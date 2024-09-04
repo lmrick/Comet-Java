@@ -7,7 +7,7 @@ import com.cometproject.api.game.rooms.settings.*;
 import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.rooms.models.types.StaticRoomModel;
-import com.cometproject.server.game.rooms.types.RoomPromotion;
+import com.cometproject.server.game.rooms.types.components.types.promotion.RoomPromotion;
 import com.cometproject.server.storage.SQLUtility;
 import com.cometproject.storage.api.data.rooms.RoomData;
 import com.google.common.collect.Lists;

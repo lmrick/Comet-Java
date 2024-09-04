@@ -3,7 +3,7 @@ package com.cometproject.server.network.messages.incoming.room.trading;
 import com.cometproject.api.game.rooms.entities.RoomEntityStatus;
 import com.cometproject.api.game.rooms.settings.RoomTradeState;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
-import com.cometproject.server.game.rooms.types.components.types.Trade;
+import com.cometproject.server.game.rooms.types.components.types.trade.Trade;
 import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.messages.outgoing.room.trading.TradeErrorMessageComposer;
 import com.cometproject.server.network.sessions.Session;

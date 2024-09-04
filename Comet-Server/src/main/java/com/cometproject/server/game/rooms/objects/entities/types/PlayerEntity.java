@@ -30,7 +30,7 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.trigge
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.components.games.GameTeam;
 import com.cometproject.server.game.rooms.types.components.games.GameType;
-import com.cometproject.server.game.rooms.types.components.types.Trade;
+import com.cometproject.server.game.rooms.types.components.types.trade.Trade;
 import com.cometproject.server.logging.LogManager;
 import com.cometproject.server.logging.entries.RoomVisitLogEntry;
 import com.cometproject.server.network.NetworkManager;

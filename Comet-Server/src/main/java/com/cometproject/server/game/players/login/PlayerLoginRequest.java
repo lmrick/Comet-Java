@@ -129,9 +129,7 @@ public class PlayerLoginRequest implements ICometTask {
 			player.setOnline(true);
 			
 			PlayerDao.updatePlayerStatus(player, player.isOnline(), true);
-			
-			client.sendQueue(new UniqueIDMessageComposer(client.getUniqueId())).sendQueue(new AuthenticationOKMessageComposer()).sendQueue(new FuserightsMessageComposer(client.getPlayer().getSubscription().exists(), client.getPlayer().getData().getRank())).sendQueue(new FavouriteRoomsMessageComposer(client.getPlayer().getNavigator().getFavouriteRooms())).sendQueue(new AvailabilityStatusMessageComposer()).sendQueue(new PlayerSettingsMessageComposer(player.getSettings())).sendQueue(new HomeRoomMessageComposer(player.getSettings().getHomeRoom(), player.getSettings().getHomeRoom())).sendQueue(new EffectsInventoryMessageComposer(player.getInventory().getEffects(), player.getInventory().getEquippedEffect()));
-			client.sendQueue(new CfhTopicsInitMessageComposer());
+			sendLoginComposers(player);
 			
 			if (client.getPlayer().getPermissions().getRank().modTool()) {
 				client.sendQueue(new ModToolMessageComposer());
@@ -155,9 +153,7 @@ public class PlayerLoginRequest implements ICometTask {
 				NetworkManager.getInstance().getSessions().broadcast(new NotificationMessageComposer("generic", Locale.getOrDefault("player.online", "%username% is online!").replace("%username%", player.getData().getUsername())));
 			}
 			
-			// Process the achievements
 			client.getPlayer().getAchievements().progressAchievement(AchievementType.LOGIN, 1);
-			
 			double regDate = StringUtils.isNumeric(client.getPlayer().getData().getRegDate()) ? Integer.parseInt(client.getPlayer().getData().getRegDate()) : client.getPlayer().getData().getRegTimestamp();
 			
 			if (regDate != 0) {
@@ -209,6 +205,17 @@ public class PlayerLoginRequest implements ICometTask {
 		}
 	}
 	
+	private void sendLoginComposers(Player player) {
+		client.sendQueue(new UniqueIDMessageComposer(client.getUniqueId()));
+		client.sendQueue(new AuthenticationOKMessageComposer());
+		client.sendQueue(new FuserightsMessageComposer(client.getPlayer().getSubscription().exists(), client.getPlayer().getData().getRank()));
+		client.sendQueue(new FavouriteRoomsMessageComposer(client.getPlayer().getNavigator().getFavouriteRooms()));
+		client.sendQueue(new AvailabilityStatusMessageComposer());
+		client.sendQueue(new PlayerSettingsMessageComposer(player.getSettings()));
+		client.sendQueue(new HomeRoomMessageComposer(player.getSettings().getHomeRoom(), player.getSettings().getHomeRoom()));
+		client.sendQueue(new EffectsInventoryMessageComposer(player.getInventory().getEffects(), player.getInventory().getEquippedEffect()));
+		client.sendQueue(new CfhTopicsInitMessageComposer());
+	}
 	
 	
 }

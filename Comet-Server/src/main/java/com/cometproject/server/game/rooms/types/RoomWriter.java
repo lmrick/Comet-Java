@@ -9,7 +9,7 @@ import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.navigator.NavigatorManager;
 import com.cometproject.server.game.navigator.types.publics.PublicRoom;
 import com.cometproject.server.game.rooms.RoomManager;
-
+import com.cometproject.server.game.rooms.types.components.types.promotion.RoomPromotion;
 
 public class RoomWriter {
     public static void write(IRoomData room, IComposerDataWrapper msg) {

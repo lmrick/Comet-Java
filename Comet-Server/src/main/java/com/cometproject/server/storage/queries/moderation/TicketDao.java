@@ -3,7 +3,7 @@ package com.cometproject.server.storage.queries.moderation;
 import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.server.game.moderation.types.tickets.HelpTicket;
 import com.cometproject.server.game.moderation.types.tickets.HelpTicketState;
-import com.cometproject.server.game.rooms.types.components.types.ChatMessage;
+import com.cometproject.server.game.rooms.types.components.types.chat.ChatMessage;
 import com.cometproject.server.storage.SQLUtility;
 import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;

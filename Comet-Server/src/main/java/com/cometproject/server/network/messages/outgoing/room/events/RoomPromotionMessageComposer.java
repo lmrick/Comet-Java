@@ -2,7 +2,7 @@ package com.cometproject.server.network.messages.outgoing.room.events;
 
 import com.cometproject.api.game.rooms.IRoomData;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
-import com.cometproject.server.game.rooms.types.RoomPromotion;
+import com.cometproject.server.game.rooms.types.components.types.promotion.RoomPromotion;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 

@@ -22,7 +22,7 @@ import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.objects.entities.effects.PlayerEffect;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.types.Room;
-import com.cometproject.server.game.rooms.types.components.types.ChatMessageColour;
+import com.cometproject.server.game.rooms.types.components.types.chat.ChatMessageColour;
 import com.cometproject.server.network.messages.outgoing.notification.AdvancedAlertMessageComposer;
 import com.cometproject.server.network.messages.outgoing.notification.MotdNotificationMessageComposer;
 import com.cometproject.server.network.messages.outgoing.quests.QuestStartedMessageComposer;
@@ -42,7 +42,6 @@ import com.google.common.collect.Sets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.Map.Entry;
 
 public class Player implements IPlayer {
 	
@@ -147,16 +146,13 @@ public class Player implements IPlayer {
 		
 	}
 	
-	public void injectComponentDependencies() {
-		var componentCtx = createComponentContext();
+	private void injectComponentDependencies() {
+		var componentCtx = new PlayerComponentContext(this);
 		var componentFactory = new PlayerComponentFactory(componentCtx);
 		
 		injectComponents(componentCtx, componentFactory);
 		assignComponents(componentCtx);
-	}
-	
-	private PlayerComponentContext createComponentContext() {
-		return new PlayerComponentContext(this);
+		
 	}
 	
 	private void injectComponents(PlayerComponentContext ctx, PlayerComponentFactory factory) {

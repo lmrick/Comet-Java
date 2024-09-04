@@ -1,7 +1,7 @@
 package com.cometproject.server.network.ws.handlers;
 
 import com.cometproject.server.game.rooms.RoomManager;
-import com.cometproject.server.game.rooms.types.misc.vote.RoomVote;
+import com.cometproject.server.game.rooms.types.components.types.vote.RoomVote;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.network.ws.messages.RoomVoteRequest;

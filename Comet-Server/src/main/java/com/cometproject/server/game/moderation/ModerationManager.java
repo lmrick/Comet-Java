@@ -4,7 +4,7 @@ import com.cometproject.api.utilities.Initializable;
 import com.cometproject.server.game.moderation.types.actions.ActionCategory;
 import com.cometproject.server.game.moderation.types.tickets.HelpTicket;
 import com.cometproject.server.game.moderation.types.tickets.HelpTicketState;
-import com.cometproject.server.game.rooms.types.components.types.ChatMessage;
+import com.cometproject.server.game.rooms.types.components.types.chat.ChatMessage;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.messages.outgoing.moderation.tickets.HelpTicketMessageComposer;
 import com.cometproject.server.network.sessions.Session;

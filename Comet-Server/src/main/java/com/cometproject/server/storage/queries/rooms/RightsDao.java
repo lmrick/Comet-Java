@@ -1,6 +1,6 @@
 package com.cometproject.server.storage.queries.rooms;
 
-import com.cometproject.server.game.rooms.types.components.types.RoomBan;
+import com.cometproject.server.game.rooms.types.components.types.ban.RoomBan;
 import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;

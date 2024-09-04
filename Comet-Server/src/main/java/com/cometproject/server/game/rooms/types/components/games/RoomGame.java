@@ -7,7 +7,7 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.highsc
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.triggers.WiredTriggerGameEnds;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.triggers.WiredTriggerGameStarts;
 import com.cometproject.server.game.rooms.types.Room;
-import com.cometproject.server.game.rooms.types.components.GameComponent;
+import com.cometproject.server.game.rooms.types.components.types.GameComponent;
 import com.cometproject.server.game.rooms.types.components.games.banzai.BanzaiGame;
 import com.cometproject.server.game.rooms.types.components.games.freeze.FreezeGame;
 import com.cometproject.server.tasks.ICometTask;

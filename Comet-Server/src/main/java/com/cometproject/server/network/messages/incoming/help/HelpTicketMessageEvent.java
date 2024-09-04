@@ -3,7 +3,7 @@ package com.cometproject.server.network.messages.incoming.help;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.moderation.ModerationManager;
-import com.cometproject.server.game.rooms.types.components.types.ChatMessage;
+import com.cometproject.server.game.rooms.types.components.types.chat.ChatMessage;
 import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.messages.outgoing.help.TicketSentMessageComposer;
 import com.cometproject.server.network.messages.outgoing.notification.AlertMessageComposer;

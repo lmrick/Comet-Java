@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.room.avatar;
 
-import com.cometproject.server.game.rooms.types.misc.ChatEmotion;
+import com.cometproject.server.game.rooms.types.components.types.chat.emotions.ChatEmotion;
 import com.cometproject.server.protocol.headers.Composers;
 
 

@@ -26,7 +26,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class RoomEntity extends RoomFloorObject implements IAvatarEntity {
-	
 	public int updatePhase = 0;
 	public boolean needsForcedUpdate = false;
 	private RoomEntityType entityType;

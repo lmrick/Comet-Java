@@ -83,6 +83,7 @@ public class GameCycle implements ICometTask, Initializable {
 	}
 	
 	private void processSession() {
+		final boolean doubleRewards = CometSettings.onlineRewardDoubleDays.contains(CometSettings.date.getDayOfWeek());
 		
 		if (CometSettings.onlineRewardEnabled || CometSettings.updateDaily) {
 			NetworkManager.getInstance().getSessions().getSessions().values().forEach(client -> {
@@ -111,11 +112,11 @@ public class GameCycle implements ICometTask, Initializable {
 					if (needsReward || needsDiamondsReward) {
 						if (needsReward) {
 							if (CometSettings.onlineRewardCredits > 0) {
-								client.getPlayer().getData().increaseCredits(CometSettings.onlineRewardCredits * (CometSettings.doubleRewards ? 2 : 1));
+								client.getPlayer().getData().increaseCredits(CometSettings.onlineRewardCredits * (doubleRewards ? 2 : 1));
 							}
 							
 							if (CometSettings.onlineRewardDuckets > 0) {
-								client.getPlayer().getData().increaseActivityPoints(CometSettings.onlineRewardDuckets * (CometSettings.doubleRewards ? 2 : 1));
+								client.getPlayer().getData().increaseActivityPoints(CometSettings.onlineRewardDuckets * (doubleRewards ? 2 : 1));
 							}
 							
 							client.getPlayer().setLastReward(Comet.getTime());
@@ -123,7 +124,7 @@ public class GameCycle implements ICometTask, Initializable {
 						
 						if (needsDiamondsReward) {
 							if (CometSettings.onlineRewardDiamonds > 0) {
-								client.getPlayer().getData().increaseVipPoints(CometSettings.onlineRewardDiamonds * (CometSettings.doubleRewards ? 2 : 1));
+								client.getPlayer().getData().increaseVipPoints(CometSettings.onlineRewardDiamonds * (doubleRewards ? 2 : 1));
 							}
 							
 							client.getPlayer().setLastDiamondReward(Comet.getTime());

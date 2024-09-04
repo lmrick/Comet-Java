@@ -1,10 +1,9 @@
 package com.cometproject.server.game.rooms;
 
-import com.cometproject.server.game.rooms.types.RoomPromotion;
+import com.cometproject.server.game.rooms.types.components.types.promotion.RoomPromotion;
 import com.cometproject.server.tasks.ICometTask;
 import com.cometproject.server.tasks.CometThreadManager;
 import com.cometproject.server.utilities.TimeSpan;
-import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 
 import java.text.MessageFormat;

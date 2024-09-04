@@ -5,12 +5,15 @@ import com.cometproject.api.game.bots.IBotData;
 import com.cometproject.api.game.groups.types.IGroup;
 import com.cometproject.api.game.pets.IPetData;
 import com.cometproject.api.game.rooms.IRoom;
-import com.cometproject.api.game.rooms.IRoomData;
 import com.cometproject.api.game.rooms.IRoomCategory;
-import com.cometproject.api.game.rooms.settings.RoomType;
+import com.cometproject.api.game.rooms.IRoomData;
+import com.cometproject.api.game.rooms.RoomContext;
+import com.cometproject.api.game.rooms.components.IRoomComponent;
+import com.cometproject.api.game.rooms.components.RoomComponentContext;
 import com.cometproject.api.game.rooms.models.CustomFloorMapData;
 import com.cometproject.api.game.rooms.models.IRoomModel;
 import com.cometproject.api.game.rooms.models.RoomModelData;
+import com.cometproject.api.game.rooms.settings.RoomType;
 import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.server.game.navigator.NavigatorManager;
 import com.cometproject.server.game.rooms.RoomManager;
@@ -19,7 +22,9 @@ import com.cometproject.server.game.rooms.objects.entities.types.BotEntity;
 import com.cometproject.server.game.rooms.objects.entities.types.PetEntity;
 import com.cometproject.server.game.rooms.objects.entities.types.data.PlayerBotData;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.triggers.WiredTriggerAtGivenTime;
-import com.cometproject.server.game.rooms.types.components.*;
+import com.cometproject.server.game.rooms.types.components.RoomComponentFactory;
+import com.cometproject.server.game.rooms.types.components.types.*;
+import com.cometproject.server.game.rooms.types.components.types.promotion.RoomPromotion;
 import com.cometproject.server.game.rooms.types.mapping.RoomMapping;
 import com.cometproject.server.network.messages.outgoing.room.polls.QuickPollMessageComposer;
 import com.cometproject.server.network.messages.outgoing.room.polls.QuickPollResultsMessageComposer;
@@ -39,6 +44,8 @@ import java.util.stream.Collectors;
 
 public class Room implements Attributable, IRoom {
 	
+	private final RoomContext roomContext;
+	
 	public static final boolean useCycleForItems = false;
 	public static final boolean useCycleForEntities = false;
 	
@@ -48,8 +55,10 @@ public class Room implements Attributable, IRoom {
 	
 	private final RoomDataObject cachedData;
 	private final AtomicInteger wiredTimer = new AtomicInteger(0);
+	
 	private IRoomModel model;
 	private RoomMapping mapping;
+	
 	private ProcessComponent process;
 	private RightsComponent rights;
 	private ItemsComponent items;
@@ -60,6 +69,7 @@ public class Room implements Attributable, IRoom {
 	private GameComponent game;
 	private EntityComponent entities;
 	private FilterComponent filter;
+	
 	private IGroup group;
 	private Map<String, Object> attributes;
 	private Set<Integer> ratings;
@@ -76,6 +86,47 @@ public class Room implements Attributable, IRoom {
 		this.data = data;
 		this.log = Logger.getLogger("Room \"" + this.getData().getName() + "\"");
 		this.cachedData = null;
+		
+		this.roomContext = new RoomContext(this);
+		RoomContext.setCurrentContext(this.roomContext);
+	}
+	
+	private void injectComponentDependencies() {
+		var componentCtx = new RoomComponentContext(this);
+		var componentFactory = new RoomComponentFactory(componentCtx);
+		
+		injectComponents(componentCtx, componentFactory);
+		assignComponents(componentCtx);
+	}
+	
+	private void injectComponents(RoomComponentContext ctx, RoomComponentFactory factory) {
+		ctx.setEntityComponent(factory.createEntityComponent());
+		ctx.setFilterComponent(factory.createFilterComponent());
+		ctx.setGameComponent(factory.createGameComponent());
+		ctx.setItemsProcessComponent(factory.createItemsProcessComponent());
+		ctx.setItemsComponent(factory.createItemsComponent());
+		ctx.setPetComponent(factory.createPetComponent());
+		ctx.setProcessComponent(factory.createProcessComponent());
+		ctx.setRightsComponent(factory.createRightsComponent());
+		ctx.setRoomBotComponent(factory.createRoomBotComponent());
+		ctx.setTradeComponent(factory.createTradeComponent());
+	}
+	
+	private void assignComponents(RoomComponentContext ctx) {
+		this.itemProcess = (ItemProcessComponent) ctx.getItemsProcessComponent();
+		this.process = (ProcessComponent) ctx.getProcessComponent();
+		this.rights = (RightsComponent) ctx.getRightsComponent();
+		this.items = (ItemsComponent) ctx.getItemsComponent();
+		this.trade = (TradeComponent) ctx.getTradeComponent();
+		this.game = (GameComponent) ctx.getGameComponent();
+		this.entities = (EntityComponent) ctx.getEntityComponent();
+		this.bots = (RoomBotComponent) ctx.getRoomBotComponent();
+		this.pets = (PetComponent) ctx.getPetComponent();
+		this.filter = (FilterComponent) ctx.getFilterComponent();
+	}
+	
+	private void disposeAllComponents() {
+		RoomComponentFactory.getComponents().forEach(IRoomComponent::dispose);
 	}
 	
 	public Room(RoomDataObject cachedRoomObject) {
@@ -111,19 +162,9 @@ public class Room implements Attributable, IRoom {
 		this.ratings = new HashSet<>();
 		
 		this.mapping = new RoomMapping(this);
-		this.itemProcess = new ItemProcessComponent(this);
-		this.process = new ProcessComponent(this);
-		this.rights = new RightsComponent(this);
-		this.items = new ItemsComponent(this);
-		
 		this.mapping.init();
 		
-		this.trade = new TradeComponent(this);
-		this.game = new GameComponent(this);
-		this.entities = new EntityComponent(this);
-		this.bots = new RoomBotComponent(this);
-		this.pets = new PetComponent(this);
-		this.filter = new FilterComponent(this);
+		injectComponentDependencies();
 		
 		this.setAttribute("loadTime", System.currentTimeMillis());
 		
@@ -199,6 +240,7 @@ public class Room implements Attributable, IRoom {
 		
 		this.isDisposed = true;
 		
+		
 		this.process.stop();
 		this.itemProcess.stop();
 		this.game.stop();
@@ -207,6 +249,9 @@ public class Room implements Attributable, IRoom {
 		this.entities.dispose();
 		this.items.dispose();
 		this.bots.dispose();
+		
+		disposeAllComponents();
+		
 		this.mapping.dispose();
 		
 		if (this.data.getType() == RoomType.PUBLIC) {
@@ -306,6 +351,11 @@ public class Room implements Attributable, IRoom {
 	
 	public int getId() {
 		return this.data.getId();
+	}
+	
+	@Override
+	public RoomContext getContext() {
+		return null;
 	}
 	
 	public IRoomData getData() {

@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.outgoing.room.settings;
 
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
-import com.cometproject.server.game.rooms.types.components.types.RoomBan;
+import com.cometproject.server.game.rooms.types.components.types.ban.RoomBan;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 

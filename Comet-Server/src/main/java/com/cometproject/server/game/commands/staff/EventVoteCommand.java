@@ -5,7 +5,7 @@ import com.cometproject.api.game.rooms.IRoomData;
 import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.commands.ChatCommand;
 import com.cometproject.server.game.rooms.RoomManager;
-import com.cometproject.server.game.rooms.types.misc.vote.RoomVote;
+import com.cometproject.server.game.rooms.types.components.types.vote.RoomVote;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.messages.outgoing.notification.MotdNotificationMessageComposer;
 import com.cometproject.server.network.sessions.Session;

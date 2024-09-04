@@ -8,7 +8,6 @@ import com.cometproject.server.game.players.components.types.*;
 import java.util.ArrayList;
 
 public class PlayerComponentFactory implements IPlayerComponentFactory {
-	
 	private static final ArrayList<IPlayerComponent> components = new ArrayList<>();
 	private final PlayerComponentContext playerComponentContext;
 	

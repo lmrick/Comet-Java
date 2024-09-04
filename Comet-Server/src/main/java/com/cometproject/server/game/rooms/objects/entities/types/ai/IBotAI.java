@@ -2,7 +2,7 @@ package com.cometproject.server.game.rooms.objects.entities.types.ai;
 
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.types.mapping.RoomTile;
-import com.cometproject.server.game.rooms.types.misc.ChatEmotion;
+import com.cometproject.server.game.rooms.types.components.types.chat.emotions.ChatEmotion;
 
 
 public interface IBotAI {

@@ -1,17 +1,18 @@
 package com.cometproject.server.game.players;
 
+import com.cometproject.api.caching.Cache;
 import com.cometproject.api.config.Configuration;
 import com.cometproject.api.game.players.IPlayerService;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
+import com.cometproject.api.game.players.data.IPlayerData;
 import com.cometproject.api.networking.sessions.ISession;
+import com.cometproject.common.caching.LastReferenceCache;
 import com.cometproject.server.game.players.data.PlayerData;
 import com.cometproject.server.game.players.login.PlayerLoginRequest;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.storage.queries.player.PlayerDao;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
+import com.cometproject.server.tasks.CometThreadManager;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -35,9 +36,8 @@ public class PlayerManager implements IPlayerService {
 	private Map<String, Integer> ssoTicketToPlayerId;
 	private Map<Integer, String> playerIdToUsername;
 	private Map<String, Integer> authTokenToPlayerId;
-	private CacheManager cacheManager;
-	private Cache playerAvatarCache;
-	private Cache playerDataCache;
+	private Cache<Integer, IPlayerAvatar> playerAvatarCache;
+	private Cache<Integer, IPlayerData> playerDataCache;
 	private ExecutorService playerLoginService;
 	
 	public PlayerManager() {
@@ -61,14 +61,11 @@ public class PlayerManager implements IPlayerService {
 		if ((boolean) Configuration.currentConfig().getOrDefault("comet.cache.players.enabled", true)) {
 			log.info("Initializing Player cache");
 			
-			final int oneDay = 24 * 60 * 60;
-			this.playerAvatarCache = new Cache("playerAvatarCache", 75000, false, false, oneDay, oneDay);
-			this.playerDataCache = new Cache("playerDataCache", 15000, false, false, oneDay, oneDay);
+			this.playerAvatarCache = new LastReferenceCache<>(43200 * 1000, 10000, (key, val) -> {
+			}, CometThreadManager.getInstance().getCoreExecutor());
+			this.playerDataCache = new LastReferenceCache<>(43200 * 1000, 10000, (key, val) -> {
+			}, CometThreadManager.getInstance().getCoreExecutor());
 			
-			this.cacheManager = CacheManager.newInstance("./config/ehcache.xml");
-			
-			this.cacheManager.addCache(this.playerAvatarCache);
-			this.cacheManager.addCache(this.playerDataCache);
 		} else {
 			log.info("Player data cache is disabled.");
 		}
@@ -95,34 +92,45 @@ public class PlayerManager implements IPlayerService {
 		}
 		
 		if (this.playerDataCache != null) {
-			Element cachedElement = this.playerDataCache.get(playerId);
+			var cachedElement = this.playerDataCache.get(playerId);
 			
-			if (cachedElement != null && cachedElement.getObjectValue() != null) {
-				return (PlayerData) cachedElement.getObjectValue();
+			if (cachedElement != null) {
+				return cachedElement;
 			}
 		}
 		
 		if (this.playerAvatarCache != null) {
-			Element cachedElement = this.playerAvatarCache.get(playerId);
+			var cachedElement = this.playerAvatarCache.get(playerId);
 			
-			if (cachedElement != null && cachedElement.getObjectValue() != null) {
-				final IPlayerAvatar playerAvatar = ((IPlayerAvatar) cachedElement.getObjectValue());
+			if (cachedElement != null) {
 				
-				if (playerAvatar.getMotto() == null && mode == IPlayerAvatar.USERNAME_FIGURE_MOTTO) {
-					playerAvatar.setMotto(PlayerDao.getMottoByPlayerId(playerId));
+				if (cachedElement.getMotto() == null && mode == IPlayerAvatar.USERNAME_FIGURE_MOTTO) {
+					cachedElement.setMotto(PlayerDao.getMottoByPlayerId(playerId));
 				}
 				
-				return playerAvatar;
+				return cachedElement;
 			}
 		}
 		
 		IPlayerAvatar playerAvatar = PlayerDao.getAvatarById(playerId, mode);
 		
 		if (playerAvatar != null && this.playerAvatarCache != null) {
-			this.playerAvatarCache.put(new Element(playerId, playerAvatar));
+			this.playerAvatarCache.add(playerId, playerAvatar);
 		}
 		
 		return playerAvatar;
+	}
+	
+	public void removeData(int playerId, boolean avatarData) {
+		if (this.playerAvatarCache.get(playerId) == null || this.playerDataCache.get(playerId) == null) {
+			return;
+		}
+		
+		if (avatarData) {
+			this.playerAvatarCache.remove(playerId);
+		}
+		
+		this.playerDataCache.remove(playerId);
 	}
 	
 	@Override
@@ -136,17 +144,17 @@ public class PlayerManager implements IPlayerService {
 		}
 		
 		if (this.playerDataCache != null) {
-			Element cachedElement = this.playerDataCache.get(playerId);
+			var cachedElement = this.playerDataCache.get(playerId);
 			
-			if (cachedElement != null && cachedElement.getObjectValue() != null) {
-				return (PlayerData) cachedElement.getObjectValue();
+			if (cachedElement != null) {
+				return (PlayerData) cachedElement;
 			}
 		}
 		
 		PlayerData playerData = PlayerDao.getDataById(playerId);
 		
 		if (playerData != null && this.playerDataCache != null) {
-			this.playerDataCache.put(new Element(playerId, playerData));
+			this.playerDataCache.add(playerId, playerData);
 		}
 		
 		return playerData;
@@ -265,10 +273,6 @@ public class PlayerManager implements IPlayerService {
 	@Override
 	public ExecutorService getPlayerLoadExecutionService() {
 		return playerLoginService;
-	}
-	
-	public CacheManager getCacheManager() {
-		return cacheManager;
 	}
 	
 }

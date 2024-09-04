@@ -2,8 +2,8 @@ package com.cometproject.server.tasks;
 
 import com.cometproject.api.config.Configuration;
 import com.cometproject.api.utilities.Initializable;
-import com.cometproject.server.game.rooms.types.components.ItemProcessComponent;
-import com.cometproject.server.game.rooms.types.components.ProcessComponent;
+import com.cometproject.server.game.rooms.types.components.types.ItemProcessComponent;
+import com.cometproject.server.game.rooms.types.components.types.ProcessComponent;
 import org.apache.log4j.Logger;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;

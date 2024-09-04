@@ -8,7 +8,7 @@ import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.entities.pathfinding.Square;
 import com.cometproject.server.game.rooms.objects.entities.pathfinding.types.EntityPathfinder;
 import com.cometproject.server.game.rooms.types.Room;
-import com.cometproject.server.game.rooms.types.misc.ChatEmotion;
+import com.cometproject.server.game.rooms.types.components.types.chat.emotions.ChatEmotion;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.messages.outgoing.room.avatar.TalkMessageComposer;
 import com.cometproject.server.network.messages.outgoing.room.avatar.WhisperMessageComposer;

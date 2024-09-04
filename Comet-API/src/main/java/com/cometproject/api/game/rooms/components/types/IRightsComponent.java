@@ -1,11 +1,11 @@
 package com.cometproject.api.game.rooms.components.types;
 
 import com.cometproject.api.game.rooms.IRoom;
+import com.cometproject.api.game.rooms.components.IRoomComponent;
 import java.util.List;
 
-public interface IRightsComponent {
+public interface IRightsComponent extends IRoomComponent {
 	
-	void dispose();
 	boolean hasRights(int playerId);
 	boolean hasRights(int playerId, boolean checkGroup);
 	boolean checkGroupRights(int playerId);

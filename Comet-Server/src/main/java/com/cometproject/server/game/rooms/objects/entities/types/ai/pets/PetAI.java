@@ -20,7 +20,7 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.pet.breeding
 import com.cometproject.server.game.rooms.objects.items.types.floor.pet.breeding.types.*;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.WiredUtil;
 import com.cometproject.server.game.rooms.types.mapping.RoomTile;
-import com.cometproject.server.game.rooms.types.misc.ChatEmotion;
+import com.cometproject.server.game.rooms.types.components.types.chat.emotions.ChatEmotion;
 import com.cometproject.server.network.messages.outgoing.room.pets.AddExperiencePointsMessageComposer;
 import com.cometproject.api.game.utilities.RandomUtil;
 
