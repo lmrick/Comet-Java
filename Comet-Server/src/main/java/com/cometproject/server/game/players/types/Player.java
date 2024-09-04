@@ -46,6 +46,8 @@ import java.util.*;
 public class Player implements IPlayer {
 	
 	private final PlayerContext playerContext;
+	private PlayerComponentContext playerComponentContext;
+	
 	private PermissionComponent permissions;
 	private InventoryComponent inventory;
 	private SubscriptionComponent subscription;
@@ -122,7 +124,6 @@ public class Player implements IPlayer {
 	
 	public Player(ResultSet data, boolean isFallback) throws SQLException {
 		this.id = data.getInt("playerId");
-		
 		this.data = new PlayerData(data, this);
 		
 		if (isFallback) {
@@ -133,26 +134,23 @@ public class Player implements IPlayer {
 			this.stats = new PlayerStatistics(data, true, this);
 		}
 		
-		injectComponentDependencies();
+		this.playerContext = new PlayerContext(this);
+		PlayerContext.setCurrentContext(playerContext);
 		
+		injectComponentDependencies();
 		StorageContext.getCurrentContext().getGroupRepository().getGroupIdsByPlayerId(this.id, groups -> this.groups.addAll(groups));
 		
 		this.entity = null;
 		this.lastReward = Comet.getTime();
 		this.lastDiamondReward = Comet.getTime();
-		
-		this.playerContext = new PlayerContext(this);
-		PlayerContext.setCurrentContext(playerContext);
-		
 	}
 	
 	private void injectComponentDependencies() {
-		var componentCtx = new PlayerComponentContext(this);
-		var componentFactory = new PlayerComponentFactory(componentCtx);
+		this.playerComponentContext = new PlayerComponentContext(this);
+		var componentFactory = new PlayerComponentFactory(playerComponentContext);
 		
-		injectComponents(componentCtx, componentFactory);
-		assignComponents(componentCtx);
-		
+		injectComponents(playerComponentContext, componentFactory);
+		assignComponents(playerComponentContext);
 	}
 	
 	private void injectComponents(PlayerComponentContext ctx, PlayerComponentFactory factory) {
@@ -419,40 +417,40 @@ public class Player implements IPlayer {
 	
 	@Override
 	public PermissionComponent getPermissions() {
-		return this.permissions;
+		return (PermissionComponent) this.playerComponentContext.getPlayerPermissions();
 	}
 	
 	public MessengerComponent getMessenger() {
-		return this.messenger;
+		return (MessengerComponent) this.playerComponentContext.getPlayerMessenger();
 	}
 	
 	public IPlayerInventory getInventory() {
-		return this.inventory;
+		return this.playerComponentContext.getPlayerInventory();
 	}
 	
 	public SubscriptionComponent getSubscription() {
-		return this.subscription;
+		return (SubscriptionComponent) this.playerComponentContext.getPlayerSubscription();
 	}
 	
 	@Override
 	public RelationshipComponent getRelationships() {
-		return this.relationships;
+		return (RelationshipComponent) this.playerComponentContext.getPlayerRelationships();
 	}
 	
 	public InventoryBotComponent getBots() {
-		return this.bots;
+		return (InventoryBotComponent) this.playerComponentContext.getPlayerBots();
 	}
 	
 	public PetComponent getPets() {
-		return this.pets;
+		return (PetComponent) this.playerComponentContext.getPlayerPets();
 	}
 	
 	public QuestComponent getQuests() {
-		return quests;
+		return (QuestComponent) this.playerComponentContext.getPlayerQuests();
 	}
 	
 	public AchievementComponent getAchievements() {
-		return achievements;
+		return (AchievementComponent) this.playerComponentContext.getPlayerAchievements();
 	}
 	
 	@Override
@@ -824,7 +822,7 @@ public class Player implements IPlayer {
 	}
 	
 	public NavigatorComponent getNavigator() {
-		return navigator;
+		return (NavigatorComponent) this.playerComponentContext.getPlayerNavigator();
 	}
 	
 	public boolean petsMuted() {
@@ -844,7 +842,7 @@ public class Player implements IPlayer {
 	}
 	
 	public WardrobeComponent getWardrobe() {
-		return wardrobe;
+		return (WardrobeComponent) this.playerComponentContext.getPlayerWardrobe();
 	}
 	
 	public String getLastPhoto() {

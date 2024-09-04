@@ -84,9 +84,9 @@ public class RoomTile {
         this.canStack = true;
         this.hasMagicTile = false;
         this.topItem = 0;
-        this.originalHeight = 0d;
+        this.originalHeight = 0.0D;
         this.originalTopItem = 0;
-        this.stackHeight = 0d;
+        this.stackHeight = 0.0D;
         this.hasAdjustableHeight = false;
         this.hasGate = false;
 
@@ -110,7 +110,7 @@ public class RoomTile {
         this.items.clear();
 			
 			// it's null!
-			mappingInstance.getRoom().getItems().getFloorItems().values().stream().filter(item -> item != null && item.getDefinition() != null).forEachOrdered(item -> {
+			this.mappingInstance.getRoom().getItems().getFloorItems().values().stream().filter(item -> item != null && item.getDefinition() != null).forEachOrdered(item -> {
 				if (item.getPosition().getX() == this.position.getX() && item.getPosition().getY() == this.position.getY()) {
 					items.add(item);
 				} else {

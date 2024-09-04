@@ -42,7 +42,7 @@ public class RoomMapping {
 			RoomTile[] xArray = new RoomTile[sizeY];
 			
 			for (int y = 0; y < sizeY; y++) {
-				RoomTile instance = new RoomTile(this, new Position(x, y, 0d));
+				RoomTile instance = new RoomTile(this, new Position(x, y, 0.0D));
 				instance.reload();
 				
 				xArray[y] = instance;

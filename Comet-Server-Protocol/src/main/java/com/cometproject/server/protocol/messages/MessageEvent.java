@@ -3,9 +3,11 @@ package com.cometproject.server.protocol.messages;
 import com.cometproject.api.networking.messages.wrappers.IEventDataWrapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.util.CharsetUtil;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public final class MessageEvent implements IEventDataWrapper {
 	
@@ -36,42 +38,38 @@ public final class MessageEvent implements IEventDataWrapper {
 	
 	@Override
 	public boolean readBoolean() {
-		return this.content().readByte() == 1;
+		return (this.content().readByte() == 1);
 	}
 	
 	@Override
 	public String readString() {
-		int length = this.readShort();
-		byte[] data = this.content().readBytes((length)).array();
-		
+		var length = this.readShort();
+		var data = new byte[length];
+		this.content().readBytes(data);
 		return new String(data);
 	}
 	
 	@Override
 	public byte[] readBytes(int length) {
-		final byte[] bytes = new byte[length];
-		
-		for (int i = 0; i < length; i++) {
-			bytes[i] = this.buffer.readByte();
-		}
-		
+		final var bytes = new byte[length];
+		IntStream.range(0, length).forEach(i -> bytes[i] = this.buffer.readByte());
 		return bytes;
 	}
 	
 	@Override
 	public byte[] toRawBytes() {
-		byte[] complete = this.buffer.array();
-		return Arrays.copyOfRange(complete, 6, complete.length);
+		int length = this.buffer.readableBytes() - 6;
+		byte[] rawBytes = new byte[length];
+		this.buffer.getBytes(6, rawBytes);
+		return rawBytes;
 	}
 	
 	@Override
 	public String toString() {
-		String body = this.content().toString((Charset.defaultCharset()));
-		
-		for (int i = 0; i < 13; i++) {
+		var body = content().toString(CharsetUtil.UTF_8);
+		for (var i = 0; i < 13; i++) {
 			body = body.replace(Character.toString((char) i), "[" + i + "]");
 		}
-		
 		return body;
 	}
 	
@@ -86,7 +84,7 @@ public final class MessageEvent implements IEventDataWrapper {
 	
 	@Override
 	public int getLength() {
-		return length;
+		return this.buffer.readableBytes();
 	}
 	
 }

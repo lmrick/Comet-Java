@@ -118,15 +118,14 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public final class MessageHandler extends MessagingHandler {
+public final class MessageHandler {
 	public static Logger log = Logger.getLogger(MessageHandler.class.getName());
 	private final Map<Short, Event> messages = Maps.newConcurrentMap();
 	private final ExecutorService eventExecutor;
 	private final boolean asyncEventExecution;
 	private final MessagingHandler messagingHandler;
 	
-	public MessageHandler(MessageHandler messageHandler) {
-		super(messageHandler);
+	public MessageHandler() {
 		this.messagingHandler = new MessagingHandler(this);
 		this.asyncEventExecution = Boolean.parseBoolean((String) Configuration.currentConfig().getOrDefault("comet.network.alternativePacketHandling.enabled", "false"));
 		this.eventExecutor = Executors.newFixedThreadPool(8);
@@ -509,7 +508,7 @@ public final class MessageHandler extends MessagingHandler {
 	}
 	
 	public void handle(MessageEvent message, Session client) {
-		super.handle(message, client);
+		this.messagingHandler.handle(message, client);
 	}
 	
 	public Map<Short, Event> getMessages() {

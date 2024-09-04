@@ -25,13 +25,13 @@ public class MessengerDao {
         try {
             sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SQLUtility.prepare("SELECT m.user_two_id, p.username, p.figure, p.motto, p.gender FROM messenger_friendships m LEFT JOIN players p ON p.id = m.user_two_id WHERE user_one_id = ?;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT m.to_id, p.username, p.figure, p.motto, p.gender FROM messenger_friendships m LEFT JOIN players p ON p.id = m.to_id WHERE from_id = ?;", sqlConnection);
             preparedStatement.setInt(1, playerId);
 
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                data.put(resultSet.getInt("user_two_id"), new MessengerFriend(resultSet));
+                data.put(resultSet.getInt("to_id"), new MessengerFriend(resultSet));
             }
         } catch (SQLException e) {
             SQLUtility.handleSqlException(e);
@@ -80,7 +80,7 @@ public class MessengerDao {
         try {
             sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SQLUtility.prepare("DELETE from messenger_friendships WHERE user_one_id = ? AND user_two_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE from messenger_friendships WHERE from_id = ? AND to_id = ?", sqlConnection);
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, userTwoId);
 
@@ -101,7 +101,7 @@ public class MessengerDao {
         try {
             sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SQLUtility.prepare("DELETE from messenger_friendships WHERE user_one_id = ? OR user_two_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE from messenger_friendships WHERE from_id = ? OR to_id = ?", sqlConnection);
             preparedStatement.setInt(1, playerId);
             preparedStatement.setInt(2, playerId);
 
@@ -167,7 +167,7 @@ public class MessengerDao {
         try {
             sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SQLUtility.prepare("INSERT into messenger_friendships(`user_one_id`, `user_two_id`) VALUES(?, ?)", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT INTO messenger_friendships(`from_id`, `to_id`) VALUES(?, ?)", sqlConnection);
 
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, userTwoId);
@@ -193,7 +193,7 @@ public class MessengerDao {
         try {
             sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SQLUtility.prepare("INSERT into messenger_requests (`from_id`, `to_id`) VALUES(?, ?)", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT INTO messenger_requests (`from_id`, `to_id`) VALUES (?, ?)", sqlConnection);
 
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, userTwoId);
@@ -245,7 +245,7 @@ public class MessengerDao {
         try {
             sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SQLUtility.prepare("SELECT COUNT(1) FROM messenger_friendships WHERE user_one_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT COUNT(1) FROM messenger_friendships WHERE from_id = ?", sqlConnection);
             preparedStatement.setInt(1, userId);
 
             resultSet = preparedStatement.executeQuery();

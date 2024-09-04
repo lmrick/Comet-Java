@@ -107,13 +107,9 @@ public class CometSettings {
 
     private static final Logger log = Logger.getLogger(CometSettings.class.getName());
 
-    /**
-     * Enable & set the Message Of The Day text
-     *
-     * @param motd The message to display to the user on-login
-     */
     public static void setMotd(String motd) {
         motdEnabled = true;
         motdMessage = motd;
     }
+    
 }

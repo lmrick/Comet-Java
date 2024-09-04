@@ -56,14 +56,14 @@ public class NetworkManager {
 	public void initialize(String ip, String ports) {
 		this.rsa = new RSA();
 		this.sessions = new SessionManager();
-		this.messageHandler = new MessageHandler(messageHandler);
+		this.messageHandler = new MessageHandler();
 		
 		this.serverPort = Integer.parseInt(ports.split(",")[0]);
 		
 		try {
 			
 			final ServerBootstrap sb = new ServerBootstrap();
-			sb.group(new NioEventLoopGroup(), new NioEventLoopGroup()).channel(NioServerSocketChannel.class).localAddress(new InetSocketAddress(30002)).childHandler(new ChannelInitializer<SocketChannel>() {
+			sb.group(new NioEventLoopGroup(), new NioEventLoopGroup()).channel(NioServerSocketChannel.class).localAddress(new InetSocketAddress(2096)).childHandler(new ChannelInitializer<SocketChannel>() {
 				@Override
 				public void initChannel(final SocketChannel ch) {
 					ch.pipeline().addLast(new HttpRequestDecoder(), new HttpObjectAggregator(65536), new HttpResponseEncoder(), new WebSocketServerProtocolHandler("/comet"), new WsMessageHandler());

@@ -19,11 +19,13 @@ public class SSOTicketMessageEvent implements Event {
 		
 		String ticket = msg.readString();
 		
+		/*
 		if (ticket.length() < 8 || ticket.length() > 128) {
 			client.getLogger().warn("Session was disconnected because ticket was too long or too short. Length: " + ticket.length());
 			client.disconnect();
 			return;
 		}
+		*/
 		
 		PlayerManager.getInstance().submitLoginRequest(client, ticket);
 	}

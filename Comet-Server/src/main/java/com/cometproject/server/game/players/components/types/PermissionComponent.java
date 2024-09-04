@@ -20,19 +20,19 @@ public class PermissionComponent extends PlayerComponent implements IPlayerPermi
 	
 	@Override
 	public Rank getRank() {
-		return PermissionsManager.getInstance().getRank(this.getComponentContext().getPlayer().getData().getRank());
+		return PermissionsManager.getInstance().getRank(this.getPlayer().getData().getRank());
 	}
 	
 	@Override
 	public boolean hasCommand(String key) {
-		if (this.getComponentContext().getPlayer().getData().getRank() == 255) {
+		if (this.getPlayer().getData().getRank() == 255) {
 			return true;
 		}
 		
 		if (PermissionsManager.getInstance().getOverrideCommands().containsKey(key)) {
 			OverrideCommandPermission permission = PermissionsManager.getInstance().getOverrideCommands().get(key);
 			
-			if (permission.playerId() == this.getComponentContext().getPlayer().getData().getId() && permission.enabled()) {
+			if (permission.playerId() == this.getPlayer().getData().getId() && permission.enabled()) {
 				return true;
 			}
 		}
@@ -40,15 +40,15 @@ public class PermissionComponent extends PlayerComponent implements IPlayerPermi
 		if (PermissionsManager.getInstance().getCommands().containsKey(key)) {
 			CommandPermission permission = PermissionsManager.getInstance().getCommands().get(key);
 			
-			if (permission.minimumRank() <= this.getComponentContext().getPlayer().getData().getRank()) {
-				boolean hasCommand = !permission.vipOnly() || this.getComponentContext().getPlayer().getData().isVip();
+			if (permission.minimumRank() <= this.getPlayer().getData().getRank()) {
+				boolean hasCommand = !permission.vipOnly() || this.getPlayer().getData().isVip();
 				
 				if (!permission.rightsOnly()) {
 					return hasCommand;
 				}
 				
 				if (hasCommand) {
-					if (this.getComponentContext().getPlayer().getEntity().getRoom().getRights().hasRights(this.getComponentContext().getPlayer().getId())) {
+					if (this.getPlayer().getEntity().getRoom().getRights().hasRights(this.getPlayer().getId())) {
 						return true;
 					}
 				}

@@ -45,6 +45,7 @@ import java.util.stream.Collectors;
 public class Room implements Attributable, IRoom {
 	
 	private final RoomContext roomContext;
+	private RoomComponentContext roomComponentContext;
 	
 	public static final boolean useCycleForItems = false;
 	public static final boolean useCycleForEntities = false;
@@ -89,14 +90,15 @@ public class Room implements Attributable, IRoom {
 		
 		this.roomContext = new RoomContext(this);
 		RoomContext.setCurrentContext(this.roomContext);
+		
 	}
 	
 	private void injectComponentDependencies() {
-		var componentCtx = new RoomComponentContext(this);
-		var componentFactory = new RoomComponentFactory(componentCtx);
+		this.roomComponentContext = new RoomComponentContext(this);
+		var componentFactory = new RoomComponentFactory(roomComponentContext);
 		
-		injectComponents(componentCtx, componentFactory);
-		assignComponents(componentCtx);
+		injectComponents(roomComponentContext, componentFactory);
+		assignComponents(roomComponentContext);
 	}
 	
 	private void injectComponents(RoomComponentContext ctx, RoomComponentFactory factory) {
@@ -162,9 +164,10 @@ public class Room implements Attributable, IRoom {
 		this.ratings = new HashSet<>();
 		
 		this.mapping = new RoomMapping(this);
-		this.mapping.init();
 		
 		injectComponentDependencies();
+		
+		this.mapping.init();
 		
 		this.setAttribute("loadTime", System.currentTimeMillis());
 		
@@ -367,40 +370,40 @@ public class Room implements Attributable, IRoom {
 	}
 	
 	public ProcessComponent getProcess() {
-		return this.process;
+		return (ProcessComponent) this.roomComponentContext.getProcessComponent();
 	}
 	
 	public ItemProcessComponent getItemProcess() {
-		return this.itemProcess;
+		return (ItemProcessComponent) this.roomComponentContext.getItemsProcessComponent();
 	}
 	
 	public ItemsComponent getItems() {
-		return this.items;
+		return (ItemsComponent) this.roomComponentContext.getItemsComponent();
 	}
 	
 	public TradeComponent getTrade() {
-		return this.trade;
+		return (TradeComponent) this.roomComponentContext.getTradeComponent();
 	}
 	
 	
 	public RightsComponent getRights() {
-		return this.rights;
+		return (RightsComponent) this.roomComponentContext.getRightsComponent();
 	}
 	
 	public RoomBotComponent getBots() {
-		return this.bots;
+		return (RoomBotComponent) this.roomComponentContext.getRoomBotComponent();
 	}
 	
 	public PetComponent getPets() {
-		return this.pets;
+		return (PetComponent) this.roomComponentContext.getPetComponent();
 	}
 	
 	public GameComponent getGame() {
-		return this.game;
+		return (GameComponent) this.roomComponentContext.getGameComponent();
 	}
 	
 	public EntityComponent getEntities() {
-		return this.entities;
+		return (EntityComponent) this.roomComponentContext.getEntityComponent();
 	}
 	
 	public RoomMapping getMapping() {

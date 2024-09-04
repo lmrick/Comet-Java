@@ -1,6 +1,7 @@
 package com.cometproject.server.network.sessions;
 
 import com.cometproject.api.config.CometSettings;
+import com.cometproject.api.game.players.PlayerContext;
 import com.cometproject.api.networking.messages.IMessageComposer;
 import com.cometproject.api.networking.sessions.ISession;
 import com.cometproject.api.utilities.JsonUtil;
@@ -173,11 +174,11 @@ public class Session implements ISession {
 
         PlayerManager.getInstance().put(player.getId(), channelId, username, this.getIpAddress());
 
-        if (player.getPermissions().getRank().modTool()) {
+        if (PlayerContext.getCurrentContext().getPlayer().getPermissions().getRank().modTool()) {
             ModerationManager.getInstance().addModerator(player.getSession());
         }
 
-        if (player.getPermissions().getRank().messengerLogChat()) {
+        if (PlayerContext.getCurrentContext().getPlayer().getPermissions().getRank().messengerLogChat()) {
             ModerationManager.getInstance().addLogChatUser(player.getSession());
         }
     }

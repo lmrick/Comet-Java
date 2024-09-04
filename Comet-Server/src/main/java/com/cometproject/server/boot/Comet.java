@@ -20,7 +20,7 @@ import java.util.*;
 public class Comet {
 	public static String instanceId = UUID.randomUUID().toString();
 	public static long start;
-	public static volatile boolean isDebugging = false;
+	public static volatile boolean isDebugging = true;
 	public static volatile boolean isRunning = true;
 	public static boolean daemon = false;
 	private static final Logger log = Logger.getLogger(Comet.class.getName());
