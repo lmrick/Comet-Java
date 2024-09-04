@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.room.engine;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.RoomWriter;
 import com.cometproject.server.protocol.headers.Composers;
@@ -40,7 +40,7 @@ public class RoomDataMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         RoomWriter.entryData(room.getData(), msg, this.isLoading, this.checkEntry, false, this.canMute);
     }
 }

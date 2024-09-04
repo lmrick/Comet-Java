@@ -2,7 +2,7 @@ package com.cometproject.server.network.messages.outgoing.moderation;
 
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.rooms.IRoomData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.logging.entries.RoomVisitLogEntry;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
@@ -28,7 +28,7 @@ public class ModToolRoomVisitsMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(playerId);
         msg.writeString(playerUsername);
 

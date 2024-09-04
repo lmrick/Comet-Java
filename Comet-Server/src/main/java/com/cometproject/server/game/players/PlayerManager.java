@@ -4,7 +4,6 @@ import com.cometproject.api.config.Configuration;
 import com.cometproject.api.game.players.IPlayerService;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.networking.sessions.ISession;
-import com.cometproject.api.utilities.Initialisable;
 import com.cometproject.server.game.players.data.PlayerData;
 import com.cometproject.server.game.players.login.PlayerLoginRequest;
 import com.cometproject.server.network.NetworkManager;

@@ -278,15 +278,13 @@ public class Composers {
     public static final short GameStatusMessageComposer = 10;
     public static final short GameAccountStatusMessageComposer = 1821;
     public static final short LoadGameMessageComposer = 2610;
-
-
-    private static Map<Short, String> composerPacketNames = new HashMap<>();
+    
+    private static final Map<Short, String> composerPacketNames = new HashMap<>();
 
     static {
         try {
             for (Field field : Composers.class.getDeclaredFields()) {
-                if (!Modifier.isPrivate(field.getModifiers()))
-                    composerPacketNames.put(field.getShort(field.getName()), field.getName());
+                if (!Modifier.isPrivate(field.getModifiers())) composerPacketNames.put(field.getShort(field.getName()), field.getName());
             }
         } catch (Exception ignored) {
 
@@ -294,10 +292,8 @@ public class Composers {
     }
 
     public static String valueOfId(short packetId) {
-        if (composerPacketNames.containsKey(packetId)) {
-            return composerPacketNames.get(packetId);
-        }
-
-        return "UnknownMessageComposer";
+        if (composerPacketNames.containsKey(packetId)) return composerPacketNames.get(packetId);
+        return "Unknown Message Composer";
     }
+    
 }

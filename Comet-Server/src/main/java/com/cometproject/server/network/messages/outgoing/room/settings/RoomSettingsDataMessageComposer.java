@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.outgoing.room.settings;
 
 import com.cometproject.api.config.CometSettings;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.RoomWriter;
 import com.cometproject.server.protocol.headers.Composers;
@@ -23,7 +23,7 @@ public class RoomSettingsDataMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(room.getData().getId());
         msg.writeString(room.getData().getName());
         msg.writeString(room.getData().getDescription());

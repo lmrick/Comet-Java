@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.user.club;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.players.components.types.SubscriptionComponent;
 import com.cometproject.server.protocol.headers.Composers;
@@ -20,7 +20,7 @@ public class ClubStatusMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         int timeLeft = 0;
         int days = 0;
         int months = 0;

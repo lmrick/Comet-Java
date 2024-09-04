@@ -1,11 +1,11 @@
 package com.cometproject.api.game.groups.types.components.forum;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 
 import java.util.List;
 
 public interface IForumThread {
-    void compose(IComposer msg);
+    void compose(IComposerDataWrapper msg);
 
     List<IForumThreadReply> getReplies(int start);
 

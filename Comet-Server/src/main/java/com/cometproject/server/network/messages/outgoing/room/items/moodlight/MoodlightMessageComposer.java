@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.room.items.moodlight;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.objects.items.data.MoodLightPresetData;
 import com.cometproject.server.game.rooms.objects.items.types.wall.MoodLightWallItem;
 import com.cometproject.server.protocol.headers.Composers;
@@ -20,7 +20,7 @@ public class MoodlightMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(this.moodlightWallItem.getMoodlightData().getPresets().size());
         msg.writeInt(this.moodlightWallItem.getMoodlightData().getActivePreset());
 

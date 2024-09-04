@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.landing;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.landing.types.PromoArticle;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
@@ -21,7 +21,7 @@ public class PromoArticlesMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(articles.size());
 
         for (PromoArticle article : articles.values()) {

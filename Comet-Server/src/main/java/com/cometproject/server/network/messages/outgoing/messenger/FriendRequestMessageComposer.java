@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.outgoing.messenger;
 
 import com.cometproject.api.game.players.data.IPlayerAvatar;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -19,7 +19,7 @@ public class FriendRequestMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(this.playerAvatar.getId());
         msg.writeString(this.playerAvatar.getUsername());
         msg.writeString(this.playerAvatar.getFigure());

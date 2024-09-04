@@ -2,7 +2,7 @@ package com.cometproject.server.game.pets;
 
 import com.cometproject.api.game.pets.IPetData;
 import com.cometproject.api.game.pets.IPetRace;
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.server.game.pets.data.PetSpeech;
 import com.cometproject.server.game.pets.races.PetBreedLevel;
 import com.cometproject.server.game.pets.races.PetRace;
@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-public class PetManager implements Initialisable {
+public class PetManager implements Initializable {
     private static PetManager petManagerInstance;
     private final Map<Integer, IPetData> pendingPetDataSaves = Maps.newConcurrentMap();
     private Logger log = Logger.getLogger(PetManager.class.getName());

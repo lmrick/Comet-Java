@@ -1,6 +1,6 @@
 package com.cometproject.server.logging.entries;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.logging.AbstractLogEntry;
 import com.cometproject.server.logging.LogEntryType;
@@ -28,7 +28,7 @@ public class RoomChatLogEntry extends AbstractLogEntry {
         this.timestamp = timestamp;
     }
 
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeString(TimeSpan.millisecondsToDate((int) (Comet.getTime() - getTimestamp()) * 1000));
 
         msg.writeInt(this.getPlayerId());

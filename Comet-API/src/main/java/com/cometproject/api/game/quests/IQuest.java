@@ -1,11 +1,11 @@
 package com.cometproject.api.game.quests;
 
 import com.cometproject.api.game.players.IPlayer;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 
 public interface IQuest {
 
-    void compose(IPlayer player, IComposer msg);
+    void compose(IPlayer player, IComposerDataWrapper msg);
 
     QuestType getType();
 

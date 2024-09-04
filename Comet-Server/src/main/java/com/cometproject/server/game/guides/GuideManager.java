@@ -1,6 +1,6 @@
 package com.cometproject.server.game.guides;
 
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.server.game.guides.types.HelpRequest;
 import com.cometproject.server.game.guides.types.HelperSession;
 import com.cometproject.server.network.messages.outgoing.help.guides.GuideSessionAttachedMessageComposer;
@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
-public class GuideManager implements Initialisable {
+public class GuideManager implements Initializable {
     private static GuideManager guideManagerInstance;
 
     private final Map<Integer, HelperSession> sessions = new ConcurrentHashMap<>();

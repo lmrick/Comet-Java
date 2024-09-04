@@ -3,7 +3,7 @@ package com.cometproject.server.game.rooms.objects.items.types.floor;
 import com.cometproject.api.game.furniture.types.CrackableReward;
 import com.cometproject.api.game.furniture.types.FurnitureDefinition;
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.items.ItemManager;
 import com.cometproject.server.game.players.components.types.inventory.InventoryItem;
 import com.cometproject.server.game.players.types.Player;
@@ -11,7 +11,6 @@ import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.types.Room;
-import org.apache.commons.lang.NumberUtils;
 import org.apache.commons.lang3.StringUtils;
 
 public class CrackableFloorItem extends RoomItemFloor {
@@ -79,7 +78,7 @@ public class CrackableFloorItem extends RoomItemFloor {
 	}
 	
 	@Override
-	public void composeItemData(IComposer msg) {
+	public void composeItemData(IComposerDataWrapper msg) {
 		msg.writeInt(0);
 		msg.writeInt(7);
 		

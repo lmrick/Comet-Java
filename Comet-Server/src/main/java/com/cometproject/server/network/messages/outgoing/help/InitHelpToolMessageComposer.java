@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.help;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.moderation.types.tickets.HelpTicket;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
@@ -19,7 +19,7 @@ public class InitHelpToolMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(this.helpTicket == null ? 0 : 1);
 
         if (this.helpTicket != null) {

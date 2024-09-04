@@ -1,6 +1,6 @@
 package com.cometproject.gamecenter.fastfood.net.composers;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.gamecenter.fastfood.FastFoodGame;
 import com.cometproject.gamecenter.fastfood.net.FastFoodGameSession;
 import com.cometproject.gamecenter.fastfood.net.FastFoodNetSession;
@@ -22,7 +22,7 @@ public class PlayerJoinGameMessageComposer extends MessageComposer {
 	}
 	
 	@Override
-	public void compose(IComposer msg) {
+	public void compose(IComposerDataWrapper msg) {
 		msg.writeInt(this.gameSession.getPlayerId());
 		
 		msg.writeBoolean(true);

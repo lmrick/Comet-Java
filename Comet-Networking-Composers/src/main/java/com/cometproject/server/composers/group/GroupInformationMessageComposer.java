@@ -2,7 +2,7 @@ package com.cometproject.server.composers.group;
 
 import com.cometproject.api.game.groups.types.IGroup;
 import com.cometproject.api.game.rooms.IRoomData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -33,7 +33,7 @@ public class GroupInformationMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(group.getId());
         msg.writeBoolean(true); //is visible
         msg.writeInt(group.getData().getType().getTypeId());

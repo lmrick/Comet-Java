@@ -2,7 +2,6 @@ package com.cometproject.api.networking.sessions;
 
 public class SessionManagerAccessor {
     private static SessionManagerAccessor instance;
-
     private ISessionManager sessionManager;
 
     public ISessionManager getSessionManager() {
@@ -14,10 +13,8 @@ public class SessionManagerAccessor {
     }
 
     public static SessionManagerAccessor getInstance() {
-        if (instance == null) {
-            instance = new SessionManagerAccessor();
-        }
-
+        if (instance == null) instance = new SessionManagerAccessor();
         return instance;
     }
+    
 }

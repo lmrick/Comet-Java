@@ -1,7 +1,7 @@
 package com.cometproject.server.game.commands;
 
-import com.cometproject.api.commands.CommandInfo;
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.modules.commands.CommandInfo;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.commands.staff.mass.MassEffectCommand;
 import com.cometproject.server.game.commands.staff.mass.MassFreezeCommand;
@@ -51,7 +51,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
 
-public class CommandManager implements Initialisable {
+public class CommandManager implements Initializable {
 	private static CommandManager commandManagerInstance;
 	private static final Logger log = Logger.getLogger(CommandManager.class.getName());
 	private NotificationManager notifications;

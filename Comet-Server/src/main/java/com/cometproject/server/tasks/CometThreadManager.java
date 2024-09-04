@@ -1,14 +1,14 @@
 package com.cometproject.server.tasks;
 
 import com.cometproject.api.config.Configuration;
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.server.game.rooms.types.components.ItemProcessComponent;
 import com.cometproject.server.game.rooms.types.components.ProcessComponent;
 import org.apache.log4j.Logger;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class CometThreadManager implements Initialisable {
+public class CometThreadManager implements Initializable {
 	
 	public static int POOL_SIZE = 0;
 	private static CometThreadManager cometThreadManagerInstance;

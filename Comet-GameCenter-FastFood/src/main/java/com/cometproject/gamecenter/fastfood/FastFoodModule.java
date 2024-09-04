@@ -1,6 +1,6 @@
 package com.cometproject.gamecenter.fastfood;
 
-import com.cometproject.api.config.ModuleConfig;
+import com.cometproject.api.modules.ModuleConfig;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.modules.BaseModule;
 import com.cometproject.api.server.IGameService;

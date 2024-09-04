@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.outgoing.room.pets;
 
 import com.cometproject.api.game.players.data.IPlayerAvatar;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.players.PlayerManager;
 import com.cometproject.server.game.rooms.objects.entities.types.PetEntity;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
@@ -32,7 +32,7 @@ public class PetInformationMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         if (this.petEntity != null && this.petEntity.getData() != null) {
             msg.writeInt(this.petEntity.getData().getId());
             msg.writeString(this.petEntity.getData().getName());

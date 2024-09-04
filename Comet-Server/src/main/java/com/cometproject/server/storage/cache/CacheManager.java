@@ -1,7 +1,7 @@
 package com.cometproject.server.storage.cache;
 
 import com.cometproject.api.config.Configuration;
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.server.storage.cache.subscribers.GoToRoomSubscriber;
 import com.cometproject.server.storage.cache.subscribers.ISubscriber;
@@ -18,7 +18,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class CacheManager extends CachableObject implements Initialisable {
+public class CacheManager extends CachableObject implements Initializable {
 	private static CacheManager cacheManager;
 	private final Logger log = Logger.getLogger(CacheManager.class.getName());
 	private final String keyPrefix;

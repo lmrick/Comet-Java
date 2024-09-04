@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.moderation.tickets;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.moderation.types.tickets.HelpTicket;
 import com.cometproject.server.logging.entries.RoomChatLogEntry;
 import com.cometproject.server.protocol.headers.Composers;
@@ -33,7 +33,7 @@ public class ModToolTicketChatlogMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(this.helpTicket.getId());
         msg.writeInt(this.helpTicket.getSubmitterId());
         msg.writeInt(this.helpTicket.getReportedId());

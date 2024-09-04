@@ -2,7 +2,7 @@ package com.cometproject.server.game.navigator.types.featured;
 
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.rooms.IRoomData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.types.RoomWriter;
 
@@ -56,7 +56,7 @@ public class FeaturedRoom {
 		if (!isCategory) this.room = GameContext.getCurrent().getRoomService().getRoomData(roomId);
 	}
 	
-	public void compose(IComposer msg) {
+	public void compose(IComposerDataWrapper msg) {
 		final boolean isActive = !isCategory && room != null && RoomManager.getInstance().isActive(room.getId());
 		
 		msg.writeInt(id);

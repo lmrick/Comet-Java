@@ -2,7 +2,7 @@ package com.cometproject.server.game.rooms.objects.entities;
 
 import com.cometproject.api.game.rooms.entities.RoomEntityStatus;
 import com.cometproject.api.game.utilities.Position;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.objects.entities.effects.PlayerEffect;
 import com.cometproject.server.game.rooms.objects.entities.pathfinding.Square;
 import com.cometproject.server.utilities.attributes.Attributable;
@@ -106,7 +106,7 @@ public interface IAvatarEntity extends Attributable {
 
     String getGender();
 
-    void compose(IComposer msg);
+    void compose(IComposerDataWrapper msg);
 
     void warp(Position position);
 

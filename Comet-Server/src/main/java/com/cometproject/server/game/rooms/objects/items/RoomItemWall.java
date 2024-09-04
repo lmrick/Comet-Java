@@ -2,7 +2,7 @@ package com.cometproject.server.game.rooms.objects.items;
 
 import com.cometproject.api.game.furniture.types.FurnitureDefinition;
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.items.ItemManager;
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.network.messages.outgoing.room.items.UpdateWallItemMessageComposer;
@@ -21,7 +21,7 @@ public abstract class RoomItemWall extends RoomItem {
 	}
 	
 	@Override
-	public void serialize(IComposer msg) {
+	public void serialize(IComposerDataWrapper msg) {
 		msg.writeString(this.getVirtualId());
 		msg.writeInt(this.getDefinition().getSpriteId());
 		msg.writeString(this.getWallPosition());

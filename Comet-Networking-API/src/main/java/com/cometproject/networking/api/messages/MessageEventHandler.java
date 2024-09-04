@@ -1,6 +1,6 @@
 package com.cometproject.networking.api.messages;
 
-import com.cometproject.api.networking.messages.IMessageEvent;
+import com.cometproject.api.networking.messages.wrappers.IEventDataWrapper;
 import com.cometproject.api.networking.messages.IMessageEventHandler;
 import org.apache.log4j.Logger;
 
@@ -23,7 +23,7 @@ public abstract class MessageEventHandler<T extends MessageParser> implements IM
 		}
 	}
 	
-	public void handle(IMessageEvent eventData) throws Exception {
+	public void handle(IEventDataWrapper eventData) throws Exception {
 		final var parser = (MessageParser) this.parserType.getDeclaredConstructor().newInstance();
 		parser.parse(eventData);
 		this.parserConsumer.accept(parser);

@@ -5,7 +5,7 @@ import com.cometproject.api.game.furniture.types.*;
 import com.cometproject.api.game.groups.types.IGroupData;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.api.game.rooms.objects.data.LimitedEditionItemData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.server.game.items.ItemManager;
 import org.apache.commons.lang.StringUtils;
@@ -58,7 +58,7 @@ public class InventoryItem implements IPlayerItem {
 		this.giftData = giftData;
 	}
 	
-	public void compose(IComposer msg) {
+	public void compose(IComposerDataWrapper msg) {
 		if (this.getDefinition().getItemType() == ItemType.WALL) {
 			msg.writeInt(this.getVirtualId());
 			msg.writeString(this.getDefinition().getType().toUpperCase());
@@ -188,7 +188,7 @@ public class InventoryItem implements IPlayerItem {
 		msg.writeInt(isGift ? this.getGiftData().getWrappingPaper() * 1000 + this.getGiftData().getDecorationType() : 0);
 	}
 	
-	public void serializeTrade(IComposer msg) {
+	public void serializeTrade(IComposerDataWrapper msg) {
 		final boolean isGift = this.getGiftData() != null;
 		final boolean isGroupItem = this.getDefinition().getInteraction().equals("group_item") || this.getDefinition().getInteraction().equals("group_gate");
 		final boolean isLimited = this.getLimitedEditionItem() != null;

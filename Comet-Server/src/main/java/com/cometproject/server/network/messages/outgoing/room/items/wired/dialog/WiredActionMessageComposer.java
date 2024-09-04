@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.room.items.wired.dialog;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.items.ItemManager;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.base.WiredActionItem;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.base.WiredTriggerItem;
@@ -25,7 +25,7 @@ public class WiredActionMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeBoolean(false); // advanced
         msg.writeInt(wiredAction.getFurniSelection());
 

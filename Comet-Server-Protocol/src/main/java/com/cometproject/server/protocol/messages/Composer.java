@@ -1,14 +1,11 @@
 package com.cometproject.server.protocol.messages;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufHolder;
 import io.netty.util.CharsetUtil;
 
-import java.nio.charset.Charset;
-
-public class Composer implements ByteBufHolder, IComposer {
-	
+public class Composer implements ByteBufHolder, IComposerDataWrapper {
 	protected final int id;
 	protected final ByteBuf body;
 	
@@ -106,7 +103,7 @@ public class Composer implements ByteBufHolder, IComposer {
 	}
 	
 	@Override
-	public boolean isFinalised() {
+	public boolean isFinalized() {
 		return (this.body.getInt(0) > -1);
 	}
 	
@@ -163,7 +160,7 @@ public class Composer implements ByteBufHolder, IComposer {
 	}
 	
 	@Override
-	public void writeBoolean(Boolean b) {
+	public void writeBoolean(boolean b) {
 		try {
 			this.body.writeByte(b ? 1 : 0);
 		} catch (Exception e) {

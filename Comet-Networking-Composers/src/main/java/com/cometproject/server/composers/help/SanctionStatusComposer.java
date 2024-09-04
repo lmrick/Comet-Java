@@ -1,6 +1,6 @@
 package com.cometproject.server.composers.help;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -17,7 +17,7 @@ public class SanctionStatusComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeBoolean(false);
         msg.writeBoolean(false);
         msg.writeString("rocks");

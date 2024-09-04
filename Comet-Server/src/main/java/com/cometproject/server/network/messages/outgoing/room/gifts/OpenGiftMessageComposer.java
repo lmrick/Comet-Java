@@ -3,7 +3,7 @@ package com.cometproject.server.network.messages.outgoing.room.gifts;
 import com.cometproject.api.game.furniture.types.FurnitureDefinition;
 import com.cometproject.api.game.furniture.types.GiftData;
 import com.cometproject.api.game.furniture.types.ItemType;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -27,7 +27,7 @@ public class OpenGiftMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeString(itemDefinition.getType());
         msg.writeInt(itemDefinition.getSpriteId());
         msg.writeString(itemDefinition.getPublicName());

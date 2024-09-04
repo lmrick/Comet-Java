@@ -1,14 +1,14 @@
 package com.cometproject.server.game.players.components.types.messenger;
 
 import com.cometproject.api.game.players.data.components.messenger.IMessengerSearchResult;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.players.PlayerManager;
 
 public record MessengerSearchResult(int id, String username, String figure, String motto,
 																		String lastOnline) implements IMessengerSearchResult {
 	
 	@Override
-	public void compose(IComposer msg) {
+	public void compose(IComposerDataWrapper msg) {
 		msg.writeInt(id);
 		msg.writeString(username);
 		msg.writeString(motto);

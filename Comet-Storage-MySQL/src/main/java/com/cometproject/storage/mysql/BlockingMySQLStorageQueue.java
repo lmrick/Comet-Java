@@ -84,8 +84,8 @@ public abstract class BlockingMySQLStorageQueue<T, O> extends Thread {
 
             for (Pair<T, O> obj : entriesToProcess) {
                 try {
-                    this.mapping.remove(obj.getLeft());
-                    this.processBatch(preparedStatement, obj.getLeft(), obj.getRight());
+                    this.mapping.remove(obj.left());
+                    this.processBatch(preparedStatement, obj.left(), obj.right());
                 } catch (Exception e) {
                     log.error("Failed to process batch entry", e);
                 }
@@ -108,7 +108,7 @@ public abstract class BlockingMySQLStorageQueue<T, O> extends Thread {
 
     public void addAll(Collection<Pair<T, O>> all) {
         for (Pair<T, O> obj : all) {
-            this.add(obj.getLeft(), obj.getRight());
+            this.add(obj.left(), obj.right());
         }
     }
 

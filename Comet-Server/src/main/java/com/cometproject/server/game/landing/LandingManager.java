@@ -2,7 +2,7 @@ package com.cometproject.server.game.landing;
 
 import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.server.game.landing.types.PromoArticle;
 import com.cometproject.server.storage.queries.landing.LandingDao;
 import com.cometproject.server.tasks.CometThreadManager;
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
-public class LandingManager implements Initialisable {
+public class LandingManager implements Initializable {
     private static final Logger log = Logger.getLogger(LandingManager.class.getName());
     private static LandingManager landingManagerInstance;
     private Map<Integer, PromoArticle> articles;

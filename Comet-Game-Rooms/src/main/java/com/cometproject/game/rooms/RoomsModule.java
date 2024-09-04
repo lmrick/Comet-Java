@@ -1,7 +1,7 @@
 package com.cometproject.game.rooms;
 
 import com.cometproject.api.caching.Cache;
-import com.cometproject.api.config.ModuleConfig;
+import com.cometproject.api.modules.ModuleConfig;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.rooms.IRoomData;
 import com.cometproject.api.game.rooms.IRoomService;

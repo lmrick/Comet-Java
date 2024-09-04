@@ -3,7 +3,7 @@ package com.cometproject.server.game.rooms.objects.items;
 import com.cometproject.api.game.furniture.types.FurnitureDefinition;
 import com.cometproject.api.game.rooms.objects.IRoomItemData;
 import com.cometproject.api.game.rooms.objects.data.LimitedEditionItemData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.items.types.LowPriorityItemProcessor;
 import com.cometproject.server.game.rooms.objects.BigRoomFloorObject;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
@@ -142,7 +142,7 @@ public abstract class RoomItem extends BigRoomFloorObject implements Attributabl
 	
 	}
 	
-	public void composeItemData(IComposer msg) {
+	public void composeItemData(IComposerDataWrapper msg) {
 		msg.writeInt(1);
 		msg.writeInt(0);
 		
@@ -189,7 +189,7 @@ public abstract class RoomItem extends BigRoomFloorObject implements Attributabl
 		this.attributes.remove(attributeKey);
 	}
 	
-	public abstract void serialize(IComposer msg);
+	public abstract void serialize(IComposerDataWrapper msg);
 	public abstract FurnitureDefinition getDefinition();
 	public abstract void sendUpdate();
 	public abstract void save();

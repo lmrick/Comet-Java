@@ -6,11 +6,25 @@ import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
 
 
 public class CometSettings {
+    
+    public static final LocalDate date = LocalDate.now();
+    public static final Calendar calendar = Calendar.getInstance();
+    
+    public static final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+    public static final int minute = calendar.get(Calendar.MINUTE);
+    
+    public static final boolean doubleRewards = CometSettings.onlineRewardDoubleDays.contains(date.getDayOfWeek());
+    public static final boolean updateDaily = hour == 0 && minute == 0;
+    public static final int dailyRespects = 3;
+    public static final int dailyScratches = 3;
+    
     public static boolean motdEnabled = false;
     public static String motdMessage = "";
     public static String hotelName = "";

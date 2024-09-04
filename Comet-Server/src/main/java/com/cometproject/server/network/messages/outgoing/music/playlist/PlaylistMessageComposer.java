@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.music.playlist;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.items.music.SongItemData;
 import com.cometproject.server.game.rooms.objects.items.types.floor.SoundMachineFloorItem;
 import com.cometproject.server.protocol.headers.Composers;
@@ -21,7 +21,7 @@ public class PlaylistMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(SoundMachineFloorItem.MAX_CAPACITY);
         msg.writeInt(songItemDatas.size());
 

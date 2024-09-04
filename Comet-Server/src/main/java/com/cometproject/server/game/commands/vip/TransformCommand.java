@@ -1,6 +1,6 @@
 package com.cometproject.server.game.commands.vip;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.commands.ChatCommand;
 import com.cometproject.server.game.pets.PetManager;
@@ -11,7 +11,7 @@ import com.cometproject.server.network.sessions.Session;
 
 public class TransformCommand extends ChatCommand {
 	
-	public static void composeTransformation(IComposer msg, String[] transformationData, PlayerEntity entity) {
+	public static void composeTransformation(IComposerDataWrapper msg, String[] transformationData, PlayerEntity entity) {
 		// TODO: create global composer for entity types maybe
 		msg.writeInt(entity.getPlayerId());
 		msg.writeString(entity.getUsername());

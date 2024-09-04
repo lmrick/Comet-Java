@@ -3,8 +3,9 @@ package com.cometproject.api.events;
 import java.util.function.Consumer;
 
 public abstract class Event<T extends EventArgs> {
+    
     private final Consumer<T> callback;
-
+    
     public Event(Consumer<T> callback) {
         this.callback = callback;
     }

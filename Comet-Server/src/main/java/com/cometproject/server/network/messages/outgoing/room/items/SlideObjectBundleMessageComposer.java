@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.outgoing.room.items;
 
 import com.cometproject.api.game.utilities.Position;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -41,7 +41,7 @@ public class SlideObjectBundleMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         if (this.items == null) {
             composeLegacy(msg);
             return;
@@ -75,7 +75,7 @@ public class SlideObjectBundleMessageComposer extends MessageComposer {
         }
     }
 
-    private void composeLegacy(IComposer msg) {
+    private void composeLegacy(IComposerDataWrapper msg) {
         final boolean isItem = itemId > 0;
 
         msg.writeInt(from.getX());

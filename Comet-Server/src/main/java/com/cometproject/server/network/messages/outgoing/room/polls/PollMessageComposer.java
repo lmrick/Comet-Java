@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.room.polls;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.polls.types.Poll;
 import com.cometproject.server.game.polls.types.PollQuestion;
 import com.cometproject.server.game.polls.types.questions.MultipleChoiceQuestion;
@@ -23,7 +23,7 @@ public class PollMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(this.poll.getPollId());
         msg.writeString(this.poll.getPollTitle());
         msg.writeString(this.poll.getThanksMessage());

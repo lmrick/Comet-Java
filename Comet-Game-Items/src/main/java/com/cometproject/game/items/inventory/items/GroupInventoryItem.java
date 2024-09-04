@@ -4,7 +4,7 @@ import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.furniture.types.FurnitureDefinition;
 import com.cometproject.api.game.groups.types.IGroupData;
 import com.cometproject.api.game.players.data.components.inventory.InventoryItemData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.game.items.inventory.InventoryItem;
 import org.apache.commons.lang.StringUtils;
 
@@ -14,7 +14,7 @@ public class GroupInventoryItem extends InventoryItem {
     }
 
     @Override
-    public boolean composeData(IComposer msg) {
+    public boolean composeData(IComposerDataWrapper msg) {
         int groupId = 0;
 
         msg.writeInt(17);

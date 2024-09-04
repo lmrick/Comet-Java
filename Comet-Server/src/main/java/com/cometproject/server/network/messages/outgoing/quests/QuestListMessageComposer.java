@@ -2,7 +2,7 @@ package com.cometproject.server.network.messages.outgoing.quests;
 
 import com.cometproject.api.game.players.IPlayer;
 import com.cometproject.api.game.quests.IQuest;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.quests.QuestManager;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
@@ -29,7 +29,7 @@ public class QuestListMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         Map<String, IQuest> categoryCounters = Maps.newHashMap();
 
         List<IQuest> activeQuests = Lists.newArrayList();
@@ -85,7 +85,7 @@ public class QuestListMessageComposer extends MessageComposer {
         }
     }
 
-    private void composeQuest(final String category, final IQuest quest, final IComposer msg) {
+    private void composeQuest(final String category, final IQuest quest, final IComposerDataWrapper msg) {
         int amountInCategory = QuestManager.getInstance().getAmountOfQuestsInCategory(category);
 
         if (quest == null) {

@@ -1,6 +1,6 @@
 package com.cometproject.gamecenter.fastfood.net.composers;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.gamecenter.fastfood.net.FastFoodGameSession;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -18,7 +18,7 @@ public class MyPowerUpsMessageComposer extends MessageComposer {
 	}
 	
 	@Override
-	public void compose(IComposer msg) {
+	public void compose(IComposerDataWrapper msg) {
 		msg.writeInt(3);
 		
 		msg.writeInt(0);

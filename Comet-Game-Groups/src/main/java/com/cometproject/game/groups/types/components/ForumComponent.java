@@ -4,7 +4,7 @@ import com.cometproject.api.game.groups.types.IGroupData;
 import com.cometproject.api.game.groups.types.components.IForumComponent;
 import com.cometproject.api.game.groups.types.components.forum.IForumSettings;
 import com.cometproject.api.game.groups.types.components.forum.IForumThread;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class ForumComponent implements IForumComponent {
     }
 
     @Override
-    public void composeData(IComposer msg, IGroupData groupData) {
+    public void composeData(IComposerDataWrapper msg, IGroupData groupData) {
         msg.writeInt(groupData.getId());
         msg.writeString(groupData.getTitle());
         msg.writeString(groupData.getDescription());

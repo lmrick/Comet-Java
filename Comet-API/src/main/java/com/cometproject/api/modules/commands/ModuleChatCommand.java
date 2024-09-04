@@ -1,4 +1,4 @@
-package com.cometproject.api.commands;
+package com.cometproject.api.modules.commands;
 
 import com.cometproject.api.networking.sessions.ISession;
 

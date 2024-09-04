@@ -1,7 +1,7 @@
 package com.cometproject.game.groups;
 
 import com.cometproject.api.caching.Cache;
-import com.cometproject.api.config.ModuleConfig;
+import com.cometproject.api.modules.ModuleConfig;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.groups.types.IGroup;
 import com.cometproject.api.game.groups.types.IGroupData;

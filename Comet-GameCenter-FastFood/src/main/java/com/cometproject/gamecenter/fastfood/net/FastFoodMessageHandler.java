@@ -2,7 +2,7 @@ package com.cometproject.gamecenter.fastfood.net;
 
 import com.cometproject.api.game.players.IPlayerService;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
-import com.cometproject.api.networking.messages.IMessageEvent;
+import com.cometproject.api.networking.messages.wrappers.IEventDataWrapper;
 import com.cometproject.gamecenter.fastfood.FastFoodGame;
 import com.cometproject.gamecenter.fastfood.net.composers.AuthenticationOKMessageComposer;
 import com.cometproject.gamecenter.fastfood.net.composers.MyPowerUpsMessageComposer;
@@ -27,7 +27,7 @@ public class FastFoodMessageHandler implements IMessageHandler<FastFoodNetSessio
 	private final IPlayerService playerService;
 	private final ScheduledExecutorService executorService;
 	
-	private final Map<Short, BiConsumer<IMessageEvent, FastFoodNetSession>> messageHandlers;
+	private final Map<Short, BiConsumer<IEventDataWrapper, FastFoodNetSession>> messageHandlers;
 	private final Set<FastFoodGame> games = Sets.newConcurrentHashSet();
 	
 	public FastFoodMessageHandler(ScheduledExecutorService executorService, IPlayerService playerService, MySQLFastFoodRepository fastFoodRepository) {
@@ -49,7 +49,7 @@ public class FastFoodMessageHandler implements IMessageHandler<FastFoodNetSessio
 		this.messageHandlers.put((short) 3, this::launchMissile);
 	}
 	
-	private void authenticate(IMessageEvent messageEvent, INetSession<FastFoodGameSession> session) {
+	private void authenticate(IEventDataWrapper messageEvent, INetSession<FastFoodGameSession> session) {
 		final String ticket = messageEvent.readString();
 		
 		final Integer playerId = this.playerService.getPlayerIdByAuthToken(ticket);
@@ -64,11 +64,11 @@ public class FastFoodMessageHandler implements IMessageHandler<FastFoodNetSessio
 		session.getChannel().writeAndFlush(new AuthenticationOKMessageComposer());
 	}
 	
-	public void getLocalisations(IMessageEvent messageEvent, INetSession<FastFoodGameSession> session) {
+	public void getLocalisations(IEventDataWrapper messageEvent, INetSession<FastFoodGameSession> session) {
 		session.getChannel().writeAndFlush(new SetClientLocalisationMessageComposer());
 	}
 	
-	public void disconnect(IMessageEvent messageEvent, INetSession<FastFoodGameSession> session) {
+	public void disconnect(IEventDataWrapper messageEvent, INetSession<FastFoodGameSession> session) {
 		final FastFoodGameSession gameSession = session.getGameSession();
 		
 		if (gameSession.getCurrentGame() != null) {
@@ -76,11 +76,11 @@ public class FastFoodMessageHandler implements IMessageHandler<FastFoodNetSessio
 		}
 	}
 	
-	public void getPowerUpPrices(IMessageEvent messageEvent, INetSession<FastFoodGameSession> session) {
+	public void getPowerUpPrices(IEventDataWrapper messageEvent, INetSession<FastFoodGameSession> session) {
 	
 	}
 	
-	public void getPowerUps(IMessageEvent messageEvent, INetSession<FastFoodGameSession> session) {
+	public void getPowerUps(IEventDataWrapper messageEvent, INetSession<FastFoodGameSession> session) {
 		final FastFoodGameSession gameSession = session.getGameSession();
 		
 		this.fastFoodRepository.loadPlayerData(gameSession);
@@ -98,19 +98,19 @@ public class FastFoodMessageHandler implements IMessageHandler<FastFoodNetSessio
 		session.getChannel().writeAndFlush(new MyPowerUpsMessageComposer(gameSession));
 	}
 	
-	public void getGamesCount(IMessageEvent messageEvent, INetSession<FastFoodGameSession> session) {
+	public void getGamesCount(IEventDataWrapper messageEvent, INetSession<FastFoodGameSession> session) {
 	
 	}
 	
-	public void getUserCredits(IMessageEvent messageEvent, INetSession<FastFoodGameSession> session) {
+	public void getUserCredits(IEventDataWrapper messageEvent, INetSession<FastFoodGameSession> session) {
 	
 	}
 	
-	public void purchasePowerUp(IMessageEvent messageEvent, INetSession<FastFoodGameSession> session) {
+	public void purchasePowerUp(IEventDataWrapper messageEvent, INetSession<FastFoodGameSession> session) {
 	
 	}
 	
-	public void joinLobby(IMessageEvent messageEvent, FastFoodNetSession session) {
+	public void joinLobby(IEventDataWrapper messageEvent, FastFoodNetSession session) {
 		final FastFoodGame fastFoodGame = this.findGame();
 		
 		fastFoodGame.getPlayers().add(session);
@@ -122,7 +122,7 @@ public class FastFoodMessageHandler implements IMessageHandler<FastFoodNetSessio
 		}
 	}
 	
-	public void launchMissile(IMessageEvent messageEvent, FastFoodNetSession session) {
+	public void launchMissile(IEventDataWrapper messageEvent, FastFoodNetSession session) {
 		if (session.getGameSession().getCurrentGame() == null || !session.getGameSession().getCurrentGame().hasStarted()) {
 			return;
 		}
@@ -151,7 +151,7 @@ public class FastFoodMessageHandler implements IMessageHandler<FastFoodNetSessio
 	}
 	
 	@Override
-	public void handleMessage(IMessageEvent messageEvent, FastFoodNetSession session) {
+	public void handleMessage(IEventDataWrapper messageEvent, FastFoodNetSession session) {
 		final short messageId = messageEvent.getId();
 		
 		if (!this.messageHandlers.containsKey(messageId)) {

@@ -40,7 +40,7 @@ public abstract class MySQLStorageQueue<T, O> {
 
     public void addAll(Collection<Pair<T, O>> all) {
         for (Pair<T, O> obj : all) {
-            this.add(obj.getLeft(), obj.getRight());
+            this.add(obj.left(), obj.right());
         }
     }
 

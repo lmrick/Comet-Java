@@ -1,12 +1,12 @@
 package com.cometproject.server.storage;
 
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.server.storage.cache.CacheManager;
 import com.cometproject.storage.api.StorageContext;
 import com.cometproject.storage.mysql.MySQLStorageInitializer;
 import com.cometproject.storage.mysql.connections.HikariConnectionProvider;
 
-public class StorageManager implements Initialisable {
+public class StorageManager implements Initializable {
 	private static StorageManager storageManagerInstance;
 	private final HikariConnectionProvider hikariConnectionProvider;
 	

@@ -3,7 +3,7 @@ package com.cometproject.storage.mysql.models;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.groups.types.components.forum.IForumThreadReply;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 
 public class GroupForumThreadMessageData implements IForumThreadReply {
     private int id;
@@ -32,7 +32,7 @@ public class GroupForumThreadMessageData implements IForumThreadReply {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         final IPlayerAvatar playerAvatar = GameContext.getCurrent().getPlayerService().getAvatarByPlayerId(this.getAuthorId(),
 																																																					 IPlayerAvatar.USERNAME_FIGURE);
 

@@ -2,7 +2,7 @@ package com.cometproject.server.game.rooms.objects.entities.types;
 
 import com.cometproject.api.game.bots.IBotData;
 import com.cometproject.api.game.utilities.Position;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.server.game.bots.BotData;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
@@ -128,7 +128,7 @@ public class BotEntity extends RoomEntity {
 	}
 	
 	@Override
-	public void compose(IComposer msg) {
+	public void compose(IComposerDataWrapper msg) {
 		msg.writeInt(this.getBotId());
 		msg.writeString(this.getUsername());
 		msg.writeString(this.getMotto());

@@ -5,18 +5,18 @@ import com.cometproject.api.game.groups.types.IGroupData;
 import com.cometproject.api.game.rooms.IRoomData;
 import com.cometproject.api.game.rooms.RoomType;
 import com.cometproject.api.game.rooms.settings.RoomAccessType;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.navigator.NavigatorManager;
 import com.cometproject.server.game.navigator.types.publics.PublicRoom;
 import com.cometproject.server.game.rooms.RoomManager;
 
 
 public class RoomWriter {
-    public static void write(IRoomData room, IComposer msg) {
+    public static void write(IRoomData room, IComposerDataWrapper msg) {
         write(room, msg, false);
     }
 
-    public static void write(IRoomData room, IComposer msg, boolean skipAuth) {
+    public static void write(IRoomData room, IComposerDataWrapper msg, boolean skipAuth) {
         boolean isActive = RoomManager.getInstance().isActive(room.getId());
         PublicRoom publicRoom = NavigatorManager.getInstance().getPublicRoom(room.getId());
 
@@ -46,7 +46,7 @@ public class RoomWriter {
         composeRoomSpecials(msg, room, promotion, group, room.getType());
     }
 
-    public static void entryData(IRoomData room, IComposer msg, boolean isLoading, boolean checkEntry, boolean skipAuth, boolean canMute) {
+    public static void entryData(IRoomData room, IComposerDataWrapper msg, boolean isLoading, boolean checkEntry, boolean skipAuth, boolean canMute) {
         msg.writeBoolean(isLoading); // is loading
 
         write(room, msg, skipAuth);
@@ -69,7 +69,7 @@ public class RoomWriter {
         msg.writeInt(room.getAntiFloodSettings());
     }
 
-    public static void composeRoomSpecials(IComposer msg, IRoomData roomData, RoomPromotion promotion, IGroupData group, RoomType roomType) {
+    public static void composeRoomSpecials(IComposerDataWrapper msg, IRoomData roomData, RoomPromotion promotion, IGroupData group, RoomType roomType) {
         boolean composeGroup = group != null;
         boolean composePromo = promotion != null;
 
@@ -104,13 +104,13 @@ public class RoomWriter {
         }
     }
 
-    private static void composePromotion(RoomPromotion promotion, IComposer msg) {
+    private static void composePromotion(RoomPromotion promotion, IComposerDataWrapper msg) {
         msg.writeString(promotion.getPromotionName()); // promo name
         msg.writeString(promotion.getPromotionDescription()); // promo description
         msg.writeInt(promotion.minutesLeft()); // promo minutes left
     }
 
-    private static void composeGroup(IGroupData group, IComposer msg) {
+    private static void composeGroup(IGroupData group, IComposerDataWrapper msg) {
         msg.writeInt(group.getId());
         msg.writeString(group.getTitle());
         msg.writeString(group.getBadge());

@@ -1,6 +1,6 @@
 package com.cometproject.server.game.polls;
 
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.server.game.polls.types.Poll;
 import com.cometproject.server.game.polls.types.PollQuestion;
 import com.cometproject.server.game.polls.types.questions.MultipleChoiceQuestion;
@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class PollManager implements Initialisable {
+public class PollManager implements Initializable {
     private static PollManager pollManagerInstance;
     private static Logger log = Logger.getLogger(PollManager.class.getName());
     private final Map<Integer, Integer> roomIdToPollId;

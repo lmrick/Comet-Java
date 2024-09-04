@@ -1,6 +1,6 @@
 package com.cometproject.server.game.moderation;
 
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.moderation.types.Ban;
 import com.cometproject.server.game.moderation.types.BanType;
@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import java.util.List;
 import java.util.Map;
 
-public class BanManager implements Initialisable {
+public class BanManager implements Initializable {
 	
 	public static BanManager banManagerInstance;
 	Logger log = Logger.getLogger(BanManager.class.getName());

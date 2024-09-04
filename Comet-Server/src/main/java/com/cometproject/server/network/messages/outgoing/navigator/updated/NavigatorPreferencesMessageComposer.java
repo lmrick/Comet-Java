@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.navigator.updated;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.players.types.PlayerSettings;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
@@ -19,7 +19,7 @@ public class NavigatorPreferencesMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(this.playerSettings.getNavigatorX());
         msg.writeInt(this.playerSettings.getNavigatorY());
         msg.writeInt(this.playerSettings.getNavigatorWidth());

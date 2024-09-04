@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.outgoing.navigator;
 
 import com.cometproject.api.game.rooms.IRoomData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.types.RoomWriter;
 import com.cometproject.server.protocol.messages.MessageComposer;
@@ -37,7 +37,7 @@ public class NavigatorFlatListMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(mode);
         msg.writeString(query);
         msg.writeInt(limit ? (activeRooms.size() > 50 ? 50 : activeRooms.size()) : activeRooms.size());

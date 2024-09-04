@@ -1,6 +1,6 @@
 package com.cometproject.server.composers.gamecenter;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -31,7 +31,7 @@ public class LoadGameMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(this.gameId);
         msg.writeString(Long.toString(System.currentTimeMillis()));
         msg.writeString(this.swfLocation);

@@ -3,7 +3,7 @@ package com.cometproject.server.composers.catalog;
 import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.game.catalog.types.ICatalogItem;
 import com.cometproject.api.game.furniture.types.FurnitureDefinition;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -38,7 +38,7 @@ public class BoughtItemMessageComposer extends MessageComposer {
 	}
 	
 	@Override
-	public void compose(IComposer msg) {
+	public void compose(IComposerDataWrapper msg) {
 		if (this.catalogItem != null && this.itemDefinition != null) {
 			msg.writeInt(this.catalogItem.getId());
 			msg.writeString(this.itemDefinition.getItemName());

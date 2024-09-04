@@ -1,7 +1,7 @@
 package com.cometproject.server.game.rooms.objects.items.types.floor;
 
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.objects.items.data.BackgroundTonerData;
@@ -15,7 +15,7 @@ public class BackgroundTonerFloorItem extends RoomItemFloor {
 	}
 	
 	@Override
-	public void composeItemData(IComposer msg) {
+	public void composeItemData(IComposerDataWrapper msg) {
 		BackgroundTonerData data = BackgroundTonerData.get(this.getItemData().getData());
 		
 		boolean enabled = (data != null);

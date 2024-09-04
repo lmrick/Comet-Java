@@ -1,6 +1,6 @@
 package com.cometproject.server.composers.group;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -31,7 +31,7 @@ public class GroupBadgesMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         if (this.badges != null) {
             msg.writeInt(badges.size());
 
@@ -45,7 +45,7 @@ public class GroupBadgesMessageComposer extends MessageComposer {
         }
     }
 
-    private void composeGroupBadge(final IComposer msg, final int groupId, final String badge) {
+    private void composeGroupBadge(final IComposerDataWrapper msg, final int groupId, final String badge) {
         msg.writeInt(groupId);
         msg.writeString(badge);
     }

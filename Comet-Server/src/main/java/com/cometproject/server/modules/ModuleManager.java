@@ -1,11 +1,11 @@
 package com.cometproject.server.modules;
 
-import com.cometproject.api.config.ModuleConfig;
-import com.cometproject.api.events.EventHandler;
+import com.cometproject.api.modules.ModuleConfig;
+import com.cometproject.api.events.IEventHandler;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.modules.BaseModule;
 import com.cometproject.api.server.IGameService;
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.game.groups.GroupsModule;
 import com.cometproject.game.rooms.RoomsModule;
 import com.cometproject.gamecenter.fastfood.FastFoodModule;
@@ -17,10 +17,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ModuleManager implements Initialisable {
+public class ModuleManager implements Initializable {
+	
 	private static final Logger log = Logger.getLogger(ModuleManager.class.getName());
 	private static ModuleManager moduleManagerInstance;
-	private final EventHandler eventHandler;
+	private final IEventHandler eventHandler;
 	private final CometGameService gameService;
 	private Map<String, BaseModule> modules;
 	
@@ -51,8 +52,8 @@ public class ModuleManager implements Initialisable {
 	
 	private void loadCoreModule(Class<? extends BaseModule> moduleClass) {
 		try {
-			Constructor<? extends BaseModule> ctor = moduleClass.getConstructor(ModuleConfig.class, IGameService.class);
-			BaseModule cometModule = ctor.newInstance(null, this.gameService);
+			Constructor<? extends BaseModule> constructor = moduleClass.getConstructor(ModuleConfig.class, IGameService.class);
+			BaseModule cometModule = constructor.newInstance(null, this.gameService);
 			cometModule.loadModule();
 			this.modules.put(moduleClass.getSimpleName(), cometModule);
 		} catch (Exception e) {
@@ -61,28 +62,18 @@ public class ModuleManager implements Initialisable {
 	}
 	
 	public void setupModules() {
-		for (BaseModule baseModule : this.modules.values()) {
+		this.modules.values().forEach(baseModule -> {
 			baseModule.setup();
 			baseModule.initialiseServices(GameContext.getCurrent());
-		}
+		});
 	}
 	
-	public EventHandler getEventHandler() {
+	public IEventHandler getEventHandler() {
 		return eventHandler;
 	}
 	
-	private static class ModulesConfig {
-		
-		private final List<CometModule> modules;
-		
-		public ModulesConfig(final List<CometModule> modules) {
-			this.modules = modules;
-		}
-		
-		public List<CometModule> getModules() {
-			return modules;
-		}
-		
+	private record ModulesConfig(List<CometModule> modules) {
+	
 	}
 	
 }

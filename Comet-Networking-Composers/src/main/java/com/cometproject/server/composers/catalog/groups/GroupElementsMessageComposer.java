@@ -2,7 +2,7 @@ package com.cometproject.server.composers.catalog.groups;
 
 import com.cometproject.api.game.groups.IGroupItemService;
 import com.cometproject.api.game.groups.items.IGroupBadgeItem;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -20,7 +20,7 @@ public class GroupElementsMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(this.groupItemService.getBases().size());
 
         for (IGroupBadgeItem base : this.groupItemService.getBases()) {

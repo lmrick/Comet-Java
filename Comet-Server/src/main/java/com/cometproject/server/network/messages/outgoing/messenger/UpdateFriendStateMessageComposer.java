@@ -3,7 +3,7 @@ package com.cometproject.server.network.messages.outgoing.messenger;
 import com.cometproject.api.game.groups.types.IGroupData;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.game.players.data.components.messenger.RelationshipLevel;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -50,7 +50,7 @@ public class UpdateFriendStateMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         if (this.playerAvatar == null && this.group == null) {
             msg.writeInt(0);
             msg.writeInt(1);

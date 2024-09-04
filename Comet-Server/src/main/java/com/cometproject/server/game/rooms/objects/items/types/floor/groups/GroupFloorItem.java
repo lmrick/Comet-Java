@@ -4,7 +4,7 @@ import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.groups.types.IGroupData;
 import com.cometproject.api.game.rooms.entities.RoomEntityStatus;
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.entities.types.PetEntity;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
@@ -24,7 +24,7 @@ public class GroupFloorItem extends RoomItemFloor {
 	}
 	
 	@Override
-	public void composeItemData(IComposer msg) {
+	public void composeItemData(IComposerDataWrapper msg) {
 		final IGroupData groupData = GameContext.getCurrent().getGroupService().getData(this.groupId);
 		
 		msg.writeInt(0);

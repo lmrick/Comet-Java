@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.outgoing.user.inventory;
 
 import com.cometproject.api.game.pets.IPetData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -21,7 +21,7 @@ public class PetInventoryMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(1);
         msg.writeInt(1);
 

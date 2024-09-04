@@ -2,7 +2,7 @@ package com.cometproject.server.network.messages.outgoing.room.avatar;
 
 import com.cometproject.api.game.rooms.entities.RoomEntityStatus;
 import com.cometproject.api.game.utilities.Position;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
@@ -47,7 +47,7 @@ public class AvatarUpdateMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(this.count);
 
         if (this.singleEntity != null) {
@@ -59,7 +59,7 @@ public class AvatarUpdateMessageComposer extends MessageComposer {
         }
     }
 
-    private void composeEntity(IComposer msg, AvatarState entity) {
+    private void composeEntity(IComposerDataWrapper msg, AvatarState entity) {
         msg.writeInt(entity.getId());
 
         msg.writeInt(entity.getPosition().getX());

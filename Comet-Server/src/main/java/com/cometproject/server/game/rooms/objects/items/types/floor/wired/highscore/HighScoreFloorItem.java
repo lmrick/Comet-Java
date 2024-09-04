@@ -1,7 +1,7 @@
 package com.cometproject.server.game.rooms.objects.items.types.floor.wired.highscore;
 
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
@@ -95,7 +95,7 @@ public abstract class HighScoreFloorItem extends RoomItemFloor {
 	}
 	
 	@Override
-	public void composeItemData(IComposer msg) {
+	public void composeItemData(IComposerDataWrapper msg) {
 		msg.writeInt(0);
 		this.composeHighScoreData(msg);
 	}
@@ -151,7 +151,7 @@ public abstract class HighScoreFloorItem extends RoomItemFloor {
 		return this.clearType;
 	}
 	
-	private void composeHighScoreData(IComposer msg) {
+	private void composeHighScoreData(IComposerDataWrapper msg) {
 		msg.writeInt(6);
 		
 		msg.writeString(this.state ? "1" : "0");

@@ -1,4 +1,4 @@
-package com.cometproject.server.game.rooms.types.components;
+package com.cometproject.api.game.rooms.components;
 
 import com.cometproject.api.game.groups.types.IGroup;
 import com.cometproject.api.game.rooms.IRoom;

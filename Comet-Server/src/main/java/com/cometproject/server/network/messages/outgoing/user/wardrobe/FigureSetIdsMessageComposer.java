@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.outgoing.user.wardrobe;
 
 import com.cometproject.api.game.catalog.types.IClothingItem;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.catalog.CatalogManager;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
@@ -23,7 +23,7 @@ public class FigureSetIdsMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         final Set<Integer> parts = new HashSet<>();
 
         for (String clothing : this.clothing) {

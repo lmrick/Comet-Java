@@ -1,9 +1,9 @@
 package com.cometproject.api.game.players.data.components.messenger;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 
 public interface IMessengerSearchResult {
 	
-	void compose(IComposer msg);
+	void compose(IComposerDataWrapper msg);
 	
 }

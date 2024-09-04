@@ -1,6 +1,6 @@
 package com.cometproject.server.game.navigator;
 
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.server.game.navigator.types.categories.Category;
 import com.cometproject.server.game.navigator.types.categories.NavigatorCategoryType;
 import com.cometproject.server.game.navigator.types.publics.PublicRoom;
@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class NavigatorManager implements Initialisable {
+public class NavigatorManager implements Initializable {
 	
 	private static NavigatorManager navigatorManagerInstance;
 	private final Logger log = Logger.getLogger(NavigatorManager.class.getName());

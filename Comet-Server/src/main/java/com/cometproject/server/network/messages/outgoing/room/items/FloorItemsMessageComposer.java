@@ -1,9 +1,8 @@
 package com.cometproject.server.network.messages.outgoing.room.items;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.WiredFloorItem;
-import com.cometproject.server.game.rooms.objects.items.types.floor.wired.addons.WiredAddonPressurePlate;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.addons.WiredAddonRandomEffect;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.addons.WiredAddonUnseenEffect;
 import com.cometproject.server.game.rooms.types.Room;
@@ -28,7 +27,7 @@ public class FloorItemsMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         if (room.getItems().getFloorItems().size() > 0) {
             //if (room.getGroup() == null) {
             msg.writeInt(room.getItems().getItemOwners().size());

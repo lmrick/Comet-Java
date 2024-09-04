@@ -5,7 +5,7 @@ import com.cometproject.api.game.furniture.types.GiftData;
 import com.cometproject.api.game.furniture.types.LegacyGiftData;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.server.game.catalog.CatalogManager;
 import com.cometproject.server.game.players.PlayerManager;
@@ -53,7 +53,7 @@ public class GiftFloorItem extends RoomItemFloor {
 	}
 	
 	@Override
-	public void composeItemData(IComposer msg) {
+	public void composeItemData(IComposerDataWrapper msg) {
 		final GiftData giftData = this.getGiftData();
 		final HashMap<String, String> itemData = this.getData();
 		

@@ -1,6 +1,6 @@
 package com.cometproject.server.game.moderation.types.tickets;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.rooms.types.components.types.ChatMessage;
 import com.cometproject.server.storage.queries.moderation.TicketDao;
@@ -50,7 +50,7 @@ public class HelpTicket {
 		TicketDao.saveTicket(this);
 	}
 	
-	public void compose(IComposer msg) {
+	public void compose(IComposerDataWrapper msg) {
 		msg.writeInt(this.getId());
 		msg.writeInt(this.getState().getTabId());
 		msg.writeInt(3); // style

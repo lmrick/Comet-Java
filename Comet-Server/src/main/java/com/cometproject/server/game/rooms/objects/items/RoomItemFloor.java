@@ -4,7 +4,7 @@ import com.cometproject.api.game.furniture.types.FurnitureDefinition;
 import com.cometproject.api.game.rooms.objects.IFloorItem;
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
 import com.cometproject.api.game.utilities.Position;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.items.ItemManager;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.entities.pathfinding.AffectedTile;
@@ -32,7 +32,7 @@ public abstract class RoomItemFloor extends RoomItem implements Collidable, IFlo
 		super(itemData, room);
 	}
 	
-	public void serialize(IComposer msg, boolean isNew) {
+	public void serialize(IComposerDataWrapper msg, boolean isNew) {
 		msg.writeInt(this.getVirtualId());
 		msg.writeInt(this.getDefinition().getSpriteId());
 		msg.writeInt(this.getPosition().getX());
@@ -68,7 +68,7 @@ public abstract class RoomItemFloor extends RoomItem implements Collidable, IFlo
 	}
 	
 	@Override
-	public void serialize(IComposer msg) {
+	public void serialize(IComposerDataWrapper msg) {
 		this.serialize(msg, false);
 	}
 	

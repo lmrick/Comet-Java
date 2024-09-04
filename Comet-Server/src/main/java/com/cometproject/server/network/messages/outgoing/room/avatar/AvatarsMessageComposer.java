@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.room.avatar;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.types.Room;
@@ -47,7 +47,7 @@ public class AvatarsMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         if (this.singleEntity != null) {
             msg.writeInt(1);
 

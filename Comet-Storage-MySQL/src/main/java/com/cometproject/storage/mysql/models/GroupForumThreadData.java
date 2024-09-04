@@ -4,7 +4,7 @@ import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.groups.types.components.forum.IForumThread;
 import com.cometproject.api.game.groups.types.components.forum.IForumThreadReply;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class GroupForumThreadData implements IForumThread {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(this.getId());
 
         final IPlayerAvatar authorAvatar = GameContext.getCurrent().getPlayerService().getAvatarByPlayerId(this.getAuthorId(), IPlayerAvatar.USERNAME_FIGURE);

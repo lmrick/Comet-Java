@@ -1,6 +1,6 @@
 package com.cometproject.gamecenter.fastfood.net.composers;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class UseBigParachuteMessageComposer extends MessageComposer {
@@ -19,7 +19,7 @@ public class UseBigParachuteMessageComposer extends MessageComposer {
 	}
 	
 	@Override
-	public void compose(IComposer msg) {
+	public void compose(IComposerDataWrapper msg) {
 		msg.writeInt(this.objectId);
 		msg.writeInt(this.playerId);
 	}

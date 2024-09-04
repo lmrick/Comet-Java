@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.user.details;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.players.types.Player;
 import com.cometproject.server.protocol.headers.Composers;
@@ -33,7 +33,7 @@ public class UserObjectMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(player.getId());
         msg.writeString(player.getData().getUsername());
         msg.writeString(player.getData().getFigure());

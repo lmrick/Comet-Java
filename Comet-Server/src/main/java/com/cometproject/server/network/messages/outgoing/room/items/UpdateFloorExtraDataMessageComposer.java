@@ -1,6 +1,6 @@
 //package com.cometproject.server.network.messages.outgoing.room.items;
 //
-//import com.cometproject.api.networking.messages.IComposer;
+//import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 //import com.cometproject.server.game.groups.GroupManager;
 //import com.cometproject.server.game.groups.types.GroupData;
 //import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
@@ -33,7 +33,7 @@
 //    }
 //
 //    @Override
-//    public void compose(IComposer msg) {
+//    public void compose(IComposerDataWrapper msg) {
 //        if (floorItem instanceof MannequinFloorItem) {
 //            msg.writeString(String.valueOf(id));
 //

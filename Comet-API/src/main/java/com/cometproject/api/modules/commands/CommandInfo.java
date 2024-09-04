@@ -1,4 +1,4 @@
-package com.cometproject.api.commands;
+package com.cometproject.api.modules.commands;
 
 public class CommandInfo {
     private final String description;

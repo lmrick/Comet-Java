@@ -6,7 +6,7 @@ import com.cometproject.api.game.groups.types.IGroup;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.game.players.data.components.messenger.IMessengerFriend;
 import com.cometproject.api.game.players.data.components.messenger.RelationshipLevel;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.players.types.Player;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.sessions.Session;
@@ -55,7 +55,7 @@ public class BuddyListMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(1);//?
         msg.writeInt(0);//?
 

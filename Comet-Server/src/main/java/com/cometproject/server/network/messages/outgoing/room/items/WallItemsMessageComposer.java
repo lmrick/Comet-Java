@@ -2,7 +2,7 @@ package com.cometproject.server.network.messages.outgoing.room.items;
 
 import com.cometproject.api.game.groups.types.IGroup;
 import com.cometproject.api.game.groups.types.components.membership.IGroupMember;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.objects.items.RoomItemWall;
 import com.cometproject.server.game.rooms.objects.items.types.wall.PostItWallItem;
 import com.cometproject.server.game.rooms.types.Room;
@@ -24,7 +24,7 @@ public class WallItemsMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         int size = room.getItems().getWallItems().size();
 
         if (size > 0) {

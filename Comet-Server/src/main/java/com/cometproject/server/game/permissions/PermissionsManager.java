@@ -1,6 +1,6 @@
 package com.cometproject.server.game.permissions;
 
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.server.game.permissions.types.CommandPermission;
 import com.cometproject.server.game.permissions.types.OverrideCommandPermission;
 import com.cometproject.server.game.permissions.types.Perk;
@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class PermissionsManager implements Initialisable {
+public class PermissionsManager implements Initializable {
 	
 	private static PermissionsManager permissionsManagerInstance;
 	private static final Logger log = Logger.getLogger(PermissionsManager.class.getName());

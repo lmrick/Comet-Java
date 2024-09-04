@@ -4,7 +4,7 @@ import com.cometproject.api.game.players.IPlayer;
 import com.cometproject.api.game.quests.IQuest;
 import com.cometproject.api.game.quests.QuestReward;
 import com.cometproject.api.game.quests.QuestType;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.quests.QuestManager;
 
 import java.sql.ResultSet;
@@ -55,7 +55,7 @@ public class Quest implements IQuest {
 	}
 	
 	@Override
-	public void compose(IPlayer player, IComposer msg) {
+	public void compose(IPlayer player, IComposerDataWrapper msg) {
 		boolean startedQuest = player.getData().getQuestId() == this.getId();
 		int progress = player.getQuests().getProgress(this.getId());
 		

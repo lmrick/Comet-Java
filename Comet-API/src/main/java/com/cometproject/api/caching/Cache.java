@@ -2,15 +2,12 @@ package com.cometproject.api.caching;
 
 import java.util.function.BiConsumer;
 
-public interface Cache<TKey, TObj> {
+public interface Cache<K, V> {
 
-    TObj get(TKey key);
-
-    void remove(TKey key);
-
-    void add(TKey key, TObj obj);
-
-    boolean contains(TKey key);
-
-    void forEach(BiConsumer<TKey, TObj> consumer);
+    V get(K key);
+    void remove(K key);
+    void add(K key, V obj);
+    boolean contains(K key);
+    void forEach(BiConsumer<K, V> consumer);
+    
 }

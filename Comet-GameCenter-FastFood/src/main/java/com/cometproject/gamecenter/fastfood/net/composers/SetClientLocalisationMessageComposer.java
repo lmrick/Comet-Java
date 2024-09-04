@@ -1,6 +1,6 @@
 package com.cometproject.gamecenter.fastfood.net.composers;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class SetClientLocalisationMessageComposer extends MessageComposer {
@@ -11,7 +11,7 @@ public class SetClientLocalisationMessageComposer extends MessageComposer {
 	}
 	
 	@Override
-	public void compose(IComposer msg) {
+	public void compose(IComposerDataWrapper msg) {
 		msg.writeInt(49);
 		msg.writeString("basejump.exit");
 		msg.writeString("Exit");

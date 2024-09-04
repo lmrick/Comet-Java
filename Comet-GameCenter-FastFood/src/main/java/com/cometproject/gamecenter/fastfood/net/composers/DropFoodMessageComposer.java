@@ -1,6 +1,6 @@
 package com.cometproject.gamecenter.fastfood.net.composers;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.gamecenter.fastfood.objects.FoodPlate;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -20,7 +20,7 @@ public class DropFoodMessageComposer extends MessageComposer {
 	}
 	
 	@Override
-	public void compose(IComposer msg) {
+	public void compose(IComposerDataWrapper msg) {
 		msg.writeInt(objectId);
 		
 		msg.writeInt(this.foodPlate.getPlayerId());

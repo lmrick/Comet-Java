@@ -2,7 +2,7 @@ package com.cometproject.server.network.messages.outgoing.quests;
 
 import com.cometproject.api.game.players.IPlayer;
 import com.cometproject.api.game.quests.IQuest;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -21,7 +21,7 @@ public class QuestCompletedMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         quest.compose(this.player, msg);
 
         msg.writeBoolean(this.player.getQuests().hasCompletedQuest(this.quest.getId()));

@@ -1,14 +1,14 @@
 package com.cometproject.api.game.moderation;
 
 import com.cometproject.api.game.rooms.chat.IChatMessage;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 
 import java.util.List;
 
 public interface IHelpTicket {
     void save();
 
-    void compose(IComposer msg);
+    void compose(IComposerDataWrapper msg);
 
     int getId();
 

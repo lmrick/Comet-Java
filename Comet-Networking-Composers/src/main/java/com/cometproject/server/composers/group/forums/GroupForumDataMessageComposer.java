@@ -3,7 +3,7 @@ package com.cometproject.server.composers.group.forums;
 import com.cometproject.api.game.groups.types.IGroup;
 import com.cometproject.api.game.groups.types.components.forum.ForumPermission;
 import com.cometproject.api.game.groups.types.components.forum.IForumSettings;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -22,7 +22,7 @@ public class GroupForumDataMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         this.group.getForum().composeData(msg, group.getData());
 
         final IForumSettings forumSettings = this.group.getForum().getForumSettings();

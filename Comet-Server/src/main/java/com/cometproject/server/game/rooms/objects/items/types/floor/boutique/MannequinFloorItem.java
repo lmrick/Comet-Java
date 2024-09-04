@@ -1,7 +1,7 @@
 package com.cometproject.server.game.rooms.objects.items.types.floor.boutique;
 
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
@@ -37,7 +37,7 @@ public class MannequinFloorItem extends RoomItemFloor {
 		}
 	}
 	
-	public void composeItemData(IComposer msg) {
+	public void composeItemData(IComposerDataWrapper msg) {
 		msg.writeInt(0);
 		msg.writeInt(1);
 		msg.writeInt(3);

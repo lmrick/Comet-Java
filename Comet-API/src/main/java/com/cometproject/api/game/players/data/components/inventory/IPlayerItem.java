@@ -2,7 +2,7 @@ package com.cometproject.api.game.players.data.components.inventory;
 
 import com.cometproject.api.game.furniture.types.FurnitureDefinition;
 import com.cometproject.api.game.furniture.types.LimitedEditionItem;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 
 public interface IPlayerItem {
     
@@ -12,7 +12,7 @@ public interface IPlayerItem {
     String getExtraData();
     LimitedEditionItem getLimitedEditionItem();
     int getVirtualId();
-    void compose(IComposer message);
+    void compose(IComposerDataWrapper message);
     IPlayerItemSnapshot createSnapshot();
     
 }

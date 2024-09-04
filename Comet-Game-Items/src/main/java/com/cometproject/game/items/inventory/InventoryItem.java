@@ -6,7 +6,7 @@ import com.cometproject.api.game.furniture.types.LimitedEditionItem;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.api.game.players.data.components.inventory.InventoryItemData;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItemSnapshot;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 
 public class InventoryItem implements IPlayerItem {
 	private final InventoryItemData itemData;
@@ -17,7 +17,7 @@ public class InventoryItem implements IPlayerItem {
 		this.furnitureDefinition = furnitureDefinition;
 	}
 	
-	protected boolean composeData(IComposer msg) {
+	protected boolean composeData(IComposerDataWrapper msg) {
 		msg.writeInt(1);
 		
 		if (this.itemData.limitedEditionItem() != null) {
@@ -31,7 +31,7 @@ public class InventoryItem implements IPlayerItem {
 		return true;
 	}
 	
-	public void compose(IComposer msg) {
+	public void compose(IComposerDataWrapper msg) {
 		msg.writeInt(this.getVirtualId());
 		msg.writeString(this.getDefinition().getType());
 		msg.writeInt(this.getVirtualId());

@@ -1,11 +1,11 @@
 package com.cometproject.api.game.catalog.types;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 
 import java.util.List;
 
 public interface ICatalogItem {
-    void compose(IComposer msg);
+    void compose(IComposerDataWrapper msg);
 
     int getId();
 

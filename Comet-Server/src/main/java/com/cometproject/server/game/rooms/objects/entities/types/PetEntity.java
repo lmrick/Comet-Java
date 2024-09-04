@@ -2,7 +2,7 @@ package com.cometproject.server.game.rooms.objects.entities.types;
 
 import com.cometproject.api.game.pets.IPetData;
 import com.cometproject.api.game.utilities.Position;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.entities.types.ai.IBotAI;
 import com.cometproject.server.game.rooms.objects.entities.types.ai.pets.PetAI;
@@ -109,7 +109,7 @@ public class PetEntity extends RoomEntity {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(this.data.getId());
         msg.writeString(this.data.getName());
         msg.writeEmptyString();

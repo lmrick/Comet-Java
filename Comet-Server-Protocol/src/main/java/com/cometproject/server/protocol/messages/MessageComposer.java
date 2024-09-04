@@ -1,6 +1,6 @@
 package com.cometproject.server.protocol.messages;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.api.networking.messages.IMessageComposer;
 import io.netty.buffer.ByteBuf;
 import org.apache.log4j.Logger;
@@ -12,7 +12,7 @@ public abstract class MessageComposer implements IMessageComposer {
 	public MessageComposer() {
 	}
 	
-	public final IComposer writeMessage(ByteBuf buf) {
+	public final IComposerDataWrapper writeMessage(ByteBuf buf) {
 		return this.writeMessageImpl(buf);
 	}
 	
@@ -31,7 +31,7 @@ public abstract class MessageComposer implements IMessageComposer {
 	}
 	
 	public abstract short getId();
-	public abstract void compose(IComposer msg);
+	public abstract void compose(IComposerDataWrapper msg);
 	public void dispose() { }
 	
 }

@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.moderation;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.players.PlayerManager;
 import com.cometproject.server.game.players.data.PlayerData;
@@ -24,7 +24,7 @@ public class ModToolUserInfoMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(playerData.getId());
         msg.writeString(playerData.getUsername());
         msg.writeString(playerData.getFigure());

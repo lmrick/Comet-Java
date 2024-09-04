@@ -1,6 +1,6 @@
 package com.cometproject.server.composers.group;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -28,7 +28,7 @@ public class GroupFurnitureWidgetMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(furnitureId);
         msg.writeInt(groupId);
         msg.writeString(groupTitle);

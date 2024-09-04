@@ -2,7 +2,7 @@ package com.cometproject.game.items.inventory.items;
 
 import com.cometproject.api.game.furniture.types.FurnitureDefinition;
 import com.cometproject.api.game.players.data.components.inventory.InventoryItemData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.game.items.inventory.InventoryItem;
 
 public class WallInventoryItem extends InventoryItem {
@@ -11,7 +11,7 @@ public class WallInventoryItem extends InventoryItem {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(this.getVirtualId());
         msg.writeString(this.getDefinition().getType().toUpperCase());
         msg.writeInt(this.getVirtualId());

@@ -4,7 +4,6 @@ public class CometStats {
     private int players;
     private int rooms;
     private String uptime;
-
     private int processId;
     private long allocatedMemory;
     private long usedMemory;

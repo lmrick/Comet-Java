@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.moderation;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.logging.entries.RoomChatLogEntry;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
@@ -31,7 +31,7 @@ public class ModToolRoomChatlogMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeByte(1);
         msg.writeShort(3);
         msg.writeString("");

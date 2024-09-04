@@ -5,7 +5,7 @@ import com.cometproject.api.game.catalog.types.ICatalogItem;
 import com.cometproject.api.game.catalog.types.ICatalogPage;
 import com.cometproject.api.game.furniture.IFurnitureService;
 import com.cometproject.api.game.furniture.types.FurnitureDefinition;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -30,7 +30,7 @@ public class CatalogIndexMessageComposer extends MessageComposer {
 	}
 	
 	@Override
-	public void compose(final IComposer msg) {
+	public void compose(final IComposerDataWrapper msg) {
 		msg.writeBoolean(true);
 		msg.writeInt(0);
 		msg.writeInt(-1);
@@ -51,7 +51,7 @@ public class CatalogIndexMessageComposer extends MessageComposer {
 		msg.writeString("NORMAL");
 	}
 	
-	private void composePage(ICatalogPage page, IComposer msg) {
+	private void composePage(ICatalogPage page, IComposerDataWrapper msg) {
 		msg.writeBoolean(true);
 		msg.writeInt(page.getIcon());
 		msg.writeInt(page.isEnabled() ? page.getId() : -1);

@@ -1,21 +1,14 @@
-package com.cometproject.api.networking.messages;
+package com.cometproject.api.networking.messages.wrappers;
 
-public interface IMessageEvent {
-
-
+public interface IEventDataWrapper {
+    
     short readShort();
-
     int readInt();
-
     boolean readBoolean();
-
     String readString();
-
     byte[] readBytes(int length);
-
     byte[] toRawBytes();
-
     short getId();
-
     int getLength();
+    
 }

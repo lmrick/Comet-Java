@@ -3,7 +3,7 @@ package com.cometproject.server.game.catalog.types;
 import com.cometproject.api.game.catalog.types.ICatalogBundledItem;
 import com.cometproject.api.game.catalog.types.ICatalogItem;
 import com.cometproject.api.game.furniture.types.FurnitureDefinition;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.catalog.CatalogManager;
 import com.cometproject.server.game.items.ItemManager;
@@ -108,7 +108,7 @@ public class CatalogItem implements ICatalogItem {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         final FurnitureDefinition firstItem = this.itemId.equals("-1") ? null : ItemManager.getInstance().getDefinition(this.getItems().get(0).itemId());
 
         msg.writeInt(this.getId());

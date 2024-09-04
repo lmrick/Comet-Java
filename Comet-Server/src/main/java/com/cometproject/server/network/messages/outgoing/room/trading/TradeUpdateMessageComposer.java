@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.outgoing.room.trading;
 
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.players.components.types.inventory.InventoryItem;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
@@ -29,7 +29,7 @@ public class TradeUpdateMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(user1);
         msg.writeInt(items1.size());
 

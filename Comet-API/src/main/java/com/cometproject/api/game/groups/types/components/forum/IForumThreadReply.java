@@ -1,9 +1,9 @@
 package com.cometproject.api.game.groups.types.components.forum;
 
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 
 public interface IForumThreadReply {
-    void compose(IComposer msg);
+    void compose(IComposerDataWrapper msg);
 
     int getId();
 

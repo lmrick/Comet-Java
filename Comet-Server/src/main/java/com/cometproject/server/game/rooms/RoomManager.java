@@ -8,7 +8,7 @@ import com.cometproject.api.game.rooms.models.CustomFloorMapData;
 import com.cometproject.api.game.rooms.settings.RoomAccessType;
 import com.cometproject.api.game.rooms.settings.RoomTradeState;
 import com.cometproject.api.networking.sessions.ISession;
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.common.caching.LastReferenceCache;
 import com.cometproject.server.game.players.types.Player;
 import com.cometproject.server.game.rooms.filter.WordFilter;
@@ -25,16 +25,14 @@ import com.cometproject.server.storage.cache.CacheManager;
 import com.cometproject.server.storage.cache.objects.RoomDataObject;
 import com.cometproject.server.storage.queries.rooms.RoomDao;
 import com.cometproject.server.tasks.CometThreadManager;
-import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
-public class RoomManager implements Initialisable {
+public class RoomManager implements Initializable {
 	
 	public static final Logger log = Logger.getLogger(RoomManager.class.getName());
 	private static RoomManager roomManagerInstance;

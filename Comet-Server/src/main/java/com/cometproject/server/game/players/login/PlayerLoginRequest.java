@@ -183,7 +183,9 @@ public class PlayerLoginRequest implements ICometTask {
 				PlayerDao.nullifyAuthTicket(player.getData().getId());
 			}
 			
-			if (ModuleManager.getInstance().getEventHandler().handleEvent(OnPlayerLoginEvent.class, new OnPlayerLoginEventArgs(client.getPlayer()))) {
+			if (ModuleManager.getInstance()
+							.getEventHandler()
+							.handleEvent(OnPlayerLoginEvent.class, new OnPlayerLoginEventArgs(client.getPlayer()))) {
 				client.disconnect();
 			}
 			
@@ -206,5 +208,7 @@ public class PlayerLoginRequest implements ICometTask {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 }

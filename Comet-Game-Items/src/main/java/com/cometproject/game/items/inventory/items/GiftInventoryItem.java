@@ -4,7 +4,7 @@ import com.cometproject.api.game.furniture.types.FurnitureDefinition;
 import com.cometproject.api.game.furniture.types.GiftData;
 import com.cometproject.api.game.furniture.types.LegacyGiftData;
 import com.cometproject.api.game.players.data.components.inventory.InventoryItemData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.game.items.inventory.InventoryItem;
 
@@ -34,7 +34,7 @@ public class GiftInventoryItem extends InventoryItem {
     }
 
     @Override
-    public boolean composeData(IComposer msg) {
+    public boolean composeData(IComposerDataWrapper msg) {
         super.composeData(msg);
 
         msg.writeString("");

@@ -1,7 +1,7 @@
 package com.cometproject.server.composers.group.forums;
 
 import com.cometproject.api.game.groups.types.components.forum.IForumThread;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -20,7 +20,7 @@ public class GroupForumUpdateThreadMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(this.groupId);
 
         this.forumThread.compose(msg);

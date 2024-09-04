@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.outgoing.room.engine;
 
 import com.cometproject.api.game.rooms.IRoomData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.types.RoomWriter;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
@@ -27,7 +27,7 @@ public class FollowRoomDataMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer composer) {
+    public void compose(IComposerDataWrapper composer) {
         RoomWriter.entryData(this.roomData, composer, this.isLoading, this.checkEntry, this.skipAuth, this.canMute);
     }
 }

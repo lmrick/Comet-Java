@@ -1,6 +1,6 @@
 package com.cometproject.networking.api.messages;
 
-import com.cometproject.api.networking.messages.IMessageEvent;
+import com.cometproject.api.networking.messages.wrappers.IEventDataWrapper;
 
 public abstract class MessageParser {
     private boolean hasError = false;
@@ -13,7 +13,7 @@ public abstract class MessageParser {
         this.hasError = error;
     }
 
-    public abstract void parse(IMessageEvent event);
+    public abstract void parse(IEventDataWrapper event);
     public void flush() {  }
     
 }

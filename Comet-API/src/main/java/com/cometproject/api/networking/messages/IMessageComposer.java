@@ -1,13 +1,13 @@
 package com.cometproject.api.networking.messages;
 
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import io.netty.buffer.ByteBuf;
 
 public interface IMessageComposer {
-    IComposer writeMessage(ByteBuf buffer);
-
+    
+    IComposerDataWrapper writeMessage(ByteBuf buffer);
     short getId();
-
-    void compose(IComposer msg);
-
+    void compose(IComposerDataWrapper msg);
     void dispose();
+    
 }

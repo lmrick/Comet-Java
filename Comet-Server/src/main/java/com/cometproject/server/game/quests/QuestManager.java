@@ -2,13 +2,13 @@ package com.cometproject.server.game.quests;
 
 import com.cometproject.api.game.quests.IQuest;
 import com.cometproject.api.game.quests.IQuestService;
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.server.storage.queries.quests.QuestsDao;
 import org.apache.log4j.Logger;
 
 import java.util.Map;
 
-public class QuestManager implements Initialisable, IQuestService {
+public class QuestManager implements Initializable, IQuestService {
     private static final Logger log = Logger.getLogger(QuestManager.class.getName());
 
     private static QuestManager questManagerInstance;

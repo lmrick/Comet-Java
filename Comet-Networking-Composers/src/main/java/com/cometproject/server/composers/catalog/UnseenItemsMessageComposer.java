@@ -2,7 +2,7 @@ package com.cometproject.server.composers.catalog;
 
 import com.cometproject.api.game.furniture.IFurnitureService;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 import com.google.common.collect.Lists;
@@ -39,7 +39,7 @@ public class UnseenItemsMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(this.newObjects.size());
 
         for (Map.Entry<Integer, List<Integer>> tab : this.newObjects.entrySet()) {

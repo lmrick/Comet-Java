@@ -11,7 +11,7 @@ import com.cometproject.api.game.rooms.entities.PlayerRoomEntity;
 import com.cometproject.api.game.rooms.entities.RoomEntityStatus;
 import com.cometproject.api.game.rooms.settings.RoomAccessType;
 import com.cometproject.api.game.utilities.Position;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.commands.CommandManager;
@@ -590,7 +590,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntityAccess, Att
 	}
 	
 	@Override
-	public void compose(IComposer msg) {
+	public void compose(IComposerDataWrapper msg) {
 		if (this.hasAttribute("transformation")) {
 			String[] transformationData = ((String) this.getAttribute("transformation")).split("#");
 			TransformCommand.composeTransformation(msg, transformationData, this);

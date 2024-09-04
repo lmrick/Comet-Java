@@ -2,7 +2,7 @@ package com.cometproject.server.composers.catalog.groups;
 
 import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.game.rooms.IRoomData;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -23,7 +23,7 @@ public class GroupPartsMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(CometSettings.groupCost);
         msg.writeInt(availableRooms.size());
 

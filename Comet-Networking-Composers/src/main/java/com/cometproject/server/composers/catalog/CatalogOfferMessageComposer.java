@@ -1,7 +1,7 @@
 package com.cometproject.server.composers.catalog;
 
 import com.cometproject.api.game.catalog.types.ICatalogItem;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -19,7 +19,7 @@ public class CatalogOfferMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         this.catalogItem.compose(msg);
     }
 }

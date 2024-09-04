@@ -4,7 +4,7 @@ import com.cometproject.api.game.achievements.types.AchievementType;
 import com.cometproject.api.game.achievements.types.IAchievement;
 import com.cometproject.api.game.achievements.types.IAchievementGroup;
 import com.cometproject.api.game.players.data.components.achievements.IAchievementProgress;
-import com.cometproject.api.networking.messages.IComposer;
+import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.achievements.AchievementManager;
 import com.cometproject.server.game.players.components.types.AchievementComponent;
 import com.cometproject.server.protocol.headers.Composers;
@@ -26,7 +26,7 @@ public class AchievementsListMessageComposer extends MessageComposer {
     }
 
     @Override
-    public void compose(IComposer msg) {
+    public void compose(IComposerDataWrapper msg) {
         msg.writeInt(AchievementManager.getInstance().getAchievementGroups().size());
 
         for (Map.Entry<AchievementType, IAchievementGroup> entry : AchievementManager.getInstance().getAchievementGroups().entrySet()) {

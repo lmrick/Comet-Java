@@ -1,6 +1,6 @@
 package com.cometproject.server.game.moderation;
 
-import com.cometproject.api.utilities.Initialisable;
+import com.cometproject.api.utilities.Initializable;
 import com.cometproject.server.game.moderation.types.actions.ActionCategory;
 import com.cometproject.server.game.moderation.types.tickets.HelpTicket;
 import com.cometproject.server.game.moderation.types.tickets.HelpTicketState;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ModerationManager implements Initialisable {
+public class ModerationManager implements Initializable {
 	
 	private static ModerationManager moderationManagerInstance;
 	
