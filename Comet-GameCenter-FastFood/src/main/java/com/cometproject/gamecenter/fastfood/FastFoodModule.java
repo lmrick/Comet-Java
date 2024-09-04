@@ -17,29 +17,25 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class FastFoodModule extends BaseModule {
-
-    private MySQLFastFoodRepository fastFoodRepository;
-    private INetworkingServer fastFoodServer;
-    private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
-
-    public FastFoodModule(ModuleConfig config, IGameService gameService) {
-        super(config, gameService);
-    }
-
-    @Override
-    public void setup() {
-        this.fastFoodRepository = new MySQLFastFoodRepository(MySQLStorageContext.getCurrentContext().getConnectionProvider());
-    }
-
-    @Override
-    public void initialiseServices(GameContext gameContext) {
-        final short serverPort = 30010;
-
-        this.fastFoodServer = NetworkingContext.getCurrentContext().getServerFactory().createServer(
-                new NetworkingServerConfig("0.0.0.0", Sets.newHashSet(serverPort)),
-                new SessionFactory(new FastFoodMessageHandler(this.executorService, gameContext.getPlayerService(),
-                        this.fastFoodRepository)));
-
-        this.fastFoodServer.start();
-    }
+	private MySQLFastFoodRepository fastFoodRepository;
+	private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
+	
+	public FastFoodModule(ModuleConfig config, IGameService gameService) {
+		super(config, gameService);
+	}
+	
+	@Override
+	public void setup() {
+		this.fastFoodRepository = new MySQLFastFoodRepository(MySQLStorageContext.getCurrentContext().getConnectionProvider());
+	}
+	
+	@Override
+	public void initialiseServices(GameContext gameContext) {
+		final short serverPort = 30010;
+		
+		INetworkingServer fastFoodServer = NetworkingContext.getCurrentContext().serverFactory().createServer(new NetworkingServerConfig("0.0.0.0", Sets.newHashSet(serverPort)), new SessionFactory(new FastFoodMessageHandler(this.executorService, gameContext.getPlayerService(), this.fastFoodRepository)));
+		
+		fastFoodServer.start();
+	}
+	
 }

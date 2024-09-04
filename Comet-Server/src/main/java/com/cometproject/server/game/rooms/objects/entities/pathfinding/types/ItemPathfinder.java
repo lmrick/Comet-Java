@@ -17,10 +17,7 @@ public class ItemPathfinder extends Pathfinder {
     private static ItemPathfinder pathfinderInstance;
 
     public static ItemPathfinder getInstance() {
-        if (pathfinderInstance == null) {
-            pathfinderInstance = new ItemPathfinder();
-        }
-
+        if (pathfinderInstance == null) pathfinderInstance = new ItemPathfinder();
         return pathfinderInstance;
     }
 
@@ -34,7 +31,7 @@ public class ItemPathfinder extends Pathfinder {
             return false;
         }
 
-        if ((!roomFloorObject.getRoom().getMapping().isValidPosition(to) || (roomFloorObject.getRoom().getModel().getSquareState()[to.getX()][to.getY()] == RoomTileState.INVALID))) {
+        if ((roomFloorObject.getRoom().getMapping().isValidPosition(to) || (roomFloorObject.getRoom().getModel().getSquareState()[to.getX()][to.getY()] == RoomTileState.INVALID))) {
             return false;
         }
 
@@ -42,31 +39,27 @@ public class ItemPathfinder extends Pathfinder {
 
         if (rotation == 1 || rotation == 3 || rotation == 5 || rotation == 7) {
             RoomTile left = null;
-            RoomTile right = null;
-
-            switch (rotation) {
-                case 1:
-                    left = roomFloorObject.getRoom().getMapping().getTile(from.squareInFront(rotation + 1));
-                    right = roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(rotation + 1));
-                    break;
-
-                case 3:
-                    left = roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(rotation + 1));
-                    right = roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(rotation - 1));
-                    break;
-
-                case 5:
-                    left = roomFloorObject.getRoom().getMapping().getTile(from.squareInFront(rotation - 1));
-                    right = roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(rotation - 1));
-                    break;
-
-                case 7:
-                    left = roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(0));
-                    right = roomFloorObject.getRoom().getMapping().getTile(from.squareInFront(rotation - 1));
-                    break;
-            }
-
-            if (left != null && right != null) {
+            RoomTile right = switch (rotation) {
+							case 1 -> {
+								left = roomFloorObject.getRoom().getMapping().getTile(from.squareInFront(rotation + 1));
+								yield roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(rotation + 1));
+							}
+							case 3 -> {
+								left = roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(rotation + 1));
+								yield roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(rotation - 1));
+							}
+							case 5 -> {
+								left = roomFloorObject.getRoom().getMapping().getTile(from.squareInFront(rotation - 1));
+								yield roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(rotation - 1));
+							}
+							case 7 -> {
+								left = roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(0));
+								yield roomFloorObject.getRoom().getMapping().getTile(from.squareInFront(rotation - 1));
+							}
+							default -> null;
+						};
+					
+					if (left != null && right != null) {
                 if (left.getMovementNode() != RoomEntityMovementNode.OPEN && right.getMovementNode() != RoomEntityMovementNode.OPEN)
                     return false;
             }

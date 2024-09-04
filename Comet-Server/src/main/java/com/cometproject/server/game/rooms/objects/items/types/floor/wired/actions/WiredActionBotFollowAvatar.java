@@ -11,20 +11,6 @@ import com.cometproject.server.game.rooms.types.Room;
 public class WiredActionBotFollowAvatar extends WiredActionItem {
     private static final int PARAM_FOLLOW = 0;
 
-    /**
-     * The default constructor
-     *
-     * @param id        The ID of the item
-     * @param itemId    The ID of the item definition
-     * @param room      The instance of the room
-     * @param owner     The ID of the owner
-     * @param ownerName The username of the owner
-     * @param x         The position of the item on the X axis
-     * @param y         The position of the item on the Y axis
-     * @param z         The position of the item on the z axis
-     * @param rotation  The orientation of the item
-     * @param data      The JSON object associated with this item
-     */
     public WiredActionBotFollowAvatar(RoomItemData itemData, Room room) {
         super(itemData, room);
     }
@@ -39,7 +25,7 @@ public class WiredActionBotFollowAvatar extends WiredActionItem {
             return;
         }
 
-        if (event.entity == null || !(event.entity instanceof PlayerEntity)) return;
+        if (!(event.entity instanceof PlayerEntity)) return;
 
         int param = this.getWiredData().getParams().get(PARAM_FOLLOW);
 

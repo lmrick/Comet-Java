@@ -2,14 +2,14 @@ package com.cometproject.api.game.catalog.types;
 
 public interface ICatalogFrontPageEntry {
 
-    int getId();
+    int id();
 
-    String getCaption();
+    String caption();
 
-    String getImage();
+    String image();
 
-    String getPageLink();
+    String pageLink();
 
-    int getPageId();
+    int pageId();
 
 }

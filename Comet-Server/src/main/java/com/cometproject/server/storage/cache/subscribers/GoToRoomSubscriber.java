@@ -28,40 +28,23 @@ public class GoToRoomSubscriber implements ISubscriber {
 
     @Override
     public void handleMessage(String message) {
-        Data data = new Gson().fromJson(message, Data.class);
+        GoToRoomSubscriberData data = new Gson().fromJson(message, GoToRoomSubscriberData.class);
+        if (data == null || data.roomId() == null || data.roomId() == 0 || data.username() == null || data.username().isEmpty()) {
+					return;
+				}
 
-        if (data == null || data.getRoomId() == null || data.getRoomId() == 0 ||
-                data.getUsername() == null || data.getUsername().equals(""))
-            return;
+        Session session = NetworkManager.getInstance().getSessions().getByPlayerUsername(data.username());
+        if (session == null) {
+					return;
+				}
 
-        Session session = NetworkManager.getInstance().getSessions().getByPlayerUsername(data.getUsername());
-
-        if (session == null)
-            return;
-
-        session.send(new RoomForwardMessageComposer(data.getRoomId()));
+        session.send(new RoomForwardMessageComposer(data.roomId()));
     }
 
     @Override
     public String getChannel() {
         return "comet.goto.room";
     }
-
-    private class Data {
-        private String username;
-        private Integer roomId;
-
-        public Data(String username, Integer roomId) {
-            this.username = username;
-            this.roomId = roomId;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public Integer getRoomId() {
-            return roomId;
-        }
-    }
+    
+    private record GoToRoomSubscriberData(String username, Integer roomId) { }
 }

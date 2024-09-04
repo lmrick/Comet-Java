@@ -1,7 +1,7 @@
 package com.cometproject.server.storage.queries.system;
 
 import com.cometproject.server.boot.Comet;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,8 +15,8 @@ public class StatisticsDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
-            preparedStatement = SqlHelper.prepare("UPDATE server_status SET active_players = ?, active_rooms = ?, server_version = ?, player_record = ?, player_record_timestamp = ?", sqlConnection);
+            sqlConnection = SQLUtility.getConnection();
+            preparedStatement = SQLUtility.prepare("UPDATE server_status SET active_players = ?, active_rooms = ?, server_version = ?, player_record = ?, player_record_timestamp = ?", sqlConnection);
 
             preparedStatement.setInt(1, players);
             preparedStatement.setInt(2, rooms);
@@ -26,10 +26,10 @@ public class StatisticsDao {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -38,8 +38,8 @@ public class StatisticsDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
-            preparedStatement = SqlHelper.prepare("UPDATE server_status SET active_players = ?, active_rooms = ?, server_version = ?", sqlConnection);
+            sqlConnection = SQLUtility.getConnection();
+            preparedStatement = SQLUtility.prepare("UPDATE server_status SET active_players = ?, active_rooms = ?, server_version = ?", sqlConnection);
 
             preparedStatement.setInt(1, players);
             preparedStatement.setInt(2, rooms);
@@ -47,10 +47,10 @@ public class StatisticsDao {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -60,8 +60,8 @@ public class StatisticsDao {
         ResultSet resultSet = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
-            preparedStatement = SqlHelper.prepare("SELECT player_record FROM server_status LIMIT 1", sqlConnection);
+            sqlConnection = SQLUtility.getConnection();
+            preparedStatement = SQLUtility.prepare("SELECT player_record FROM server_status LIMIT 1", sqlConnection);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -69,11 +69,11 @@ public class StatisticsDao {
 
             return resultSet.getInt("player_record");
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
-            SqlHelper.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
         }
 
         return 0;

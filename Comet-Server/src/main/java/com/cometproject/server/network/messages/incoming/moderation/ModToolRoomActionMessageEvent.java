@@ -3,7 +3,7 @@ package com.cometproject.server.network.messages.incoming.moderation;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.rooms.IRoomData;
 import com.cometproject.api.game.rooms.settings.RoomAccessType;
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.types.Room;

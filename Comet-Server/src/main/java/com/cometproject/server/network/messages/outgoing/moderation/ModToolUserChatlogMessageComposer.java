@@ -37,7 +37,7 @@ public class ModToolUserChatlogMessageComposer extends MessageComposer {
         msg.writeInt(this.userChatlogContainer.size());
 
         for (UserChatlogContainer.LogSet logSet : this.userChatlogContainer.getLogs()) {
-            IRoomData roomData = GameContext.getCurrent().getRoomService().getRoomData(logSet.getRoomId());
+            IRoomData roomData = GameContext.getCurrent().getRoomService().getRoomData(logSet.roomId());
             msg.writeByte(1);
             msg.writeShort(2);
             msg.writeString(ROOM_NAME);
@@ -47,9 +47,9 @@ public class ModToolUserChatlogMessageComposer extends MessageComposer {
             msg.writeByte(1); //type of following data i guess (int = 1)
             msg.writeInt(roomData == null ? 0 : roomData.getId());
 
-            msg.writeShort(logSet.getLogs().size());
+            msg.writeShort(logSet.logs().size());
 
-            for (RoomChatLogEntry chatLogEntry : logSet.getLogs()) {
+            for (RoomChatLogEntry chatLogEntry : logSet.logs()) {
                 chatLogEntry.compose(msg);
             }
         }

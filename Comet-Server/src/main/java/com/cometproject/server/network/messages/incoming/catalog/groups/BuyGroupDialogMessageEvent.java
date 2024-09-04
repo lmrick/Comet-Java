@@ -11,22 +11,23 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-
 public class BuyGroupDialogMessageEvent implements Event {
-    public void handle(Session client, MessageEvent msg) {
-        final List<IRoomData> roomData = Lists.newArrayList();
-
-        for (Integer roomId : client.getPlayer().getRooms()) {
-            final IRoomData room = GameContext.getCurrent().getRoomService().getRoomData(roomId);
-
-            if (room.getGroupId() < 1) {
-                roomData.add(room);
-            }
-//            if (GroupManager.getInstance().getGroupByRoomId(room) == null)
-//                roomData.add(RoomManager.getInstance().getRoomData(room));
-        }
-
-        client.send(new GroupPartsMessageComposer(roomData));
-        client.send(new GroupElementsMessageComposer(GameContext.getCurrent().getGroupService().getItemService()));
-    }
+	
+	public void handle(Session client, MessageEvent msg) {
+		final List<IRoomData> roomData = Lists.newArrayList();
+		
+		for (Integer roomId : client.getPlayer().getRooms()) {
+			final IRoomData room = GameContext.getCurrent().getRoomService().getRoomData(roomId);
+			
+			if (room.getGroupId() < 1) {
+				roomData.add(room);
+			}
+			//            if (GroupManager.getInstance().getGroupByRoomId(room) == null)
+			//                roomData.add(RoomManager.getInstance().getRoomData(room));
+		}
+		
+		client.send(new GroupPartsMessageComposer(roomData));
+		client.send(new GroupElementsMessageComposer(GameContext.getCurrent().getGroupService().getItemService()));
+	}
+	
 }

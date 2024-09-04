@@ -27,12 +27,12 @@ public class AchievementRequirementsMessageComposer extends MessageComposer {
         msg.writeInt(this.achievementGroups.size());
 
         for (IAchievementGroup achievementGroup : this.achievementGroups) {
-            msg.writeString(achievementGroup.getGroupName().replace("ACH_", ""));
-            msg.writeInt(achievementGroup.getAchievements().size());
+            msg.writeString(achievementGroup.groupName().replace("ACH_", ""));
+            msg.writeInt(achievementGroup.achievements().size());
 
-            for (IAchievement achievement : achievementGroup.getAchievements().values()) {
-                msg.writeInt(achievement.getLevel());
-                msg.writeInt(achievement.getProgressNeeded());
+            for (IAchievement achievement : achievementGroup.achievements().values()) {
+                msg.writeInt(achievement.level());
+                msg.writeInt(achievement.progressNeeded());
             }
         }
     }

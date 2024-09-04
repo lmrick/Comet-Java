@@ -6,10 +6,8 @@ public class EntityPathfinder extends Pathfinder {
     private static EntityPathfinder pathfinderInstance;
 
     public static EntityPathfinder getInstance() {
-        if (pathfinderInstance == null) {
-            pathfinderInstance = new EntityPathfinder();
-        }
-
+        if (pathfinderInstance == null) pathfinderInstance = new EntityPathfinder();
         return pathfinderInstance;
     }
+    
 }

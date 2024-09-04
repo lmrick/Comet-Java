@@ -2,10 +2,10 @@ package com.cometproject.server.network.messages.incoming.user.camera;
 
 import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.game.achievements.types.AchievementType;
-import com.cometproject.api.game.players.data.components.inventory.PlayerItem;
+import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.server.composers.camera.PurchasedPhotoMessageComposer;
 import com.cometproject.server.composers.catalog.UnseenItemsMessageComposer;
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.items.ItemManager;
 import com.cometproject.server.game.players.components.types.inventory.InventoryItem;
 import com.cometproject.server.network.messages.incoming.Event;
@@ -31,7 +31,7 @@ public class PurchasePhotoMessageEvent implements Event {
         final Data<Long> itemIdData = Data.createEmpty();
         StorageContext.getCurrentContext().getRoomItemRepository().createItem(client.getPlayer().getId(), CometSettings.cameraPhotoItemId, itemExtraData, itemIdData::set);
 
-        final PlayerItem playerItem = new InventoryItem(itemIdData.get(), CometSettings.cameraPhotoItemId, itemExtraData);
+        final IPlayerItem playerItem = new InventoryItem(itemIdData.get(), CometSettings.cameraPhotoItemId, itemExtraData);
 
         client.getPlayer().getInventory().addItem(playerItem);
 

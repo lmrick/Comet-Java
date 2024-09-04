@@ -1,7 +1,7 @@
 package com.cometproject.server.storage.queries.items;
 
 import com.cometproject.api.game.rooms.objects.data.LimitedEditionItemData;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,19 +15,19 @@ public class LimitedEditionDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT INTO items_limited_edition (`item_id`, `limited_id`, `limited_total`) VALUES(?, ?, ?);", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT INTO items_limited_edition (`item_id`, `limited_id`, `limited_total`) VALUES(?, ?, ?);", sqlConnection);
             preparedStatement.setLong(1, item.getItemId());
             preparedStatement.setInt(2, item.getLimitedRare());
             preparedStatement.setInt(3, item.getLimitedRareTotal());
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -37,9 +37,9 @@ public class LimitedEditionDao {
         ResultSet resultSet = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT `limited_id`, `limited_total` FROM items_limited_edition WHERE item_id = ? LIMIT 1;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT `limited_id`, `limited_total` FROM items_limited_edition WHERE item_id = ? LIMIT 1;", sqlConnection);
             preparedStatement.setLong(1, itemId);
 
             resultSet = preparedStatement.executeQuery();
@@ -48,11 +48,11 @@ public class LimitedEditionDao {
                 return new LimitedEditionItemData(itemId, resultSet.getInt("limited_id"), resultSet.getInt("limited_total"));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return null;

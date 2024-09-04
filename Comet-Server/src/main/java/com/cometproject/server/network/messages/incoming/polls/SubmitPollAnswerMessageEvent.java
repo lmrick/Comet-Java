@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.incoming.polls;
 
 import com.cometproject.api.utilities.JsonUtil;
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.polls.PollManager;
 import com.cometproject.server.game.polls.types.Poll;
 import com.cometproject.server.game.polls.types.PollQuestion;

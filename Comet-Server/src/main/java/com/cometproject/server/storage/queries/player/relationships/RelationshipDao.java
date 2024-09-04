@@ -1,7 +1,7 @@
 package com.cometproject.server.storage.queries.player.relationships;
 
 import com.cometproject.api.game.players.data.components.messenger.RelationshipLevel;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,9 +20,9 @@ public class RelationshipDao {
         Map<Integer, RelationshipLevel> data = new ConcurrentHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT `partner`, `level` FROM player_relationships WHERE player_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT `partner`, `level` FROM player_relationships WHERE player_id = ?", sqlConnection);
             preparedStatement.setInt(1, playerId);
 
             resultSet = preparedStatement.executeQuery();
@@ -31,11 +31,11 @@ public class RelationshipDao {
                 data.put(resultSet.getInt("partner"), RelationshipLevel.valueOf(resultSet.getString("level").toUpperCase()));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -46,18 +46,18 @@ public class RelationshipDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("DELETE FROM player_relationships WHERE player_id = ? AND partner = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE FROM player_relationships WHERE player_id = ? AND partner = ?", sqlConnection);
             preparedStatement.setInt(1, playerId);
             preparedStatement.setInt(2, partner);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -66,20 +66,20 @@ public class RelationshipDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("UPDATE player_relationships SET level = ? WHERE player_id = ? AND partner = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE player_relationships SET level = ? WHERE player_id = ? AND partner = ?", sqlConnection);
 
             preparedStatement.setString(1, level);
             preparedStatement.setInt(2, playerId);
             preparedStatement.setInt(3, partner);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -88,17 +88,17 @@ public class RelationshipDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("DELETE FROM player_relationships WHERE player_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE FROM player_relationships WHERE player_id = ?", sqlConnection);
             preparedStatement.setInt(1, playerId);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -107,19 +107,19 @@ public class RelationshipDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into player_relationships (`player_id`, `level`, `partner`) VALUES(?, ?, ?);", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT into player_relationships (`player_id`, `level`, `partner`) VALUES(?, ?, ?);", sqlConnection);
             preparedStatement.setInt(1, playerId);
             preparedStatement.setString(2, status);
             preparedStatement.setInt(3, partner);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 }

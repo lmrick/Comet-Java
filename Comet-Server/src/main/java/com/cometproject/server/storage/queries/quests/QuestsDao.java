@@ -2,7 +2,7 @@ package com.cometproject.server.storage.queries.quests;
 
 import com.cometproject.api.game.quests.IQuest;
 import com.cometproject.server.game.quests.types.Quest;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,20 +20,20 @@ public class QuestsDao {
         Map<String, IQuest> quests = new HashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM quests WHERE enabled = '1'", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM quests WHERE enabled = '1'", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 quests.put(resultSet.getString("name"), new Quest(resultSet));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return quests;

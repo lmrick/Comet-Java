@@ -4,8 +4,7 @@ import io.netty.channel.ChannelHandlerContext;
 
 public interface INetSessionFactory {
 
-    INetSession createSession(ChannelHandlerContext channel);
-
-    void disposeSession(INetSession session);
+    INetSession<?> createSession(ChannelHandlerContext channel);
+    void disposeSession(INetSession<?> session);
 
 }

@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.incoming.room.action;
 
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.permissions.PermissionsManager;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.filter.FilterResult;

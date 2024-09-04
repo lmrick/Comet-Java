@@ -13,19 +13,6 @@ import com.cometproject.server.network.messages.outgoing.room.avatar.WhisperMess
 public class WiredActionBotTalkToAvatar extends WiredActionItem {
     public static final int PARAM_MESSAGE_TYPE = 0;
 
-    /**
-     * The default constructor
-     *
-     * @param id       The ID of the item
-     * @param itemId   The ID of the item definition
-     * @param room     The instance of the room
-     * @param owner    The ID of the owner
-     * @param x        The position of the item on the X axis
-     * @param y        The position of the item on the Y axis
-     * @param z        The position of the item on the z axis
-     * @param rotation The orientation of the item
-     * @param data     The JSON object associated with this item
-     */
     public WiredActionBotTalkToAvatar(RoomItemData itemData, Room room) {
         super(itemData, room);
     }
@@ -46,7 +33,7 @@ public class WiredActionBotTalkToAvatar extends WiredActionItem {
             return;
         }
 
-        if (event.entity == null || !(event.entity instanceof PlayerEntity)) {
+        if (!(event.entity instanceof PlayerEntity)) {
             return;
         }
 
@@ -71,12 +58,8 @@ public class WiredActionBotTalkToAvatar extends WiredActionItem {
 
         if (botEntity != null) {
             boolean isWhisper = (this.getWiredData().getParams().size() == 1 && (this.getWiredData().getParams().get(PARAM_MESSAGE_TYPE) == 1));
-
-            if (isWhisper) {
-                ((PlayerEntity) event.entity).getPlayer().getSession().send(new WhisperMessageComposer(botEntity.getId(), message, 2));
-            } else {
-                ((PlayerEntity) event.entity).getPlayer().getSession().send(new TalkMessageComposer(botEntity.getId(), message, ChatEmotion.NONE, 2));
-            }
+					
+					((PlayerEntity) event.entity).getPlayer().getSession().send(isWhisper ? new WhisperMessageComposer(botEntity.getId(), message, 2) : new TalkMessageComposer(botEntity.getId(), message, ChatEmotion.NONE, 2));
         }
     }
 }

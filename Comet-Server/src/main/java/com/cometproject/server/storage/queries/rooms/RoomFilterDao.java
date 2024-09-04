@@ -1,6 +1,6 @@
 package com.cometproject.server.storage.queries.rooms;
 
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 import com.cometproject.server.utilities.collections.ConcurrentHashSet;
 
 import java.sql.Connection;
@@ -18,9 +18,9 @@ public class RoomFilterDao {
         Set<String> data = new ConcurrentHashSet<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT `word` FROM room_word_filter WHERE room_id = ?;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT `word` FROM room_word_filter WHERE room_id = ?;", sqlConnection);
             preparedStatement.setInt(1, roomId);
             resultSet = preparedStatement.executeQuery();
 
@@ -29,11 +29,11 @@ public class RoomFilterDao {
             }
         } catch (Exception e) {
             if (e instanceof SQLException)
-                SqlHelper.handleSqlException(((SQLException) e));
+                SQLUtility.handleSqlException(((SQLException) e));
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -44,19 +44,19 @@ public class RoomFilterDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into room_word_filter (`word`, `room_id`) VALUES(?, ?);", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT into room_word_filter (`word`, `room_id`) VALUES(?, ?);", sqlConnection);
             preparedStatement.setString(1, word);
             preparedStatement.setInt(2, roomId);
 
             preparedStatement.execute();
         } catch (Exception e) {
             if (e instanceof SQLException)
-                SqlHelper.handleSqlException(((SQLException) e));
+                SQLUtility.handleSqlException(((SQLException) e));
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -65,19 +65,19 @@ public class RoomFilterDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("DELETE FROM room_word_filter WHERE word = ? AND room_id = ?;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE FROM room_word_filter WHERE word = ? AND room_id = ?;", sqlConnection);
             preparedStatement.setString(1, word);
             preparedStatement.setInt(2, roomId);
 
             preparedStatement.execute();
         } catch (Exception e) {
             if (e instanceof SQLException)
-                SqlHelper.handleSqlException(((SQLException) e));
+                SQLUtility.handleSqlException(((SQLException) e));
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 }

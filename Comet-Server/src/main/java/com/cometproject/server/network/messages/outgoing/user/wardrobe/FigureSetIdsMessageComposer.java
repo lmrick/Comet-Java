@@ -30,7 +30,7 @@ public class FigureSetIdsMessageComposer extends MessageComposer {
             final IClothingItem clothingItem = CatalogManager.getInstance().getClothingItems().get(clothing);
 
             if (clothingItem != null) {
-                for (int part : clothingItem.getParts()) {
+                for (int part : clothingItem.parts()) {
                     parts.add(part);
                 }
             }

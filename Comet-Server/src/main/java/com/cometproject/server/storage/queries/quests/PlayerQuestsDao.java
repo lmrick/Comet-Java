@@ -1,6 +1,6 @@
 package com.cometproject.server.storage.queries.quests;
 
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,9 +18,9 @@ public class PlayerQuestsDao {
         Map<Integer, Integer> questProgression = new HashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT `quest_id`, `progress`  FROM player_quest_progression WHERE player_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT `quest_id`, `progress`  FROM player_quest_progression WHERE player_id = ?", sqlConnection);
 
             preparedStatement.setInt(1, playerId);
 
@@ -30,11 +30,11 @@ public class PlayerQuestsDao {
                 questProgression.put(resultSet.getInt("quest_id"), resultSet.getInt("progress"));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return questProgression;
@@ -45,12 +45,12 @@ public class PlayerQuestsDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
             if (isNew) {
-                preparedStatement = SqlHelper.prepare("INSERT into player_quest_progression (progress, player_id, quest_id) VALUES(?, ?, ?);", sqlConnection);
+                preparedStatement = SQLUtility.prepare("INSERT into player_quest_progression (progress, player_id, quest_id) VALUES(?, ?, ?);", sqlConnection);
             } else {
-                preparedStatement = SqlHelper.prepare("UPDATE player_quest_progression SET progress = ? WHERE player_id = ? AND quest_id = ?;", sqlConnection);
+                preparedStatement = SQLUtility.prepare("UPDATE player_quest_progression SET progress = ? WHERE player_id = ? AND quest_id = ?;", sqlConnection);
             }
 
             preparedStatement.setInt(1, progression);
@@ -63,10 +63,10 @@ public class PlayerQuestsDao {
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -75,19 +75,19 @@ public class PlayerQuestsDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("DELETE FROM player_quest_progression WHERE player_id = ? AND quest_id = ?;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE FROM player_quest_progression WHERE player_id = ? AND quest_id = ?;", sqlConnection);
 
             preparedStatement.setInt(1, playerId);
             preparedStatement.setInt(2, questId);
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 }

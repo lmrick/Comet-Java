@@ -20,7 +20,7 @@ public class WiredConditionHasHandItem extends WiredConditionItem {
 
     @Override
     public boolean evaluate(RoomEntity entity, Object data) {
-        if (entity == null || !(entity instanceof PlayerEntity)) return false;
+        if (!(entity instanceof PlayerEntity)) return false;
 
         if (this.getWiredData().getParams().size() != 1) {
             return false;

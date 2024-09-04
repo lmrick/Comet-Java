@@ -1,6 +1,6 @@
 package com.cometproject.server.storage.queries.items;
 
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,19 +15,19 @@ public class TradeDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("UPDATE items SET user_id = ? WHERE id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE items SET user_id = ? WHERE id = ?", sqlConnection);
 
             preparedStatement.setInt(1, userId);
             preparedStatement.setLong(2, itemId);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -36,9 +36,9 @@ public class TradeDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("UPDATE items SET user_id = ? WHERE id = ?;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE items SET user_id = ? WHERE id = ?;", sqlConnection);
 
             for (Map.Entry<Long, Integer> item : itemsToUpdate.entrySet()) {
                 preparedStatement.setInt(1, item.getValue());
@@ -49,10 +49,10 @@ public class TradeDao {
 
             preparedStatement.executeBatch();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 }

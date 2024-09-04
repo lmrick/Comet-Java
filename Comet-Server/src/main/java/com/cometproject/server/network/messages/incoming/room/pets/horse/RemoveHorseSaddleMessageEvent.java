@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.incoming.room.pets.horse;
 
-import com.cometproject.api.game.players.data.components.inventory.PlayerItem;
+import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.server.composers.catalog.UnseenItemsMessageComposer;
 import com.cometproject.server.game.items.ItemManager;
 import com.cometproject.server.game.rooms.objects.entities.types.PetEntity;
@@ -40,7 +40,7 @@ public class RemoveHorseSaddleMessageEvent implements Event {
             final Data<Long> itemId = Data.createEmpty();
             StorageContext.getCurrentContext().getRoomItemRepository().createItem(client.getPlayer().getId(), ItemManager.getInstance().getSaddleId(), "", itemId::set);
 
-            PlayerItem playerItem = client.getPlayer().getInventory().add(itemId.get(), ItemManager.getInstance().getSaddleId(), "", null, null);
+            IPlayerItem playerItem = client.getPlayer().getInventory().add(itemId.get(), ItemManager.getInstance().getSaddleId(), "", null, null);
             client.send(new UnseenItemsMessageComposer(Sets.newHashSet(playerItem), ItemManager.getInstance()));
             client.send(new UpdateInventoryMessageComposer());
         }

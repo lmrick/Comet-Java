@@ -26,7 +26,7 @@ public class PlaylistMessageComposer extends MessageComposer {
         msg.writeInt(songItemDatas.size());
 
         for (SongItemData songItemData : this.songItemDatas) {
-            msg.writeInt(songItemData.getItemSnapshot().getBaseItemId());
+            msg.writeInt(songItemData.getItemSnapshot().baseItemId());
             msg.writeInt(songItemData.getSongId());
         }
     }

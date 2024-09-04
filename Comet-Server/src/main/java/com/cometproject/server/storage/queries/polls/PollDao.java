@@ -5,7 +5,7 @@ import com.cometproject.server.game.polls.types.PollQuestionType;
 import com.cometproject.server.game.polls.types.questions.MultipleChoiceQuestion;
 import com.cometproject.server.game.polls.types.questions.SingleChoiceQuestion;
 import com.cometproject.server.game.polls.types.questions.WordedPollQuestion;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 import com.google.common.collect.Maps;
 
 import java.sql.Connection;
@@ -23,9 +23,9 @@ public class PollDao {
         Map<Integer, Poll> data = Maps.newConcurrentMap();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM polls;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM polls;", sqlConnection);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -45,10 +45,10 @@ public class PollDao {
             }
 
             // close the stuff cos we gonna create new ones
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM polls_questions", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM polls_questions", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -79,11 +79,11 @@ public class PollDao {
 
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -94,9 +94,9 @@ public class PollDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into polls_answers (player_id, poll_id, question_id, answer) VALUES(?, ?, ?, ?);", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT into polls_answers (player_id, poll_id, question_id, answer) VALUES(?, ?, ?, ?);", sqlConnection);
 
             preparedStatement.setInt(1, playerId);
             preparedStatement.setInt(2, pollId);
@@ -105,10 +105,10 @@ public class PollDao {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -118,10 +118,10 @@ public class PollDao {
         ResultSet resultSet = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
             String query = "SELECT NULL FROM polls_answers WHERE question_id = ? AND poll_id = ? AND player_id = ?;";
-            preparedStatement = SqlHelper.prepare(query, sqlConnection);
+            preparedStatement = SQLUtility.prepare(query, sqlConnection);
 
             preparedStatement.setInt(1, questionId);
             preparedStatement.setInt(2, pollId);
@@ -134,11 +134,11 @@ public class PollDao {
             }
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return false;
@@ -150,10 +150,10 @@ public class PollDao {
         ResultSet resultSet = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
             String query = "SELECT NULL FROM polls_answers WHERE poll_id = ? AND player_id = ?;";
-            preparedStatement = SqlHelper.prepare(query, sqlConnection);
+            preparedStatement = SQLUtility.prepare(query, sqlConnection);
 
             preparedStatement.setInt(1, pollId);
             preparedStatement.setInt(2, playerId);
@@ -165,11 +165,11 @@ public class PollDao {
             }
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return false;

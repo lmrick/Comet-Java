@@ -3,15 +3,15 @@ package com.cometproject.api.game.achievements.types;
 import java.util.Map;
 
 public interface IAchievementGroup {
-    int getId();
+    int id();
 
     int getLevelCount();
 
     IAchievement getAchievement(int level);
 
-    Map<Integer, IAchievement> getAchievements();
+    Map<Integer, IAchievement> achievements();
 
-    String getGroupName();
+    String groupName();
 
-    AchievementCategory getCategory();
+    AchievementCategory category();
 }

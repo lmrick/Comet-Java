@@ -11,51 +11,44 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-
 public class WiredActionRandomEffect extends WiredActionItem {
-    public WiredActionRandomEffect(RoomItemData itemData, Room room) {
-        super(itemData, room);
-    }
-
-    @Override
-    public void onEventComplete(WiredItemEvent event) {
-        if (!(event.entity instanceof PlayerEntity)) {
-            return;
-        }
-
-        PlayerEntity playerEntity = ((PlayerEntity) event.entity);
-
-        List<WiredActionItem> actionItems = Lists.newArrayList();
-
-        for(long itemId : this.getWiredData().getSelectedIds()){
-            final RoomItemFloor floorItem = this.getRoom().getItems().getFloorItem(itemId);
-
-            for (RoomItemFloor roomItemFloor : this.getRoom().getItems().getItemsOnSquare(floorItem.getPosition().getX(), floorItem.getPosition().getY()))
-            {
-                if(!(roomItemFloor instanceof WiredActionItem))
-                    continue;
-
-                actionItems.add((WiredActionItem) roomItemFloor);
-            }
-        }
-
-        WiredActionItem actionItem = WiredUtil.getRandomElement(actionItems);
-
-        if (actionItem == null)
-            return;
-
-        actionItem.evaluate(playerEntity, null);
-
-    }
-
-
-    @Override
-    public boolean requiresPlayer() {
-        return true;
-    }
-
-    @Override
-    public int getInterface() {
-        return 0;
-    }
+	
+	public WiredActionRandomEffect(RoomItemData itemData, Room room) {
+		super(itemData, room);
+	}
+	
+	@Override
+	public void onEventComplete(WiredItemEvent event) {
+		if (!(event.entity instanceof PlayerEntity playerEntity)) {
+			return;
+		}
+		
+		List<WiredActionItem> actionItems = Lists.newArrayList();
+		
+		this.getWiredData().getSelectedIds().stream()
+						.mapToLong(itemId -> itemId)
+						.mapToObj(itemId -> this.getRoom().getItems().getFloorItem(itemId))
+						.forEachOrdered(floorItem -> this.getRoom().getItems().getItemsOnSquare(floorItem.getPosition().getX(), floorItem.getPosition().getY()).stream()
+										.filter(WiredActionItem.class::isInstance)
+										.map(WiredActionItem.class::cast)
+										.forEachOrdered(actionItems::add));
+		
+		WiredActionItem actionItem = WiredUtil.getRandomElement(actionItems);
+		
+		if (actionItem == null) return;
+		
+		actionItem.evaluate(playerEntity, null);
+		
+	}
+	
+	@Override
+	public boolean requiresPlayer() {
+		return true;
+	}
+	
+	@Override
+	public int getInterface() {
+		return 0;
+	}
+	
 }

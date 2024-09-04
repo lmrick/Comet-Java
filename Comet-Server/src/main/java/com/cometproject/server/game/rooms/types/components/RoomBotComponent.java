@@ -15,9 +15,9 @@ import java.util.Map;
 
 
 public class RoomBotComponent {
-    private Room room;
+    private final Room room;
 
-    private Map<String, Integer> botNameToId;
+    private final Map<String, Integer> botNameToId;
 
     public RoomBotComponent(Room room) {
         this.room = room;
@@ -34,53 +34,35 @@ public class RoomBotComponent {
     public void load() {
         try {
             List<IBotData> botData = this.room.getCachedData() != null ? this.room.getCachedData().getBots() : RoomBotDao.getBotsByRoomId(this.room.getId());
-
-            for (IBotData data : botData) {
-                if (this.botNameToId.containsKey(data.getUsername())) {
-                    data.setUsername(this.getAvailableName(data.getUsername()));
-                }
-
-                BotEntity botEntity = new BotEntity(data, room.getEntities().getFreeId(), ((PlayerBotData) data).getPosition(), 2, 2, room);
-                this.botNameToId.put(botEntity.getUsername(), botEntity.getBotId());
-
-                botEntity.getPosition().setZ(this.getRoom().getMapping().getStepHeight(botEntity.getPosition()));
-
-                this.getRoom().getEntities().addEntity(botEntity);
-
-                for (RoomItemFloor roomItemFloor : this.getRoom().getItems().getItemsOnSquare(((PlayerBotData) data).getPosition().getX(), ((PlayerBotData) data).getPosition().getY())) {
-                    roomItemFloor.onEntityStepOn(botEntity);
-                }
-            }
+					
+					botData.forEach(data -> {
+						if (this.botNameToId.containsKey(data.getUsername())) {
+							data.setUsername(this.getAvailableName(data.getUsername()));
+						}
+						BotEntity botEntity = new BotEntity(data, room.getEntities().getFreeId(), ((PlayerBotData) data).getPosition(), 2, 2, room);
+						this.botNameToId.put(botEntity.getUsername(), botEntity.getBotId());
+						botEntity.getPosition().setZ(this.getRoom().getMapping().getStepHeight(botEntity.getPosition()));
+						this.getRoom().getEntities().addEntity(botEntity);
+						this.getRoom().getItems().getItemsOnSquare(((PlayerBotData) data).getPosition().getX(), ((PlayerBotData) data).getPosition().getY()).forEach(roomItemFloor -> roomItemFloor.onEntityStepOn(botEntity));
+					});
         } catch (Exception e) {
             room.log.error("Error while deploying bots", e);
         }
     }
 
     public String getAvailableName(String name) {
-        int usedCount = 0;
-
-        for (String usedName : this.botNameToId.keySet()) {
-            if (name.startsWith(usedName)) {
-                usedCount++;
-            }
-        }
-
-        if (usedCount == 0) return name;
+        int usedCount = (int) this.botNameToId.keySet().stream().filter(name::startsWith).count();
+			
+			if (usedCount == 0) return name;
 
         return name + usedCount;
     }
 
     public BotEntity addBot(IBotData bot, int x, int y, double height) {
         int virtualId = room.getEntities().getFreeId();
-        String name;
-
-        if (this.botNameToId.containsKey(bot.getUsername())) {
-            name = this.getAvailableName(bot.getUsername());
-        } else {
-            name = bot.getUsername();
-        }
-
-        this.botNameToId.put(bot.getUsername(), bot.getId());
+        String name = this.botNameToId.containsKey(bot.getUsername()) ? this.getAvailableName(bot.getUsername()) : bot.getUsername();
+			
+			this.botNameToId.put(bot.getUsername(), bot.getId());
 
         BotData botData = new PlayerBotData(bot.getId(), name, bot.getMotto(), bot.getFigure(), bot.getGender(), bot.getOwnerName(), bot.getOwnerId(), "[]", true, 7, bot.getBotType(), bot.getMode(), null);
         BotEntity botEntity = new BotEntity(botData, virtualId, new Position(x, y, height), 1, 1, room);

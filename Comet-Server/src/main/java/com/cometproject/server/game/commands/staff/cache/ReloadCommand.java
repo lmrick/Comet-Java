@@ -2,7 +2,7 @@ package com.cometproject.server.game.commands.staff.cache;
 
 import com.cometproject.api.game.GameContext;
 import com.cometproject.server.composers.catalog.CatalogPublishMessageComposer;
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.achievements.AchievementManager;
 import com.cometproject.server.game.catalog.CatalogManager;
 import com.cometproject.server.game.commands.ChatCommand;
@@ -33,164 +33,122 @@ public class ReloadCommand extends ChatCommand {
     @Override
     public void execute(Session client, String[] params) {
         String command = params.length == 0 ? "" : params[0];
-
-        switch (command) {
-            default:
-                client.send(new MotdNotificationMessageComposer(
-                        "Here's a list of what you can reload using the :reload <type> command!\n\n" +
-                                "- bans\n" +
-                                "- catalog\n" +
-                                "- navigator\n" +
-                                "- permissions\n" +
-                                "- rooms\n" +
-                                "- catalog\n" +
-                                "- news\n" +
-                                "- config\n" +
-                                "- items\n" +
-                                "- filter\n" +
-                                "- locale\n" +
-                                "- modpresets\n" +
-                                "- groupitems\n" +
-                                "- models\n" +
-                                "- music\n" +
-                                "- quests\n" +
-                                "- achievements\n" +
-                                "- pets\n" +
-                                "- polls\n" +
-                                "- bundles"
-                ));
-
-                break;
-            case "bans":
-                BanManager.getInstance().loadBans();
-
-                sendNotif(Locale.get("command.reload.bans"), client);
-                break;
-
-            case "catalog":
-                CatalogManager.getInstance().loadItemsAndPages();
-                CatalogManager.getInstance().loadGiftBoxes();
-
-                NetworkManager.getInstance().getSessions().broadcast(new CatalogPublishMessageComposer(true));
-                sendNotif(Locale.get("command.reload.catalog"), client);
-                break;
-
-            case "navigator":
-                NavigatorManager.getInstance().loadCategories();
-                NavigatorManager.getInstance().loadPublicRooms();
-                NavigatorManager.getInstance().loadStaffPicks();
-
-                sendNotif(Locale.get("command.reload.navigator"), client);
-                break;
-
-            case "permissions":
-                PermissionsManager.getInstance().loadRankPermissions();
-                PermissionsManager.getInstance().loadPerks();
-                PermissionsManager.getInstance().loadCommands();
-                PermissionsManager.getInstance().loadOverrideCommands();
-                PermissionsManager.getInstance().getEffects();
-
-                sendNotif(Locale.get("command.reload.permissions"), client);
-                break;
-
-            case "config":
-                ConfigDao.getAll();
-
-                sendNotif(Locale.get("command.reload.config"), client);
-                break;
-
-            case "news":
-                LandingManager.getInstance().loadArticles();
-
-                sendNotif(Locale.get("command.reload.news"), client);
-                break;
-
-            case "items":
-                ItemManager.getInstance().loadItemDefinitions();
-
-                sendNotif(Locale.get("command.reload.items"), client);
-                break;
-
-            case "filter":
-                RoomManager.getInstance().getFilter().loadFilter();
-
-                sendNotif(Locale.get("command.reload.filter"), client);
-                break;
-
-            case "locale":
-                Locale.reload();
-                CommandManager.getInstance().reloadAllCommands();
-
-                sendNotif(Locale.get("command.reload.locale"), client);
-                break;
-
-            case "modpresets":
-                ModerationManager.getInstance().loadPresets();
-
-                sendNotif(Locale.get("command.reload.modpresets"), client);
-
-                ModerationManager.getInstance().getModerators().forEach((session -> {
-                    session.send(new ModToolMessageComposer());
-                }));
-                break;
-
-            case "groupitems":
-                GameContext.getCurrent().getGroupService().getItemService().load();
-                sendNotif(Locale.get("command.reload.groupitems"), client);
-                break;
-
-            case "models":
-                GameContext.getCurrent().getRoomModelService().loadModels();
-
-                sendNotif(Locale.get("command.reload.models"), client);
-                break;
-
-            case "music":
-                ItemManager.getInstance().loadMusicData();
-                sendNotif(Locale.get("command.reload.music"), client);
-                break;
-
-            case "quests":
-                QuestManager.getInstance().loadQuests();
-                sendNotif(Locale.get("command.reload.quests"), client);
-                break;
-
-            case "achievements":
-                AchievementManager.getInstance().loadAchievements();
-
-                sendNotif(Locale.get("command.reload.achievements"), client);
-                break;
-
-            case "pets":
-                PetManager.getInstance().loadPetRaces();
-                PetManager.getInstance().loadPetSpeech();
-                PetManager.getInstance().loadTransformablePets();
-                PetManager.getInstance().loadPetBreedPallets();
-
-                PetCommandManager.getInstance().initialize();
-
-                sendNotif(Locale.get("command.reload.pets"), client);
-                break;
-
-            case "polls":
-                PollManager.getInstance().initialize();
-
-                if (PollManager.getInstance().roomHasPoll(client.getPlayer().getEntity().getRoom().getId())) {
-                    Poll poll = PollManager.getInstance().getPollByRoomId(client.getPlayer().getEntity().getRoom().getId());
-
-                    client.getPlayer().getEntity().getRoom().getEntities().broadcastMessage(new InitializePollMessageComposer(poll.getPollId(), poll.getPollTitle(), poll.getThanksMessage()));
-                }
-
-                sendNotif(Locale.get("command.reload.polls"), client);
-                break;
-            case "bundles": {
-                RoomBundleManager.getInstance().initialize();
-
-                sendNotif(Locale.get("command.reload.bundles"), client);
-
-                break;
-            }
-        }
+			
+			switch (command) {
+				default -> client.send(new MotdNotificationMessageComposer("Here's a list of what you can reload using the :reload <type> command!\n\n- bans\n- catalog\n- navigator\n- permissions\n- rooms\n- catalog\n- news\n- config\n- items\n- filter\n- locale\n- modpresets\n- groupitems\n- models\n- music\n- quests\n- achievements\n- pets\n- polls\n- bundles"));
+				case "bans" -> {
+					BanManager.getInstance().loadBans();
+					
+					sendNotification(Locale.get("command.reload.bans"), client);
+				}
+				case "catalog" -> {
+					CatalogManager.getInstance().loadItemsAndPages();
+					CatalogManager.getInstance().loadGiftBoxes();
+					
+					NetworkManager.getInstance().getSessions().broadcast(new CatalogPublishMessageComposer(true));
+					sendNotification(Locale.get("command.reload.catalog"), client);
+				}
+				case "navigator" -> {
+					NavigatorManager.getInstance().loadCategories();
+					NavigatorManager.getInstance().loadPublicRooms();
+					NavigatorManager.getInstance().loadStaffPicks();
+					
+					sendNotification(Locale.get("command.reload.navigator"), client);
+				}
+				case "permissions" -> {
+					PermissionsManager.getInstance().loadRankPermissions();
+					PermissionsManager.getInstance().loadPerks();
+					PermissionsManager.getInstance().loadCommands();
+					PermissionsManager.getInstance().loadOverrideCommands();
+					PermissionsManager.getInstance().getEffects();
+					
+					sendNotification(Locale.get("command.reload.permissions"), client);
+				}
+				case "config" -> {
+					ConfigDao.getAll();
+					
+					sendNotification(Locale.get("command.reload.config"), client);
+				}
+				case "news" -> {
+					LandingManager.getInstance().loadArticles();
+					
+					sendNotification(Locale.get("command.reload.news"), client);
+				}
+				case "items" -> {
+					ItemManager.getInstance().loadItemDefinitions();
+					
+					sendNotification(Locale.get("command.reload.items"), client);
+				}
+				case "filter" -> {
+					RoomManager.getInstance().getFilter().loadFilter();
+					
+					sendNotification(Locale.get("command.reload.filter"), client);
+				}
+				case "locale" -> {
+					Locale.reload();
+					CommandManager.getInstance().reloadAllCommands();
+					
+					sendNotification(Locale.get("command.reload.locale"), client);
+				}
+				case "modpresets" -> {
+					ModerationManager.getInstance().loadPresets();
+					
+					sendNotification(Locale.get("command.reload.modpresets"), client);
+					
+					ModerationManager.getInstance().getModerators().forEach((session -> {
+						session.send(new ModToolMessageComposer());
+					}));
+				}
+				case "groupitems" -> {
+					GameContext.getCurrent().getGroupService().getItemService().load();
+					sendNotification(Locale.get("command.reload.groupitems"), client);
+				}
+				case "models" -> {
+					GameContext.getCurrent().getRoomModelService().loadModels();
+					
+					sendNotification(Locale.get("command.reload.models"), client);
+				}
+				case "music" -> {
+					ItemManager.getInstance().loadMusicData();
+					sendNotification(Locale.get("command.reload.music"), client);
+				}
+				case "quests" -> {
+					QuestManager.getInstance().loadQuests();
+					sendNotification(Locale.get("command.reload.quests"), client);
+				}
+				case "achievements" -> {
+					AchievementManager.getInstance().loadAchievements();
+					
+					sendNotification(Locale.get("command.reload.achievements"), client);
+				}
+				case "pets" -> {
+					PetManager.getInstance().loadPetRaces();
+					PetManager.getInstance().loadPetSpeech();
+					PetManager.getInstance().loadTransformablePets();
+					PetManager.getInstance().loadPetBreedPallets();
+					
+					PetCommandManager.getInstance().initialize();
+					
+					sendNotification(Locale.get("command.reload.pets"), client);
+				}
+				case "polls" -> {
+					PollManager.getInstance().initialize();
+					
+					if (PollManager.getInstance().roomHasPoll(client.getPlayer().getEntity().getRoom().getId())) {
+						Poll poll = PollManager.getInstance().getPollByRoomId(client.getPlayer().getEntity().getRoom().getId());
+						
+						client.getPlayer().getEntity().getRoom().getEntities().broadcastMessage(new InitializePollMessageComposer(poll.getPollId(), poll.getPollTitle(), poll.getThanksMessage()));
+					}
+					
+					sendNotification(Locale.get("command.reload.polls"), client);
+				}
+				case "bundles" -> {
+					RoomBundleManager.getInstance().initialize();
+					
+					sendNotification(Locale.get("command.reload.bundles"), client);
+					
+				}
+			}
     }
 
     @Override

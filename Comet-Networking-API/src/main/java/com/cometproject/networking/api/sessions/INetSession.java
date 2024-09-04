@@ -6,9 +6,7 @@ import io.netty.channel.ChannelHandlerContext;
 public interface INetSession<T> {
 
     ChannelHandlerContext getChannel();
-
     IMessageHandler getMessageHandler();
-
     T getGameSession();
 
 }

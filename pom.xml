@@ -6,29 +6,19 @@
 
     <groupId>Comet</groupId>
     <artifactId>Comet-Parent</artifactId>
-
+    <version>2.12.1-TEST1</version>
     <packaging>pom</packaging>
 
-    <version>2.12.1-TEST1</version>
-
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <name>Comet</name>
     <url>http://www.comet.im</url>
     <description>Comet Server developed by the Comet Team</description>
 
-
-    <!--
-    INSERT INTO `comet`.`permission_commands` (`command_id`, `minimum_rank`, `vip_only`) VALUES ('eventvote_command', '6', '0');
-    INSERT INTO `comet`.`permission_commands` (`command_id`, `minimum_rank`, `vip_only`) VALUES ('roomvideo_command', '2', '0');
-
-    INSERT INTO `comet`.`server_locale` (`key`, `value`) VALUES ('command.eventvote.name', 'eventvote');
-    INSERT INTO `comet`.`server_locale` (`key`, `value`) VALUES ('command.roomvideo.name', 'roomvideo');
-
-    -->
     <modules>
         <module>Comet-API</module>
         <module>Comet-API-Example</module>

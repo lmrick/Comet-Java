@@ -9,20 +9,15 @@ import com.cometproject.server.storage.queries.pets.RoomPetDao;
 
 
 public class PetComponent {
-
     private Room room;
 
     public PetComponent(Room room) {
         this.room = room;
-
         this.load();
     }
 
     public void load() {
-        for (IPetData data : this.room.getCachedData() != null ? this.room.getCachedData().getPets() :
-                RoomPetDao.getPetsByRoomId(this.room.getId())) {
-            this.loadPet(data);
-        }
+			(this.room.getCachedData() != null ? this.room.getCachedData().getPets() : RoomPetDao.getPetsByRoomId(this.room.getId())).forEach(this::loadPet);
     }
 
     private void loadPet(IPetData petData) {

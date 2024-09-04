@@ -1,7 +1,7 @@
 package com.cometproject.server.storage.queries.system;
 
 import com.cometproject.server.game.commands.notifications.types.Notification;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,9 +20,9 @@ public class NotificationCommandsDao {
         Map<String, Notification> data = new HashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM command_notifications", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM command_notifications", sqlConnection);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -30,11 +30,11 @@ public class NotificationCommandsDao {
                 data.put(resultSet.getString("name"), new Notification(resultSet));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;

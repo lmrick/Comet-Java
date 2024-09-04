@@ -2,7 +2,7 @@ package com.cometproject.server.storage.queries.config;
 
 import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.game.rooms.filter.FilterMode;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,9 +17,9 @@ public class ConfigDao {
         PreparedStatement preparedStatement = null;
         ResultSet config = null;
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM server_configuration LIMIT 1", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM server_configuration LIMIT 1", sqlConnection);
 
             config = preparedStatement.executeQuery();
 
@@ -107,11 +107,11 @@ public class ConfigDao {
                 }
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(config);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(config);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 }

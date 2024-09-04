@@ -1,21 +1,21 @@
 package com.cometproject.api.game.catalog.types.vouchers;
 
 public interface IVoucher {
-    int getId();
+    int id();
 
-    VoucherType getType();
+    VoucherType type();
 
-    String getData();
+    String data();
 
-    int getCreatedBy();
+    int createdBy();
 
-    int getCreatedAt();
+    int createdAt();
 
-    int getClaimedBy();
+    int claimedBy();
 
-    int getClaimedAt();
+    int claimedAt();
 
-    VoucherStatus getStatus();
+    VoucherStatus status();
 
-    String getCode();
+    String code();
 }

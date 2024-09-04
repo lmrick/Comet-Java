@@ -1,7 +1,7 @@
 package com.cometproject.server.logging.database;
 
 import com.cometproject.server.logging.database.queries.LogQueries;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -18,7 +18,7 @@ public class LogDatabaseHelper {
     }
 
     public static Connection getConnection() throws SQLException {
-        return SqlHelper.getConnection();
+        return SQLUtility.getConnection();
     }
 
     public static void closeSilently(Connection connection) {

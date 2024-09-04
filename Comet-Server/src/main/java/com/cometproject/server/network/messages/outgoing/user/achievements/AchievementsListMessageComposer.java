@@ -6,7 +6,7 @@ import com.cometproject.api.game.achievements.types.IAchievementGroup;
 import com.cometproject.api.game.players.data.components.achievements.IAchievementProgress;
 import com.cometproject.api.networking.messages.IComposer;
 import com.cometproject.server.game.achievements.AchievementManager;
-import com.cometproject.server.game.players.components.AchievementComponent;
+import com.cometproject.server.game.players.components.types.AchievementComponent;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
@@ -33,12 +33,12 @@ public class AchievementsListMessageComposer extends MessageComposer {
             IAchievementProgress achievementProgress = this.achievementComponent.getProgress(entry.getKey());
             IAchievement achievement = achievementProgress == null ? entry.getValue().getAchievement(1) : entry.getValue().getAchievement(achievementProgress.getLevel());
 
-            msg.writeInt(entry.getValue().getId());
-            msg.writeInt(achievement == null ? 0 : achievement.getLevel());
-            msg.writeString(achievement == null ? "" : entry.getKey().getGroupName() + achievement.getLevel());
-            msg.writeInt(achievement == null ? 0 : achievement.getLevel() == 1 ? 0 : entry.getValue().getAchievement(achievement.getLevel() - 1).getProgressNeeded());
-            msg.writeInt(achievement == null ? 0 : achievement.getProgressNeeded());
-            msg.writeInt(achievement == null ? 0 : achievement.getRewardActivityPoints());
+            msg.writeInt(entry.getValue().id());
+            msg.writeInt(achievement == null ? 0 : achievement.level());
+            msg.writeString(achievement == null ? "" : entry.getKey().getGroupName() + achievement.level());
+            msg.writeInt(achievement == null ? 0 : achievement.level() == 1 ? 0 : entry.getValue().getAchievement(achievement.level() - 1).progressNeeded());
+            msg.writeInt(achievement == null ? 0 : achievement.progressNeeded());
+            msg.writeInt(achievement == null ? 0 : achievement.rewardActivityPoints());
             msg.writeInt(0);
             msg.writeInt(achievementProgress != null ? achievementProgress.getProgress() : 0);
 
@@ -50,7 +50,7 @@ public class AchievementsListMessageComposer extends MessageComposer {
                 msg.writeBoolean(false);
             }
 
-            msg.writeString(entry.getValue().getCategory().toString().toLowerCase());
+            msg.writeString(entry.getValue().category().toString().toLowerCase());
             msg.writeString("");
             msg.writeInt(entry.getValue().getLevelCount());
             msg.writeInt(0);

@@ -3,7 +3,7 @@ package com.cometproject.server.storage.queries.achievements;
 import com.cometproject.api.game.achievements.types.AchievementType;
 import com.cometproject.api.game.players.data.components.achievements.IAchievementProgress;
 import com.cometproject.server.game.players.components.types.achievements.AchievementProgress;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,9 +21,9 @@ public class PlayerAchievementDao {
         Map<AchievementType, IAchievementProgress> achievements = new HashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT `group`, `level`, `progress` FROM `player_achievements` WHERE `player_id` = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT `group`, `level`, `progress` FROM `player_achievements` WHERE `player_id` = ?", sqlConnection);
 
             preparedStatement.setInt(1, playerId);
 
@@ -33,11 +33,11 @@ public class PlayerAchievementDao {
                 achievements.put(AchievementType.getTypeByName(resultSet.getString("group")), new AchievementProgress(resultSet.getInt("level"), resultSet.getInt("progress")));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return achievements;
@@ -48,9 +48,9 @@ public class PlayerAchievementDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into player_achievements (`player_id`, `group`, `level`, `progress`) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE level = ?, progress = ?;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT into player_achievements (`player_id`, `group`, `level`, `progress`) VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE level = ?, progress = ?;", sqlConnection);
 
             preparedStatement.setInt(1, playerId);
             preparedStatement.setString(2, type.getGroupName());
@@ -61,10 +61,10 @@ public class PlayerAchievementDao {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -73,9 +73,9 @@ public class PlayerAchievementDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("UPDATE player_badges SET badge_code = ? WHERE player_id = ? AND badge_code = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE player_badges SET badge_code = ? WHERE player_id = ? AND badge_code = ?", sqlConnection);
 
             preparedStatement.setString(1, newBadge);
             preparedStatement.setInt(2, playerId);
@@ -83,10 +83,10 @@ public class PlayerAchievementDao {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 }

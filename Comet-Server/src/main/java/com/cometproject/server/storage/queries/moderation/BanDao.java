@@ -3,7 +3,7 @@ package com.cometproject.server.storage.queries.moderation;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.moderation.types.Ban;
 import com.cometproject.server.game.moderation.types.BanType;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,9 +22,9 @@ public class BanDao {
         Map<String, Ban> data = new ConcurrentHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM bans WHERE expire = 0 OR expire > " + Comet.getTime(), sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM bans WHERE expire = 0 OR expire > " + Comet.getTime(), sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -32,11 +32,11 @@ public class BanDao {
             }
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -49,9 +49,9 @@ public class BanDao {
         ResultSet resultSet = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into bans (`type`, `expire`, `data`, `reason`, `added_by`) VALUES(?, ?, ?, ?, ?);", sqlConnection, true);
+            preparedStatement = SQLUtility.prepare("INSERT into bans (`type`, `expire`, `data`, `reason`, `added_by`) VALUES(?, ?, ?, ?, ?);", sqlConnection, true);
 
             preparedStatement.setString(1, type.toString().toLowerCase());
             preparedStatement.setLong(2, length == 0 ? 0 : expire);
@@ -59,18 +59,18 @@ public class BanDao {
             preparedStatement.setString(4, reason);
             preparedStatement.setInt(5, addedBy);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
             resultSet = preparedStatement.getGeneratedKeys();
 
             while (resultSet.next()) {
                 return resultSet.getInt(1);
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return 0;
@@ -83,21 +83,21 @@ public class BanDao {
         ResultSet resultSet = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("DELETE FROM bans WHERE data = ?", sqlConnection, true);
+            preparedStatement = SQLUtility.prepare("DELETE FROM bans WHERE data = ?", sqlConnection, true);
 
             preparedStatement.setString(1, data);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
             resultSet = preparedStatement.getGeneratedKeys();
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
     }

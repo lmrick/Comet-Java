@@ -48,16 +48,14 @@ public class NetworkManager {
     }
 
     public static NetworkManager getInstance() {
-        if (networkManagerInstance == null)
-            networkManagerInstance = new NetworkManager();
-
+        if (networkManagerInstance == null) networkManagerInstance = new NetworkManager();
         return networkManagerInstance;
     }
 
     public void initialize(String ip, String ports) {
         this.rsa = new RSA();
         this.sessions = new SessionManager();
-        this.messageHandler = new MessageHandler();
+        this.messageHandler = new MessageHandler(messageHandler);
 
         this.serverPort = Integer.parseInt(ports.split(",")[0]);
 

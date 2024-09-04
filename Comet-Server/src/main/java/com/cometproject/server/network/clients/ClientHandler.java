@@ -16,12 +16,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
-@ChannelHandler.Sharable
+import static io.netty.channel.ChannelHandler.*;
+
+@Sharable
 public class ClientHandler extends SimpleChannelInboundHandler<MessageEvent> {
     private static final AttributeKey<INetSession> ATTR_SESSION = AttributeKey.newInstance("NetSession");
-
     private static Logger log = Logger.getLogger(ClientHandler.class.getName());
-
     private static ClientHandler clientHandlerInstance;
     private final INetSessionFactory sessionFactory;
 
@@ -30,9 +30,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageEvent> {
     }
 
     public static ClientHandler getInstance(INetSessionFactory netSessionFactory) {
-        if (clientHandlerInstance == null)
-            clientHandlerInstance = new ClientHandler(netSessionFactory);
-
+        if (clientHandlerInstance == null) clientHandlerInstance = new ClientHandler(netSessionFactory);
         return clientHandlerInstance;
     }
 
@@ -58,7 +56,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageEvent> {
 
             this.sessionFactory.disposeSession(session);
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
         }
 
         ctx.attr(ATTR_SESSION).remove();
@@ -67,9 +65,8 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageEvent> {
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
         if (NetworkManager.IDLE_TIMER_ENABLED) {
-            if (evt instanceof IdleStateEvent) {
-                IdleStateEvent e = (IdleStateEvent) evt;
-                if (e.state() == IdleState.READER_IDLE) {
+            if (evt instanceof IdleStateEvent e) {
+							if (e.state() == IdleState.READER_IDLE) {
                     ctx.close();
                 } else if (e.state() == IdleState.WRITER_IDLE) {
                     ctx.writeAndFlush(new PingMessageComposer(), ctx.voidPromise());

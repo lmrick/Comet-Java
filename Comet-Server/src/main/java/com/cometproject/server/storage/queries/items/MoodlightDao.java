@@ -1,10 +1,10 @@
 package com.cometproject.server.storage.queries.items;
 
 import com.cometproject.api.utilities.JsonUtil;
-import com.cometproject.server.game.rooms.objects.items.data.MoodlightData;
-import com.cometproject.server.game.rooms.objects.items.data.MoodlightPresetData;
-import com.cometproject.server.game.rooms.objects.items.types.wall.MoodlightWallItem;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.game.rooms.objects.items.data.MoodLightData;
+import com.cometproject.server.game.rooms.objects.items.data.MoodLightPresetData;
+import com.cometproject.server.game.rooms.objects.items.types.wall.MoodLightWallItem;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,18 +15,18 @@ import java.util.List;
 
 
 public class MoodlightDao {
-    public static MoodlightData getMoodlightData(long itemId) {
+    public static MoodLightData getMoodlightData(long itemId) {
         Connection sqlConnection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        List<MoodlightPresetData> presets = new ArrayList<>();
-        MoodlightData data = null;
+        List<MoodLightPresetData> presets = new ArrayList<>();
+        MoodLightData data = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM items_moodlight WHERE item_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM items_moodlight WHERE item_id = ?", sqlConnection);
             preparedStatement.setLong(1, itemId);
             resultSet = preparedStatement.executeQuery();
 
@@ -37,23 +37,23 @@ public class MoodlightDao {
                     String preset3 = resultSet.getString("preset_3");
 
                     if (!preset1.equals("")) {
-                        presets.add(JsonUtil.getInstance().fromJson(preset1, MoodlightPresetData.class));
+                        presets.add(JsonUtil.getInstance().fromJson(preset1, MoodLightPresetData.class));
                     }
                     if (!preset2.equals("")) {
-                        presets.add(JsonUtil.getInstance().fromJson(preset2, MoodlightPresetData.class));
+                        presets.add(JsonUtil.getInstance().fromJson(preset2, MoodLightPresetData.class));
                     }
                     if (!preset3.equals("")) {
-                        presets.add(JsonUtil.getInstance().fromJson(preset3, MoodlightPresetData.class));
+                        presets.add(JsonUtil.getInstance().fromJson(preset3, MoodLightPresetData.class));
                     }
 
-                    data = new MoodlightData(resultSet.getString("enabled").equals("1"), resultSet.getInt("active_preset"), presets);
+                    data = new MoodLightData(resultSet.getString("enabled").equals("1"), resultSet.getInt("active_preset"), presets);
                 }
             } else {
-                presets.add(new MoodlightPresetData(true, "#000000", 255));
-                presets.add(new MoodlightPresetData(true, "#000000", 255));
-                presets.add(new MoodlightPresetData(true, "#000000", 255));
+                presets.add(new MoodLightPresetData(true, "#000000", 255));
+                presets.add(new MoodLightPresetData(true, "#000000", 255));
+                presets.add(new MoodLightPresetData(true, "#000000", 255));
 
-                preparedStatement = SqlHelper.prepare("INSERT INTO items_moodlight (item_id,enabled,active_preset,preset_1,preset_2,preset_3) VALUES (?,?,?,?,?,?);", sqlConnection);
+                preparedStatement = SQLUtility.prepare("INSERT INTO items_moodlight (item_id,enabled,active_preset,preset_1,preset_2,preset_3) VALUES (?,?,?,?,?,?);", sqlConnection);
                 preparedStatement.setLong(1, itemId);
                 preparedStatement.setString(2, "0");
                 preparedStatement.setString(3, "1");
@@ -63,28 +63,28 @@ public class MoodlightDao {
 
                 preparedStatement.execute();
 
-                data = new MoodlightData(false, 1, presets);
+                data = new MoodLightData(false, 1, presets);
             }
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
     }
 
-    public static void updateMoodlight(MoodlightWallItem item) {
+    public static void updateMoodlight(MoodLightWallItem item) {
         Connection sqlConnection = null;
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("UPDATE items_moodlight SET enabled = ?, active_preset = ?, preset_1 = ?, preset_2 = ?, preset_3 = ? WHERE item_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE items_moodlight SET enabled = ?, active_preset = ?, preset_1 = ?, preset_2 = ?, preset_3 = ? WHERE item_id = ?", sqlConnection);
             preparedStatement.setString(1, item.getMoodlightData().isEnabled() ? "1" : "0");
             preparedStatement.setInt(2, item.getMoodlightData().getActivePreset());
             preparedStatement.setString(3, JsonUtil.getInstance().toJson(item.getMoodlightData().getPresets().get(0)));
@@ -94,10 +94,10 @@ public class MoodlightDao {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 }

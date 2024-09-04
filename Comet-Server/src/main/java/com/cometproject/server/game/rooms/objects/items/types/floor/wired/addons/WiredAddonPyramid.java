@@ -33,12 +33,8 @@ public class WiredAddonPyramid extends RoomItemFloor {
             this.setTicks(RoomItemFactory.getProcessTime(1.0));
             return;
         }
-
-        if (this.getItemData().getData().equals("1")) {
-            this.getItemData().setData("0");
-        } else {
-            this.getItemData().setData("1");
-        }
+			
+			this.getItemData().setData(this.getItemData().getData().equals("1") ? "0" : "1");
 
         this.sendUpdate();
         this.setTicks(RoomItemFactory.getProcessTime(RandomUtil.getRandomInt(5, 8)));

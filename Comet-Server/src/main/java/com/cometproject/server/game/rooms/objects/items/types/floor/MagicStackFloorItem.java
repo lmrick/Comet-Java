@@ -6,28 +6,29 @@ import com.cometproject.server.game.rooms.types.Room;
 
 import java.text.DecimalFormat;
 
-
 public class MagicStackFloorItem extends RoomItemFloor {
-    private double magicHeight = 0d;
-
-    public MagicStackFloorItem(RoomItemData itemData, Room room) {
-        super(itemData, room);
-    }
-
-    @Override
-    public void onPlaced() {
-        this.getItemData().setData("");
-        this.magicHeight = 0d;
-        this.saveData();
-    }
-
-    @Override
-    public double getOverrideHeight() {
-        return magicHeight;
-    }
-
-    public void setOverrideHeight(double magicHeight) {
-        this.getItemData().setData(new DecimalFormat("#.00").format(magicHeight).replace(",", "."));
-        this.magicHeight = magicHeight;
-    }
+	
+	private double magicHeight = 0.0D;
+	
+	public MagicStackFloorItem(RoomItemData itemData, Room room) {
+		super(itemData, room);
+	}
+	
+	@Override
+	public void onPlaced() {
+		this.getItemData().setData("");
+		this.magicHeight = 0.0D;
+		this.saveData();
+	}
+	
+	@Override
+	public double getOverrideHeight() {
+		return magicHeight;
+	}
+	
+	public void setOverrideHeight(double magicHeight) {
+		this.getItemData().setData(new DecimalFormat("#.00").format(magicHeight).replace(",", "."));
+		this.magicHeight = magicHeight;
+	}
+	
 }

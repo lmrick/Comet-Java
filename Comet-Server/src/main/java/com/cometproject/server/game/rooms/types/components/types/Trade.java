@@ -1,9 +1,9 @@
 package com.cometproject.server.game.rooms.types.components.types;
 
-import com.cometproject.api.game.players.data.components.inventory.PlayerItem;
+import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.api.game.rooms.entities.RoomEntityStatus;
 import com.cometproject.server.composers.catalog.UnseenItemsMessageComposer;
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.items.ItemManager;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.types.components.TradeComponent;
@@ -21,37 +21,12 @@ import java.util.Set;
 
 
 public class Trade {
-    /**
-     * The entities which are trading
-     */
     private PlayerEntity user1, user2;
-
-    /**
-     * The stage the trade is currently at
-     */
     private int stage = 1;
-
-    /**
-     * The items which the entities are trading
-     */
-    private Set<PlayerItem> user1Items, user2Items;
-
-    /**
-     * Have the entities accepted the trade?
-     */
+    private Set<IPlayerItem> user1Items, user2Items;
     private boolean user1Accepted = false, user2Accepted = false;
-
-    /**
-     * The component instance which stores the trades
-     */
     private TradeComponent tradeComponent;
 
-    /**
-     * Initialize the trade
-     *
-     * @param user1 The user who initialized the trade
-     * @param user2 The user who is participating in the trade
-     */
     public Trade(PlayerEntity user1, PlayerEntity user2) {
         this.user1 = user1;
         this.user2 = user2;
@@ -125,7 +100,7 @@ public class Trade {
      * @param user The user which is adding an item
      * @param item The chosen item
      */
-    public void addItem(int user, PlayerItem item, boolean update) {
+    public void addItem(int user, IPlayerItem item, boolean update) {
         if(this.user1Accepted || this.user2Accepted) {
             return;
         }
@@ -154,7 +129,7 @@ public class Trade {
         }
     }
 
-    public boolean isOffered(PlayerItem item) {
+    public boolean isOffered(IPlayerItem item) {
         return this.user1Items.contains(item) || this.user2Items.contains(item);
     }
 
@@ -174,7 +149,7 @@ public class Trade {
      * @param user The user which is removing an item
      * @param item The chosen item
      */
-    public void removeItem(int user, PlayerItem item) {
+    public void removeItem(int user, IPlayerItem item) {
         if(this.user1Accepted || this.user2Accepted) {
             return;
         }
@@ -262,14 +237,14 @@ public class Trade {
      */
     public void complete() {
         // confirm the items still exist before making any permanent changes.
-        for (PlayerItem item : this.user1Items) {
+        for (IPlayerItem item : this.user1Items) {
             if (user1.getPlayer().getInventory().getItem(item.getId()) == null) {
                 sendToUsers(new AlertMessageComposer(Locale.get("game.trade.error")));
                 return;
             }
         }
 
-        for (PlayerItem item : this.user2Items) {
+        for (IPlayerItem item : this.user2Items) {
             if (user2.getPlayer().getInventory().getItem(item.getId()) == null) {
                 sendToUsers(new AlertMessageComposer(Locale.get("game.trade.error")));
                 return;
@@ -278,14 +253,14 @@ public class Trade {
 
         final Map<Long, Integer> itemsToSave = new HashMap<>();
 
-        for (PlayerItem item : this.user1Items) {
+        for (IPlayerItem item : this.user1Items) {
             user1.getPlayer().getInventory().removeItem(item);
             user2.getPlayer().getInventory().addItem(item);
 
             itemsToSave.put(item.getId(), user2.getPlayer().getId());
         }
 
-        for (PlayerItem item : this.user2Items) {
+        for (IPlayerItem item : this.user2Items) {
             user2.getPlayer().getInventory().removeItem(item);
             user1.getPlayer().getInventory().addItem(item);
 

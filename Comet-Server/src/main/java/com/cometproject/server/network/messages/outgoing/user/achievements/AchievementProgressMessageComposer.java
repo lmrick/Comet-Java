@@ -27,12 +27,12 @@ public class AchievementProgressMessageComposer extends MessageComposer {
     public void compose(IComposer msg) {
         final IAchievement achievement = this.achievementGroup.getAchievement(this.achievementProgress.getLevel());
 
-        msg.writeInt(achievementGroup.getId());
-        msg.writeInt(achievement.getLevel());
-        msg.writeString(achievementGroup.getGroupName() + achievement.getLevel());
-        msg.writeInt(achievement.getLevel() == 1 ? 0 : achievementGroup.getAchievement(achievement.getLevel() - 1).getProgressNeeded());
-        msg.writeInt(achievement.getProgressNeeded());
-        msg.writeInt(achievement.getRewardActivityPoints());
+        msg.writeInt(achievementGroup.id());
+        msg.writeInt(achievement.level());
+        msg.writeString(achievementGroup.groupName() + achievement.level());
+        msg.writeInt(achievement.level() == 1 ? 0 : achievementGroup.getAchievement(achievement.level() - 1).progressNeeded());
+        msg.writeInt(achievement.progressNeeded());
+        msg.writeInt(achievement.rewardActivityPoints());
         msg.writeInt(0);
         msg.writeInt(achievementProgress.getProgress());
 
@@ -42,7 +42,7 @@ public class AchievementProgressMessageComposer extends MessageComposer {
             msg.writeBoolean(false);
         }
 
-        msg.writeString(achievementGroup.getCategory().toString().toLowerCase());
+        msg.writeString(achievementGroup.category().toString().toLowerCase());
         msg.writeString("");
         msg.writeInt(achievementGroup.getLevelCount());
         msg.writeInt(0);

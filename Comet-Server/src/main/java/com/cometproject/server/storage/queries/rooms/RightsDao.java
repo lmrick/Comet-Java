@@ -1,7 +1,7 @@
 package com.cometproject.server.storage.queries.rooms;
 
 import com.cometproject.server.game.rooms.types.components.types.RoomBan;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,9 +22,9 @@ public class RightsDao {
         List<Integer> data = new CopyOnWriteArrayList<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT player_id FROM room_rights WHERE room_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT player_id FROM room_rights WHERE room_id = ?", sqlConnection);
             preparedStatement.setInt(1, roomId);
 
             resultSet = preparedStatement.executeQuery();
@@ -33,11 +33,11 @@ public class RightsDao {
                 data.add(resultSet.getInt("player_id"));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -48,18 +48,18 @@ public class RightsDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("DELETE from room_rights WHERE room_id = ? AND player_id = ? ", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE from room_rights WHERE room_id = ? AND player_id = ? ", sqlConnection);
             preparedStatement.setInt(1, roomId);
             preparedStatement.setInt(2, playerId);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -68,18 +68,18 @@ public class RightsDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into room_rights (`room_id`, `player_id`) VALUES(?, ?);", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT into room_rights (`room_id`, `player_id`) VALUES(?, ?);", sqlConnection);
             preparedStatement.setInt(1, roomId);
             preparedStatement.setInt(2, playerId);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -88,19 +88,19 @@ public class RightsDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into room_bans (`room_id`, `player_id`, `expire_timestamp`) VALUES(?, ?, ?);", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT into room_bans (`room_id`, `player_id`, `expire_timestamp`) VALUES(?, ?, ?);", sqlConnection);
             preparedStatement.setInt(1, roomId);
             preparedStatement.setInt(2, playerId);
             preparedStatement.setInt(3, expireTimestamp);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -109,18 +109,18 @@ public class RightsDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("DELETE FROM `room_bans` WHERE `player_id` = ? AND `room_id` = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE FROM `room_bans` WHERE `player_id` = ? AND `room_id` = ?", sqlConnection);
             preparedStatement.setInt(1, playerId);
             preparedStatement.setInt(2, roomId);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -133,9 +133,9 @@ public class RightsDao {
         Map<Integer, RoomBan> data = new ConcurrentHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT b.`room_id`, b.`player_id`, b.`expire_timestamp`, p.`username` AS player_name FROM `room_bans` b LEFT JOIN `players` AS p ON p.`id` = b.`player_id` WHERE b.`room_id` = ? AND b.`expire_timestamp` >= UNIX_TIMESTAMP() OR b.`room_id` = ? AND b.`expire_timestamp` = -1", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT b.`room_id`, b.`player_id`, b.`expire_timestamp`, p.`username` AS player_name FROM `room_bans` b LEFT JOIN `players` AS p ON p.`id` = b.`player_id` WHERE b.`room_id` = ? AND b.`expire_timestamp` >= UNIX_TIMESTAMP() OR b.`room_id` = ? AND b.`expire_timestamp` = -1", sqlConnection);
             preparedStatement.setInt(1, roomId);
             preparedStatement.setInt(2, roomId);
 
@@ -145,11 +145,11 @@ public class RightsDao {
                 data.put(resultSet.getInt("player_id"), new RoomBan(resultSet.getInt("player_id"), resultSet.getString("player_name"), resultSet.getInt("expire_timestamp")));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;

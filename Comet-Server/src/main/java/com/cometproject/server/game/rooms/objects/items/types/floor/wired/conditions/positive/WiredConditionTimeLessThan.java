@@ -6,21 +6,23 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.base.W
 import com.cometproject.server.game.rooms.types.Room;
 
 public class WiredConditionTimeLessThan extends WiredConditionItem {
-    private static final int PARAM_TICKS = 0;
-
-    public WiredConditionTimeLessThan(RoomItemData itemData, Room room) {
-        super(itemData, room);
-    }
-
-    @Override
-    public int getInterface() {
-        return 3;
-    }
-
-    @Override
-    public boolean evaluate(RoomEntity entity, Object data) {
-        final int ticks = this.getWiredData().getParams().get(PARAM_TICKS);
-        return this.getRoom().getWiredTimer() <= ticks;
-    }
+	
+	private static final int PARAM_TICKS = 0;
+	
+	public WiredConditionTimeLessThan(RoomItemData itemData, Room room) {
+		super(itemData, room);
+	}
+	
+	@Override
+	public int getInterface() {
+		return 3;
+	}
+	
+	@Override
+	public boolean evaluate(RoomEntity entity, Object data) {
+		final int ticks = this.getWiredData().getParams().get(PARAM_TICKS);
+		return this.getRoom().getWiredTimer() <= ticks;
+	}
+	
 }
 

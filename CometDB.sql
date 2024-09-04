@@ -12188,6 +12188,8 @@ INSERT INTO `permission_commands` VALUES ('notification_command', '7', '0');
 INSERT INTO `permission_commands` VALUES ('maintenance_command', '7', '0');
 INSERT INTO `permission_commands` VALUES ('eventalert_command', '7', '0');
 INSERT INTO `permission_commands` VALUES ('quickpoll_command', '7', '0');
+INSERT INTO `permission_commands` VALUES ('eventvote_command', '6', '0');
+INSERT INTO `permission_commands` VALUES ('roomvideo_command', '2', '0');
 
 -- ----------------------------
 -- Table structure for permission_perks
@@ -13378,6 +13380,8 @@ INSERT INTO `server_locale` VALUES ('navigator.staff.picks.added.message', 'Room
 INSERT INTO `server_locale` VALUES ('navigator.staff.picks.added.title', 'Staff Picked Rooms');
 INSERT INTO `server_locale` VALUES ('navigator.staff.picks.removed.message', 'Room has been removed from the staff picked rooms.');
 INSERT INTO `server_locale` VALUES ('navigator.staff.picks.removed.title', 'Staff Picked Rooms');
+INSERT INTO `server_locale` VALUES ('command.eventvote.name', 'eventvote');
+INSERT INTO `server_locale` VALUES ('command.roomvideo.name', 'roomvideo');
 
 -- ----------------------------
 -- Table structure for server_permissions_ranks

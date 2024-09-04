@@ -1,7 +1,7 @@
 package com.cometproject.server.storage.queries.player.messenger;
 
 import com.cometproject.server.game.players.components.types.messenger.MessengerSearchResult;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,11 +21,11 @@ public class MessengerSearchDao {
         List<MessengerSearchResult> data = new ArrayList<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            query = SqlHelper.escapeWildcards(query);
+            query = SQLUtility.escapeWildcards(query);
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM players WHERE username LIKE ? LIMIT 50;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM players WHERE username LIKE ? LIMIT 50;", sqlConnection);
             preparedStatement.setString(1, query + "%");
 
             resultSet = preparedStatement.executeQuery();
@@ -34,11 +34,11 @@ public class MessengerSearchDao {
                 data.add(new MessengerSearchResult(resultSet.getInt("id"), resultSet.getString("username"), resultSet.getString("figure"), resultSet.getString("motto"), new Date(resultSet.getInt("last_online") * 1000L).toString()));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;

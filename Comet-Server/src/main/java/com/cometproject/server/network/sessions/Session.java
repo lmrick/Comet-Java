@@ -32,9 +32,7 @@ public class Session implements ISession {
     private String uniqueId = "";
     private Player player;
     private boolean disconnectCalled = false;
-
     private ChannelHandlerContext wsChannel;
-
     private DiffieHellman diffieHellman;
     private long lastPing = Comet.getTime();
 

@@ -9,7 +9,7 @@ import com.cometproject.api.game.utilities.RandomUtil;
 
 
 public class WiredAddonColourWheel extends RoomItemFloor {
-    private static final int TIMEOUT = 4;
+    private static final double TIMEOUT = 4;
 
     public WiredAddonColourWheel(RoomItemData itemData, Room room) {
         super(itemData, room);

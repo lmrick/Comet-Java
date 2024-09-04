@@ -4,7 +4,7 @@ import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.game.bots.IBotData;
 import com.cometproject.api.game.rooms.models.RoomTileState;
 import com.cometproject.api.game.utilities.Position;
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.rooms.objects.entities.types.BotEntity;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.types.Room;
@@ -41,7 +41,7 @@ public class PlaceBotMessageEvent implements Event {
 
         final RoomTile tile = room.getMapping().getTile(x, y);
 
-        if (tile == null || !room.getMapping().isValidPosition(position) || room.getModel().getSquareState()[x][y] != RoomTileState.VALID) {
+        if (tile == null || room.getMapping().isValidPosition(position) || room.getModel().getSquareState()[x][y] != RoomTileState.VALID) {
             return;
         }
 

@@ -9,4 +9,5 @@ public class DefaultAI extends AbstractBotAI {
     public DefaultAI(RoomEntity entity) {
         super(entity);
     }
+    
 }

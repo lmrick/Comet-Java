@@ -10,9 +10,7 @@
         <version>2.12.1-TEST1</version>
     </parent>
 
-    <groupId>Comet</groupId>
     <artifactId>Comet-Game-Catalog</artifactId>
     <version>2.12.1-TEST1</version>
-
 
 </project>

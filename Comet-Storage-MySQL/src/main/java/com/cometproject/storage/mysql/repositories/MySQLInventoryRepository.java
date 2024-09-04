@@ -1,9 +1,9 @@
 package com.cometproject.storage.mysql.repositories;
 
 import com.cometproject.api.game.furniture.types.LimitedEditionItem;
+import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItemFactory;
 import com.cometproject.api.game.players.data.components.inventory.InventoryItemData;
-import com.cometproject.api.game.players.data.components.inventory.PlayerItem;
 import com.cometproject.api.game.rooms.objects.data.LimitedEditionItemData;
 import com.cometproject.storage.api.repositories.IInventoryRepository;
 import com.cometproject.storage.mysql.MySQLConnectionProvider;
@@ -23,8 +23,8 @@ public class MySQLInventoryRepository extends MySQLRepository implements IInvent
     }
 
     @Override
-    public void getInventoryByPlayerId(int playerId, Consumer<List<PlayerItem>> itemConsumer) {
-        final List<PlayerItem> items = Lists.newArrayList();
+    public void getInventoryByPlayerId(int playerId, Consumer<List<IPlayerItem>> itemConsumer) {
+        final List<IPlayerItem> items = Lists.newArrayList();
 
         select("SELECT i.*, ltd.limited_id, ltd.limited_total FROM items i LEFT JOIN items_limited_edition ltd ON ltd.item_id = i.id WHERE room_id = 0 AND user_id = ? ORDER by id DESC;", (data) -> {
             items.add(this.buildItem(data));
@@ -33,7 +33,7 @@ public class MySQLInventoryRepository extends MySQLRepository implements IInvent
         itemConsumer.accept(items);
     }
 
-    private PlayerItem buildItem(IResultReader data) throws Exception {
+    private IPlayerItem buildItem(IResultReader data) throws Exception {
         final long id = data.readLong("id");
         final int baseId = data.readInteger("base_item");
         final String extra_data = data.readString("extra_data");

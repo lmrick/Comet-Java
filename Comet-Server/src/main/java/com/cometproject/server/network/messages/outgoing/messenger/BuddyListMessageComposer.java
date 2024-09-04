@@ -3,7 +3,7 @@ package com.cometproject.server.network.messages.outgoing.messenger;
 import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.groups.types.IGroup;
-import com.cometproject.api.game.players.data.PlayerAvatar;
+import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.game.players.data.components.messenger.IMessengerFriend;
 import com.cometproject.api.game.players.data.components.messenger.RelationshipLevel;
 import com.cometproject.api.networking.messages.IComposer;
@@ -22,7 +22,7 @@ import java.util.Set;
 public class BuddyListMessageComposer extends MessageComposer {
     private final Player player;
     private final Map<Integer, IMessengerFriend> friends;
-    private final List<PlayerAvatar> avatars;
+    private final List<IPlayerAvatar> avatars;
     private final Set<Integer> groups;
 
     private final boolean hasStaffChat;
@@ -38,7 +38,7 @@ public class BuddyListMessageComposer extends MessageComposer {
 
         for (Map.Entry<Integer, IMessengerFriend> friend : friends.entrySet()) {
             if (friend.getValue() != null) {
-                final PlayerAvatar playerAvatar = friend.getValue().getAvatar();
+                final IPlayerAvatar playerAvatar = friend.getValue().getAvatar();
 
                 if (playerAvatar != null) {
                     avatars.add(playerAvatar);
@@ -65,7 +65,7 @@ public class BuddyListMessageComposer extends MessageComposer {
             msg.writeInt(avatars.size() + (hasStaffChat ? 1 : 0) + (hasLogChat ? 1 : 0));
         }
 
-        for (PlayerAvatar playerAvatar : avatars) {
+        for (IPlayerAvatar playerAvatar : avatars) {
             msg.writeInt(playerAvatar.getId());
             msg.writeString(playerAvatar.getUsername());
             msg.writeInt(77); // Male.

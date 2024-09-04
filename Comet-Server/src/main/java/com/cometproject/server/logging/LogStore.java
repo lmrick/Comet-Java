@@ -9,16 +9,14 @@ import java.util.concurrent.TimeUnit;
 public class LogStore {
     private static final TimeUnit QUEUE_FLUSH_UNIT = TimeUnit.MINUTES;
     private static final int QUEUE_FLUSH_TIME = 1;
-
-    // Containers
     private RoomVisitContainer roomVisitContainer;
     private LogEntryContainer logEntryContainer;
 
     public LogStore() {
-        if (!LogManager.ENABLED)
-            return;
-
-        // Register the containers
+        if (!LogManager.ENABLED) {
+					return;
+				}
+        
         roomVisitContainer = new RoomVisitContainer();
         logEntryContainer = new LogEntryContainer();
     }

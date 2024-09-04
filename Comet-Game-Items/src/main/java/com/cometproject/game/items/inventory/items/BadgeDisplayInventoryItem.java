@@ -35,6 +35,6 @@ public class BadgeDisplayInventoryItem extends InventoryItem {
         msg.writeString(name); // creator
         msg.writeString(date); // date
 
-        return true;
+        return false;
     }
 }

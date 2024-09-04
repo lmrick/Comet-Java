@@ -1,25 +1,53 @@
 package com.cometproject.server.tasks;
 
+import javax.annotation.Nonnull;
+import java.text.MessageFormat;
+
 public class CometThread extends Thread {
-
-    public CometThread(CometTask task) {
-        super(task, "Comet Task");
-    }
-
-    public CometThread(CometTask task, String identifier) {
-        super(task, "Comet Task [" + identifier + "]");
-    }
-
-    @Override
-    public void start() {
-        if (this.isRunning()) {
-            return;
-        }
-
-        super.start();
-    }
-
-    public boolean isRunning() {
-        return super.isAlive();
-    }
+	
+	public CometThread(Runnable r) {
+		super(r, "Comet Thread");
+	}
+	
+	public CometThread(Runnable r, String identifier) {
+		super(r, MessageFormat.format("Comet Thread [{0}]", identifier));
+	}
+	
+	public CometThread(ICometTask task) {
+		super(task, "Comet Task");
+	}
+	
+	public CometThread(ICometTask task, String identifier) {
+		super(task, MessageFormat.format("Comet Task [{0}]", identifier));
+	}
+	
+	@Override
+	public synchronized void start() {
+		if (this.isRunning()) {
+			return;
+		}
+		
+		super.start();
+	}
+	
+	@Override
+	@Nonnull
+	public State getState() {
+		return super.getState();
+	}
+	
+	@Override
+	public void interrupt() {
+		super.interrupt();
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+	
+	public synchronized boolean isRunning() {
+		return super.isAlive();
+	}
+	
 }

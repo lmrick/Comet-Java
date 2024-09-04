@@ -4,7 +4,7 @@ import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.server.game.moderation.types.tickets.HelpTicket;
 import com.cometproject.server.game.moderation.types.tickets.HelpTicketState;
 import com.cometproject.server.game.rooms.types.components.types.ChatMessage;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
 
@@ -27,9 +27,9 @@ public class TicketDao {
         Map<Integer, HelpTicket> data = new HashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM moderation_help_tickets WHERE state = 'OPEN' OR state = 'IN_PROGRESS'", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM moderation_help_tickets WHERE state = 'OPEN' OR state = 'IN_PROGRESS'", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -47,11 +47,11 @@ public class TicketDao {
                         resultSet.getInt("reported_id"), resultSet.getInt("moderator_id"), resultSet.getString("message"), HelpTicketState.valueOf(resultSet.getString("state")), chatMessages, resultSet.getInt("room_id")));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -62,10 +62,10 @@ public class TicketDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("UPDATE moderation_help_tickets SET state = ?, submitter_id = ?, reported_id = ?, moderator_id = ?, category_id = ?, message = ?, chat_messages = ?, room_id = ?, timestamp_opened = ?, " +
-                    "timestamp_closed = ? WHERE id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE moderation_help_tickets SET state = ?, submitter_id = ?, reported_id = ?, moderator_id = ?, category_id = ?, message = ?, chat_messages = ?, room_id = ?, timestamp_opened = ?, " +
+																									 "timestamp_closed = ? WHERE id = ?", sqlConnection);
 
             preparedStatement.setString(1, helpTicket.getState().toString());
             preparedStatement.setInt(2, helpTicket.getSubmitterId());
@@ -82,10 +82,10 @@ public class TicketDao {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -95,9 +95,9 @@ public class TicketDao {
         ResultSet resultSet = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into moderation_help_tickets (`state`, `submitter_id`, `reported_id`, `category_id`, `message`, `chat_messages`, `room_id`, `timestamp_opened`) VALUES(?, ?, ?, ?, ?, ?, ?, ?);", sqlConnection, true);
+            preparedStatement = SQLUtility.prepare("INSERT into moderation_help_tickets (`state`, `submitter_id`, `reported_id`, `category_id`, `message`, `chat_messages`, `room_id`, `timestamp_opened`) VALUES(?, ?, ?, ?, ?, ?, ?, ?);", sqlConnection, true);
 
             preparedStatement.setString(1, "OPEN");
             preparedStatement.setInt(2, submitterId);
@@ -115,11 +115,11 @@ public class TicketDao {
                 return resultSet.getInt(1);
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return 0;

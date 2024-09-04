@@ -3,7 +3,7 @@ package com.cometproject.server.network.messages.incoming.room.item.gifts;
 import com.cometproject.api.game.furniture.types.FurnitureDefinition;
 import com.cometproject.api.game.furniture.types.GiftData;
 import com.cometproject.api.game.furniture.types.ItemType;
-import com.cometproject.api.game.players.data.components.inventory.PlayerItem;
+import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.server.composers.catalog.UnseenItemsMessageComposer;
 import com.cometproject.server.game.items.ItemManager;
 import com.cometproject.server.game.players.components.types.inventory.InventoryItem;
@@ -45,7 +45,7 @@ public class OpenGiftMessageEvent implements Event {
         room.getItems().removeItem(floorItem, client, false);
 
         if (itemDefinition.getItemType() == ItemType.WALL) {
-            final PlayerItem item = new InventoryItem(floorItemId, itemDefinition.getId(), giftData.getExtraData(), null, null);
+            final IPlayerItem item = new InventoryItem(floorItemId, itemDefinition.getId(), giftData.getExtraData(), null, null);
             client.getPlayer().getInventory().addItem(item);
 
             client.sendQueue(new UpdateInventoryMessageComposer());

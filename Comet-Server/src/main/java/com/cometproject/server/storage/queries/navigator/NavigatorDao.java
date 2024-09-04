@@ -1,9 +1,9 @@
 package com.cometproject.server.storage.queries.navigator;
 
-import com.cometproject.server.game.navigator.types.Category;
+import com.cometproject.server.game.navigator.types.categories.Category;
 import com.cometproject.server.game.navigator.types.categories.NavigatorViewMode;
 import com.cometproject.server.game.navigator.types.publics.PublicRoom;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 import com.cometproject.server.utilities.collections.ConcurrentHashSet;
 import org.apache.commons.collections4.map.ListOrderedMap;
 
@@ -25,9 +25,9 @@ public class NavigatorDao {
         LinkedHashMap<Integer, PublicRoom> data = new LinkedHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM navigator_publics WHERE enabled = '1' ORDER BY order_num ASC", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM navigator_publics WHERE enabled = '1' ORDER BY order_num ASC", sqlConnection);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -36,11 +36,11 @@ public class NavigatorDao {
                 data.put(roomId, new PublicRoom(roomId, resultSet.getString("caption"), resultSet.getString("description"), resultSet.getString("image_url"), resultSet.getString("category")));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -54,9 +54,9 @@ public class NavigatorDao {
         Set<Integer> data = new ConcurrentHashSet<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM navigator_staff_picks", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM navigator_staff_picks", sqlConnection);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -66,11 +66,11 @@ public class NavigatorDao {
                 data.add(roomId);
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -84,9 +84,9 @@ public class NavigatorDao {
         Map<Integer, Category> data = new ListOrderedMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM navigator_categories WHERE enabled = '1' ORDER BY order_id ASC", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM navigator_categories WHERE enabled = '1' ORDER BY order_id ASC", sqlConnection);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -108,11 +108,11 @@ public class NavigatorDao {
                         resultSet.getInt("room_count_expanded")));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -123,17 +123,17 @@ public class NavigatorDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("DELETE FROM navigator_staff_picks WHERE room_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE FROM navigator_staff_picks WHERE room_id = ?", sqlConnection);
             preparedStatement.setInt(1, roomId);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -142,18 +142,18 @@ public class NavigatorDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
-            preparedStatement = SqlHelper.prepare("INSERT into navigator_staff_picks VALUES(?, ?)", sqlConnection);
+            sqlConnection = SQLUtility.getConnection();
+            preparedStatement = SQLUtility.prepare("INSERT into navigator_staff_picks VALUES(?, ?)", sqlConnection);
 
             preparedStatement.setInt(1, roomId);
             preparedStatement.setInt(2, picker);
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 }

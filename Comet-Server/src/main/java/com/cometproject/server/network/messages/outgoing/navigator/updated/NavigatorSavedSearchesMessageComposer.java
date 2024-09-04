@@ -26,8 +26,8 @@ public class NavigatorSavedSearchesMessageComposer extends MessageComposer {
 
         for (Map.Entry<Integer, ISavedSearch> savedSearch : this.savedSearches.entrySet()) {
             msg.writeInt(savedSearch.getKey());
-            msg.writeString(savedSearch.getValue().getView());
-            msg.writeString(savedSearch.getValue().getSearchQuery());
+            msg.writeString(savedSearch.getValue().view());
+            msg.writeString(savedSearch.getValue().searchQuery());
             msg.writeString("");
         }
     }

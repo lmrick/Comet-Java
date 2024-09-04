@@ -9,7 +9,7 @@ import com.cometproject.api.game.groups.types.components.forum.IForumThreadReply
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.composers.group.forums.GroupForumPostReplyMessageComposer;
 import com.cometproject.server.composers.group.forums.GroupForumPostThreadMessageComposer;
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.filter.FilterResult;
 import com.cometproject.server.network.messages.incoming.Event;

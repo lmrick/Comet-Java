@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.outgoing.user.details;
 
 import com.cometproject.api.networking.messages.IComposer;
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.players.types.Player;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;

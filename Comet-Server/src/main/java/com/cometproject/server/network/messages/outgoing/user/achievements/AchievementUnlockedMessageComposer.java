@@ -27,15 +27,15 @@ public class AchievementUnlockedMessageComposer extends MessageComposer {
     @Override
     public void compose(IComposer msg) {
         msg.writeInt(currentAchievementId);
-        msg.writeInt(newAchievement == null ? 1 : newAchievement.getLevel());
+        msg.writeInt(newAchievement == null ? 1 : newAchievement.level());
         msg.writeInt(144);
-        msg.writeString(achievementName + (newAchievement == null ? 1 : (newAchievement.getLevel() - 1)));
-        msg.writeInt(newAchievement == null ? 0 : newAchievement.getRewardAchievement());
-        msg.writeInt(newAchievement == null ? 0 : newAchievement.getRewardActivityPoints());
+        msg.writeString(achievementName + (newAchievement == null ? 1 : (newAchievement.level() - 1)));
+        msg.writeInt(newAchievement == null ? 0 : newAchievement.rewardAchievement());
+        msg.writeInt(newAchievement == null ? 0 : newAchievement.rewardActivityPoints());
         msg.writeInt(0);
         msg.writeInt(10);
         msg.writeInt(21);
-        msg.writeString(newAchievement != null ? newAchievement.getLevel() > 1 ? achievementName + (newAchievement.getLevel() - 1) : "" : "");
+        msg.writeString(newAchievement != null ? newAchievement.level() > 1 ? achievementName + (newAchievement.level() - 1) : "" : "");
 
         msg.writeString(achievementCategory.toLowerCase());
         msg.writeBoolean(true);

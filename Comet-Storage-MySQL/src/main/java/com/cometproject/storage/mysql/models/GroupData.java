@@ -2,7 +2,7 @@ package com.cometproject.storage.mysql.models;
 
 import com.cometproject.api.game.groups.types.GroupType;
 import com.cometproject.api.game.groups.types.IGroupData;
-import com.cometproject.api.game.players.data.PlayerAvatar;
+import com.cometproject.api.game.players.data.IPlayerAvatar;
 
 
 public class GroupData implements IGroupData {
@@ -71,9 +71,9 @@ public class GroupData implements IGroupData {
     /**
      * The name of the owner
      */
-    private PlayerAvatar ownerAvatar;
+    private IPlayerAvatar ownerAvatar;
 
-    public GroupData(int id, String title, String description, String badge, int ownerId, String ownerName, int roomId, int created, GroupType type, int colourA, int colourB, boolean canMembersDecorate, boolean hasForum, PlayerAvatar playerAvatar) {
+    public GroupData(int id, String title, String description, String badge, int ownerId, String ownerName, int roomId, int created, GroupType type, int colourA, int colourB, boolean canMembersDecorate, boolean hasForum, IPlayerAvatar playerAvatar) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -346,7 +346,7 @@ public class GroupData implements IGroupData {
     }
 
     @Override
-    public PlayerAvatar getOwnerAvatar() {
+    public IPlayerAvatar getOwnerAvatar() {
         return this.ownerAvatar;
     }
 }

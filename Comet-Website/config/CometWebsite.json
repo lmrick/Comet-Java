@@ -1,7 +1,7 @@
 {
     "dbHost": "127.0.0.1",
     "dbUsername": "root",
-    "dbPassword": "password",
+    "dbPassword": "123",
     "dbDatabase": "comet",
     "dbPoolSize": 2,
 

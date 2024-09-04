@@ -1,7 +1,7 @@
 package com.cometproject.server.storage.queries.player;
 
 import com.cometproject.server.boot.Comet;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,9 +15,9 @@ public class PlayerAccessDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into player_access (player_id, hardware_id, ip_address, timestamp) VALUES(?, ?, ?, ?);", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT into player_access (player_id, hardware_id, ip_address, timestamp) VALUES(?, ?, ?, ?);", sqlConnection);
 
             preparedStatement.setInt(1, playerId);
             preparedStatement.setString(2, hardwareId);
@@ -26,10 +26,10 @@ public class PlayerAccessDao {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 

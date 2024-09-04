@@ -35,13 +35,11 @@ public class WiredAddonBlob extends RoomItemFloor {
     public void onEntityStepOn(RoomEntity entity) {
         // award point
 
-        if (!(entity instanceof PlayerEntity) || this.getItemData().getData().equals("1")) {
+        if (!(entity instanceof PlayerEntity playerEntity) || this.getItemData().getData().equals("1")) {
             return;
         }
-
-        final PlayerEntity playerEntity = (PlayerEntity) entity;
-
-        if (playerEntity.getGameTeam() == GameTeam.NONE) {
+			
+			if (playerEntity.getGameTeam() == GameTeam.NONE) {
             return;
         }
 

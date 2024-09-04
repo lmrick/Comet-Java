@@ -58,7 +58,6 @@ public final class MessageEvent implements IMessageEvent  {
             bytes[i] = this.buffer.readByte();
         }
 
-//        byte[] data = this.content().readBytes((length)).array();
         return bytes;
     }
 
@@ -67,7 +66,8 @@ public final class MessageEvent implements IMessageEvent  {
         byte[] complete = this.buffer.array();
         return Arrays.copyOfRange(complete, 6, complete.length);
     }
-
+    
+    @Override
     public String toString() {
         String body = this.content().toString((Charset.defaultCharset()));
 

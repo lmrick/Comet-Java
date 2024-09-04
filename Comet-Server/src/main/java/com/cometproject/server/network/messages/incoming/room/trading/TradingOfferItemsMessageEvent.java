@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.incoming.room.trading;
 
-import com.cometproject.api.game.players.data.components.inventory.PlayerItem;
+import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.server.game.items.ItemManager;
 import com.cometproject.server.game.rooms.types.components.types.Trade;
 import com.cometproject.server.network.messages.incoming.Event;
@@ -18,13 +18,13 @@ public class TradingOfferItemsMessageEvent implements Event {
 
         final long itemId = ItemManager.getInstance().getItemIdByVirtualId(msg.readInt());
 
-        PlayerItem item = client.getPlayer().getInventory().getItem(itemId);
+        IPlayerItem item = client.getPlayer().getInventory().getItem(itemId);
         Trade trade = client.getPlayer().getEntity().getRoom().getTrade().get(client.getPlayer().getEntity());
         if (trade == null) return;
 
         int i = 0;
 
-        for (PlayerItem playerItem : client.getPlayer().getInventory().getInventoryItems().values()) {
+        for (IPlayerItem playerItem : client.getPlayer().getInventory().getInventoryItems().values()) {
             if (i >= amount)
                 break;
 

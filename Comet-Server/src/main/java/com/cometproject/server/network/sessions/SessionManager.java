@@ -122,11 +122,7 @@ public final class SessionManager implements ISessionManager, ISessionService {
     }
 
     public void broadcastToModerators(IMessageComposer messageComposer) {
-        for (ISession session : this.sessions.values()) {
-            if (session.getPlayer() != null && session.getPlayer().getPermissions() != null && session.getPlayer().getPermissions().getRank().modTool()) {
-                session.send(messageComposer);
-            }
-        }
+			this.sessions.values().stream().filter(session -> session.getPlayer() != null && session.getPlayer().getPermissions() != null && session.getPlayer().getPermissions().getRank().modTool()).forEachOrdered(session -> session.send(messageComposer));
     }
 
     public Map<String, SessionAccessLog> getAccessLog() {

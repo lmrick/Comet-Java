@@ -15,10 +15,7 @@ public class LogManager implements Initialisable {
     }
 
     public static LogManager getInstance() {
-        if (logManagerInstance == null) {
-            logManagerInstance = new LogManager();
-        }
-
+        if (logManagerInstance == null) logManagerInstance = new LogManager();
         return logManagerInstance;
     }
 

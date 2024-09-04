@@ -6,7 +6,7 @@
 //import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 //import com.cometproject.server.game.rooms.objects.items.types.floor.boutique.MannequinFloorItem;
 //import com.cometproject.server.game.rooms.objects.items.types.floor.groups.GroupFloorItem;
-//import com.cometproject.server.game.rooms.objects.items.types.floor.wired.highscore.HighscoreClassicFloorItem;
+//import com.cometproject.server.game.rooms.objects.items.types.floor.wired.highscore.HighScoreClassicFloorItem;
 //import com.cometproject.server.network.messages.composers.MessageComposer;
 //import com.cometproject.server.protocol.headers.Composers;
 //import com.cometproject.server.utilities.attributes.Stateable;
@@ -67,10 +67,10 @@
 //                msg.writeString(colourA);
 //                msg.writeString(colourB);
 //            }
-//        } else if(floorItem instanceof HighscoreClassicFloorItem) {
+//        } else if(floorItem instanceof HighScoreClassicFloorItem) {
 //            msg.writeString(id);
 //
-//            ((HighscoreClassicFloorItem) floorItem).composeHighscoreData(msg);
+//            ((HighScoreClassicFloorItem) floorItem).composeHighscoreData(msg);
 //        } else {
 //            msg.writeString(id);
 //            msg.writeInt(0);

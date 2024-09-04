@@ -1,53 +1,48 @@
 package com.cometproject.server.game.players.components.types.messenger;
 
+import com.cometproject.api.game.players.data.components.messenger.IMessengerSearchResult;
 import com.cometproject.api.networking.messages.IComposer;
 import com.cometproject.server.game.players.PlayerManager;
 
-
-public class MessengerSearchResult {
-    private int id;
-    private String username;
-    private String figure;
-    private String motto;
-    private String lastOnline;
-
-    public MessengerSearchResult(int id, String username, String figure, String motto, String lastOnline) {
-        this.id = id;
-        this.username = username;
-        this.figure = figure;
-        this.motto = motto;
-        this.lastOnline = lastOnline;
-    }
-
-    public void compose(IComposer msg) {
-        msg.writeInt(id);
-        msg.writeString(username);
-        msg.writeString(motto);
-        msg.writeBoolean(PlayerManager.getInstance().isOnline(id)); // is online
-        msg.writeBoolean(false);
-        msg.writeString("");
-        msg.writeInt(0);
-        msg.writeString(figure);
-        msg.writeString(lastOnline);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getFigure() {
-        return figure;
-    }
-
-    public String getMotto() {
-        return motto;
-    }
-
-    public String getLastOnline() {
-        return lastOnline;
-    }
+public record MessengerSearchResult(int id, String username, String figure, String motto,
+																		String lastOnline) implements IMessengerSearchResult {
+	
+	@Override
+	public void compose(IComposer msg) {
+		msg.writeInt(id);
+		msg.writeString(username);
+		msg.writeString(motto);
+		msg.writeBoolean(PlayerManager.getInstance().isOnline(id)); // is online
+		msg.writeBoolean(false);
+		msg.writeString("");
+		msg.writeInt(0);
+		msg.writeString(figure);
+		msg.writeString(lastOnline);
+	}
+	
+	@Override
+	public String figure() {
+		return figure;
+	}
+	
+	@Override
+	public int id() {
+		return id;
+	}
+	
+	@Override
+	public String lastOnline() {
+		return lastOnline;
+	}
+	
+	@Override
+	public String motto() {
+		return motto;
+	}
+	
+	@Override
+	public String username() {
+		return username;
+	}
+	
 }

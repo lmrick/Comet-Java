@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TradeComponent {
     private final Room room;
-    private List<Trade> trades;
+    private final List<Trade> trades;
 
     public TradeComponent(Room room) {
         this.room = room;
@@ -24,13 +24,9 @@ public class TradeComponent {
     }
 
     public Trade get(PlayerEntity client) {
-        for (Trade trade : this.getTrades()) {
-            if (trade.getUser1() == client || trade.getUser2() == client)
-                return trade;
-        }
-
-        return null;
-    }
+			return this.getTrades().stream().filter(trade -> trade.getUser1() == client || trade.getUser2() == client).findFirst().orElse(null);
+			
+		}
 
     public void remove(Trade trade) {
         this.trades.remove(trade);

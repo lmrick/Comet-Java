@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.incoming.navigator;
 
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.navigator.NavigatorManager;
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.network.messages.incoming.Event;

@@ -18,13 +18,11 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.snowboarding
 import com.cometproject.server.utilities.collections.ConcurrentHashSet;
 import com.google.common.collect.Lists;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
-
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class RoomTile {
     public Set<RoomEntity> entities;
@@ -51,46 +49,35 @@ public class RoomTile {
         this.mappingInstance = mappingInstance;
         this.position = position;
         this.entities = new ConcurrentHashSet<>();
-        this.items = new ArrayList<>(); // maybe change this in the future..
+        this.items = new ArrayList<>();
 
         this.reload();
     }
 
     public RoomTile[] getAllAdjacentTiles() {
         RoomTile[] tiles = new RoomTile[Direction.values().length];
-
-        for (int i = 0; i < tiles.length; i++) {
-            RoomTile tile = this.mappingInstance.getTile(this.position.squareInFront(Direction.get(i)));
-
-            tiles[i] = tile;
-        }
+			
+			IntStream.range(0, tiles.length).forEachOrdered(i -> {
+				RoomTile tile = this.mappingInstance.getTile(this.position.squareInFront(Direction.get(i)));
+				tiles[i] = tile;
+			});
 
         return tiles;
     }
 
     public List<RoomTile> getAdjacentTiles(Position from) {
-        final List<RoomTile> roomTiles = Lists.newArrayList();
-
-        for (int rotation : Position.COLLIDE_TILES) {
-            final RoomTile tile = this.mappingInstance.getTile(this.getPosition().squareInFront(rotation));
-
-            roomTiles.add(tile);
-        }
-
-        roomTiles.sort((left, right) -> {
-            if (left == null || right == null || left.getPosition() == null || right.getPosition() == null) return -1;
-
-            final double distanceFromLeft = left.getPosition().distanceTo(from);
-            final double distanceFromRight = right.getPosition().distanceTo(from);
-
-            return Double.compare(distanceFromLeft, distanceFromRight);
-        });
-
-        return roomTiles;
+			
+			return Arrays.stream(Position.COLLIDE_TILES).mapToObj(rotation -> this.mappingInstance.getTile(this.getPosition().squareInFront(rotation))).sorted((left, right) -> {
+				if (left == null || right == null || left.getPosition() == null || right.getPosition() == null) return -1;
+				
+				final double distanceFromLeft = left.getPosition().distanceTo(from);
+				final double distanceFromRight = right.getPosition().distanceTo(from);
+				
+				return Double.compare(distanceFromLeft, distanceFromRight);
+			}).collect(Collectors.toList());
     }
 
     public void reload() {
-        // reset the tile data
         this.hasItems = false;
         this.redirect = null;
         this.movementNode = RoomEntityMovementNode.OPEN;
@@ -122,27 +109,17 @@ public class RoomTile {
         Double overrideHeight = null;
 
         this.items.clear();
-
-        for (Map.Entry<Long, RoomItemFloor> itemEntry : mappingInstance.getRoom().getItems().getFloorItems().entrySet()) {
-            final RoomItemFloor item = itemEntry.getValue();
-
-            if (item == null || item.getDefinition() == null) continue; // it's null!
-
-            if (item.getPosition().getX() == this.position.getX() && item.getPosition().getY() == this.position.getY()) {
-                items.add(item);
-            } else {
-                List<AffectedTile> affectedTiles = AffectedTile.getAffectedTilesAt(
-                        item.getDefinition().getLength(), item.getDefinition().getWidth(), item.getPosition().getX(), item.getPosition().getY(), item.getRotation());
-
-                for (AffectedTile tile : affectedTiles) {
-                    if (this.position.getX() == tile.x && this.position.getY() == tile.y) {
-                        if (!items.contains(item)) {
-                            items.add(item);
-                        }
-                    }
-                }
-            }
-        }
+			
+			// it's null!
+			mappingInstance.getRoom().getItems().getFloorItems().values().stream().filter(item -> item != null && item.getDefinition() != null).forEachOrdered(item -> {
+				if (item.getPosition().getX() == this.position.getX() && item.getPosition().getY() == this.position.getY()) {
+					items.add(item);
+				} else {
+					List<AffectedTile> affectedTiles = AffectedTile.getAffectedTilesAt(item.getDefinition().getLength(), item.getDefinition().getWidth(), item.getPosition().getX(), item.getPosition().getY(), item.getRotation());
+					
+					affectedTiles.stream().filter(tile -> this.position.getX() == tile.x && this.position.getY() == tile.y).filter(tile -> !items.contains(item)).forEachOrdered(tile -> items.add(item));
+				}
+			});
 
         for (RoomItemFloor item : new ArrayList<>(items)) {
             if (item.getDefinition() == null)
@@ -171,36 +148,31 @@ public class RoomTile {
                 if (highestItem == item.getId())
                     movementNode = RoomEntityMovementNode.CLOSED;
             }
-
-            switch (item.getDefinition().getInteraction().toLowerCase()) {
-                case "bed":
-                    status = RoomTileStatusType.LAY;
-                    movementNode = RoomEntityMovementNode.END_OF_ROUTE;
-
-                    if (item.getRotation() == 2 || item.getRotation() == 6) {
-                        this.redirect = new Position(item.getPosition().getX(), this.getPosition().getY());
-                    } else if (item.getRotation() == 0 || item.getRotation() == 4) {
-                        this.redirect = new Position(this.getPosition().getX(), item.getPosition().getY());
-                    }
-
-                    break;
-
-                case "gate":
-                    movementNode = ((GateFloorItem) item).isOpen() ? RoomEntityMovementNode.OPEN : RoomEntityMovementNode.CLOSED;
-                    break;
-
-                case "onewaygate":
-                    movementNode = RoomEntityMovementNode.CLOSED;
-                    break;
-
-                case "wf_pyramid":
-                    movementNode = item.getItemData().getData().equals("1") ? RoomEntityMovementNode.OPEN : RoomEntityMovementNode.CLOSED;
-                    break;
-
-                case "freeze_block":
-                    movementNode = ((FreezeBlockFloorItem) item).isDestroyed() ? RoomEntityMovementNode.OPEN : RoomEntityMovementNode.CLOSED;
-                    break;
-            }
+					
+					switch (item.getDefinition().getInteraction().toLowerCase()) {
+						case "bed" -> {
+							status = RoomTileStatusType.LAY;
+							movementNode = RoomEntityMovementNode.END_OF_ROUTE;
+							
+							if (item.getRotation() == 2 || item.getRotation() == 6) {
+								this.redirect = new Position(item.getPosition().getX(), this.getPosition().getY());
+							} else if (item.getRotation() == 0 || item.getRotation() == 4) {
+								this.redirect = new Position(this.getPosition().getX(), item.getPosition().getY());
+							}
+						}
+						case "gate" -> {
+							if (item instanceof GateFloorItem) {
+								movementNode = ((GateFloorItem) item).isOpen() ? RoomEntityMovementNode.OPEN : RoomEntityMovementNode.CLOSED;
+							}
+						}
+						case "onewaygate" -> movementNode = RoomEntityMovementNode.CLOSED;
+						case "wf_pyramid" -> movementNode = item.getItemData().getData().equals("1") ? RoomEntityMovementNode.OPEN : RoomEntityMovementNode.CLOSED;
+						case "freeze_block" -> {
+							if (item instanceof FreezeBlockFloorItem) {
+                  movementNode = ((FreezeBlockFloorItem) item).isDestroyed() ? RoomEntityMovementNode.OPEN : RoomEntityMovementNode.CLOSED;
+							}
+						}
+					}
 
             if (item instanceof BreedingBoxFloorItem) {
                 movementNode = RoomEntityMovementNode.END_OF_ROUTE;
@@ -230,9 +202,9 @@ public class RoomTile {
                 }
 
                 if (overrideHeight != null) {
-                    overrideHeight += item.getOverrideHeight() + (hasComponentItem ? 1.0 : 0d);
+                    overrideHeight += item.getOverrideHeight() + (hasComponentItem ? 1.0D : 0.0D);
                 } else {
-                    overrideHeight = item.getOverrideHeight() + (hasComponentItem ? 1.0 : 0d);
+                    overrideHeight = item.getOverrideHeight() + (hasComponentItem ? 1.0D : 0.0D);
                 }
             }
         }
@@ -249,11 +221,11 @@ public class RoomTile {
 
         this.topItem = highestItem;
 
-        if (this.stackHeight == 0d) {
+        if (this.stackHeight == 0.0D) {
             this.stackHeight = this.mappingInstance.getModel().getSquareHeight()[this.position.getX()][this.position.getY()];
         }
 
-        if (this.originalHeight == 0)
+        if (this.originalHeight == 0.0D)
             this.originalHeight = this.stackHeight;
     }
 
@@ -284,16 +256,8 @@ public class RoomTile {
 
     public double getStackHeight(RoomItemFloor itemToStack) {
         RoomItemFloor topItem = this.getTopItemInstance();
-
-        double stackHeight;
-
-        if (this.hasMagicTile() || (topItem != null && topItem instanceof AdjustableHeightFloorItem)) {
-            stackHeight = this.stackHeight;
-        } else {
-            stackHeight = itemToStack != null && itemToStack.getId() == this.getTopItem() ? itemToStack.getPosition().getZ() : this.originalHeight;
-        }
-
-        return stackHeight;
+			
+			return this.hasMagicTile() || (topItem instanceof AdjustableHeightFloorItem) ? this.stackHeight : itemToStack != null && itemToStack.getId() == this.getTopItem() ? itemToStack.getPosition().getZ() : this.originalHeight;
     }
 
     public double getWalkHeight() {
@@ -319,21 +283,18 @@ public class RoomTile {
 
     public boolean isReachable(RoomEntity entity) {
         List<Square> path = EntityPathfinder.getInstance().makePath(entity, this.position);
-        return path != null && path.size() > 0;
+        return path != null && !path.isEmpty();
     }
 
     public boolean isReachable(RoomObject object) {
         List<Square> path = ItemPathfinder.getInstance().makePath(object, this.position);
-        return path != null && path.size() > 0;
+        return path != null && !path.isEmpty();
     }
 
     public RoomEntity getEntity() {
-        for (RoomEntity entity : this.getEntities()) {
-            return entity;
-        }
-
-        return null;
-    }
+			return this.getEntities().stream().findFirst().orElse(null);
+			
+		}
 
     public Set<RoomEntity> getEntities() {
         return this.entities;

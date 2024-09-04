@@ -8,7 +8,7 @@ public enum AccessLevel {
     MODERATOR(5),
     ADMIN(7);
 
-    private int accessLevel;
+    private final int accessLevel;
 
     AccessLevel(int accessLevel) {
         this.accessLevel = accessLevel;

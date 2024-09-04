@@ -8,16 +8,18 @@ import com.cometproject.server.network.ws.messages.piano.ClosePianoMessage;
 import com.cometproject.server.network.ws.messages.piano.OpenPianoMessage;
 
 public class PianoFloorItem extends DefaultFloorItem {
-    public PianoFloorItem(RoomItemData itemData, Room room) {
-        super(itemData, room);
-    }
-
-    @Override
-    public void onToggled(PlayerEntity playerEntity) {
-        if (this.getItemData().getData().equals("0")) {
-            this.getRoom().getEntities().broadcastWs(new ClosePianoMessage());
-        } else if (this.getItemData().getData().equals("1")) {
-            this.getRoom().getEntities().broadcastWs(new OpenPianoMessage());
-        }
-    }
+	
+	public PianoFloorItem(RoomItemData itemData, Room room) {
+		super(itemData, room);
+	}
+	
+	@Override
+	public void onToggled(PlayerEntity playerEntity) {
+		if (this.getItemData().getData().equals("0")) {
+			this.getRoom().getEntities().broadcastWs(new ClosePianoMessage());
+		} else if (this.getItemData().getData().equals("1")) {
+			this.getRoom().getEntities().broadcastWs(new OpenPianoMessage());
+		}
+	}
+	
 }

@@ -13,53 +13,54 @@ import com.cometproject.server.game.rooms.types.components.games.freeze.types.Fr
 import com.cometproject.server.game.rooms.types.mapping.RoomEntityMovementNode;
 
 public class FreezeTileFloorItem extends RoomItemFloor {
-    public FreezeTileFloorItem(RoomItemData itemData, Room room) {
-        super(itemData, room);
-    }
-
-    @Override
-    public boolean onInteract(RoomEntity entity, int requestData, boolean isWiredTrigger) {
-        if (!(entity instanceof PlayerEntity)) {
-            return false;
-        }
-
-        if (isWiredTrigger) {
-            return false;
-        }
-
-        if (entity.getTile() != this.getTile()) {
-            double distance = entity.getPosition().distanceTo(this.getPosition());
-
-            if (this.getTile().getMovementNode() != RoomEntityMovementNode.OPEN || distance > 1) {
-                return false;
-            }
-
-            if (entity.canWalk()) {
-                entity.moveTo(this.getPosition());
-            }
-        }
-
-        final RoomGame game = this.getRoom().getGame().getInstance();
-
-        if (game == null || !game.isActive()) {
-            return false;
-        }
-
-        final PlayerEntity playerEntity = (PlayerEntity) entity;
-        final FreezeGame freezeGame = game.getFreezeGame();
-
-        if (playerEntity.getGameTeam() == GameTeam.NONE || playerEntity.getGameType() != GameType.FREEZE) {
-            return false;
-        }
-
-        final FreezePlayer freezePlayer = freezeGame.getPlayer(playerEntity.getPlayerId());
-
-        if (freezePlayer.getBalls() < 1) {
-            return false;
-        }
-
-        freezePlayer.setBalls(freezePlayer.getBalls() - 1);
-        freezeGame.launchBall(this, freezePlayer);
-        return true;
-    }
+	
+	public FreezeTileFloorItem(RoomItemData itemData, Room room) {
+		super(itemData, room);
+	}
+	
+	@Override
+	public boolean onInteract(RoomEntity entity, int requestData, boolean isWiredTrigger) {
+		if (!(entity instanceof PlayerEntity playerEntity)) {
+			return false;
+		}
+		
+		if (isWiredTrigger) {
+			return false;
+		}
+		
+		if (entity.getTile() != this.getTile()) {
+			double distance = entity.getPosition().distanceTo(this.getPosition());
+			
+			if (this.getTile().getMovementNode() != RoomEntityMovementNode.OPEN || distance > 1) {
+				return false;
+			}
+			
+			if (entity.canWalk()) {
+				entity.moveTo(this.getPosition());
+			}
+		}
+		
+		final RoomGame game = this.getRoom().getGame().getInstance();
+		
+		if (game == null || !game.isActive()) {
+			return false;
+		}
+		
+		final FreezeGame freezeGame = game.getFreezeGame();
+		
+		if (playerEntity.getGameTeam() == GameTeam.NONE || playerEntity.getGameType() != GameType.FREEZE) {
+			return false;
+		}
+		
+		final FreezePlayer freezePlayer = freezeGame.getPlayer(playerEntity.getPlayerId());
+		
+		if (freezePlayer.getBalls() < 1) {
+			return false;
+		}
+		
+		freezePlayer.setBalls(freezePlayer.getBalls() - 1);
+		freezeGame.launchBall(this, freezePlayer);
+		return true;
+	}
+	
 }

@@ -5,7 +5,9 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.games.GameTi
 import com.cometproject.server.game.rooms.types.Room;
 
 public class FreezeTimerFloorItem extends GameTimerFloorItem {
-    public FreezeTimerFloorItem(RoomItemData itemData, Room room) {
-        super(itemData, room);
-    }
+	
+	public FreezeTimerFloorItem(RoomItemData itemData, Room room) {
+		super(itemData, room);
+	}
+	
 }

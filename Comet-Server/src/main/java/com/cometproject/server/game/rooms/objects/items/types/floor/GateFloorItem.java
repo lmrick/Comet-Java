@@ -18,12 +18,12 @@ public class GateFloorItem extends RoomItemFloor {
         if (this.interactionBlocked(entity0, isWiredTrigger)) return false;
 
         for (AffectedTile tile : AffectedTile.getAffectedTilesAt(this.getDefinition().getLength(), this.getDefinition().getWidth(), this.getPosition().getX(), this.getPosition().getY(), this.getRotation())) {
-            if (this.getRoom().getEntities().getEntitiesAt(new Position(tile.x, tile.y)).size() > 0) {
+            if (!this.getRoom().getEntities().getEntitiesAt(new Position(tile.x, tile.y)).isEmpty()) {
                 return false;
             }
         }
 
-        if (this.getRoom().getEntities().getEntitiesAt(this.getPosition()).size() > 0) {
+        if (!this.getRoom().getEntities().getEntitiesAt(this.getPosition()).isEmpty()) {
             return false;
         }
 

@@ -1,15 +1,15 @@
 package com.cometproject.server.network.messages.outgoing.messenger;
 
-import com.cometproject.api.game.players.data.PlayerAvatar;
+import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.networking.messages.IComposer;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 
 public class FriendRequestMessageComposer extends MessageComposer {
-    private final PlayerAvatar playerAvatar;
+    private final IPlayerAvatar playerAvatar;
 
-    public FriendRequestMessageComposer(final PlayerAvatar playerAvatar) {
+    public FriendRequestMessageComposer(final IPlayerAvatar playerAvatar) {
         this.playerAvatar = playerAvatar;
     }
 

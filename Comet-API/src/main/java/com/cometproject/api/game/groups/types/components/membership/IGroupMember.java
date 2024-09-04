@@ -1,7 +1,5 @@
 package com.cometproject.api.game.groups.types.components.membership;
 
-import com.cometproject.api.game.players.data.PlayerAvatar;
-
 public interface IGroupMember {
     int getMembershipId();
 

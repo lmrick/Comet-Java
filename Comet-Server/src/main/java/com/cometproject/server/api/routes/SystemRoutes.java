@@ -3,7 +3,7 @@ package com.cometproject.server.api.routes;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.boot.utils.ShutdownProcess;
 import com.cometproject.server.composers.catalog.CatalogPublishMessageComposer;
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.catalog.CatalogManager;
 import com.cometproject.server.game.commands.CommandManager;
 import com.cometproject.server.game.items.ItemManager;

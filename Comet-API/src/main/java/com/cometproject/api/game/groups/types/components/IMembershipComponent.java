@@ -3,7 +3,6 @@ package com.cometproject.api.game.groups.types.components;
 import com.cometproject.api.game.groups.types.GroupComponent;
 import com.cometproject.api.game.groups.types.GroupMemberAvatar;
 import com.cometproject.api.game.groups.types.components.membership.IGroupMember;
-import com.cometproject.api.game.players.data.PlayerAvatar;
 import com.cometproject.api.networking.messages.IMessageComposer;
 import com.cometproject.api.networking.sessions.ISessionService;
 

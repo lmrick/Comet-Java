@@ -9,25 +9,26 @@ import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 import com.cometproject.server.storage.queries.player.inventory.InventoryDao;
 
-
 public class BadgeInventoryMessageEvent implements Event {
-    public void handle(Session client, MessageEvent msg) {
-        int userId = msg.readInt();
-
-        if (userId == client.getPlayer().getId()) {
-            client.send(new BadgeInventoryMessageComposer(client.getPlayer().getInventory().getBadges()));
-            return;
-        }
-
-        if (PlayerManager.getInstance().isOnline(userId)) {
-            final Session session = NetworkManager.getInstance().getSessions().getByPlayerId(userId);
-
-            if (session != null && session.getPlayer() != null && session.getPlayer().getInventory() != null) {
-                client.send(new UserBadgesMessageComposer(userId, session.getPlayer().getInventory().equippedBadges()));
-                return;
-            }
-        }
-
-        client.send(new UserBadgesMessageComposer(userId, InventoryDao.getWornBadgesByPlayerId(userId)));
-    }
+	
+	public void handle(Session client, MessageEvent msg) {
+		int userId = msg.readInt();
+		
+		if (userId == client.getPlayer().getId()) {
+			client.send(new BadgeInventoryMessageComposer(client.getPlayer().getInventory().getBadges()));
+			return;
+		}
+		
+		if (PlayerManager.getInstance().isOnline(userId)) {
+			final Session session = NetworkManager.getInstance().getSessions().getByPlayerId(userId);
+			
+			if (session != null && session.getPlayer() != null && session.getPlayer().getInventory() != null) {
+				client.send(new UserBadgesMessageComposer(userId, session.getPlayer().getInventory().equippedBadges()));
+				return;
+			}
+		}
+		
+		client.send(new UserBadgesMessageComposer(userId, InventoryDao.getWornBadgesByPlayerId(userId)));
+	}
+	
 }

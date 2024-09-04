@@ -5,9 +5,10 @@ import com.cometproject.server.network.messages.outgoing.user.inventory.BotInven
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
-
 public class BotInventoryMessageEvent implements Event {
-    public void handle(Session client, MessageEvent msg) {
-        client.send(new BotInventoryMessageComposer(client.getPlayer().getBots().getBots()));
-    }
+	
+	public void handle(Session client, MessageEvent msg) {
+		client.send(new BotInventoryMessageComposer(client.getPlayer().getBots().getBots()));
+	}
+	
 }

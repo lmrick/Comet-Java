@@ -4,7 +4,7 @@ import com.cometproject.server.game.permissions.types.CommandPermission;
 import com.cometproject.server.game.permissions.types.OverrideCommandPermission;
 import com.cometproject.server.game.permissions.types.Perk;
 import com.cometproject.server.game.permissions.types.Rank;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,9 +24,9 @@ public class PermissionsDao {
         Map<Integer, Perk> data = new ConcurrentHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT `id`, `title`, `data`, `override_rank`, `override_default`, `min_rank` FROM permission_perks", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT `id`, `title`, `data`, `override_rank`, `override_default`, `min_rank` FROM permission_perks", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -41,11 +41,11 @@ public class PermissionsDao {
             }
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -60,8 +60,8 @@ public class PermissionsDao {
 
         try {
 
-            sqlConnection = SqlHelper.getConnection();
-            preparedStatement = SqlHelper.prepare("SELECT * FROM server_permissions_ranks", sqlConnection);
+            sqlConnection = SQLUtility.getConnection();
+            preparedStatement = SQLUtility.prepare("SELECT * FROM server_permissions_ranks", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -92,11 +92,11 @@ public class PermissionsDao {
             }
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -110,8 +110,8 @@ public class PermissionsDao {
         Map<String, CommandPermission> data = new ConcurrentHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
-            preparedStatement = SqlHelper.prepare("SELECT `command_id`, `minimum_rank`, `vip_only`, `rights_only` FROM permission_commands", sqlConnection);
+            sqlConnection = SQLUtility.getConnection();
+            preparedStatement = SQLUtility.prepare("SELECT `command_id`, `minimum_rank`, `vip_only`, `rights_only` FROM permission_commands", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -129,11 +129,11 @@ public class PermissionsDao {
             }
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -147,8 +147,8 @@ public class PermissionsDao {
         Map<String, OverrideCommandPermission> data = new ConcurrentHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
-            preparedStatement = SqlHelper.prepare("SELECT `id`, `command_id`, `player_id`, `enabled` FROM permission_command_overrides", sqlConnection);
+            sqlConnection = SQLUtility.getConnection();
+            preparedStatement = SQLUtility.prepare("SELECT `id`, `command_id`, `player_id`, `enabled` FROM permission_command_overrides", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -163,11 +163,11 @@ public class PermissionsDao {
             }
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -181,8 +181,8 @@ public class PermissionsDao {
         Map<Integer, Integer> data = new ConcurrentHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
-            preparedStatement = SqlHelper.prepare("SELECT * FROM permission_effects", sqlConnection);
+            sqlConnection = SQLUtility.getConnection();
+            preparedStatement = SQLUtility.prepare("SELECT * FROM permission_effects", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -190,11 +190,11 @@ public class PermissionsDao {
             }
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -208,8 +208,8 @@ public class PermissionsDao {
         Map<Integer, Integer> data = new ConcurrentHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
-            preparedStatement = SqlHelper.prepare("SELECT `bubble_id`, `minimum_rank` FROM permission_chat_bubbles", sqlConnection);
+            sqlConnection = SQLUtility.getConnection();
+            preparedStatement = SQLUtility.prepare("SELECT `bubble_id`, `minimum_rank` FROM permission_chat_bubbles", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -221,11 +221,11 @@ public class PermissionsDao {
             }
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;

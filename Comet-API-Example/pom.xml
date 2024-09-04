@@ -12,7 +12,6 @@
 
     <artifactId>Comet-API-Example</artifactId>
     <version>2.12.1-TEST1</version>
-
     <packaging>jar</packaging>
 
     <build>
@@ -20,17 +19,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
+                <version>3.13.0</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>21</source>
+                    <target>21</target>
                 </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.4.2</version>
                 <configuration>
                     <outputDirectory>../modules</outputDirectory>
                 </configuration>

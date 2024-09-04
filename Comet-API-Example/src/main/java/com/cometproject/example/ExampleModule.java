@@ -3,7 +3,7 @@ package com.cometproject.example;
 import com.cometproject.api.config.ModuleConfig;
 import com.cometproject.api.events.players.OnPlayerLoginEvent;
 import com.cometproject.api.events.players.args.OnPlayerLoginEventArgs;
-import com.cometproject.api.game.players.data.components.inventory.PlayerItem;
+import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.api.modules.BaseModule;
 import com.cometproject.api.networking.sessions.ISession;
 import com.cometproject.api.server.IGameService;
@@ -41,7 +41,7 @@ public class ExampleModule extends BaseModule {
 
         Map<String, AtomicInteger> inventoryItemsAndQuantity = new HashMap<>();
 
-        for (PlayerItem item : session.getPlayer().getInventory().getInventoryItems().values()) {
+        for (IPlayerItem item : session.getPlayer().getInventory().getInventoryItems().values()) {
             if (inventoryItemsAndQuantity.containsKey(item.getDefinition().getPublicName()))
                 inventoryItemsAndQuantity.get(item.getDefinition().getPublicName()).incrementAndGet();
             else

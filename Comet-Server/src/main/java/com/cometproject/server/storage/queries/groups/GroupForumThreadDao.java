@@ -3,7 +3,7 @@ package com.cometproject.server.storage.queries.groups;
 import com.cometproject.api.game.groups.types.components.forum.IForumThread;
 import com.cometproject.api.game.groups.types.components.forum.IForumThreadReply;
 import com.cometproject.server.boot.Comet;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 import com.cometproject.storage.mysql.models.factories.GroupForumMessageFactory;
 
 import java.sql.Connection;
@@ -20,9 +20,9 @@ public class GroupForumThreadDao {
         final int time = (int) Comet.getTime();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into group_forum_messages (type, group_id, title, message, author_id, author_timestamp) VALUES('THREAD', ?, ?, ?, ?, ?);", sqlConnection, true);
+            preparedStatement = SQLUtility.prepare("INSERT into group_forum_messages (type, group_id, title, message, author_id, author_timestamp) VALUES('THREAD', ?, ?, ?, ?, ?);", sqlConnection, true);
 
             preparedStatement.setInt(1, groupId);
             preparedStatement.setString(2, title);
@@ -38,11 +38,11 @@ public class GroupForumThreadDao {
                 return new GroupForumMessageFactory().createThread(resultSet.getInt(1), title, message, authorId, time, 1, false, false, 0, "");
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return null;
@@ -56,10 +56,10 @@ public class GroupForumThreadDao {
         final int time = (int) Comet.getTime();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into group_forum_messages (type, group_id, thread_id, message, " +
-                    "author_id, author_timestamp) VALUES('REPLY', ?, ?, ?, ?, ?);", sqlConnection, true);
+            preparedStatement = SQLUtility.prepare("INSERT into group_forum_messages (type, group_id, thread_id, message, " +
+																									 "author_id, author_timestamp) VALUES('REPLY', ?, ?, ?, ?, ?);", sqlConnection, true);
 
             preparedStatement.setInt(1, groupId);
             preparedStatement.setInt(2, threadId);
@@ -75,11 +75,11 @@ public class GroupForumThreadDao {
                 return new GroupForumMessageFactory().createThreadReply(resultSet.getInt(1), -1, message, threadId, authorId, time, 1, 0, "");
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return null;
@@ -89,9 +89,9 @@ public class GroupForumThreadDao {
         Connection sqlConnection = null;
         PreparedStatement preparedStatement = null;
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("UPDATE group_forum_messages SET state = ?, moderator_id = ?, moderator_username = ? WHERE id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE group_forum_messages SET state = ?, moderator_id = ?, moderator_username = ? WHERE id = ?", sqlConnection);
 
             preparedStatement.setInt(1, state);
             preparedStatement.setInt(2, playerId);
@@ -100,10 +100,10 @@ public class GroupForumThreadDao {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -111,9 +111,9 @@ public class GroupForumThreadDao {
         Connection sqlConnection = null;
         PreparedStatement preparedStatement = null;
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("UPDATE group_forum_messages SET locked = ?, moderator_id = ?, moderator_username = ? WHERE id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE group_forum_messages SET locked = ?, moderator_id = ?, moderator_username = ? WHERE id = ?", sqlConnection);
 
             preparedStatement.setString(1, isLocked ? "1" : "0");
             preparedStatement.setInt(2, playerId);
@@ -122,10 +122,10 @@ public class GroupForumThreadDao {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -133,19 +133,19 @@ public class GroupForumThreadDao {
         Connection sqlConnection = null;
         PreparedStatement preparedStatement = null;
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("UPDATE group_forum_messages SET pinned = ? WHERE id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE group_forum_messages SET pinned = ? WHERE id = ?", sqlConnection);
 
             preparedStatement.setString(1, isPinned ? "1" : "0");
             preparedStatement.setInt(2, messageId);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -155,9 +155,9 @@ public class GroupForumThreadDao {
         ResultSet resultSet = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT COUNT(0) as messageCount FROM group_forum_messages WHERE author_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT COUNT(0) as messageCount FROM group_forum_messages WHERE author_id = ?", sqlConnection);
             preparedStatement.setInt(1, playerId);
 
             resultSet = preparedStatement.executeQuery();
@@ -166,10 +166,10 @@ public class GroupForumThreadDao {
                 return resultSet.getInt("messageCount");
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return 0;

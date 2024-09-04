@@ -2,7 +2,7 @@ package com.cometproject.server.storage.queries.player.messenger;
 
 import com.cometproject.api.game.players.data.components.messenger.IMessengerFriend;
 import com.cometproject.server.game.players.components.types.messenger.MessengerFriend;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,9 +23,9 @@ public class MessengerDao {
         Map<Integer, IMessengerFriend> data = new ConcurrentHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT m.user_two_id, p.username, p.figure, p.motto, p.gender FROM messenger_friendships m LEFT JOIN players p ON p.id = m.user_two_id WHERE user_one_id = ?;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT m.user_two_id, p.username, p.figure, p.motto, p.gender FROM messenger_friendships m LEFT JOIN players p ON p.id = m.user_two_id WHERE user_one_id = ?;", sqlConnection);
             preparedStatement.setInt(1, playerId);
 
             resultSet = preparedStatement.executeQuery();
@@ -34,11 +34,11 @@ public class MessengerDao {
                 data.put(resultSet.getInt("user_two_id"), new MessengerFriend(resultSet));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -52,9 +52,9 @@ public class MessengerDao {
         List<Integer> data = new ArrayList<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM messenger_requests WHERE to_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM messenger_requests WHERE to_id = ?", sqlConnection);
             preparedStatement.setInt(1, playerId);
 
             resultSet = preparedStatement.executeQuery();
@@ -63,11 +63,11 @@ public class MessengerDao {
                 data.add(resultSet.getInt("from_id"));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -78,18 +78,18 @@ public class MessengerDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("DELETE from messenger_friendships WHERE user_one_id = ? AND user_two_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE from messenger_friendships WHERE user_one_id = ? AND user_two_id = ?", sqlConnection);
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, userTwoId);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -99,18 +99,18 @@ public class MessengerDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("DELETE from messenger_friendships WHERE user_one_id = ? OR user_two_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE from messenger_friendships WHERE user_one_id = ? OR user_two_id = ?", sqlConnection);
             preparedStatement.setInt(1, playerId);
             preparedStatement.setInt(2, playerId);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -119,18 +119,18 @@ public class MessengerDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("DELETE FROM messenger_requests WHERE to_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE FROM messenger_requests WHERE to_id = ?", sqlConnection);
 
             preparedStatement.setInt(1, userId);
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -139,9 +139,9 @@ public class MessengerDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("DELETE FROM messenger_requests WHERE to_id = ? AND from_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE FROM messenger_requests WHERE to_id = ? AND from_id = ?", sqlConnection);
 
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, userTwoId);
@@ -153,10 +153,10 @@ public class MessengerDao {
 
             preparedStatement.executeBatch();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -165,9 +165,9 @@ public class MessengerDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into messenger_friendships(`user_one_id`, `user_two_id`) VALUES(?, ?)", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT into messenger_friendships(`user_one_id`, `user_two_id`) VALUES(?, ?)", sqlConnection);
 
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, userTwoId);
@@ -179,10 +179,10 @@ public class MessengerDao {
 
             preparedStatement.executeBatch();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -191,19 +191,19 @@ public class MessengerDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into messenger_requests (`from_id`, `to_id`) VALUES(?, ?)", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT into messenger_requests (`from_id`, `to_id`) VALUES(?, ?)", sqlConnection);
 
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, userTwoId);
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -213,9 +213,9 @@ public class MessengerDao {
         ResultSet resultSet = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT COUNT(1) FROM messenger_requests WHERE (from_id = ? AND to_id = ?) OR (from_id = ? AND to_id = ?)", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT COUNT(1) FROM messenger_requests WHERE (from_id = ? AND to_id = ?) OR (from_id = ? AND to_id = ?)", sqlConnection);
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, userTwoId);
             preparedStatement.setInt(3, userTwoId);
@@ -227,11 +227,11 @@ public class MessengerDao {
                 return resultSet.getInt(1);
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return 0;
@@ -243,9 +243,9 @@ public class MessengerDao {
         ResultSet resultSet = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT COUNT(1) FROM messenger_friendships WHERE user_one_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT COUNT(1) FROM messenger_friendships WHERE user_one_id = ?", sqlConnection);
             preparedStatement.setInt(1, userId);
 
             resultSet = preparedStatement.executeQuery();
@@ -254,11 +254,11 @@ public class MessengerDao {
                 return resultSet.getInt(1);
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return 0;

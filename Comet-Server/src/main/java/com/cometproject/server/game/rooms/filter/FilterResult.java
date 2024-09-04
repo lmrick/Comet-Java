@@ -1,7 +1,7 @@
 package com.cometproject.server.game.rooms.filter;
 
 import com.cometproject.api.game.rooms.filter.IFilterResult;
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.moderation.ModerationManager;
 import com.cometproject.server.network.messages.outgoing.messenger.InstantChatMessageComposer;
 import com.cometproject.server.network.sessions.Session;

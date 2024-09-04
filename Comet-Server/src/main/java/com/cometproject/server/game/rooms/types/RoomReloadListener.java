@@ -4,11 +4,13 @@ import com.cometproject.server.game.players.types.Player;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.google.common.collect.Sets;
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
 public class RoomReloadListener {
-    private final Set<Player> players = Sets.newConcurrentHashSet();
+    private final Set<Player> players = new HashSet<>();
     private final BiConsumer<Set<Player>, Room> consumer;
 
     public RoomReloadListener(final Room room, BiConsumer<Set<Player>, Room> consumer) {
@@ -22,10 +24,6 @@ public class RoomReloadListener {
     }
 
     private void addPlayers(Room room) {
-        for (PlayerEntity playerEntity : room.getEntities().getPlayerEntities()) {
-            if (playerEntity.getPlayer() != null) {
-                this.players.add(playerEntity.getPlayer());
-            }
-        }
+			room.getEntities().getPlayerEntities().stream().map(PlayerEntity::getPlayer).filter(Objects::nonNull).forEachOrdered(this.players::add);
     }
 }

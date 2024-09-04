@@ -4,7 +4,7 @@ import com.cometproject.api.game.bots.BotMode;
 import com.cometproject.api.game.bots.BotType;
 import com.cometproject.api.game.bots.IBotData;
 import com.cometproject.server.game.rooms.objects.entities.types.data.PlayerBotData;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,9 +23,9 @@ public class PlayerBotDao {
         Map<Integer, IBotData> data = new ConcurrentHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM bots WHERE owner_id = ? AND room_id = 0", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM bots WHERE owner_id = ? AND room_id = 0", sqlConnection);
             preparedStatement.setInt(1, playerId);
 
             resultSet = preparedStatement.executeQuery();
@@ -49,11 +49,11 @@ public class PlayerBotDao {
                         ownerName, ownerId, messages, automaticChat, chatDelay, botType, mode, storedData));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -65,10 +65,10 @@ public class PlayerBotDao {
         ResultSet resultSet = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into bots (`owner_id`, `room_id`, `name`, `figure`, `gender`, `motto`, `x`, `y`, `z`, `messages`, `automatic_chat`, `chat_delay`, `type`) VALUES(" +
-                    "?, 0, ?, ?, ?, ?, 0, 0, 0, '[]', '1', '14', ?);", sqlConnection, true);
+            preparedStatement = SQLUtility.prepare("INSERT into bots (`owner_id`, `room_id`, `name`, `figure`, `gender`, `motto`, `x`, `y`, `z`, `messages`, `automatic_chat`, `chat_delay`, `type`) VALUES(" +
+																									 "?, 0, ?, ?, ?, ?, 0, 0, 0, '[]', '1', '14', ?);", sqlConnection, true);
 
             preparedStatement.setInt(1, playerId);
             preparedStatement.setString(2, name);
@@ -85,11 +85,11 @@ public class PlayerBotDao {
                 return resultSet.getInt(1);
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return 0;
@@ -100,17 +100,17 @@ public class PlayerBotDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("DELETE FROM bots WHERE owner_id = ? AND room_id = 0;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE FROM bots WHERE owner_id = ? AND room_id = 0;", sqlConnection);
             preparedStatement.setInt(1, playerId);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 }

@@ -38,8 +38,8 @@ public class PlaylistRemoveMessageEvent implements Event {
         SongItemData songItemData = soundMachineFloorItem.removeSong(songIndex);
         soundMachineFloorItem.saveData();
 
-        StorageContext.getCurrentContext().getRoomItemRepository().removeItemFromRoom(songItemData.getItemSnapshot().getId(), client.getPlayer().getId(), songItemData.getItemSnapshot().getExtraData());
-        client.getPlayer().getInventory().add(songItemData.getItemSnapshot().getId(), songItemData.getItemSnapshot().getBaseItemId(), songItemData.getItemSnapshot().getExtraData(), null);
+        StorageContext.getCurrentContext().getRoomItemRepository().removeItemFromRoom(songItemData.getItemSnapshot().id(), client.getPlayer().getId(), songItemData.getItemSnapshot().extraData());
+        client.getPlayer().getInventory().add(songItemData.getItemSnapshot().id(), songItemData.getItemSnapshot().baseItemId(), songItemData.getItemSnapshot().extraData(), null);
 
         client.send(new UpdateInventoryMessageComposer());
 

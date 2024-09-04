@@ -10,12 +10,9 @@ import java.util.concurrent.Future;
 
 public class FbApiClient {
     private final Gson gson = new Gson();
-
     public static final String FB_API_VERSION = "v2.8";
-
     public static final String FB_APP_ID = "1260936063961905";
     private static final String FB_APP_SECRET = "5f61f7d4968939964875152251ce7884";
-
     private final AsyncHttpClient httpClient = new AsyncHttpClient();
 
     public FbApiClient() {

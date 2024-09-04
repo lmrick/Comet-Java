@@ -58,12 +58,11 @@ public class WiredActionGiveScore extends WiredActionItem {
 
     @Override
     public void onEventComplete(WiredItemEvent event) {
-        if (!(event.entity instanceof PlayerEntity)) {
+        if (!(event.entity instanceof PlayerEntity playerEntity)) {
             return;
         }
-
-        PlayerEntity playerEntity = ((PlayerEntity) event.entity);
-        if (!this.awardedPlayers.containsKey(playerEntity.getPlayerId())) {
+			
+			if (!this.awardedPlayers.containsKey(playerEntity.getPlayerId())) {
             this.awardedPlayers.put(playerEntity.getPlayerId(), new AtomicInteger(1));
         } else {
             if (this.awardedPlayers.get(playerEntity.getPlayerId()).getAndIncrement() > this.timesPerGame()) {

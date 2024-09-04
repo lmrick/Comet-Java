@@ -8,24 +8,22 @@ import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.types.Room;
 
 public class EffectFloorItem extends RoomItemFloor {
-    private final int effectId;
-
-    public EffectFloorItem(RoomItemData itemData, Room room) {
-        super(itemData, room);
-
-        this.effectId = this.getDefinition().getEffectId();
-    }
-
-    @Override
-    public void onEntityStepOn(RoomEntity entity) {
-        if (!(entity instanceof PlayerEntity)) {
-            return;
-        }
-
-        if (entity.getCurrentEffect() != null && entity.getCurrentEffect().getEffectId() == this.effectId) {
-            entity.applyEffect(null);
-        } else {
-            entity.applyEffect(new PlayerEffect(this.effectId, 0));
-        }
-    }
+	
+	private final int effectId;
+	
+	public EffectFloorItem(RoomItemData itemData, Room room) {
+		super(itemData, room);
+		
+		this.effectId = this.getDefinition().getEffectId();
+	}
+	
+	@Override
+	public void onEntityStepOn(RoomEntity entity) {
+		if (!(entity instanceof PlayerEntity)) {
+			return;
+		}
+		
+		entity.applyEffect(entity.getCurrentEffect() != null && entity.getCurrentEffect().getEffectId() == this.effectId ? null : new PlayerEffect(this.effectId, 0));
+	}
+	
 }

@@ -1,6 +1,6 @@
 package com.cometproject.server.storage.queries.player;
 
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,9 +16,9 @@ public class PlayerClothingDao {
         ResultSet resultSet = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM player_clothing WHERE player_id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM player_clothing WHERE player_id = ?", sqlConnection);
             preparedStatement.setInt(1, playerId);
             resultSet = preparedStatement.executeQuery();
 
@@ -26,11 +26,11 @@ public class PlayerClothingDao {
                 clothingItems.add(resultSet.getString("item_name"));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -39,18 +39,18 @@ public class PlayerClothingDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into player_clothing (player_id, item_name) VALUES(?, ?); ", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT into player_clothing (player_id, item_name) VALUES(?, ?); ", sqlConnection);
             preparedStatement.setInt(1, playerId);
             preparedStatement.setString(2, clothingItem);
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 }

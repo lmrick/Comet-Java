@@ -1,7 +1,7 @@
 package com.cometproject.server.composers.catalog;
 
 import com.cometproject.api.game.furniture.IFurnitureService;
-import com.cometproject.api.game.players.data.components.inventory.PlayerItem;
+import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.api.networking.messages.IComposer;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
@@ -21,10 +21,10 @@ public class UnseenItemsMessageComposer extends MessageComposer {
         this.newObjects = newObjects;
     }
 
-    public UnseenItemsMessageComposer(final Set<PlayerItem> PlayerItems, final IFurnitureService furnitureService) {
+    public UnseenItemsMessageComposer(final Set<IPlayerItem> PlayerItems, final IFurnitureService furnitureService) {
         this.newObjects = new HashMap<>();
 
-        for (PlayerItem playerItem : PlayerItems) {
+        for (IPlayerItem playerItem : PlayerItems) {
             if (!this.newObjects.containsKey(1)) {
                 this.newObjects.put(1, Lists.newArrayList(furnitureService.getItemVirtualId(playerItem.getId())));
             } else {

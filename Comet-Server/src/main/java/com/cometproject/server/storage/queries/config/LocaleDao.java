@@ -1,6 +1,6 @@
 package com.cometproject.server.storage.queries.config;
 
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,9 +19,9 @@ public class LocaleDao {
         Map<String, String> data = new HashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM server_locale", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM server_locale", sqlConnection);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -29,11 +29,11 @@ public class LocaleDao {
                 data.putIfAbsent(resultSet.getString("key"), resultSet.getString("value"));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;

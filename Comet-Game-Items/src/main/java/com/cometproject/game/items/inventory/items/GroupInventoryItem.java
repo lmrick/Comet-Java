@@ -42,6 +42,6 @@ public class GroupInventoryItem extends InventoryItem {
             msg.writeString(colourB);
         }
 
-        return true;
+        return false;
     }
 }

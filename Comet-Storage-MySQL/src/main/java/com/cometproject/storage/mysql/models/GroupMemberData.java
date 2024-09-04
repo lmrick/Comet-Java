@@ -2,7 +2,6 @@ package com.cometproject.storage.mysql.models;
 
 import com.cometproject.api.game.groups.types.components.membership.GroupAccessLevel;
 import com.cometproject.api.game.groups.types.components.membership.IGroupMember;
-import com.cometproject.api.game.players.data.PlayerAvatar;
 
 public class GroupMemberData implements IGroupMember {
 

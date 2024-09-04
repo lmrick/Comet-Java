@@ -1,7 +1,7 @@
 package com.cometproject.server.game.rooms.objects.items.types.floor.wired.actions;
 
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.objects.entities.types.BotEntity;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
@@ -13,19 +13,6 @@ import com.cometproject.server.network.messages.outgoing.room.avatar.TalkMessage
 public class WiredActionBotGiveHandItem extends WiredActionItem {
     private final static int PARAM_HANDITEM = 0;
 
-    /**
-     * The default constructor
-     *
-     * @param id       The ID of the item
-     * @param itemId   The ID of the item definition
-     * @param room     The instance of the room
-     * @param owner    The ID of the owner
-     * @param x        The position of the item on the X axis
-     * @param y        The position of the item on the Y axis
-     * @param z        The position of the item on the z axis
-     * @param rotation The orientation of the item
-     * @param data     The JSON object associated with this item
-     */
     public WiredActionBotGiveHandItem(RoomItemData itemData, Room room) {
         super(itemData, room);
     }
@@ -50,7 +37,7 @@ public class WiredActionBotGiveHandItem extends WiredActionItem {
             return;
         }
 
-        if (event.entity == null || !(event.entity instanceof PlayerEntity)) return;
+        if (!(event.entity instanceof PlayerEntity)) return;
 
         int param = this.getWiredData().getParams().get(PARAM_HANDITEM);
 

@@ -20,31 +20,12 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 
-/**
- * This system was inspired by Nillus' "habbod2".
- */
 public abstract class WiredFloorItem extends AdvancedFloorItem<WiredItemEvent> implements WiredItemSnapshot.Refreshable, Stateable {
-    /**
-     * The data associated with this wired item
-     */
     private WiredItemData wiredItemData = null;
     private boolean state;
     private boolean hasTicked = false;
     private boolean isFlashing = false;
 
-    /**
-     * The default constructor
-     *
-     * @param id       The ID of the item
-     * @param itemId   The ID of the item definition
-     * @param room     The instance of the room
-     * @param owner    The ID of the owner
-     * @param x        The position of the item on the X axis
-     * @param y        The position of the item on the Y axis
-     * @param z        The position of the item on the z axis
-     * @param rotation The orientation of the item
-     * @param data     The JSON object associated with this item
-     */
     public WiredFloorItem(RoomItemData itemData, Room room) {
         super(itemData, room);
 
@@ -55,19 +36,12 @@ public abstract class WiredFloorItem extends AdvancedFloorItem<WiredItemEvent> i
         this.load();
     }
 
-    /**
-     * Turn the wired item data into a JSON object, and then save it to the database
-     */
     @Override
     public void save() {
         this.getItemData().setData(JsonUtil.getInstance().toJson(wiredItemData));
 
         super.save();
     }
-
-    /**
-     * Turn the JSON object into a usable WiredItemData object
-     */
     public void load() {
         try {
             if (this.getItemData().getData().equals("{}")) {
@@ -93,9 +67,9 @@ public abstract class WiredFloorItem extends AdvancedFloorItem<WiredItemEvent> i
             return true;
         }
 
-        PlayerEntity p = (PlayerEntity) entity;
+        PlayerEntity playerEntity = (PlayerEntity) entity;
 
-        if (!this.getRoom().getRights().hasRights(p.getPlayerId()) && !p.getPlayer().getPermissions().getRank().roomFullControl()) {
+        if (!this.getRoom().getRights().hasRights(playerEntity.getPlayerId()) && !playerEntity.getPlayer().getPermissions().getRank().roomFullControl()) {
             return true;
         }
 
@@ -108,21 +82,17 @@ public abstract class WiredFloorItem extends AdvancedFloorItem<WiredItemEvent> i
     public void refreshSnapshots() {
         List<Long> toRemove = Lists.newArrayList();
         this.getWiredData().getSnapshots().clear();
-
-        for (long itemId : this.getWiredData().getSelectedIds()) {
-            RoomItemFloor floorItem = this.getRoom().getItems().getFloorItem(itemId);
-
-            if (floorItem == null) {
-                toRemove.add(itemId);
-                continue;
-            }
-
-            this.getWiredData().getSnapshots().put(itemId, new WiredItemSnapshot(floorItem));
-        }
-
-        for (long itemToRemove : toRemove) {
-            this.getWiredData().getSelectedIds().remove(itemToRemove);
-        }
+			
+			this.getWiredData().getSelectedIds().forEach(itemId -> {
+				RoomItemFloor floorItem = this.getRoom().getItems().getFloorItem(itemId);
+				if (floorItem == null) {
+					toRemove.add(itemId);
+					return;
+				}
+				this.getWiredData().getSnapshots().put(itemId, new WiredItemSnapshot(floorItem));
+			});
+			
+			toRemove.forEach(itemToRemove -> this.getWiredData().getSelectedIds().remove(itemToRemove));
 
         this.save();
     }
@@ -161,64 +131,26 @@ public abstract class WiredFloorItem extends AdvancedFloorItem<WiredItemEvent> i
 
     }
 
-    /**
-     * Get the wired item data object
-     *
-     * @return The wired item data object
-     */
     public WiredItemData getWiredData() {
         return wiredItemData;
     }
 
-    /**
-     * Get the ID of the interface of the item which will tell the client which input fields to display
-     *
-     * @return The ID of the interface
-     */
     public abstract int getInterface();
-
-    /**
-     * Get the packet to display the full dialog to the player
-     *
-     * @return The dialog message composer
-     */
     public abstract MessageComposer getDialog();
-
-    /**
-     * Evaluate the wired trigger/action/condition
-     *
-     * @param entity The entity that's involved with this event
-     * @param data   The data passed by the trigger
-     * @return Whether or not the evaluation was a success
-     */
     public abstract boolean evaluate(RoomEntity entity, Object data);
 
-    /**
-     * Will be executed when the data has been refreshed
-     */
     public void onDataRefresh() {
 
     }
 
-    /**
-     * Will be executed when the data has been changed (different to the "onDataRefresh" event)
-     */
     public void onDataChange() {
 
     }
 
-    /**
-     * If Wired uses Delay
-     * @return boolean
-     */
     public boolean usesDelay() {
         return true;
     }
 
-    /**
-     * Custom Furni selection
-     * @return
-     */
     public int getFurniSelection() {
         return WiredUtil.MAX_FURNI_SELECTION;
     }
@@ -227,4 +159,5 @@ public abstract class WiredFloorItem extends AdvancedFloorItem<WiredItemEvent> i
     public boolean getState() {
         return this.state;
     }
+    
 }

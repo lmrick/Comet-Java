@@ -8,7 +8,7 @@ public enum ChatEmotion {
     SAD(4),
     LAUGH(6);
 
-    private int emotionId;
+    private final int emotionId;
 
     ChatEmotion(int emotionId) {
         this.emotionId = emotionId;

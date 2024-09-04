@@ -35,9 +35,7 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
 
     @Override
     protected void initChannel(SocketChannel ch) {
-        // Check if we should register the client or disconnect it
         final String ipAddress = ch.remoteAddress().getAddress().getHostAddress();
-
         final Map<String, SessionAccessLog> accessLog = NetworkManager.getInstance().getSessions().getAccessLog();
 
         if (CometSettings.maxConnectionsBlockSuspicious && NetworkManager.getInstance().getSessions().getAccessLog().containsKey(ipAddress)) {

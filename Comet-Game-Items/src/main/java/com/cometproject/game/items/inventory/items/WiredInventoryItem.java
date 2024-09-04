@@ -15,7 +15,7 @@ public class WiredInventoryItem extends InventoryItem {
         super.composeData(msg);
 
         msg.writeString("");
-        return true;
+        return false;
     }
 
 }

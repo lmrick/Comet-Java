@@ -15,7 +15,7 @@ public class GiftInventoryItem extends InventoryItem {
     public GiftInventoryItem(InventoryItemData inventoryItemData, FurnitureDefinition furnitureDefinition) {
         super(inventoryItemData, furnitureDefinition);
 
-        this.giftData = this.getGiftData(inventoryItemData.getExtraData());
+        this.giftData = this.getGiftData(inventoryItemData.extraData());
     }
 
     private GiftData getGiftData(String data) {
@@ -38,7 +38,7 @@ public class GiftInventoryItem extends InventoryItem {
         super.composeData(msg);
 
         msg.writeString("");
-        return true;
+        return false;
     }
 
     @Override

@@ -9,23 +9,12 @@ import com.cometproject.server.tasks.CometThreadManager;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class CometGameService implements IGameService {
-    /**
-     * The main system-wide event handler
-     */
     private EventHandler eventHandler;
 
-    /**
-     * Default constructor
-     */
     public CometGameService(EventHandler eventHandler) {
         this.eventHandler = eventHandler;
     }
 
-    /**
-     * Get the main event handler
-     *
-     * @return EventHandler instance
-     */
     @Override
     public EventHandler getEventHandler() {
         return this.eventHandler;

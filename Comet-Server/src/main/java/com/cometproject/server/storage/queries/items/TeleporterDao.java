@@ -1,6 +1,6 @@
 package com.cometproject.server.storage.queries.items;
 
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,9 +16,9 @@ public class TeleporterDao {
         ResultSet resultSet = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM items_teles WHERE id_one = ? LIMIT 1;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM items_teles WHERE id_one = ? LIMIT 1;", sqlConnection);
             preparedStatement.setLong(1, id);
 
             resultSet = preparedStatement.executeQuery();
@@ -27,11 +27,11 @@ public class TeleporterDao {
                 return resultSet.getLong("id_two");
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return 0;
@@ -42,9 +42,9 @@ public class TeleporterDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT into items_teles (id_one, id_two) VALUES(?, ?);", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT into items_teles (id_one, id_two) VALUES(?, ?);", sqlConnection);
             preparedStatement.setLong(1, item1);
             preparedStatement.setLong(2, item2);
 
@@ -57,10 +57,10 @@ public class TeleporterDao {
 
             preparedStatement.executeBatch();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 }

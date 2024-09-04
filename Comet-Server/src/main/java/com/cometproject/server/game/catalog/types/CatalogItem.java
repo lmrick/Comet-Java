@@ -9,89 +9,27 @@ import com.cometproject.server.game.catalog.CatalogManager;
 import com.cometproject.server.game.items.ItemManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
 public class CatalogItem implements ICatalogItem {
-    /**
-     * The ID of the catalog item
-     */
-    private int id;
-
-    /**
-     * The ID of the item definition
-     */
-    private String itemId;
-
-    /**
-     * The name of item which will be displayed in the catalog
-     */
-    private String displayName;
-
-    /**
-     * The coin cost of the item
-     */
-    private int costCredits;
-
-    /**
-     * The duckets cost of the item
-     */
-    private int costActivityPoints;
-
-    /**
-     * The diamonds cost of the item
-     */
-    private int costDiamonds;
-
-    /**
-     * The seasonal currency cost of the item
-     */
-    private int costSeasonal;
-
-    /**
-     * The amount of items you get if you purchase this
-     */
-    private int amount;
-
-    /**
-     * Is this item only available to VIP members?
-     */
-    private boolean vip;
-
-    /**
-     * The items (if this is a bundle)
-     */
+    private final int id;
+    private final String itemId;
+    private final String displayName;
+    private final int costCredits;
+    private final int costActivityPoints;
+    private final int costDiamonds;
+    private final int costSeasonal;
+    private final int amount;
+    private final boolean vip;
     private List<ICatalogBundledItem> items;
-
-    /**
-     * If this item is limited edition, how many items are available
-     */
-    private int limitedTotal;
-
-    /**
-     * If this item is limited edition, how many items have been sold
-     */
+    private final int limitedTotal;
     private int limitedSells;
-
-    /**
-     * Allow this item to be sold
-     */
-    private boolean allowOffer;
-
-    /**
-     * Badge ID that's bundled with this item (if any)
-     */
-    private String badgeId;
-
-    /**
-     * Item extra-data presets (once purchased, this preset will be applied to the item)
-     */
-    private String presetData;
-
-    /**
-     * The catalog page ID
-     */
-    private int pageId;
+    private final boolean allowOffer;
+    private final String badgeId;
+    private final String presetData;
+    private final int pageId;
 
     public CatalogItem(int id, String itemId, String displayName, int costCredits, int costActivityPoints, int costDiamonds, int costSeasonal, int amount, boolean vip, int limitedTotal, int limitedSells, boolean allowOffer, String badgeId, String presetData, int pageId) {
         this(id, itemId, null, displayName, costCredits, costActivityPoints, costDiamonds, costSeasonal, amount, vip, limitedTotal, limitedSells, allowOffer, badgeId, presetData, pageId);
@@ -116,7 +54,7 @@ public class CatalogItem implements ICatalogItem {
 
         this.items = bundledItems != null ? bundledItems : new ArrayList<>();
 
-        if (items.size() == 0) {
+        if (items.isEmpty()) {
             if (!this.itemId.equals("-1")) {
                 if (bundledItems != null) {
                     items = bundledItems;
@@ -124,50 +62,44 @@ public class CatalogItem implements ICatalogItem {
 
                     if (itemId.contains(",")) {
                         String[] split = itemId.replace("\n", "").split(",");
-
-                        for (String str : split) {
-                            if (!str.equals("")) {
-                                String[] parts = str.split(":");
-                                if (parts.length != 3) continue;
-
-                                try {
-                                    final int aItemId = Integer.parseInt(parts[0]);
-                                    final int aAmount = Integer.parseInt(parts[1]);
-                                    final String aPresetData = parts[2];
-
-                                    this.items.add(new CatalogBundledItem(aPresetData, aAmount, aItemId));
-                                } catch (Exception ignored) {
-                                    Comet.getServer().getLogger().warn("Invalid item data for catalog item: " + this.id);
-                                }
-                            }
-                        }
+											
+											Arrays.stream(split).filter(str -> !str.isEmpty()).map(str -> str.split(":")).filter(parts -> parts.length == 3).forEachOrdered(parts -> {
+												try {
+													final int aItemId = Integer.parseInt(parts[0]);
+													final int aAmount = Integer.parseInt(parts[1]);
+													final String aPresetData = parts[2];
+													
+													this.items.add(new CatalogBundledItem(aPresetData, aAmount, aItemId));
+												} catch (Exception ignored) {
+													Comet.getServer().getLogger().warn("Invalid item data for catalog item: " + this.id);
+												}
+											});
                     } else {
-                        this.items.add(new CatalogBundledItem(this.presetData, this.amount, Integer.valueOf(this.itemId)));
+                        this.items.add(new CatalogBundledItem(this.presetData, this.amount, Integer.parseInt(this.itemId)));
                     }
                 }
             }
 
-            if (this.getItems().size() == 0) return;
+            if (this.getItems().isEmpty()) return;
 
             List<ICatalogBundledItem> itemsToRemove = new ArrayList<>();
-
-            for (ICatalogBundledItem catalogBundledItem : this.items) {
-                final FurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(catalogBundledItem.getItemId());
-
-                if (itemDefinition == null) {
-                    itemsToRemove.add(catalogBundledItem);
-                }
-            }
+					
+					this.items.forEach(catalogBundledItem -> {
+						final FurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(catalogBundledItem.itemId());
+						if (itemDefinition == null) {
+							itemsToRemove.add(catalogBundledItem);
+						}
+					});
 
             this.items.removeAll(itemsToRemove);
             itemsToRemove.clear();
 
-            if (this.items.size() == 0) {
+            if (this.items.isEmpty()) {
                 return;
             }
 
-            if (ItemManager.getInstance().getDefinition(this.getItems().get(0).getItemId()) == null) return;
-            int offerId = ItemManager.getInstance().getDefinition(this.getItems().get(0).getItemId()).getOfferId();
+            if (ItemManager.getInstance().getDefinition(this.getItems().getFirst().itemId()) == null) return;
+            int offerId = ItemManager.getInstance().getDefinition(this.getItems().getFirst().itemId()).getOfferId();
 
             if (!CatalogManager.getInstance().getCatalogOffers().containsKey(offerId)) {
                 CatalogManager.getInstance().getCatalogOffers().put(offerId, new CatalogOffer(offerId, this.getPageId(), this.getId()));
@@ -177,7 +109,7 @@ public class CatalogItem implements ICatalogItem {
 
     @Override
     public void compose(IComposer msg) {
-        final FurnitureDefinition firstItem = this.itemId.equals("-1") ? null : ItemManager.getInstance().getDefinition(this.getItems().get(0).getItemId());
+        final FurnitureDefinition firstItem = this.itemId.equals("-1") ? null : ItemManager.getInstance().getDefinition(this.getItems().get(0).itemId());
 
         msg.writeInt(this.getId());
         msg.writeString(this.getDisplayName());
@@ -210,27 +142,18 @@ public class CatalogItem implements ICatalogItem {
         }
 
         if (!this.isBadgeOnly()) {
-            for (ICatalogBundledItem bundledItem : this.getItems()) {
-                FurnitureDefinition def = ItemManager.getInstance().getDefinition(bundledItem.getItemId());
-
-                msg.writeString(def.getType());
-                msg.writeInt(def.getSpriteId());
-
-                if (this.getDisplayName().contains("wallpaper_single") || this.getDisplayName().contains("floor_single") || this.getDisplayName().contains("landscape_single")) {
-                    msg.writeString(this.getDisplayName().split("_")[2]);
-                } else {
-                    msg.writeString(bundledItem.getPresetData());
-                }
-
-                msg.writeInt(bundledItem.getAmount());
-
-                msg.writeBoolean(this.getLimitedTotal() != 0);
-
-                if (this.getLimitedTotal() > 0) {
-                    msg.writeInt(this.getLimitedTotal());
-                    msg.writeInt(this.getLimitedTotal() - this.getLimitedSells());
-                }
-            }
+					this.getItems().forEach(bundledItem -> {
+						FurnitureDefinition def = ItemManager.getInstance().getDefinition(bundledItem.itemId());
+						msg.writeString(def.getType());
+						msg.writeInt(def.getSpriteId());
+						msg.writeString(this.getDisplayName().contains("wallpaper_single") || this.getDisplayName().contains("floor_single") || this.getDisplayName().contains("landscape_single") ? this.getDisplayName().split("_")[2] : bundledItem.presetData());
+						msg.writeInt(bundledItem.amount());
+						msg.writeBoolean(this.getLimitedTotal() != 0);
+						if (this.getLimitedTotal() > 0) {
+							msg.writeInt(this.getLimitedTotal());
+							msg.writeInt(this.getLimitedTotal() - this.getLimitedSells());
+						}
+					});
         }
 
         msg.writeInt(0); // club level
@@ -316,7 +239,7 @@ public class CatalogItem implements ICatalogItem {
 
     @Override
     public boolean isBadgeOnly() {
-        return this.items.size() == 0 && this.hasBadge();
+        return this.items.isEmpty() && this.hasBadge();
     }
 
     @Override

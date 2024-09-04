@@ -1,8 +1,8 @@
 package com.cometproject.storage.api.data.players;
 
-import com.cometproject.api.game.players.data.PlayerAvatar;
+import com.cometproject.api.game.players.data.IPlayerAvatar;
 
-public class PlayerAvatarData implements PlayerAvatar {
+public class PlayerAvatarData implements IPlayerAvatar {
     private final int id;
     private String username;
     private String figure;

@@ -3,7 +3,7 @@ package com.cometproject.server.network.messages.incoming.room.pets;
 import com.cometproject.api.game.pets.IPetData;
 import com.cometproject.api.game.rooms.models.RoomTileState;
 import com.cometproject.api.game.utilities.Position;
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.rooms.objects.entities.types.PetEntity;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.types.Room;
@@ -58,7 +58,7 @@ public class PlacePetMessageEvent implements Event {
 
             Position position = new Position(x, y, tile.getWalkHeight());
 
-            if ((!atDoor && tile.getEntities().size() >= 1) || !room.getMapping().isValidPosition(position) || room.getModel().getSquareState()[x][y] != RoomTileState.VALID) {
+            if ((!atDoor && tile.getEntities().size() >= 1) || room.getMapping().isValidPosition(position) || room.getModel().getSquareState()[x][y] != RoomTileState.VALID) {
                 return;
             }
 

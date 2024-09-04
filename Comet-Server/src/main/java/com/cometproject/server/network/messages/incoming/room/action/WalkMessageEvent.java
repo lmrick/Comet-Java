@@ -51,7 +51,7 @@ public class WalkMessageEvent implements Event {
 //                return;
 //            }
 
-            if (!entity.sendUpdateMessage()) {
+            if (entity.sendUpdateMessage()) {
                 entity.setSendUpdateMessage(true);
             }
 

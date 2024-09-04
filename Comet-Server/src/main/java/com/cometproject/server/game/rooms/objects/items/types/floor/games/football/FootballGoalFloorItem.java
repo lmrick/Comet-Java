@@ -9,46 +9,39 @@ import com.cometproject.server.game.rooms.types.components.games.GameTeam;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.sessions.Session;
 
-
 public class FootballGoalFloorItem extends RoomItemFloor {
-    private GameTeam gameTeam;
-
-    public FootballGoalFloorItem(RoomItemData roomItemData, Room room) {
-        super(roomItemData, room);
-
-        switch (this.getDefinition().getItemName()) {
-            case "fball_goal_b":
-                this.gameTeam = GameTeam.BLUE;
-                break;
-            case "fball_goal_r":
-                this.gameTeam = GameTeam.RED;
-                break;
-            case "fball_goal_y":
-                this.gameTeam = GameTeam.YELLOW;
-                break;
-            case "fball_goal_g":
-                this.gameTeam = GameTeam.GREEN;
-                break;
-        }
-    }
-
-    @Override
-    public void onItemAddedToStack(RoomItemFloor floorItem) {
-        if (floorItem instanceof FootballFloorItem) {
-
-            final int playerId = this.getRoom().getData().getOwnerId();
-
-            if (PlayerManager.getInstance().isOnline(playerId)) {
-                Session session = NetworkManager.getInstance().getSessions().getByPlayerId(playerId);
-
-                if (session != null && session.getPlayer() != null && session.getPlayer().getAchievements() != null) {
-                    session.getPlayer().getAchievements().progressAchievement(AchievementType.FOOTBALL_GOAL, 1);
-                }
-            }
-        }
-    }
-
-    public GameTeam getGameTeam() {
-        return gameTeam;
-    }
+	
+	private GameTeam gameTeam;
+	
+	public FootballGoalFloorItem(RoomItemData roomItemData, Room room) {
+		super(roomItemData, room);
+		
+		switch (this.getDefinition().getItemName()) {
+			case "fball_goal_b" -> this.gameTeam = GameTeam.BLUE;
+			case "fball_goal_r" -> this.gameTeam = GameTeam.RED;
+			case "fball_goal_y" -> this.gameTeam = GameTeam.YELLOW;
+			case "fball_goal_g" -> this.gameTeam = GameTeam.GREEN;
+		}
+	}
+	
+	@Override
+	public void onItemAddedToStack(RoomItemFloor floorItem) {
+		if (floorItem instanceof FootballFloorItem) {
+			
+			final int playerId = this.getRoom().getData().getOwnerId();
+			
+			if (PlayerManager.getInstance().isOnline(playerId)) {
+				Session session = NetworkManager.getInstance().getSessions().getByPlayerId(playerId);
+				
+				if (session != null && session.getPlayer() != null && session.getPlayer().getAchievements() != null) {
+					session.getPlayer().getAchievements().progressAchievement(AchievementType.FOOTBALL_GOAL, 1);
+				}
+			}
+		}
+	}
+	
+	public GameTeam getGameTeam() {
+		return gameTeam;
+	}
+	
 }

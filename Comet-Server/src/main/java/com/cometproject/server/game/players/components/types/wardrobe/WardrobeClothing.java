@@ -1,25 +1,22 @@
 package com.cometproject.server.game.players.components.types.wardrobe;
 
-public class WardrobeClothing {
-    private final int id;
-    private final int partId;
-    private final int part;
+import com.cometproject.api.game.players.data.components.wardrobe.IWardrobeClothing;
 
-    public WardrobeClothing(int id, int partId, int part) {
-        this.id = id;
-        this.partId = partId;
-        this.part = part;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getPartId() {
-        return partId;
-    }
-
-    public int getPart() {
-        return part;
-    }
+public record WardrobeClothing(int id, int partId, int part) implements IWardrobeClothing {
+	
+	@Override
+	public int id() {
+		return id;
+	}
+	
+	@Override
+	public int partId() {
+		return partId;
+	}
+	
+	@Override
+	public int part() {
+		return part;
+	}
+	
 }

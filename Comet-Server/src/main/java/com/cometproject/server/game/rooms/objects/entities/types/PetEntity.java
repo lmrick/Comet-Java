@@ -4,7 +4,7 @@ import com.cometproject.api.game.pets.IPetData;
 import com.cometproject.api.game.utilities.Position;
 import com.cometproject.api.networking.messages.IComposer;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
-import com.cometproject.server.game.rooms.objects.entities.types.ai.BotAI;
+import com.cometproject.server.game.rooms.objects.entities.types.ai.IBotAI;
 import com.cometproject.server.game.rooms.objects.entities.types.ai.pets.PetAI;
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.network.messages.outgoing.room.avatar.LeaveRoomMessageComposer;
@@ -175,7 +175,7 @@ public class PetEntity extends RoomEntity {
     }
 
     @Override
-    public BotAI getAI() {
+    public IBotAI getAI() {
         return ai;
     }
 

@@ -1,6 +1,6 @@
 package com.cometproject.server.storage.queries.filter;
 
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,9 +19,9 @@ public class FilterDao {
         Map<String, String> data = new HashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT `word`, `replacement` FROM `wordfilter`", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT `word`, `replacement` FROM `wordfilter`", sqlConnection);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -29,11 +29,11 @@ public class FilterDao {
                 data.put(resultSet.getString("word").toLowerCase(), resultSet.getString("replacement"));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -44,9 +44,9 @@ public class FilterDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("REPLACE INTO wordfilter (`word`, `replacement`) VALUES(?, ?)", sqlConnection);
+            preparedStatement = SQLUtility.prepare("REPLACE INTO wordfilter (`word`, `replacement`) VALUES(?, ?)", sqlConnection);
 
             for (Map.Entry<String, String> word : wordfilter.entrySet()) {
                 preparedStatement.setString(1, word.getKey());
@@ -58,10 +58,10 @@ public class FilterDao {
             preparedStatement.executeBatch();
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 }

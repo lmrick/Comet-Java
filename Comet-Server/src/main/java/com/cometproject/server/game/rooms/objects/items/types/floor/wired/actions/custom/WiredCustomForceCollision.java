@@ -10,61 +10,62 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.trigge
 import com.cometproject.server.game.rooms.types.Room;
 
 public class WiredCustomForceCollision extends WiredActionItem {
-
-    public WiredCustomForceCollision(RoomItemData itemData, Room room) {
-        super(itemData, room);
-    }
-
-    @Override
-    public boolean requiresPlayer() {
-        return false;
-    }
-
-    @Override
-    public int getInterface() {
-        return 8;
-    }
-
-    @Override
-    public void onEventComplete(WiredItemEvent event) {
-        if (this.getWiredData().getSelectedIds().size() == 0) return;
-
-        for (long itemId : this.getWiredData().getSelectedIds()) {
-            RoomItemFloor floorItem = this.getRoom().getItems().getFloorItem(itemId);
-
-            if (floorItem == null) continue;
-
-            PlayerEntity nearestEntity = floorItem.nearestPlayerEntity();
-
-            if (floorItem.getCollision() != null && this.isCollided(floorItem.getCollision(), floorItem)) {
-                WiredTriggerCollision.executeTriggers(nearestEntity, floorItem);
-                continue;
-            }
-
-            if (nearestEntity != null) {
-                if (this.isCollided(nearestEntity, floorItem)) {
-                    if (floorItem.getCollision() != nearestEntity) {
-                        floorItem.setCollision(nearestEntity);
-
-                        WiredTriggerCollision.executeTriggers(nearestEntity, floorItem);
-                    }
-                }
-            } else {
-                return;
-            }
-        }
-    }
-
-    private boolean isCollided(RoomEntity entity, RoomItemFloor floorItem) {
-        boolean tilesTouching = entity.getPosition().touching(floorItem.getPosition());
-
-        if (tilesTouching) {
-            final boolean xMatches = entity.getPosition().getX() == floorItem.getPosition().getX();
-            final boolean yMatches = entity.getPosition().getY() == floorItem.getPosition().getY();
-
-            return xMatches || yMatches;
-        }
-
-        return false;
-    }
+	
+	public WiredCustomForceCollision(RoomItemData itemData, Room room) {
+		super(itemData, room);
+	}
+	
+	@Override
+	public boolean requiresPlayer() {
+		return false;
+	}
+	
+	@Override
+	public int getInterface() {
+		return 8;
+	}
+	
+	@Override
+	public void onEventComplete(WiredItemEvent event) {
+		if (this.getWiredData().getSelectedIds().isEmpty()) return;
+		
+		for (long itemId : this.getWiredData().getSelectedIds()) {
+			RoomItemFloor floorItem = this.getRoom().getItems().getFloorItem(itemId);
+			
+			if (floorItem == null) continue;
+			
+			PlayerEntity nearestEntity = floorItem.nearestPlayerEntity();
+			
+			if (floorItem.getCollision() != null && this.isCollided(floorItem.getCollision(), floorItem)) {
+				WiredTriggerCollision.executeTriggers(nearestEntity, floorItem);
+				continue;
+			}
+			
+			if (nearestEntity != null) {
+				if (this.isCollided(nearestEntity, floorItem)) {
+					if (floorItem.getCollision() != nearestEntity) {
+						floorItem.setCollision(nearestEntity);
+						
+						WiredTriggerCollision.executeTriggers(nearestEntity, floorItem);
+					}
+				}
+			} else {
+				return;
+			}
+		}
+	}
+	
+	private boolean isCollided(RoomEntity entity, RoomItemFloor floorItem) {
+		boolean tilesTouching = entity.getPosition().touching(floorItem.getPosition());
+		
+		if (tilesTouching) {
+			final boolean xMatches = entity.getPosition().getX() == floorItem.getPosition().getX();
+			final boolean yMatches = entity.getPosition().getY() == floorItem.getPosition().getY();
+			
+			return xMatches || yMatches;
+		}
+		
+		return false;
+	}
+	
 }

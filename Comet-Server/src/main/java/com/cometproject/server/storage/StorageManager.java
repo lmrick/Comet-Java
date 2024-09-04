@@ -7,35 +7,33 @@ import com.cometproject.storage.mysql.MySQLStorageInitializer;
 import com.cometproject.storage.mysql.connections.HikariConnectionProvider;
 
 public class StorageManager implements Initialisable {
-    private static StorageManager storageManagerInstance;
-
-    private final HikariConnectionProvider hikariConnectionProvider;
-
-    public StorageManager() {
-        hikariConnectionProvider = new HikariConnectionProvider();
-    }
-
-    public static StorageManager getInstance() {
-        if (storageManagerInstance == null)
-            storageManagerInstance = new StorageManager();
-
-        return storageManagerInstance;
-    }
-
-    @Override
-    public void initialize() {
-        final MySQLStorageInitializer initializer = new MySQLStorageInitializer(hikariConnectionProvider);
-        final StorageContext storageContext = new StorageContext();
-
-        initializer.setup(storageContext);
-
-        StorageContext.setCurrentContext(storageContext);
-
-        CacheManager.getInstance().initialize();
-        SqlHelper.init(hikariConnectionProvider);
-    }
-
-    public void shutdown() {
-        this.hikariConnectionProvider.shutdown();
-    }
+	private static StorageManager storageManagerInstance;
+	private final HikariConnectionProvider hikariConnectionProvider;
+	
+	public StorageManager() {
+		hikariConnectionProvider = new HikariConnectionProvider();
+	}
+	
+	public static StorageManager getInstance() {
+		if (storageManagerInstance == null) storageManagerInstance = new StorageManager();
+		return storageManagerInstance;
+	}
+	
+	@Override
+	public void initialize() {
+		final MySQLStorageInitializer initializer = new MySQLStorageInitializer(hikariConnectionProvider);
+		final StorageContext storageContext = new StorageContext();
+		
+		initializer.setup(storageContext);
+		
+		StorageContext.setCurrentContext(storageContext);
+		
+		CacheManager.getInstance().initialize();
+		SQLUtility.init(hikariConnectionProvider);
+	}
+	
+	public void shutdown() {
+		this.hikariConnectionProvider.shutdown();
+	}
+	
 }

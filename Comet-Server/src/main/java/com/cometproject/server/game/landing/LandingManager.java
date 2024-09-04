@@ -1,7 +1,7 @@
 package com.cometproject.server.game.landing;
 
 import com.cometproject.api.config.CometSettings;
-import com.cometproject.api.game.players.data.PlayerAvatar;
+import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.utilities.Initialisable;
 import com.cometproject.server.game.landing.types.PromoArticle;
 import com.cometproject.server.storage.queries.landing.LandingDao;
@@ -17,16 +17,13 @@ public class LandingManager implements Initialisable {
     private static LandingManager landingManagerInstance;
     private Map<Integer, PromoArticle> articles;
 
-    private Map<PlayerAvatar, Integer> hallOfFame;
+    private Map<IPlayerAvatar, Integer> hallOfFame;
 
     public LandingManager() {
     }
 
     public static LandingManager getInstance() {
-        if (landingManagerInstance == null) {
-            landingManagerInstance = new LandingManager();
-        }
-
+        if (landingManagerInstance == null) landingManagerInstance = new LandingManager();
         return landingManagerInstance;
     }
 
@@ -66,7 +63,7 @@ public class LandingManager implements Initialisable {
         return articles;
     }
 
-    public Map<PlayerAvatar, Integer> getHallOfFame() {
+    public Map<IPlayerAvatar, Integer> getHallOfFame() {
         return this.hallOfFame;
     }
 }

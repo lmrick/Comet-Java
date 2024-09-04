@@ -15,7 +15,7 @@ public class SongIdMessageEvent implements Event {
         IMusicData musicData = ItemManager.getInstance().getMusicDataByName(songName);
 
         if (musicData != null) {
-            client.send(new SongIdMessageComposer(musicData.getName(), musicData.getSongId()));
+            client.send(new SongIdMessageComposer(musicData.name(), musicData.songId()));
         }
     }
 }

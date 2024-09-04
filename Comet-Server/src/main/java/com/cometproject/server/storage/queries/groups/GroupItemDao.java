@@ -2,7 +2,7 @@ package com.cometproject.server.storage.queries.groups;
 
 import com.cometproject.api.game.groups.items.IGroupBadgeItem;
 import com.cometproject.server.game.groups.items.types.*;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,9 +22,9 @@ public class GroupItemDao {
         int count = 0;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM group_items", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM group_items", sqlConnection);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -54,11 +54,11 @@ public class GroupItemDao {
                 }
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return count;

@@ -14,8 +14,6 @@ public abstract class MessageParser {
     }
 
     public abstract void parse(IMessageEvent event);
-
-    public void flush() {
-        // Override if we need to dispose anything we previously allocated
-    }
+    public void flush() {  }
+    
 }

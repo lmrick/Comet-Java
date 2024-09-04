@@ -1,17 +1,17 @@
 package com.cometproject.api.game.furniture.types;
 
 public interface IMusicData {
-    int getSongId();
+    int songId();
 
-    String getName();
+    String name();
 
-    String getTitle();
+    String title();
 
-    String getArtist();
+    String artist();
 
-    String getData();
+    String data();
 
-    int getLengthSeconds();
+    int lengthSeconds();
 
     int getLengthMilliseconds();
 }

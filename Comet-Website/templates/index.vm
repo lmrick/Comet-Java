@@ -79,13 +79,13 @@
                 </div>
                 <div id="login-column-4">
                     <div id="fb-root"></div>
-                    <font style="font-size:15.3px;"><b>$serverStatistics.activePlayers</b> ${siteSettings.hotelName}(s)
+                    <font style="font-size:15px;"><b>$serverStatistics.activePlayers</b> ${siteSettings.hotelName}(s)
                         online!</font>
                 </div>
             </div>
+        </form>
     </div>
-    </form>
-    </div>
+
     <script>
         habboPageInitQueue.push(function () {
             if (!LandingPage.focusForced) {
@@ -171,7 +171,7 @@
                                 </label><br /><br />
 
                             <div class="g-recaptcha" data-sitekey="6LfDiv8SAAAAACmgmYJIEJIIfSwb9hfqRtzmaRka"></div>
-                            </p>
+
 
                             <div class="submit-button-wrapper">
                                 <a href="#"

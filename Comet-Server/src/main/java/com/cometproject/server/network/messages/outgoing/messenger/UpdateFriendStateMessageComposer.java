@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.outgoing.messenger;
 
 import com.cometproject.api.game.groups.types.IGroupData;
-import com.cometproject.api.game.players.data.PlayerAvatar;
+import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.game.players.data.components.messenger.RelationshipLevel;
 import com.cometproject.api.networking.messages.IComposer;
 import com.cometproject.server.protocol.headers.Composers;
@@ -9,7 +9,7 @@ import com.cometproject.server.protocol.messages.MessageComposer;
 
 
 public class UpdateFriendStateMessageComposer extends MessageComposer {
-    private final PlayerAvatar playerAvatar;
+    private final IPlayerAvatar playerAvatar;
     private final IGroupData group;
 
     private final boolean online;
@@ -18,7 +18,7 @@ public class UpdateFriendStateMessageComposer extends MessageComposer {
     private int action;
     private int friendId;
 
-    public UpdateFriendStateMessageComposer(final PlayerAvatar playerAvatar, final boolean online, final boolean inRoom, final RelationshipLevel level) {
+    public UpdateFriendStateMessageComposer(final IPlayerAvatar playerAvatar, final boolean online, final boolean inRoom, final RelationshipLevel level) {
         this.playerAvatar = playerAvatar;
         this.group = null;
         this.online = online;

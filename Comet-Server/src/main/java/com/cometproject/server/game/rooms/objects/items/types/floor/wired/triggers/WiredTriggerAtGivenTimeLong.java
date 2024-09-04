@@ -8,19 +8,6 @@ import com.cometproject.server.game.rooms.types.Room;
 public class WiredTriggerAtGivenTimeLong extends WiredTriggerAtGivenTime {
     private static final int PARAM_TICK_LENGTH = 0;
 
-    /**
-     * The default constructor
-     *
-     * @param id       The ID of the item
-     * @param itemId   The ID of the item definition
-     * @param room     The instance of the room
-     * @param owner    The ID of the owner
-     * @param x        The position of the item on the X axis
-     * @param y        The position of the item on the Y axis
-     * @param z        The position of the item on the z axis
-     * @param rotation The orientation of the item
-     * @param data     The JSON object associated with this item
-     */
     public WiredTriggerAtGivenTimeLong(RoomItemData roomItemData, Room room) {
         super(roomItemData, room);
 
@@ -30,11 +17,10 @@ public class WiredTriggerAtGivenTimeLong extends WiredTriggerAtGivenTime {
     public static boolean executeTriggers(Room room, int timer) {
         boolean wasExecuted = false;
 
-        for (RoomItemFloor wiredItem : getTriggers(room, WiredTriggerAtGivenTimeLong.class)) {
-            WiredTriggerAtGivenTimeLong trigger = ((WiredTriggerAtGivenTimeLong) wiredItem);
-
-            if (timer >= trigger.getTime()) {
-                wasExecuted = trigger.evaluate(null, null);
+        for (WiredTriggerAtGivenTimeLong wiredItem : getTriggers(room, WiredTriggerAtGivenTimeLong.class)) {
+					
+					if (timer >= wiredItem.getTime()) {
+                wasExecuted = wiredItem.evaluate(null, null);
             }
         }
 

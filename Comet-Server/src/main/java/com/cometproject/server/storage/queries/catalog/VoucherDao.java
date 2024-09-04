@@ -3,7 +3,7 @@ package com.cometproject.server.storage.queries.catalog;
 import com.cometproject.api.game.catalog.types.vouchers.VoucherStatus;
 import com.cometproject.api.game.catalog.types.vouchers.VoucherType;
 import com.cometproject.server.game.catalog.types.Voucher;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,9 +19,9 @@ public class VoucherDao {
         Voucher voucher = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM `vouchers` WHERE `code` = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM `vouchers` WHERE `code` = ?", sqlConnection);
 
             preparedStatement.setString(1, code);
 
@@ -35,11 +35,11 @@ public class VoucherDao {
             }
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return voucher;
@@ -50,9 +50,9 @@ public class VoucherDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("UPDATE `vouchers` SET `status` = 'CLAIMED', `claimed_by` = ?, `claimed_at` = UNIX_TIMESTAMP() WHERE id = ?;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE `vouchers` SET `status` = 'CLAIMED', `claimed_by` = ?, `claimed_at` = UNIX_TIMESTAMP() WHERE id = ?;", sqlConnection);
 
             preparedStatement.setInt(1, playerId);
             preparedStatement.setInt(2, voucherId);
@@ -60,10 +60,10 @@ public class VoucherDao {
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 }

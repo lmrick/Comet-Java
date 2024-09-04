@@ -27,17 +27,17 @@ public class RoomModelService implements IRoomModelService {
         this.models.clear();
 
         this.roomRepository.getAllModels((modelData) -> {
-            for (Map.Entry<String, RoomModelData> roomModelData : modelData.entrySet()) {
-                try {
-                    final IRoomModel roomModel = this.roomModelFactory.createModel(roomModelData.getValue());
-
-                    if (roomModel != null) {
-                        this.models.put(roomModelData.getKey(), roomModel);
-                    }
-                } catch (InvalidModelException e) {
-                    log.error("Failed to load model " + roomModelData.getKey(), e);
-                }
-            }
+					modelData.forEach((key, value) -> {
+						try {
+							final IRoomModel roomModel = this.roomModelFactory.createModel(value);
+							
+							if (roomModel != null) {
+								this.models.put(key, roomModel);
+							}
+						} catch (InvalidModelException e) {
+							log.error("Failed to load model " + key, e);
+						}
+					});
 
             log.info("Loaded " + this.models.size() + " static room models");
         });

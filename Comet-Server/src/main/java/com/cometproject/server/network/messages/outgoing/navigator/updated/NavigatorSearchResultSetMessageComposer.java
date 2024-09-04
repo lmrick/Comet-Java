@@ -3,7 +3,7 @@ package com.cometproject.server.network.messages.outgoing.navigator.updated;
 import com.cometproject.api.game.rooms.IRoomData;
 import com.cometproject.api.game.rooms.settings.RoomAccessType;
 import com.cometproject.api.networking.messages.IComposer;
-import com.cometproject.server.game.navigator.types.Category;
+import com.cometproject.server.game.navigator.types.categories.Category;
 import com.cometproject.server.game.navigator.types.categories.NavigatorSearchAllowance;
 import com.cometproject.server.game.navigator.types.categories.NavigatorViewMode;
 import com.cometproject.server.game.navigator.types.search.NavigatorSearchService;

@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.outgoing.user.profile;
 
-import com.cometproject.api.game.players.data.PlayerAvatar;
-import com.cometproject.api.game.players.data.components.PlayerRelationships;
+import com.cometproject.api.game.players.data.IPlayerAvatar;
+import com.cometproject.api.game.players.data.components.IPlayerRelationships;
 import com.cometproject.api.game.players.data.components.messenger.RelationshipLevel;
 import com.cometproject.api.networking.messages.IComposer;
 import com.cometproject.server.game.players.PlayerManager;
@@ -44,9 +44,9 @@ public class RelationshipsMessageComposer extends MessageComposer {
 
         msg.writeInt(relationships.size());
 
-        int hearts = PlayerRelationships.countByLevel(RelationshipLevel.HEART, relationships);
-        int smiles = PlayerRelationships.countByLevel(RelationshipLevel.SMILE, relationships);
-        int bobbas = PlayerRelationships.countByLevel(RelationshipLevel.BOBBA, relationships);
+        int hearts = IPlayerRelationships.countByLevel(RelationshipLevel.HEART, relationships);
+        int smiles = IPlayerRelationships.countByLevel(RelationshipLevel.SMILE, relationships);
+        int bobbas = IPlayerRelationships.countByLevel(RelationshipLevel.BOBBA, relationships);
 
         List<Integer> relationshipKeys = Lists.newArrayList(relationships.keySet());
         Collections.shuffle(relationshipKeys);
@@ -54,7 +54,7 @@ public class RelationshipsMessageComposer extends MessageComposer {
         for (Integer relationshipKey : relationshipKeys) {
             RelationshipLevel level = relationships.get(relationshipKey);
 
-            PlayerAvatar data = PlayerManager.getInstance().getAvatarByPlayerId(relationshipKey, PlayerAvatar.USERNAME_FIGURE);
+            IPlayerAvatar data = PlayerManager.getInstance().getAvatarByPlayerId(relationshipKey, IPlayerAvatar.USERNAME_FIGURE);
 
             if (data == null) {
                 msg.writeInt(0);

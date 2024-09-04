@@ -5,7 +5,7 @@ import com.cometproject.api.game.achievements.types.AchievementType;
 import com.cometproject.api.game.achievements.types.IAchievementGroup;
 import com.cometproject.server.game.achievements.AchievementGroup;
 import com.cometproject.server.game.achievements.types.Achievement;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,9 +24,9 @@ public class AchievementDao {
         int count = 0;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM achievements WHERE enabled = '1' ORDER by group_name ASC", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM achievements WHERE enabled = '1' ORDER by group_name ASC", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -40,16 +40,16 @@ public class AchievementDao {
                     achievementGroups.put(groupName, new AchievementGroup(resultSet.getInt("id"), new HashMap<>(), resultSet.getString("group_name"), AchievementCategory.valueOf(resultSet.getString("category").toUpperCase())));
                 }
 
-                if (!achievementGroups.get(groupName).getAchievements().containsKey(resultSet.getInt("level"))) {
-                    achievementGroups.get(groupName).getAchievements().put(resultSet.getInt("level"), create(resultSet));
+                if (!achievementGroups.get(groupName).achievements().containsKey(resultSet.getInt("level"))) {
+                    achievementGroups.get(groupName).achievements().put(resultSet.getInt("level"), create(resultSet));
                 }
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return count;

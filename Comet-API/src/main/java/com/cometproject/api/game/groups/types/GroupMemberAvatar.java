@@ -1,20 +1,20 @@
 package com.cometproject.api.game.groups.types;
 
 import com.cometproject.api.game.groups.types.components.membership.IGroupMember;
-import com.cometproject.api.game.players.data.PlayerAvatar;
+import com.cometproject.api.game.players.data.IPlayerAvatar;
 
 public class GroupMemberAvatar {
-    private final PlayerAvatar playerAvatar;
+    private final IPlayerAvatar playerAvatar;
     private final boolean isRequest;
     private final IGroupMember groupMember;
 
-    public GroupMemberAvatar(PlayerAvatar playerAvatar, boolean isRequest, IGroupMember groupMember) {
+    public GroupMemberAvatar(IPlayerAvatar playerAvatar, boolean isRequest, IGroupMember groupMember) {
         this.playerAvatar = playerAvatar;
         this.isRequest = isRequest;
         this.groupMember = groupMember;
     }
 
-    public PlayerAvatar getPlayerAvatar() {
+    public IPlayerAvatar getPlayerAvatar() {
         return playerAvatar;
     }
 

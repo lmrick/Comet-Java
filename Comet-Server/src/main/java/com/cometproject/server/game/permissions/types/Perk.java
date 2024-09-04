@@ -1,9 +1,5 @@
 package com.cometproject.server.game.permissions.types;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-
 public class Perk {
     private final int id;
     private final String title;

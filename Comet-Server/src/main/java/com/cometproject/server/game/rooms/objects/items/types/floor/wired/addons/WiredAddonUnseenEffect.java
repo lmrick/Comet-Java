@@ -7,17 +7,17 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-
 public class WiredAddonUnseenEffect extends RoomItemFloor {
-    private List<Long> seenEffects;
-
-    public WiredAddonUnseenEffect(RoomItemData itemData, Room room) {
-        super(itemData, room);
-
-        this.seenEffects = Lists.newArrayList();
-    }
-
-    public List<Long> getSeenEffects() {
-        return seenEffects;
-    }
+	private final List<Long> seenEffects;
+	
+	public WiredAddonUnseenEffect(RoomItemData itemData, Room room) {
+		super(itemData, room);
+		
+		this.seenEffects = Lists.newArrayList();
+	}
+	
+	public List<Long> getSeenEffects() {
+		return seenEffects;
+	}
+	
 }

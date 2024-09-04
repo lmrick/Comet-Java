@@ -1,9 +1,9 @@
 package com.cometproject.server.storage.queries.landing;
 
-import com.cometproject.api.game.players.data.PlayerAvatar;
+import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.server.game.landing.types.PromoArticle;
 import com.cometproject.server.game.players.data.PlayerAvatarData;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,9 +23,9 @@ public class LandingDao {
         Map<Integer, PromoArticle> data = new HashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM server_articles WHERE visible = '1'", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM server_articles WHERE visible = '1'", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -33,27 +33,27 @@ public class LandingDao {
             }
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
     }
 
-    public static Map<PlayerAvatar, Integer> getHallOfFame(String currency, int limit) {
+    public static Map<IPlayerAvatar, Integer> getHallOfFame(String currency, int limit) {
         Connection sqlConnection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        Map<PlayerAvatar, Integer> data = new LinkedHashMap<>();
+        Map<IPlayerAvatar, Integer> data = new LinkedHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT id, username, figure, " + currency + ", gender, motto FROM players WHERE rank <= 3 ORDER BY " + currency + " DESC LIMIT " + limit, sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT id, username, figure, " + currency + ", gender, motto FROM players WHERE rank <= 3 ORDER BY " + currency + " DESC LIMIT " + limit, sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -61,11 +61,11 @@ public class LandingDao {
             }
 
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;

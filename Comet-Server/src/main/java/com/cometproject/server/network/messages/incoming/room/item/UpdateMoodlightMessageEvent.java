@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.incoming.room.item;
 
-import com.cometproject.server.game.rooms.objects.items.types.wall.MoodlightWallItem;
+import com.cometproject.server.game.rooms.objects.items.types.wall.MoodLightWallItem;
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.sessions.Session;
@@ -22,7 +22,7 @@ public class UpdateMoodlightMessageEvent implements Event {
             return;
         }
 
-        MoodlightWallItem moodlight = r.getItems().getMoodlight();
+        MoodLightWallItem moodlight = r.getItems().getMoodLight();
 
         if (moodlight == null) {
             return;
@@ -33,7 +33,7 @@ public class UpdateMoodlightMessageEvent implements Event {
         String color = msg.readString();
         int intensity = msg.readInt();
 
-        if (!MoodlightWallItem.isValidColour(color)) {
+        if (!MoodLightWallItem.isValidColour(color)) {
             color = "#000000";
         }
 

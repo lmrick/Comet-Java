@@ -13,9 +13,9 @@ public class RoomItemDao {
 //        ResultSet resultSet = null;
 //
 //        try {
-//            sqlConnection = SqlHelper.getConnection();
+//            sqlConnection = SQLUtility.getConnection();
 //
-//            preparedStatement = SqlHelper.prepare("SELECT i.*, player.username AS user_name, ltd.limited_id, ltd.limited_total FROM items i LEFT JOIN items_limited_edition ltd ON ltd.item_id = i.id RIGHT JOIN players player ON player.id = i.user_id WHERE i.room_id = ?", sqlConnection);
+//            preparedStatement = SQLUtility.prepare("SELECT i.*, player.username AS user_name, ltd.limited_id, ltd.limited_total FROM items i LEFT JOIN items_limited_edition ltd ON ltd.item_id = i.id RIGHT JOIN players player ON player.id = i.user_id WHERE i.room_id = ?", sqlConnection);
 //            preparedStatement.setInt(1, room.getId());
 //
 //            resultSet = preparedStatement.executeQuery();
@@ -51,11 +51,11 @@ public class RoomItemDao {
 //                }
 //            }
 //        } catch (SQLException e) {
-//            SqlHelper.handleSqlException(e);
+//            SQLUtility.handleSqlException(e);
 //        } finally {
-//            SqlHelper.closeSilently(resultSet);
-//            SqlHelper.closeSilently(preparedStatement);
-//            SqlHelper.closeSilently(sqlConnection);
+//            SQLUtility.closeSilently(resultSet);
+//            SQLUtility.closeSilently(preparedStatement);
+//            SQLUtility.closeSilently(sqlConnection);
 //        }
 //    }
 //
@@ -64,20 +64,20 @@ public class RoomItemDao {
 //        PreparedStatement preparedStatement = null;
 //
 //        try {
-//            sqlConnection = SqlHelper.getConnection();
+//            sqlConnection = SQLUtility.getConnection();
 //
-//            preparedStatement = SqlHelper.prepare("UPDATE items SET room_id = 0, user_id = ?, x = 0, " +
+//            preparedStatement = SQLUtility.prepare("UPDATE items SET room_id = 0, user_id = ?, x = 0, " +
 //                    "y = 0, z = 0, wall_pos = '', extra_data = ? WHERE id = ?", sqlConnection);
 //            preparedStatement.setInt(1, userId);
 //            preparedStatement.setString(2, finalState);
 //            preparedStatement.setLong(3, itemId);
 //
-//            SqlHelper.executeStatementSilently(preparedStatement, false);
+//            SQLUtility.executeStatementSilently(preparedStatement, false);
 //        } catch (SQLException e) {
-//            SqlHelper.handleSqlException(e);
+//            SQLUtility.handleSqlException(e);
 //        } finally {
-//            SqlHelper.closeSilently(preparedStatement);
-//            SqlHelper.closeSilently(sqlConnection);
+//            SQLUtility.closeSilently(preparedStatement);
+//            SQLUtility.closeSilently(sqlConnection);
 //        }
 //    }
 //
@@ -86,17 +86,17 @@ public class RoomItemDao {
 //        PreparedStatement preparedStatement = null;
 //
 //        try {
-//            sqlConnection = SqlHelper.getConnection();
+//            sqlConnection = SQLUtility.getConnection();
 //
-//            preparedStatement = SqlHelper.prepare("DELETE FROM items WHERE id = ?", sqlConnection);
+//            preparedStatement = SQLUtility.prepare("DELETE FROM items WHERE id = ?", sqlConnection);
 //            preparedStatement.setLong(1, itemId);
 //
-//            SqlHelper.executeStatementSilently(preparedStatement, false);
+//            SQLUtility.executeStatementSilently(preparedStatement, false);
 //        } catch (SQLException e) {
-//            SqlHelper.handleSqlException(e);
+//            SQLUtility.handleSqlException(e);
 //        } finally {
-//            SqlHelper.closeSilently(preparedStatement);
-//            SqlHelper.closeSilently(sqlConnection);
+//            SQLUtility.closeSilently(preparedStatement);
+//            SQLUtility.closeSilently(sqlConnection);
 //        }
 //    }
 //
@@ -105,18 +105,18 @@ public class RoomItemDao {
 //        PreparedStatement preparedStatement = null;
 //
 //        try {
-//            sqlConnection = SqlHelper.getConnection();
+//            sqlConnection = SQLUtility.getConnection();
 //
-//            preparedStatement = SqlHelper.prepare("UPDATE items SET extra_data = ? WHERE id = ?", sqlConnection);
+//            preparedStatement = SQLUtility.prepare("UPDATE items SET extra_data = ? WHERE id = ?", sqlConnection);
 //            preparedStatement.setString(1, data);
 //            preparedStatement.setLong(2, itemId);
 //
-//            SqlHelper.executeStatementSilently(preparedStatement, false);
+//            SQLUtility.executeStatementSilently(preparedStatement, false);
 //        } catch (SQLException e) {
-//            SqlHelper.handleSqlException(e);
+//            SQLUtility.handleSqlException(e);
 //        } finally {
-//            SqlHelper.closeSilently(preparedStatement);
-//            SqlHelper.closeSilently(sqlConnection);
+//            SQLUtility.closeSilently(preparedStatement);
+//            SQLUtility.closeSilently(sqlConnection);
 //        }
 //    }
 //
@@ -126,9 +126,9 @@ public class RoomItemDao {
 //        ResultSet resultSet = null;
 //
 //        try {
-//            sqlConnection = SqlHelper.getConnection();
+//            sqlConnection = SQLUtility.getConnection();
 //
-//            preparedStatement = SqlHelper.prepare("SELECT `room_id` FROM items WHERE id = ? LIMIT 1;", sqlConnection);
+//            preparedStatement = SQLUtility.prepare("SELECT `room_id` FROM items WHERE id = ? LIMIT 1;", sqlConnection);
 //            preparedStatement.setLong(1, itemId);
 //
 //            resultSet = preparedStatement.executeQuery();
@@ -137,11 +137,11 @@ public class RoomItemDao {
 //                return resultSet.getInt("room_id");
 //            }
 //        } catch (SQLException e) {
-//            SqlHelper.handleSqlException(e);
+//            SQLUtility.handleSqlException(e);
 //        } finally {
-//            SqlHelper.closeSilently(resultSet);
-//            SqlHelper.closeSilently(preparedStatement);
-//            SqlHelper.closeSilently(sqlConnection);
+//            SQLUtility.closeSilently(resultSet);
+//            SQLUtility.closeSilently(preparedStatement);
+//            SQLUtility.closeSilently(sqlConnection);
 //        }
 //
 //        return 0;
@@ -152,21 +152,21 @@ public class RoomItemDao {
 //        PreparedStatement preparedStatement = null;
 //
 //        try {
-//            sqlConnection = SqlHelper.getConnection();
+//            sqlConnection = SQLUtility.getConnection();
 //
-//            preparedStatement = SqlHelper.prepare("UPDATE items SET x = ?, y = ?, z = ?, rot = ? WHERE id = ?", sqlConnection);
+//            preparedStatement = SQLUtility.prepare("UPDATE items SET x = ?, y = ?, z = ?, rot = ? WHERE id = ?", sqlConnection);
 //            preparedStatement.setInt(1, x);
 //            preparedStatement.setInt(2, y);
 //            preparedStatement.setDouble(3, height);
 //            preparedStatement.setInt(4, rotation);
 //            preparedStatement.setLong(5, id);
 //
-//            SqlHelper.executeStatementSilently(preparedStatement, false);
+//            SQLUtility.executeStatementSilently(preparedStatement, false);
 //        } catch (SQLException e) {
-//            SqlHelper.handleSqlException(e);
+//            SQLUtility.handleSqlException(e);
 //        } finally {
-//            SqlHelper.closeSilently(preparedStatement);
-//            SqlHelper.closeSilently(sqlConnection);
+//            SQLUtility.closeSilently(preparedStatement);
+//            SQLUtility.closeSilently(sqlConnection);
 //        }
 //    }
 //
@@ -175,9 +175,9 @@ public class RoomItemDao {
 //        PreparedStatement preparedStatement = null;
 //
 //        try {
-//            sqlConnection = SqlHelper.getConnection();
+//            sqlConnection = SQLUtility.getConnection();
 //
-//            preparedStatement = SqlHelper.prepare("UPDATE items SET x = ?, y = ?, z = ?, rot = ?, room_id = ?, extra_data = ? WHERE id = ?", sqlConnection);
+//            preparedStatement = SQLUtility.prepare("UPDATE items SET x = ?, y = ?, z = ?, rot = ?, room_id = ?, extra_data = ? WHERE id = ?", sqlConnection);
 //            preparedStatement.setInt(1, x);
 //            preparedStatement.setInt(2, y);
 //            preparedStatement.setDouble(3, height);
@@ -186,12 +186,12 @@ public class RoomItemDao {
 //            preparedStatement.setString(6, data);
 //            preparedStatement.setLong(7, itemId);
 //
-//            SqlHelper.executeStatementSilently(preparedStatement, false);
+//            SQLUtility.executeStatementSilently(preparedStatement, false);
 //        } catch (SQLException e) {
-//            SqlHelper.handleSqlException(e);
+//            SQLUtility.handleSqlException(e);
 //        } finally {
-//            SqlHelper.closeSilently(preparedStatement);
-//            SqlHelper.closeSilently(sqlConnection);
+//            SQLUtility.closeSilently(preparedStatement);
+//            SQLUtility.closeSilently(sqlConnection);
 //        }
 //    }
 //
@@ -200,21 +200,21 @@ public class RoomItemDao {
 //        PreparedStatement preparedStatement = null;
 //
 //        try {
-//            sqlConnection = SqlHelper.getConnection();
+//            sqlConnection = SQLUtility.getConnection();
 //
-//            preparedStatement = SqlHelper.prepare("UPDATE items SET room_id = ?, wall_pos = ?, extra_data = ? WHERE id = ?", sqlConnection);
+//            preparedStatement = SQLUtility.prepare("UPDATE items SET room_id = ?, wall_pos = ?, extra_data = ? WHERE id = ?", sqlConnection);
 //            preparedStatement.setInt(1, roomId);
 //
 //            preparedStatement.setString(2, wallPos);
 //            preparedStatement.setString(3, data);
 //            preparedStatement.setLong(4, itemId);
 //
-//            SqlHelper.executeStatementSilently(preparedStatement, false);
+//            SQLUtility.executeStatementSilently(preparedStatement, false);
 //        } catch (SQLException e) {
-//            SqlHelper.handleSqlException(e);
+//            SQLUtility.handleSqlException(e);
 //        } finally {
-//            SqlHelper.closeSilently(preparedStatement);
-//            SqlHelper.closeSilently(sqlConnection);
+//            SQLUtility.closeSilently(preparedStatement);
+//            SQLUtility.closeSilently(sqlConnection);
 //        }
 //    }
 //
@@ -223,19 +223,19 @@ public class RoomItemDao {
 //        PreparedStatement preparedStatement = null;
 //
 //        try {
-//            sqlConnection = SqlHelper.getConnection();
+//            sqlConnection = SQLUtility.getConnection();
 //
-//            preparedStatement = SqlHelper.prepare("UPDATE items set base_item = ? WHERE id = ?", sqlConnection);
+//            preparedStatement = SQLUtility.prepare("UPDATE items set base_item = ? WHERE id = ?", sqlConnection);
 //
 //            preparedStatement.setInt(1, baseId);
 //            preparedStatement.setLong(2, itemId);
 //
-//            SqlHelper.executeStatementSilently(preparedStatement, false);
+//            SQLUtility.executeStatementSilently(preparedStatement, false);
 //        } catch (SQLException e) {
-//            SqlHelper.handleSqlException(e);
+//            SQLUtility.handleSqlException(e);
 //        } finally {
-//            SqlHelper.closeSilently(preparedStatement);
-//            SqlHelper.closeSilently(sqlConnection);
+//            SQLUtility.closeSilently(preparedStatement);
+//            SQLUtility.closeSilently(sqlConnection);
 //        }
 //    }
 //
@@ -244,10 +244,10 @@ public class RoomItemDao {
 //        PreparedStatement preparedStatement = null;
 //
 //        try {
-//            sqlConnection = SqlHelper.getConnection();
+//            sqlConnection = SQLUtility.getConnection();
 //            sqlConnection.setAutoCommit(false);
 //
-//            preparedStatement = SqlHelper.prepare("UPDATE items SET extra_data = ? WHERE id = ?;", sqlConnection);
+//            preparedStatement = SQLUtility.prepare("UPDATE items SET extra_data = ? WHERE id = ?;", sqlConnection);
 //
 //            for (RoomItem roomItem : itemsToStore) {
 //                String data;
@@ -267,10 +267,10 @@ public class RoomItemDao {
 //            preparedStatement.executeBatch();
 //            sqlConnection.commit();
 //        } catch (SQLException e) {
-//            SqlHelper.handleSqlException(e);
+//            SQLUtility.handleSqlException(e);
 //        } finally {
-//            SqlHelper.closeSilently(preparedStatement);
-//            SqlHelper.closeSilently(sqlConnection);
+//            SQLUtility.closeSilently(preparedStatement);
+//            SQLUtility.closeSilently(sqlConnection);
 //        }
 //    }
 //
@@ -279,10 +279,10 @@ public class RoomItemDao {
 //        PreparedStatement preparedStatement = null;
 //
 //        try {
-//            sqlConnection = SqlHelper.getConnection();
+//            sqlConnection = SQLUtility.getConnection();
 //            sqlConnection.setAutoCommit(false);
 //
-//            preparedStatement = SqlHelper.prepare("UPDATE items SET x = ?, y = ?, z = ?, rot = ?, extra_data = ? WHERE id = ?", sqlConnection);
+//            preparedStatement = SQLUtility.prepare("UPDATE items SET x = ?, y = ?, z = ?, rot = ?, extra_data = ? WHERE id = ?", sqlConnection);
 //
 //            for (RoomItem floor : items) {
 //                preparedStatement.setInt(1, floor.getPosition().getX());
@@ -298,10 +298,10 @@ public class RoomItemDao {
 //            preparedStatement.executeBatch();
 //            sqlConnection.commit();
 //        } catch (SQLException e) {
-//            SqlHelper.handleSqlException(e);
+//            SQLUtility.handleSqlException(e);
 //        } finally {
-//            SqlHelper.closeSilently(preparedStatement);
-//            SqlHelper.closeSilently(sqlConnection);
+//            SQLUtility.closeSilently(preparedStatement);
+//            SQLUtility.closeSilently(sqlConnection);
 //        }
 //    }
 //
@@ -310,9 +310,9 @@ public class RoomItemDao {
 //        PreparedStatement preparedStatement = null;
 //
 //        try {
-//            sqlConnection = SqlHelper.getConnection();
+//            sqlConnection = SQLUtility.getConnection();
 //
-//            preparedStatement = SqlHelper.prepare("UPDATE items SET x = ?, y = ?, z = ?, rot = ?, extra_data = ? WHERE id = ?", sqlConnection);
+//            preparedStatement = SQLUtility.prepare("UPDATE items SET x = ?, y = ?, z = ?, rot = ?, extra_data = ? WHERE id = ?", sqlConnection);
 //            preparedStatement.setInt(1, floor.getPosition().getX());
 //            preparedStatement.setInt(2, floor.getPosition().getY());
 //            preparedStatement.setDouble(3, floor.getPosition().getZ());
@@ -320,12 +320,12 @@ public class RoomItemDao {
 //            preparedStatement.setString(5, floor.getDataObject());
 //            preparedStatement.setLong(6, floor.getId());
 //
-//            SqlHelper.executeStatementSilently(preparedStatement, false);
+//            SQLUtility.executeStatementSilently(preparedStatement, false);
 //        } catch (SQLException e) {
-//            SqlHelper.handleSqlException(e);
+//            SQLUtility.handleSqlException(e);
 //        } finally {
-//            SqlHelper.closeSilently(preparedStatement);
-//            SqlHelper.closeSilently(sqlConnection);
+//            SQLUtility.closeSilently(preparedStatement);
+//            SQLUtility.closeSilently(sqlConnection);
 //        }
 //    }
 //
@@ -334,20 +334,20 @@ public class RoomItemDao {
 //        PreparedStatement preparedStatement = null;
 //
 //        try {
-//            sqlConnection = SqlHelper.getConnection();
+//            sqlConnection = SQLUtility.getConnection();
 //
-//            preparedStatement = SqlHelper.prepare("INSERT into items_wired_rewards (item_id, player_id, reward_data) VALUES(?, ?, ?);", sqlConnection);
+//            preparedStatement = SQLUtility.prepare("INSERT into items_wired_rewards (item_id, player_id, reward_data) VALUES(?, ?, ?);", sqlConnection);
 //
 //            preparedStatement.setLong(1, itemId);
 //            preparedStatement.setInt(2, playerId);
 //            preparedStatement.setString(3, rewardData);
 //
-//            SqlHelper.executeStatementSilently(preparedStatement, false);
+//            SQLUtility.executeStatementSilently(preparedStatement, false);
 //        } catch (SQLException e) {
-//            SqlHelper.handleSqlException(e);
+//            SQLUtility.handleSqlException(e);
 //        } finally {
-//            SqlHelper.closeSilently(preparedStatement);
-//            SqlHelper.closeSilently(sqlConnection);
+//            SQLUtility.closeSilently(preparedStatement);
+//            SQLUtility.closeSilently(sqlConnection);
 //        }
 //    }
 //
@@ -359,9 +359,9 @@ public class RoomItemDao {
 //        Map<Integer, Set<String>> data = new ConcurrentHashMap<>();
 //
 //        try {
-//            sqlConnection = SqlHelper.getConnection();
+//            sqlConnection = SQLUtility.getConnection();
 //
-//            preparedStatement = SqlHelper.prepare("SELECT player_id, reward_data FROM items_wired_rewards WHERE item_id = ?;", sqlConnection);
+//            preparedStatement = SQLUtility.prepare("SELECT player_id, reward_data FROM items_wired_rewards WHERE item_id = ?;", sqlConnection);
 //
 //            preparedStatement.setLong(1, id);
 //
@@ -378,11 +378,11 @@ public class RoomItemDao {
 //                data.get(playerId).add(rewardData);
 //            }
 //        } catch (SQLException e) {
-//            SqlHelper.handleSqlException(e);
+//            SQLUtility.handleSqlException(e);
 //        } finally {
-//            SqlHelper.closeSilently(preparedStatement);
-//            SqlHelper.closeSilently(resultSet);
-//            SqlHelper.closeSilently(sqlConnection);
+//            SQLUtility.closeSilently(preparedStatement);
+//            SQLUtility.closeSilently(resultSet);
+//            SQLUtility.closeSilently(sqlConnection);
 //        }
 //
 //        return data;

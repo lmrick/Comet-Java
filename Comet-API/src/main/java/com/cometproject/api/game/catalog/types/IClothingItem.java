@@ -1,7 +1,7 @@
 package com.cometproject.api.game.catalog.types;
 
 public interface IClothingItem {
-    String getItemName();
+    String itemName();
 
-    int[] getParts();
+    int[] parts();
 }

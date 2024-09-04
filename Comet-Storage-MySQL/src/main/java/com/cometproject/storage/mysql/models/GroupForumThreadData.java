@@ -3,7 +3,7 @@ package com.cometproject.storage.mysql.models;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.groups.types.components.forum.IForumThread;
 import com.cometproject.api.game.groups.types.components.forum.IForumThreadReply;
-import com.cometproject.api.game.players.data.PlayerAvatar;
+import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.networking.messages.IComposer;
 import com.google.common.collect.Lists;
 
@@ -60,7 +60,7 @@ public class GroupForumThreadData implements IForumThread {
     public void compose(IComposer msg) {
         msg.writeInt(this.getId());
 
-        final PlayerAvatar authorAvatar = GameContext.getCurrent().getPlayerService().getAvatarByPlayerId(this.getAuthorId(), PlayerAvatar.USERNAME_FIGURE);
+        final IPlayerAvatar authorAvatar = GameContext.getCurrent().getPlayerService().getAvatarByPlayerId(this.getAuthorId(), IPlayerAvatar.USERNAME_FIGURE);
 
         msg.writeInt(authorAvatar == null ? 0 : authorAvatar.getId());
         msg.writeString(authorAvatar == null ? "Unknown Player" : authorAvatar.getUsername());
@@ -73,7 +73,7 @@ public class GroupForumThreadData implements IForumThread {
         msg.writeInt(0); // unread messages
         msg.writeInt(this.getMostRecentPost().getId());
 
-        final PlayerAvatar replyAuthor = GameContext.getCurrent().getPlayerService().getAvatarByPlayerId(this.getMostRecentPost().getAuthorId(), PlayerAvatar.USERNAME_FIGURE);
+        final IPlayerAvatar replyAuthor = GameContext.getCurrent().getPlayerService().getAvatarByPlayerId(this.getMostRecentPost().getAuthorId(), IPlayerAvatar.USERNAME_FIGURE);
 
         msg.writeInt(replyAuthor == null ? 0 : replyAuthor.getId());
         msg.writeString(replyAuthor == null ? "Unknown Player" : replyAuthor.getUsername());

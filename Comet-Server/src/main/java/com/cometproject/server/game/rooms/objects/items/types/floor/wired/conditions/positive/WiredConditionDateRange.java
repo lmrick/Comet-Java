@@ -6,18 +6,19 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.base.W
 import com.cometproject.server.game.rooms.types.Room;
 
 public class WiredConditionDateRange extends WiredConditionItem {
-
-    public WiredConditionDateRange(RoomItemData itemData, Room room) {
-        super(itemData, room);
-    }
-
-    @Override
-    public int getInterface() {
-        return 24;
-    }
-
-    @Override
-    public boolean evaluate(RoomEntity entity, Object data) {
-        return false;
-    }
+	
+	public WiredConditionDateRange(RoomItemData itemData, Room room) {
+		super(itemData, room);
+	}
+	
+	@Override
+	public int getInterface() {
+		return 24;
+	}
+	
+	@Override
+	public boolean evaluate(RoomEntity entity, Object data) {
+		return false;
+	}
+	
 }

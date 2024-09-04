@@ -3,7 +3,7 @@ package com.cometproject.server.api.routes;
 import com.cometproject.api.game.catalog.types.purchase.CatalogPurchase;
 import com.cometproject.api.game.furniture.types.FurnitureDefinition;
 import com.cometproject.api.game.furniture.types.GiftData;
-import com.cometproject.api.game.players.data.PlayerAvatar;
+import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.server.game.catalog.CatalogManager;
 import com.cometproject.server.game.items.ItemManager;
@@ -36,7 +36,7 @@ public class RewardRoutes {
 
         final int itemId = Integer.parseInt(req.queryParams("itemId"));
 
-        final PlayerAvatar playerAvatar = PlayerManager.getInstance().getAvatarByPlayerId(playerId, PlayerAvatar.USERNAME_FIGURE);
+        final IPlayerAvatar playerAvatar = PlayerManager.getInstance().getAvatarByPlayerId(playerId, IPlayerAvatar.USERNAME_FIGURE);
 
         if (playerAvatar == null) {
             result.put("error", "Player could not be found");

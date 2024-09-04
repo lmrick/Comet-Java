@@ -13,12 +13,7 @@ public class ShutdownProcess {
     private static final Logger log = Logger.getLogger(ShutdownProcess.class.getName());
 
     public static void init() {
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                shutdown(false);
-            }
-        });
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> shutdown(false)));
     }
 
     public static void shutdown(boolean exit) {

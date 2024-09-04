@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.incoming.help;
 
 import com.cometproject.server.boot.Comet;
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.moderation.ModerationManager;
 import com.cometproject.server.game.rooms.types.components.types.ChatMessage;
 import com.cometproject.server.network.messages.incoming.Event;

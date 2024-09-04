@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.incoming.room.action;
 
 import com.cometproject.server.boot.Comet;
-import com.cometproject.server.config.Locale;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.filter.FilterResult;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
@@ -94,7 +94,7 @@ public class WhisperMessageEvent implements Event {
 
             }
 
-            if (!userTo.getPlayer().ignores(client.getPlayer().getId()))
+            if (userTo.getPlayer().ignores(client.getPlayer().getId()))
                 userTo.getPlayer().getSession().send(new WhisperMessageComposer(playerEntity.getId(), filteredMessage));
 
             for (PlayerEntity entity : playerEntity.getRoom().getEntities().getWhisperSeers()) {

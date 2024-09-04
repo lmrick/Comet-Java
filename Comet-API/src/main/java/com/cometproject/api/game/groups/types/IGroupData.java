@@ -1,6 +1,6 @@
 package com.cometproject.api.game.groups.types;
 
-import com.cometproject.api.game.players.data.PlayerAvatar;
+import com.cometproject.api.game.players.data.IPlayerAvatar;
 
 public interface IGroupData {
     int getId();
@@ -51,5 +51,5 @@ public interface IGroupData {
 
     String getOwnerName();
 
-    PlayerAvatar getOwnerAvatar();
+    IPlayerAvatar getOwnerAvatar();
 }

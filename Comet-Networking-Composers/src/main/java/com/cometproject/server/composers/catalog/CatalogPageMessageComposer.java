@@ -87,12 +87,12 @@ public class CatalogPageMessageComposer extends MessageComposer {
             msg.writeInt(this.catalogService.getFrontPageEntries().size());
 
             for (ICatalogFrontPageEntry entry : this.catalogService.getFrontPageEntries()) {
-                msg.writeInt(entry.getId());
-                msg.writeString(entry.getCaption());
-                msg.writeString(entry.getImage());
+                msg.writeInt(entry.id());
+                msg.writeString(entry.caption());
+                msg.writeString(entry.image());
                 msg.writeInt(0);
-                msg.writeString(entry.getPageLink());
-                msg.writeString(entry.getPageId());
+                msg.writeString(entry.pageLink());
+                msg.writeString(entry.pageId());
             }
         }
     }

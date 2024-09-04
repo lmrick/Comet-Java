@@ -50,23 +50,23 @@ public interface IPlayer {
 
     IPlayerStatistics getStats();
 
-    PlayerPermissions getPermissions();
+    IPlayerPermissions getPermissions();
 
-    PlayerAchievements getAchievements();
+    IPlayerAchievements getAchievements();
 
-    PlayerMessenger getMessenger();
+    IPlayerMessenger getMessenger();
 
-    PlayerInventory getInventory();
+    IPlayerInventory getInventory();
 
 //    SubscriptionComponent getSubscription();
 
-    PlayerRelationships getRelationships();
+    IPlayerRelationships getRelationships();
 
-    PlayerBots getBots();
+    IPlayerBots getBots();
 
-    PlayerPets getPets();
+    IPlayerPets getPets();
 
-    PlayerQuests getQuests();
+    IPlayerQuests getQuests();
 
     int getId();
 

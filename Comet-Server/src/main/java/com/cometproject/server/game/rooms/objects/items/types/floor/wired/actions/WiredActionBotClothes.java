@@ -10,20 +10,6 @@ import com.cometproject.server.network.messages.outgoing.room.avatar.UpdateInfoM
 public class WiredActionBotClothes extends WiredActionItem {
     private final static int PARAM_HANDITEM = 0;
 
-    /**
-     * The default constructor
-     *
-     * @param id        The ID of the item
-     * @param itemId    The ID of the item definition
-     * @param room      The instance of the room
-     * @param owner     The ID of the owner
-     * @param ownerName The username of the owner
-     * @param x         The position of the item on the X axis
-     * @param y         The position of the item on the Y axis
-     * @param z         The position of the item on the z axis
-     * @param rotation  The orientation of the item
-     * @param data      The JSON object associated with this item
-     */
     public WiredActionBotClothes(RoomItemData itemData, Room room) {
         super(itemData, room);
     }

@@ -14,40 +14,38 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-
 public class WiredActionToggleState extends WiredActionItem {
-    public WiredActionToggleState(RoomItemData itemData, Room room) {
-        super(itemData, room);
-    }
-
-    @Override
-    public boolean requiresPlayer() {
-        return false;
-    }
-
-    @Override
-    public int getInterface() {
-        return 0;
-    }
-
-    @Override
-    public void onEventComplete(WiredItemEvent event) {
-        List<Position> tilesToUpdate = Lists.newArrayList();
-
-        for (long itemId : this.getWiredData().getSelectedIds()) {
-            final RoomItemFloor floorItem = this.getRoom().getItems().getFloorItem(itemId);
-
-            if (floorItem == null || floorItem instanceof WiredFloorItem || floorItem instanceof DiceFloorItem)
-                continue;
-
-            floorItem.onInteract(null, (floorItem instanceof FootballTimerFloorItem || floorItem instanceof FreezeTimerFloorItem ? 1 : 0), true);
-            tilesToUpdate.add(new Position(floorItem.getPosition().getX(), floorItem.getPosition().getY()));
-        }
-
-        for (Position tileToUpdate : tilesToUpdate) {
-            this.getRoom().getMapping().updateTile(tileToUpdate.getX(), tileToUpdate.getY());
-        }
-
-        tilesToUpdate.clear();
-    }
+	
+	public WiredActionToggleState(RoomItemData itemData, Room room) {
+		super(itemData, room);
+	}
+	
+	@Override
+	public boolean requiresPlayer() {
+		return false;
+	}
+	
+	@Override
+	public int getInterface() {
+		return 0;
+	}
+	
+	@Override
+	public void onEventComplete(WiredItemEvent event) {
+		List<Position> tilesToUpdate = Lists.newArrayList();
+		
+		this.getWiredData().getSelectedIds().stream()
+						.mapToLong(itemId -> itemId)
+						.mapToObj(itemId -> this.getRoom().getItems().getFloorItem(itemId))
+						.filter(floorItem -> floorItem != null && !(floorItem instanceof WiredFloorItem) && !(floorItem instanceof DiceFloorItem))
+						.forEachOrdered(floorItem -> {
+			floorItem.onInteract(null, (floorItem instanceof FootballTimerFloorItem || floorItem instanceof FreezeTimerFloorItem ? 1 : 0), true);
+			tilesToUpdate.add(new Position(floorItem.getPosition().getX(), floorItem.getPosition().getY()));
+		});
+		
+		tilesToUpdate.forEach(tileToUpdate -> this.getRoom().getMapping().updateTile(tileToUpdate.getX(), tileToUpdate.getY()));
+		
+		tilesToUpdate.clear();
+	}
+	
 }

@@ -10,7 +10,7 @@ import com.cometproject.server.game.pets.data.PetSpeech;
 import com.cometproject.server.game.pets.data.StaticPetProperties;
 import com.cometproject.server.game.pets.races.PetBreedLevel;
 import com.cometproject.server.game.pets.races.PetRace;
-import com.cometproject.server.storage.SqlHelper;
+import com.cometproject.server.storage.SQLUtility;
 import com.google.common.collect.Lists;
 
 import java.sql.Connection;
@@ -31,20 +31,20 @@ public class PetDao {
         List<PetRace> data = new ArrayList<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM pet_races", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM pet_races", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 data.add(new PetRace(resultSet));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -58,9 +58,9 @@ public class PetDao {
         Map<Integer, PetSpeech> data = new ConcurrentHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM pet_messages", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM pet_messages", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -81,11 +81,11 @@ public class PetDao {
                 petSpeech.getMessages().get(messageType).add(resultSet.getString("message_string"));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -99,20 +99,20 @@ public class PetDao {
         Map<String, String> data = new ConcurrentHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM pet_transformable", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM pet_transformable", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 data.put(resultSet.getString("name"), resultSet.getString("data"));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -126,32 +126,32 @@ public class PetDao {
         Map<Integer, IPetData> data = new ConcurrentHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT " +
-                    "pet.`id` AS id, " +
-                    "pet.`pet_name` AS pet_name, " +
-                    "pet.`level` AS `level`, " +
-                    "pet.`happiness` AS happiness, " +
-                    "pet.`experience` AS experience, " +
-                    "pet.`energy` AS energy, " +
-                    "pet.`scratches` AS scratches, " +
-                    "pet.`hunger` AS hunger, " +
-                    "pet.`owner_id` AS owner_id, " +
-                    "pet.`colour` AS colour, " +
-                    "pet.`race_id` AS race_id, " +
-                    "pet.`type` AS `type`, " +
-                    "pet.`saddled` AS saddled, " +
-                    "pet.`hair_style` AS hair_style, " +
-                    "pet.`hair_colour` AS hair_colour, " +
-                    "pet.`any_rider` AS any_rider, " +
-                    "pet.`birthday` AS birthday, " +
-                    "pet.`x` AS `x`,  " +
-                    "pet.`y` AS `y`, " +
-                    "player.username AS owner_name " +
-                    " FROM pet_data AS pet  " +
-                    " RIGHT JOIN `players` AS player ON player.id = pet.owner_id " +
-                    " WHERE pet.owner_id = ? AND pet.room_id = 0", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT " +
+																									 "pet.`id` AS id, " +
+																									 "pet.`pet_name` AS pet_name, " +
+																									 "pet.`level` AS `level`, " +
+																									 "pet.`happiness` AS happiness, " +
+																									 "pet.`experience` AS experience, " +
+																									 "pet.`energy` AS energy, " +
+																									 "pet.`scratches` AS scratches, " +
+																									 "pet.`hunger` AS hunger, " +
+																									 "pet.`owner_id` AS owner_id, " +
+																									 "pet.`colour` AS colour, " +
+																									 "pet.`race_id` AS race_id, " +
+																									 "pet.`type` AS `type`, " +
+																									 "pet.`saddled` AS saddled, " +
+																									 "pet.`hair_style` AS hair_style, " +
+																									 "pet.`hair_colour` AS hair_colour, " +
+																									 "pet.`any_rider` AS any_rider, " +
+																									 "pet.`birthday` AS birthday, " +
+																									 "pet.`x` AS `x`,  " +
+																									 "pet.`y` AS `y`, " +
+																									 "player.username AS owner_name " +
+																									 " FROM pet_data AS pet  " +
+																									 " RIGHT JOIN `players` AS player ON player.id = pet.owner_id " +
+																									 " WHERE pet.owner_id = ? AND pet.room_id = 0", sqlConnection);
 
             preparedStatement.setInt(1, playerId);
 
@@ -182,11 +182,11 @@ public class PetDao {
                         ownerName, colour, raceId, typeId, hairDye, hair, anyRider, saddled, birthday, position));
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
@@ -198,9 +198,9 @@ public class PetDao {
         ResultSet resultSet = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("INSERT INTO `pet_data` (`owner_id`, `pet_name`, `type`, `race_id`, `colour`, `scratches`, `level`, `happiness`, `experience`, `energy`, `birthday`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", sqlConnection, true);
+            preparedStatement = SQLUtility.prepare("INSERT INTO `pet_data` (`owner_id`, `pet_name`, `type`, `race_id`, `colour`, `scratches`, `level`, `happiness`, `experience`, `energy`, `birthday`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", sqlConnection, true);
 
             preparedStatement.setInt(1, ownerId);
             preparedStatement.setString(2, petName);
@@ -222,11 +222,11 @@ public class PetDao {
                 return resultSet.getInt(1);
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return 0;
@@ -237,19 +237,19 @@ public class PetDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("UPDATE pet_data SET x = ?, y = ? WHERE id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE pet_data SET x = ?, y = ? WHERE id = ?", sqlConnection);
             preparedStatement.setInt(1, x);
             preparedStatement.setInt(2, y);
             preparedStatement.setInt(3, id);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -258,9 +258,9 @@ public class PetDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("UPDATE pet_data SET scratches = ?, level = ?, happiness = ?, experience = ?, energy = ?, hunger = ? WHERE id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE pet_data SET scratches = ?, level = ?, happiness = ?, experience = ?, energy = ?, hunger = ? WHERE id = ?", sqlConnection);
 
             preparedStatement.setInt(1, scratches);
             preparedStatement.setInt(2, level);
@@ -271,12 +271,12 @@ public class PetDao {
 
             preparedStatement.setInt(7, petId);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -286,9 +286,9 @@ public class PetDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("UPDATE pet_data SET scratches = ?, level = ?, happiness = ?, experience = ?, energy = ?, hunger = ? WHERE id = ?;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE pet_data SET scratches = ?, level = ?, happiness = ?, experience = ?, energy = ?, hunger = ? WHERE id = ?;", sqlConnection);
 
             for (IPetStats pet : petStats) {
                 preparedStatement.setInt(1, pet.getScratches());
@@ -305,10 +305,10 @@ public class PetDao {
 
             preparedStatement.executeBatch();
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -318,17 +318,17 @@ public class PetDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("DELETE FROM pet_data WHERE owner_id = ? AND room_id = 0;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE FROM pet_data WHERE owner_id = ? AND room_id = 0;", sqlConnection);
             preparedStatement.setInt(1, playerId);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -337,9 +337,9 @@ public class PetDao {
         PreparedStatement preparedStatement = null;
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("UPDATE pet_data SET saddled = ?, hair_style = ?, hair_colour = ?, any_rider = ?, race_id = ? WHERE id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE pet_data SET saddled = ?, hair_style = ?, hair_colour = ?, any_rider = ?, race_id = ? WHERE id = ?", sqlConnection);
 
             preparedStatement.setString(1, saddled ? "true" : "false");
             preparedStatement.setInt(2, hair);
@@ -349,12 +349,12 @@ public class PetDao {
 
             preparedStatement.setInt(6, id);
 
-            SqlHelper.executeStatementSilently(preparedStatement, false);
+            SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
@@ -366,9 +366,9 @@ public class PetDao {
         Map<Integer, Map<PetBreedLevel, Set<Integer>>> data = new ConcurrentHashMap<>();
 
         try {
-            sqlConnection = SqlHelper.getConnection();
+            sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SqlHelper.prepare("SELECT * FROM pet_breeds;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("SELECT * FROM pet_breeds;", sqlConnection);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -388,11 +388,11 @@ public class PetDao {
                 data.get(petType).get(breedLevel).add(palletId);
             }
         } catch (SQLException e) {
-            SqlHelper.handleSqlException(e);
+            SQLUtility.handleSqlException(e);
         } finally {
-            SqlHelper.closeSilently(resultSet);
-            SqlHelper.closeSilently(preparedStatement);
-            SqlHelper.closeSilently(sqlConnection);
+            SQLUtility.closeSilently(resultSet);
+            SQLUtility.closeSilently(preparedStatement);
+            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;

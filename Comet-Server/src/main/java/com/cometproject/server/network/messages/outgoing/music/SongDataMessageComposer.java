@@ -25,12 +25,12 @@ public class SongDataMessageComposer extends MessageComposer {
         msg.writeInt(musicData.size());
 
         for (IMusicData musicData : this.musicData) {
-            msg.writeInt(musicData.getSongId());
-            msg.writeString(musicData.getName());
-            msg.writeString(musicData.getTitle());
-            msg.writeString(musicData.getData());
+            msg.writeInt(musicData.songId());
+            msg.writeString(musicData.name());
+            msg.writeString(musicData.title());
+            msg.writeString(musicData.data());
             msg.writeInt(musicData.getLengthMilliseconds());
-            msg.writeString(musicData.getArtist());
+            msg.writeString(musicData.artist());
         }
     }
 }
