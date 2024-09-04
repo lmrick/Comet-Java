@@ -18,7 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Comet {
-	
 	public static String instanceId = UUID.randomUUID().toString();
 	public static long start;
 	public static volatile boolean isDebugging = false;

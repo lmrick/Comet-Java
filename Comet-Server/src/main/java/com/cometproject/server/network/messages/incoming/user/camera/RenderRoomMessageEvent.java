@@ -19,7 +19,7 @@ public class RenderRoomMessageEvent implements Event {
 
         if (response.isEmpty()) {
             // Failed, send feedback to client
-            client.getPlayer().sendNotif("Camera", "Failed to upload image");
+            client.getPlayer().sendNotification("Camera", "Failed to upload image");
             return;
         }
 

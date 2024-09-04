@@ -70,7 +70,7 @@ public interface IPlayer {
 
     int getId();
 
-    void sendNotif(String title, String message);
+    void sendNotification(String title, String message);
 
     void sendMotd(String message);
 

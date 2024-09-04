@@ -1,6 +1,7 @@
 package com.cometproject.server.game.rooms.types.components;
 
 import com.cometproject.api.config.CometSettings;
+import com.cometproject.api.game.groups.types.IGroup;
 import com.cometproject.api.game.rooms.IRoom;
 import com.cometproject.api.game.rooms.components.types.IRightsComponent;
 import com.cometproject.server.boot.Comet;
@@ -59,6 +60,21 @@ public class RightsComponent implements IRightsComponent {
 		if (checkGroup && checkGroupRights(playerId)) return true;
 		
 		return this.room.getData().getOwnerId() == playerId || this.rights.contains(playerId);
+	}
+	
+	@Override
+	public boolean checkGroupRights(int playerId) {
+		final IGroup group = ((Room) this.getRoom()).getGroup();
+		
+		if (group != null && group.getData() != null && group.getMembers() != null && group.getMembers().getAll() != null) {
+			if (group.getData().canMembersDecorate() && group.getMembers().getAll().containsKey(playerId)) {
+				return true;
+			}
+			
+			return group.getMembers().getAdministrators().contains(playerId);
+		}
+		
+		return false;
 	}
 	
 	@Override

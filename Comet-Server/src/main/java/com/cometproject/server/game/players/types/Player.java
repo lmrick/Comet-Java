@@ -42,13 +42,14 @@ import com.google.common.collect.Sets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.Map.Entry;
 
 public class Player implements IPlayer {
 	
 	private final PlayerContext playerContext;
 	private PermissionComponent permissions;
 	private InventoryComponent inventory;
-	private SubscriptionComponent subscription; //TODO MOVE INTERFACE AND INJECT FROM CONTEXT
+	private SubscriptionComponent subscription;
 	private MessengerComponent messenger;
 	private RelationshipComponent relationships;
 	private InventoryBotComponent bots;
@@ -56,10 +57,9 @@ public class Player implements IPlayer {
 	private QuestComponent quests;
 	private AchievementComponent achievements;
 	private NavigatorComponent navigator;
-	private WardrobeComponent wardrobe; //TODO MOVE INTERFACE AND INJECT FROM CONTEXT
+	private WardrobeComponent wardrobe;
 	
 	private boolean online;
-	
 	public boolean cancelPageOpen = false;
 	public boolean isDisposed = false;
 	public int lastBannedListRequest = 0;
@@ -259,7 +259,7 @@ public class Player implements IPlayer {
 	}
 	
 	@Override
-	public void sendNotif(String title, String message) {
+	public void sendNotification(String title, String message) {
 		session.send(new AdvancedAlertMessageComposer(title, message));
 	}
 	
@@ -334,19 +334,9 @@ public class Player implements IPlayer {
 		}
 		
 		if (getSettings().hasPersonalStaff()) {
-			List<Map.Entry<Integer, Integer>> rankPermList = new ArrayList<>(PermissionsDao.getEffects().entrySet());
-			rankPermList.sort(Collections.reverseOrder(Map.Entry.comparingByValue()));
-			
-			for (Map.Entry<Integer, Integer> entry : rankPermList) {
-				
-				if (this.getPermissions().getRank().getId() < entry.getValue()) continue;
-				
-				if (this.getSettings().hasPersonalStaff()) {
-					this.getEntity().applyEffect(new PlayerEffect(entry.getKey()));
-				} else this.getEntity().applyEffect(new PlayerEffect(0));
-				
-				break;
-			}
+			var rankPermissionsList = new ArrayList<>(PermissionsDao.getEffects().entrySet());
+			rankPermissionsList.sort(Collections.reverseOrder(Map.Entry.comparingByValue()));
+			rankPermissionsList.stream().filter(entry -> this.getPermissions().getRank().getId() >= entry.getValue()).findFirst().ifPresent(entry -> this.getEntity().applyEffect(this.getSettings().hasPersonalStaff() ? new PlayerEffect(entry.getKey()) : new PlayerEffect(0)));
 		}
 		
 	}

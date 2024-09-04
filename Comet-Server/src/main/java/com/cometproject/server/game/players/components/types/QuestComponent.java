@@ -162,7 +162,7 @@ public class QuestComponent extends PlayerComponent implements IPlayerQuests {
 					}
 					case ACHIEVEMENT_POINTS -> {
 						this.getPlayer().getData().increaseAchievementPoints(quest.getReward());
-						this.getPlayer().sendNotif("Alert", Locale.get("game.received.achievementPoints").replace("%points%", quest.getReward() + ""));
+						this.getPlayer().sendNotification("Alert", Locale.get("game.received.achievementPoints").replace("%points%", quest.getReward() + ""));
 						this.getPlayer().poof();
 					}
 					case VIP_POINTS -> {

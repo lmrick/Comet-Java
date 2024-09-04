@@ -27,7 +27,7 @@ public class ExampleModule extends BaseModule {
 	}
 	
 	public void aboutCommand(ISession session, String[] args) {
-		session.getPlayer().sendNotif("ExampleModule", "This is an example module.");
+		session.getPlayer().sendNotification("ExampleModule", "This is an example module.");
 	}
 	
 	public void inventoryCommand(ISession session, String[] args) {
