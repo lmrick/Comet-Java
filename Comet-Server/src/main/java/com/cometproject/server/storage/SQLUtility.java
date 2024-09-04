@@ -1,6 +1,6 @@
 package com.cometproject.server.storage;
 
-import com.cometproject.storage.mysql.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -123,7 +123,7 @@ public class SQLUtility {
 	}
 	
 	public static void handleSqlException(SQLException e) {
-		if (e.getMessage().equals("Pool has been shutdown") || e.getMessage().contains("Data too long for column")) return;
+		if (e.getMessage().equals("Pool has been shutdown") || e.getMessage().contains("DataWrapper too long for column")) return;
 		log.error("Error while executing query", e);
 	}
 	

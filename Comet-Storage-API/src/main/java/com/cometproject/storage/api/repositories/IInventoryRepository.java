@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public interface IInventoryRepository {
-
-    void getInventoryByPlayerId(int playerId, Consumer<List<IPlayerItem>> itemConsumer);
-
+	
+	void getInventoryByPlayerId(int playerId, Consumer<List<IPlayerItem>> itemConsumer);
+	
 }

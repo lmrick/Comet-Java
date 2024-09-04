@@ -1,9 +1,9 @@
-package com.cometproject.storage.mysql.models.factories;
+package com.cometproject.storage.api.factories.groups;
 
 import com.cometproject.api.game.groups.types.GroupType;
 import com.cometproject.api.game.groups.types.IGroupData;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
-import com.cometproject.storage.mysql.models.GroupData;
+import com.cometproject.storage.api.data.groups.GroupData;
 
 public class GroupDataFactory {
 

@@ -24,7 +24,7 @@ import com.cometproject.server.network.messages.outgoing.room.items.wired.WiredR
 import com.cometproject.server.network.messages.outgoing.user.inventory.UpdateInventoryMessageComposer;
 import com.cometproject.api.game.utilities.RandomUtil;
 import com.cometproject.storage.api.StorageContext;
-import com.cometproject.storage.api.data.Data;
+import com.cometproject.storage.api.data.DataWrapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -72,7 +72,7 @@ public class WiredActionGiveReward extends WiredActionItem {
 		
 		this.ownerRank = playerData != null ? playerData.getRank() : 1;
 		
-		final Data<Map<Integer, Set<String>>> rewardData = Data.createEmpty();
+		final DataWrapper<Map<Integer, Set<String>>> rewardData = DataWrapper.createEmpty();
 		
 		StorageContext.getCurrentContext().getRoomItemRepository().getGivenRewards(this.getId(), rewardData::set);
 		
@@ -245,7 +245,7 @@ public class WiredActionGiveReward extends WiredActionItem {
 							FurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(itemId);
 							
 							if (itemDefinition != null) {
-								final Data<Long> newItem = Data.createEmpty();
+								final DataWrapper<Long> newItem = DataWrapper.createEmpty();
 								StorageContext.getCurrentContext().getRoomItemRepository().createItem(playerEntity.getPlayerId(), itemId, extraData, newItem::set);
 								
 								IPlayerItem playerItem = new InventoryItem(newItem.get(), itemId, extraData);

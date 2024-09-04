@@ -29,7 +29,7 @@ import com.cometproject.server.storage.cache.objects.RoomDataObject;
 import com.cometproject.server.storage.cache.objects.items.FloorItemDataObject;
 import com.cometproject.server.storage.cache.objects.items.WallItemDataObject;
 import com.cometproject.server.utilities.attributes.Attributable;
-import com.cometproject.storage.mysql.models.factories.rooms.RoomModelDataFactory;
+import com.cometproject.storage.api.factories.rooms.RoomModelDataFactory;
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 

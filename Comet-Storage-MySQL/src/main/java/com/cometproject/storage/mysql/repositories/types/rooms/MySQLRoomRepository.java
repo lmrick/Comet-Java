@@ -1,4 +1,4 @@
-package com.cometproject.storage.mysql.repositories;
+package com.cometproject.storage.mysql.repositories.types.rooms;
 
 import com.cometproject.api.game.rooms.IRoomData;
 import com.cometproject.api.game.rooms.settings.RoomType;
@@ -6,10 +6,11 @@ import com.cometproject.api.game.rooms.models.RoomModelData;
 import com.cometproject.api.game.rooms.settings.*;
 import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.storage.api.repositories.IRoomRepository;
-import com.cometproject.storage.mysql.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
 import com.cometproject.storage.mysql.data.results.IResultReader;
-import com.cometproject.storage.mysql.models.factories.rooms.RoomDataFactory;
-import com.cometproject.storage.mysql.models.factories.rooms.RoomModelDataFactory;
+import com.cometproject.storage.api.factories.rooms.RoomDataFactory;
+import com.cometproject.storage.api.factories.rooms.RoomModelDataFactory;
+import com.cometproject.storage.mysql.repositories.MySQLRepository;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.reflect.TypeToken;

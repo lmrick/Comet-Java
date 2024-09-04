@@ -12,6 +12,7 @@ import java.util.Map;
 
 
 public class NotificationCommandsDao {
+    
     public static Map<String, Notification> getAll() {
         Connection sqlConnection = null;
         PreparedStatement preparedStatement = null;

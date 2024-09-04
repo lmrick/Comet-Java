@@ -1,7 +1,7 @@
 package com.cometproject.storage.mysql.queues.players;
 
-import com.cometproject.storage.mysql.MySQLConnectionProvider;
-import com.cometproject.storage.mysql.MySQLStorageQueue;
+import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.queues.MySQLStorageQueue;
 import com.cometproject.storage.mysql.queues.players.objects.PlayerBadgeUpdate;
 
 import java.sql.PreparedStatement;
@@ -15,8 +15,8 @@ public class PlayerBadgeUpdateQueue extends MySQLStorageQueue<Integer, PlayerBad
 
     @Override
     protected void processBatch(PreparedStatement preparedStatement, Integer id, PlayerBadgeUpdate object) throws Exception {
-        preparedStatement.setInt(1, object.getSlot());
-        preparedStatement.setString(2, object.getBadgeId());
+        preparedStatement.setInt(1, object.slot());
+        preparedStatement.setString(2, object.badgeId());
         preparedStatement.setInt(3, id);
 
         preparedStatement.addBatch();

@@ -65,7 +65,7 @@ public class CatalogDao {
                     final ICatalogItem catalogItem = itemFromResultSet(resultSet);
 
                     if (!catalogItem.getItemId().equals("-1") && catalogItem.getItems().size() == 0) {
-                        Comet.getServer().getLogger().warn(String.format("Catalog Item with ID: %s and name: %s has invalid item data! (Data: %s)", catalogItem.getId(), catalogItem.getDisplayName(), catalogItem.getItemId()));
+                        Comet.getServer().getLogger().warn(String.format("Catalog Item with ID: %s and name: %s has invalid item data! (DataWrapper: %s)", catalogItem.getId(), catalogItem.getDisplayName(), catalogItem.getItemId()));
                         continue;
                     }
 
@@ -115,7 +115,7 @@ public class CatalogDao {
                     final ICatalogItem catalogItem = itemFromResultSet(resultSet);
 
                     if (!catalogItem.getItemId().equals("-1") && catalogItem.getItems().size() == 0) {
-                        Comet.getServer().getLogger().warn(String.format("Catalog Item with ID: %s and name: %s has invalid item data! (Data: %s)", catalogItem.getId(), catalogItem.getDisplayName(), catalogItem.getItemId()));
+                        Comet.getServer().getLogger().warn(String.format("Catalog Item with ID: %s and name: %s has invalid item data! (DataWrapper: %s)", catalogItem.getId(), catalogItem.getDisplayName(), catalogItem.getItemId()));
                         continue;
                     }
 

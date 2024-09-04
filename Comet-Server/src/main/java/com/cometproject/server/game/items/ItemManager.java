@@ -8,7 +8,7 @@ import com.cometproject.server.storage.queries.items.ItemDao;
 import com.cometproject.server.storage.queries.items.MusicDao;
 import com.cometproject.server.storage.queries.items.TeleporterDao;
 import com.cometproject.storage.api.StorageContext;
-import com.cometproject.storage.api.data.Data;
+import com.cometproject.storage.api.data.DataWrapper;
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;
@@ -139,7 +139,7 @@ public class ItemManager implements IFurnitureService {
 	
 	@Override
 	public int roomIdByItemId(long itemId) {
-		final Data<Integer> data = Data.createEmpty();
+		final DataWrapper<Integer> data = DataWrapper.createEmpty();
 		StorageContext.getCurrentContext().getRoomItemRepository().getRoomIdByItemId(itemId, data::set);
 		return data.has() ? data.get() : 0;
 	}

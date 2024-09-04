@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.Set;
 
 public class RoomFilterDao {
+    
     public static Set<String> getFilterForRoom(int roomId) {
         Connection sqlConnection = null;
         PreparedStatement preparedStatement = null;
@@ -46,7 +47,7 @@ public class RoomFilterDao {
         try {
             sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SQLUtility.prepare("INSERT into room_word_filter (`word`, `room_id`) VALUES(?, ?);", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT INTO room_word_filter (`word`, `room_id`) VALUES (?, ?);", sqlConnection);
             preparedStatement.setString(1, word);
             preparedStatement.setInt(2, roomId);
 
@@ -80,4 +81,5 @@ public class RoomFilterDao {
             SQLUtility.closeSilently(sqlConnection);
         }
     }
+    
 }

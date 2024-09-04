@@ -1,7 +1,6 @@
 package com.cometproject.storage.mysql.connections;
 
 import com.cometproject.api.config.Configuration;
-import com.cometproject.storage.mysql.MySQLConnectionProvider;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.log4j.Logger;
@@ -9,28 +8,26 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.MessageFormat;
 
 public class HikariConnectionProvider extends MySQLConnectionProvider {
-	
 	private final Logger log = Logger.getLogger(HikariConnectionProvider.class);
-	
 	private HikariDataSource hikariDataSource;
-	private boolean isConnectionFailed = true;
 	
 	public HikariConnectionProvider() {
+		boolean isConnectionFailed = true;
 		try {
 			HikariConfig config = new HikariConfig();
 			
-			config.setJdbcUrl("jdbc:mysql://" + Configuration.currentConfig().get("comet.db.host") + "/" + Configuration.currentConfig().get("comet.db.name") + "?tcpKeepAlive=" + Configuration.currentConfig().get("comet.db.pool.tcpKeepAlive") + "&autoReconnect=" + Configuration.currentConfig().get("comet.db.pool.autoReconnect"));
+			config.setJdbcUrl(MessageFormat.format("jdbc:mysql://{0}/{1}?tcpKeepAlive={2}&autoReconnect={3}", Configuration.currentConfig().get("comet.db.host"), Configuration.currentConfig().get("comet.db.name"), Configuration.currentConfig().get("comet.db.pool.tcpKeepAlive"), Configuration.currentConfig().get("comet.db.pool.autoReconnect")));
 			
 			config.setUsername(Configuration.currentConfig().get("comet.db.username"));
 			config.setPassword(Configuration.currentConfig().get("comet.db.password"));
-			
 			config.setMaximumPoolSize(Integer.parseInt(Configuration.currentConfig().get("comet.db.pool.max")));
 			
 			log.info("Connecting to the MySQL server");
 			
-			this.isConnectionFailed = false;
+			isConnectionFailed = false;
 			this.hikariDataSource = new HikariDataSource(config);
 		} catch (Exception e) {
 			isConnectionFailed = true;

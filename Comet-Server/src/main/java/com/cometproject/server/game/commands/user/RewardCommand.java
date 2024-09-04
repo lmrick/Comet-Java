@@ -4,7 +4,7 @@ import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.commands.ChatCommand;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.storage.api.StorageContext;
-import com.cometproject.storage.api.data.Data;
+import com.cometproject.storage.api.data.DataWrapper;
 import com.cometproject.storage.api.data.rewards.RewardData;
 
 import java.util.Map;
@@ -26,7 +26,7 @@ public class RewardCommand extends ChatCommand {
 				} else {
 					final RewardData rewardData = rewards.get(reward);
 					
-					final Data<Boolean> received = Data.createEmpty();
+					final DataWrapper<Boolean> received = DataWrapper.createEmpty();
 					StorageContext.getCurrentContext().getRewardRepository().playerRedeemedReward(client.getPlayer().getId(), rewardData.getCode(), received::set);
 					
 					if (!received.get()) {

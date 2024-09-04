@@ -55,7 +55,7 @@ import com.cometproject.server.storage.queries.items.TeleporterDao;
 import com.cometproject.server.storage.queries.pets.PetDao;
 import com.cometproject.server.storage.queries.player.PlayerDao;
 import com.cometproject.storage.api.StorageContext;
-import com.cometproject.storage.api.data.Data;
+import com.cometproject.storage.api.data.DataWrapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -420,7 +420,7 @@ public class LegacyPurchaseHandler implements ICatalogPurchaseHandler {
 				}
 				
 				final List<Long> newItems;
-				final Data<List<Long>> idsData = Data.createEmpty();
+				final DataWrapper<List<Long>> idsData = DataWrapper.createEmpty();
 				StorageContext.getCurrentContext().getRoomItemRepository().createItems(purchases, idsData::set, client.getPlayer().getInventory().viewingInventoryUserId());
 				
 				if (!idsData.has()) {

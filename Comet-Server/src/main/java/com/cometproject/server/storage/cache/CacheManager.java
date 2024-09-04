@@ -123,7 +123,7 @@ public class CacheManager extends CachableObject implements Initializable {
 				
 				jedis.set(this.getKey(key), objectData);
 				
-				log.info("Data put to redis: " + object.getClass().getSimpleName() + " in " + new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds() + "ms");
+				log.info("DataWrapper put to redis: " + object.getClass().getSimpleName() + " in " + new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds() + "ms");
 			} catch (Exception e) {
 				throw e;
 			}
@@ -145,7 +145,7 @@ public class CacheManager extends CachableObject implements Initializable {
 				
 				if (setter && setterKey != null) jedis.set(this.getKey(setterKey), value);
 				
-				log.info("Data published to redis channel: " + key + " in " + new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds() + "ms");
+				log.info("DataWrapper published to redis channel: " + key + " in " + new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds() + "ms");
 			} catch (Exception e) {
 				throw e;
 			}
@@ -165,7 +165,7 @@ public class CacheManager extends CachableObject implements Initializable {
 				
 				jedis.set(this.getKey(key), value);
 				
-				log.info("Data put to redis with key: " + key + " in " + new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds() + "ms");
+				log.info("DataWrapper put to redis with key: " + key + " in " + new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds() + "ms");
 			} catch (Exception e) {
 				throw e;
 			}

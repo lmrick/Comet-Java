@@ -1,7 +1,7 @@
 package com.cometproject.storage.mysql.repositories;
 
-import com.cometproject.storage.mysql.MySQLConnectionProvider;
-import com.cometproject.storage.mysql.data.StatementConsumer;
+import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.data.statements.StatementConsumer;
 import com.cometproject.storage.mysql.data.results.IResultReader;
 import com.cometproject.storage.mysql.data.results.ResultReaderConsumer;
 import com.cometproject.storage.mysql.data.results.ResultSetReader;

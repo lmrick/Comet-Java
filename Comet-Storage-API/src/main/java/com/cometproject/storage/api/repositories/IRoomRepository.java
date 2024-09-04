@@ -7,22 +7,22 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public interface IRoomRepository {
-
-    void getAllModels(Consumer<Map<String, RoomModelData>> modelConsumer);
-
-    void getRoomDataById(int roomId, Consumer<IRoomData> dataConsumer);
-//
-//    void getRoomsByPlayerId(int playerId, Consumer<Map<Integer, IRoomData>> dataConsumer);
-//
-//    void getRoomsWithRightsByPlayerId(int playerId, Consumer<Map<Integer, IRoomData>> dataConsumer);
-//
-//    void getRoomsByQuery(String query, Consumer<List<IRoomData>> dataConsumer);
-//
-//    void createRoom(IRoomData data);
-//
-    void updateRoom(IRoomData data);
-//
-//    void deleteRoom(int id);
-
-
+	
+	void getAllModels(Consumer<Map<String, RoomModelData>> modelConsumer);
+	
+	void getRoomDataById(int roomId, Consumer<IRoomData> dataConsumer);
+	//
+	//    void getRoomsByPlayerId(int playerId, Consumer<Map<Integer, IRoomData>> dataConsumer);
+	//
+	//    void getRoomsWithRightsByPlayerId(int playerId, Consumer<Map<Integer, IRoomData>> dataConsumer);
+	//
+	//    void getRoomsByQuery(String query, Consumer<List<IRoomData>> dataConsumer);
+	//
+	//    void createRoom(IRoomData data);
+	//
+	void updateRoom(IRoomData data);
+	//
+	//    void deleteRoom(int id);
+	
+	
 }

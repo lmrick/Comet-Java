@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 
 public class StatisticsDao {
+    
     public static void saveStatistics(int players, int rooms, String version, int onlineRecord) {
         Connection sqlConnection = null;
         PreparedStatement preparedStatement = null;
@@ -78,4 +79,5 @@ public class StatisticsDao {
 
         return 0;
     }
+    
 }

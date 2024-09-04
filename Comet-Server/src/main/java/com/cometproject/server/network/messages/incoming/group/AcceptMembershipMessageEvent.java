@@ -10,7 +10,7 @@ import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.messages.outgoing.room.permissions.YouAreControllerMessageComposer;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
-import com.cometproject.storage.mysql.models.factories.GroupMemberFactory;
+import com.cometproject.storage.api.factories.groups.GroupMemberFactory;
 
 
 public class AcceptMembershipMessageEvent implements Event {

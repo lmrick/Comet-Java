@@ -13,7 +13,7 @@ public class InstanceStatsCommand extends ChatCommand {
 	public void execute(Session client, String[] params) {
 		
 		String message = "<b>Comet Server - Instance Statistics </b><br><br>" + "Build: " + Comet.getBuild() + "<br><br>" + "<b>Game Statistics</b><br>Players online: " + PlayerManager.getInstance().size() + "<br>Active rooms: " + RoomManager.getInstance().getRoomInstances().size() + "<br><br>";
-		//        message.append("<b>Room Data</b><br>" + "Cached data instances: " + RoomManager.getInstance().getRoomDataInstances().size() + "<br>" + "<br>" + "<b>Group Data</b><br>" + "Cached data instances: " + GroupManager.getInstance().getGroupData().size() + "<br>" + "Cached instances: " + GroupManager.getInstance().getGroupInstances().size());
+		//        message.append("<b>Room DataWrapper</b><br>" + "Cached data instances: " + RoomManager.getInstance().getRoomDataInstances().size() + "<br>" + "<br>" + "<b>Group DataWrapper</b><br>" + "Cached data instances: " + GroupManager.getInstance().getGroupData().size() + "<br>" + "Cached instances: " + GroupManager.getInstance().getGroupInstances().size());
 		
 		client.send(new AlertMessageComposer(message));
 		//

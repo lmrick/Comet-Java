@@ -1,4 +1,4 @@
-package com.cometproject.storage.mysql.models;
+package com.cometproject.storage.api.data.groups;
 
 import com.cometproject.api.game.groups.types.components.membership.GroupAccessLevel;
 import com.cometproject.api.game.groups.types.components.membership.IGroupMember;

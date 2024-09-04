@@ -35,7 +35,7 @@ import com.cometproject.server.network.messages.outgoing.room.items.SendWallItem
 import com.cometproject.server.network.messages.outgoing.user.inventory.UpdateInventoryMessageComposer;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.storage.api.StorageContext;
-import com.cometproject.storage.api.data.Data;
+import com.cometproject.storage.api.data.DataWrapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -80,7 +80,7 @@ public class ItemsComponent {
 				this.wallItems.put(wallItemDataObject.getId(), RoomItemFactory.createWall(data, room, ItemManager.getInstance().getDefinition(wallItemDataObject.getItemDefinitionId())));
 			});
 		} else {
-			final Data<List<RoomItemData>> items = Data.createEmpty();
+			final DataWrapper<List<RoomItemData>> items = DataWrapper.createEmpty();
 			
 			StorageContext.getCurrentContext().getRoomItemRepository().getItemsByRoomId(this.room.getId(), items::set);
 			

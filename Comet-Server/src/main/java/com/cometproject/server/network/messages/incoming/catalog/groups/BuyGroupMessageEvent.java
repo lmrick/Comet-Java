@@ -22,7 +22,7 @@ import com.cometproject.server.network.messages.outgoing.user.purse.SendCreditsM
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 import com.cometproject.server.utilities.BadgeUtil;
-import com.cometproject.storage.mysql.models.factories.GroupDataFactory;
+import com.cometproject.storage.api.factories.groups.GroupDataFactory;
 
 import java.util.ArrayList;
 import java.util.List;

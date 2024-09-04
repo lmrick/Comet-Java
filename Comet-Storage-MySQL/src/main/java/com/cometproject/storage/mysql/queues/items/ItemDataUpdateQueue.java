@@ -1,7 +1,7 @@
 package com.cometproject.storage.mysql.queues.items;
 
-import com.cometproject.storage.mysql.BlockingMySQLStorageQueue;
-import com.cometproject.storage.mysql.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.queues.BlockingMySQLStorageQueue;
+import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
 
 import java.sql.PreparedStatement;
 

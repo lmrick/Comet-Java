@@ -4,7 +4,7 @@ import com.cometproject.api.game.groups.types.components.forum.IForumThread;
 import com.cometproject.api.game.groups.types.components.forum.IForumThreadReply;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.storage.SQLUtility;
-import com.cometproject.storage.mysql.models.factories.GroupForumMessageFactory;
+import com.cometproject.storage.api.factories.groups.GroupForumMessageFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

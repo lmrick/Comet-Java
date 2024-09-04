@@ -1,7 +1,7 @@
 package com.cometproject.gamecenter.fastfood.storage;
 
 import com.cometproject.gamecenter.fastfood.net.FastFoodGameSession;
-import com.cometproject.storage.mysql.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
 import com.cometproject.storage.mysql.repositories.MySQLRepository;
 
 public class MySQLFastFoodRepository extends MySQLRepository {

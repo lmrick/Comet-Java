@@ -1,7 +1,8 @@
-package com.cometproject.storage.mysql.repositories;
+package com.cometproject.storage.mysql.repositories.types.inventory;
 
 import com.cometproject.storage.api.repositories.IPhotoRepository;
-import com.cometproject.storage.mysql.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.repositories.MySQLRepository;
 
 public class MySQLPhotoRepository extends MySQLRepository implements IPhotoRepository {
 

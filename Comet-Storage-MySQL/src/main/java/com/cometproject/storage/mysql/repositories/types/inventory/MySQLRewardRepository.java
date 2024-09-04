@@ -1,8 +1,9 @@
-package com.cometproject.storage.mysql.repositories;
+package com.cometproject.storage.mysql.repositories.types.inventory;
 
 import com.cometproject.storage.api.data.rewards.RewardData;
 import com.cometproject.storage.api.repositories.IRewardRepository;
-import com.cometproject.storage.mysql.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.repositories.MySQLRepository;
 import com.google.common.collect.Maps;
 
 import java.util.Map;

@@ -18,7 +18,7 @@ public class ItemDataCommand extends ChatCommand {
 			return;
 		}
 		
-		client.send(new MotdNotificationMessageComposer(String.format("Item Data (%s)\n\nRotation: %s\nType: %s\nPosition: %s", floorItem.getId(), floorItem.getRotation(), floorItem.getClass().getSimpleName(), floorItem.getPosition())));
+		client.send(new MotdNotificationMessageComposer(String.format("Item DataWrapper (%s)\n\nRotation: %s\nType: %s\nPosition: %s", floorItem.getId(), floorItem.getRotation(), floorItem.getClass().getSimpleName(), floorItem.getPosition())));
 	}
 	
 	@Override

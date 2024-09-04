@@ -1,7 +1,7 @@
 package com.cometproject.storage.mysql.queues.players;
 
-import com.cometproject.storage.mysql.MySQLConnectionProvider;
-import com.cometproject.storage.mysql.MySQLStorageQueue;
+import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.queues.MySQLStorageQueue;
 import com.cometproject.storage.mysql.queues.players.objects.PlayerStatusUpdate;
 
 import java.sql.PreparedStatement;
@@ -14,10 +14,10 @@ public class PlayerStatusUpdateQueue extends MySQLStorageQueue<Integer, PlayerSt
 
     @Override
     public void processBatch(PreparedStatement preparedStatement, Integer id, PlayerStatusUpdate object) throws Exception {
-        preparedStatement.setString(1, object.isPlayerOnline() ? "1" : "0");
-        preparedStatement.setString(2, object.getIpAddress());
+        preparedStatement.setString(1, object.playerOnline() ? "1" : "0");
+        preparedStatement.setString(2, object.ipAddress());
         preparedStatement.setLong(3, System.currentTimeMillis() / 1000L);
-        preparedStatement.setInt(4, object.getPlayerId());
+        preparedStatement.setInt(4, object.playerId());
 
         preparedStatement.addBatch();
     }

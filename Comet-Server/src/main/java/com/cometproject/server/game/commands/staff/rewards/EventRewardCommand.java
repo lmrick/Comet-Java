@@ -7,7 +7,7 @@ import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.storage.queries.player.PlayerDao;
 import com.cometproject.storage.api.StorageContext;
-import com.cometproject.storage.api.data.Data;
+import com.cometproject.storage.api.data.DataWrapper;
 
 public class EventRewardCommand extends NotificationCommand {
 	
@@ -32,7 +32,7 @@ public class EventRewardCommand extends NotificationCommand {
 			}
 		}
 		
-		final Data<Boolean> received = Data.createEmpty();
+		final DataWrapper<Boolean> received = DataWrapper.createEmpty();
 		StorageContext.getCurrentContext().getRewardRepository().playerReceivedReward(playerId, badge, received::set);
 		
 		if (received.has() && received.get()) {

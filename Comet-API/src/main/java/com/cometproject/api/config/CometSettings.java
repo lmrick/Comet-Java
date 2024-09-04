@@ -24,7 +24,9 @@ public class CometSettings {
     public static final int hour = calendar.get(Calendar.HOUR_OF_DAY);
     public static final int minute = calendar.get(Calendar.MINUTE);
     
-    public static final boolean doubleRewards = CometSettings.onlineRewardDoubleDays.contains(date.getDayOfWeek());
+    public static final boolean doubleRewards = false;
+    //CometSettings.onlineRewardDoubleDays.contains(date.getDayOfWeek());
+    
     public static final boolean updateDaily = hour == 0 && minute == 0;
     public static final int dailyRespects = 3;
     public static final int dailyScratches = 3;

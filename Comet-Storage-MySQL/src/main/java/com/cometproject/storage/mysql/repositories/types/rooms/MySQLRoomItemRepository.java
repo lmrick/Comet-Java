@@ -1,4 +1,4 @@
-package com.cometproject.storage.mysql.repositories;
+package com.cometproject.storage.mysql.repositories.types.rooms;
 
 import com.cometproject.api.game.catalog.types.purchase.CatalogPurchase;
 import com.cometproject.api.game.furniture.types.LimitedEditionItem;
@@ -7,8 +7,9 @@ import com.cometproject.api.game.rooms.objects.data.LimitedEditionItemData;
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
 import com.cometproject.api.game.utilities.Position;
 import com.cometproject.storage.api.repositories.IRoomItemRepository;
-import com.cometproject.storage.mysql.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
 import com.cometproject.storage.mysql.data.results.IResultReader;
+import com.cometproject.storage.mysql.repositories.MySQLRepository;
 import com.google.common.collect.Lists;
 
 import java.util.HashSet;

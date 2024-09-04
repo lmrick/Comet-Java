@@ -1,9 +1,9 @@
-package com.cometproject.storage.mysql.models.factories;
+package com.cometproject.storage.api.factories.groups;
 
 import com.cometproject.api.game.groups.types.components.forum.IForumThread;
 import com.cometproject.api.game.groups.types.components.forum.IForumThreadReply;
-import com.cometproject.storage.mysql.models.GroupForumThreadData;
-import com.cometproject.storage.mysql.models.GroupForumThreadMessageData;
+import com.cometproject.storage.api.data.groups.GroupForumThreadData;
+import com.cometproject.storage.api.data.groups.GroupForumThreadMessageData;
 
 public class GroupForumMessageFactory {
 

@@ -1,8 +1,8 @@
 package com.cometproject.storage.mysql.queues.pets;
 
 import com.cometproject.api.game.pets.IPetStats;
-import com.cometproject.storage.mysql.MySQLConnectionProvider;
-import com.cometproject.storage.mysql.MySQLStorageQueue;
+import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.queues.MySQLStorageQueue;
 
 import java.sql.PreparedStatement;
 import java.util.concurrent.ScheduledExecutorService;

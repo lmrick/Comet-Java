@@ -1,4 +1,4 @@
-package com.cometproject.storage.mysql.data;
+package com.cometproject.storage.mysql.data.statements;
 
 import java.sql.PreparedStatement;
 

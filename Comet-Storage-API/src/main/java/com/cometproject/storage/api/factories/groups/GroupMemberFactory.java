@@ -1,8 +1,8 @@
-package com.cometproject.storage.mysql.models.factories;
+package com.cometproject.storage.api.factories.groups;
 
 import com.cometproject.api.game.groups.types.components.membership.GroupAccessLevel;
 import com.cometproject.api.game.groups.types.components.membership.IGroupMember;
-import com.cometproject.storage.mysql.models.GroupMemberData;
+import com.cometproject.storage.api.data.groups.GroupMemberData;
 
 public class GroupMemberFactory {
     public IGroupMember create(final int membershipId, final int playerId, final int groupId, final GroupAccessLevel accessLevel, final int dateJoined) {

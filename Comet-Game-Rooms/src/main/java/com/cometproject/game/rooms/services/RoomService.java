@@ -3,7 +3,7 @@ package com.cometproject.game.rooms.services;
 import com.cometproject.api.caching.Cache;
 import com.cometproject.api.game.rooms.IRoomData;
 import com.cometproject.api.game.rooms.IRoomService;
-import com.cometproject.storage.api.data.Data;
+import com.cometproject.storage.api.data.DataWrapper;
 import com.cometproject.storage.api.repositories.IRoomRepository;
 
 public class RoomService implements IRoomService {
@@ -22,7 +22,7 @@ public class RoomService implements IRoomService {
             return null;
         }
 
-        Data<IRoomData> roomData = Data.createEmpty();
+        DataWrapper<IRoomData> roomData = DataWrapper.createEmpty();
 
         if (this.roomDataCache.contains(roomId)) {
             return this.roomDataCache.get(roomId);

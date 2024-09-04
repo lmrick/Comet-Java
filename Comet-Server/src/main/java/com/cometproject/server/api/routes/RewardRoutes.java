@@ -10,7 +10,7 @@ import com.cometproject.server.game.items.ItemManager;
 import com.cometproject.server.game.players.PlayerManager;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.WiredUtil;
 import com.cometproject.storage.api.StorageContext;
-import com.cometproject.storage.api.data.Data;
+import com.cometproject.storage.api.data.DataWrapper;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import spark.Request;
@@ -59,7 +59,7 @@ public class RewardRoutes {
 
 
         final String extraData = req.queryParams("itemData") != null ? req.queryParams("itemData") : "0";
-        final Data<List<Long>> ids = Data.createEmpty();
+        final DataWrapper<List<Long>> ids = DataWrapper.createEmpty();
         final GiftData giftData = new GiftData(itemId, 0, sender, playerAvatar.getUsername(), message, giftSprite, 0, 0, true, extraData);
 
         final CatalogPurchase catalogPurchase = new CatalogPurchase(playerId, giftDefinition.getId(),  GiftData.EXTRA_DATA_HEADER + JsonUtil.getInstance().toJson(giftData));

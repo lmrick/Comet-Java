@@ -11,7 +11,7 @@ import com.cometproject.server.network.messages.outgoing.user.inventory.UpdateIn
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 import com.cometproject.storage.api.StorageContext;
-import com.cometproject.storage.api.data.Data;
+import com.cometproject.storage.api.data.DataWrapper;
 import com.google.common.collect.Sets;
 
 public class RemoveHorseSaddleMessageEvent implements Event {
@@ -37,7 +37,7 @@ public class RemoveHorseSaddleMessageEvent implements Event {
 
             room.getEntities().broadcastMessage(new HorseFigureMessageComposer(petEntity));
 
-            final Data<Long> itemId = Data.createEmpty();
+            final DataWrapper<Long> itemId = DataWrapper.createEmpty();
             StorageContext.getCurrentContext().getRoomItemRepository().createItem(client.getPlayer().getId(), ItemManager.getInstance().getSaddleId(), "", itemId::set);
 
             IPlayerItem playerItem = client.getPlayer().getInventory().add(itemId.get(), ItemManager.getInstance().getSaddleId(), "", null, null);
