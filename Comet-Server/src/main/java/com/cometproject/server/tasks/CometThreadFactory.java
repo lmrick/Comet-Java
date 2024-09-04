@@ -1,4 +1,4 @@
-package com.cometproject.server.utilities;
+package com.cometproject.server.tasks;
 
 import javax.annotation.Nonnull;
 import java.util.concurrent.ThreadFactory;

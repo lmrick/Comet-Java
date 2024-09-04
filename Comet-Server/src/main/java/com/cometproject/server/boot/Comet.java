@@ -5,7 +5,7 @@ import com.cometproject.server.boot.utils.ConsoleCommands;
 import com.cometproject.server.boot.utils.ShutdownProcess;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.network.NetworkManager;
-import com.cometproject.server.utilities.CometRuntime;
+import com.cometproject.server.tasks.CometRuntime;
 import com.cometproject.server.utilities.TimeSpan;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -117,7 +117,7 @@ public class Comet {
 		statsInstance.setProcessId(CometRuntime.processId);
 		statsInstance.setAllocatedMemory((Runtime.getRuntime().totalMemory() / 1024) / 1024);
 		statsInstance.setUsedMemory(statsInstance.getAllocatedMemory() - (Runtime.getRuntime().freeMemory() / 1024) / 1024);
-		statsInstance.setOperatingSystem(MessageFormat.format("{0} ({1})", CometRuntime.operatingSystem, CometRuntime.operatingSystemArchitecture));
+		statsInstance.setOperatingSystem(MessageFormat.format("{0} ({1})", CometRuntime.OPERATING_SYSTEM, CometRuntime.OPERATING_SYSTEM_ARCHITECTURE));
 		statsInstance.setCpuCores(Runtime.getRuntime().availableProcessors());
 		
 		return statsInstance;
