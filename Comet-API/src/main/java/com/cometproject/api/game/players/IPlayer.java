@@ -4,7 +4,7 @@ import com.cometproject.api.game.players.data.IPlayerData;
 import com.cometproject.api.game.players.data.IPlayerSettings;
 import com.cometproject.api.game.players.data.IPlayerStatistics;
 import com.cometproject.api.game.players.data.components.*;
-import com.cometproject.api.game.rooms.entities.PlayerRoomEntity;
+import com.cometproject.api.game.rooms.entities.IPlayerRoomEntity;
 import com.cometproject.api.networking.messages.IMessageComposer;
 import com.cometproject.api.networking.sessions.ISession;
 
@@ -40,7 +40,7 @@ public interface IPlayer {
 
     void setSession(ISession client);
 
-    PlayerRoomEntity getEntity();
+    IPlayerRoomEntity getEntity();
 
     ISession getSession();
 

@@ -1,7 +1,7 @@
 package com.cometproject.storage.mysql.repositories.types.rooms;
 
 import com.cometproject.api.game.catalog.types.purchase.CatalogPurchase;
-import com.cometproject.api.game.furniture.types.LimitedEditionItem;
+import com.cometproject.api.game.furniture.types.ILimitedEditionItem;
 import com.cometproject.api.game.rooms.objects.IRoomItemData;
 import com.cometproject.api.game.rooms.objects.data.LimitedEditionItemData;
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
@@ -179,7 +179,7 @@ public class MySQLRoomItemRepository extends MySQLRepository implements IRoomIte
     }
 
     protected RoomItemData buildItem(IResultReader data) throws Exception {
-        LimitedEditionItem limitedEditionItemData = null;
+        ILimitedEditionItem limitedEditionItemData = null;
 
         if (data.readInteger("limited_id") != 0) {
             limitedEditionItemData = new LimitedEditionItemData(data.readLong("id"),

@@ -1,8 +1,8 @@
 package com.cometproject.server.game.navigator.types.categories;
 
-import com.cometproject.api.game.rooms.RoomCategory;
+import com.cometproject.api.game.rooms.IRoomCategory;
 
-public class Category implements RoomCategory {
+public class Category implements IRoomCategory {
     private final int id;
     private final String category;
     private final String categoryId;

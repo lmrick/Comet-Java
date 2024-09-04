@@ -2,7 +2,7 @@ package com.cometproject.server.composers.catalog;
 
 import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.game.catalog.types.ICatalogItem;
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
@@ -10,17 +10,17 @@ import com.cometproject.server.protocol.messages.MessageComposer;
 public class BoughtItemMessageComposer extends MessageComposer {
 	
 	private final ICatalogItem catalogItem;
-	private final FurnitureDefinition itemDefinition;
+	private final IFurnitureDefinition itemDefinition;
 	
 	private final boolean isGroup;
 	
-	private BoughtItemMessageComposer(final ICatalogItem catalogItem, final FurnitureDefinition itemDefinition, final boolean isGroup) {
+	private BoughtItemMessageComposer(final ICatalogItem catalogItem, final IFurnitureDefinition itemDefinition, final boolean isGroup) {
 		this.catalogItem = catalogItem;
 		this.itemDefinition = itemDefinition;
 		this.isGroup = isGroup;
 	}
 	
-	public BoughtItemMessageComposer(final ICatalogItem catalogItem, final FurnitureDefinition itemDefinition) {
+	public BoughtItemMessageComposer(final ICatalogItem catalogItem, final IFurnitureDefinition itemDefinition) {
 		this(catalogItem, itemDefinition, false);
 	}
 	

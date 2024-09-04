@@ -195,7 +195,7 @@ public class RollerFloorItem extends AdvancedFloorItem<RollerFloorItemEvent> {
 				continue;
 			}
 			
-			if (!floor.getDefinition().canStack() && !(floor instanceof RollableFloorItem)) {
+			if (floor.getDefinition().canStack() && !(floor instanceof RollableFloorItem)) {
 				if (floor.getTile().getTopItem() != floor.getId()) continue;
 			}
 			

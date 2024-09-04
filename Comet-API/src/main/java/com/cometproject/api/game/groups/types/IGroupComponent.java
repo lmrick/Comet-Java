@@ -1,5 +1,5 @@
 package com.cometproject.api.game.groups.types;
 
-public interface GroupComponent {
+public interface IGroupComponent {
     void dispose();
 }

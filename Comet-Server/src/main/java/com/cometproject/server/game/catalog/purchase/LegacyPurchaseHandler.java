@@ -13,7 +13,7 @@ import com.cometproject.api.game.catalog.types.ICatalogPage;
 import com.cometproject.api.game.catalog.types.bundles.IRoomBundle;
 import com.cometproject.api.game.catalog.types.purchase.CatalogPurchase;
 import com.cometproject.api.game.catalog.types.purchase.ICatalogPurchaseHandler;
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.game.furniture.types.GiftData;
 import com.cometproject.api.game.furniture.types.IMusicData;
 import com.cometproject.api.game.furniture.types.ItemType;
@@ -131,7 +131,7 @@ public class LegacyPurchaseHandler implements ICatalogPurchaseHandler {
 			
 			if (giftData != null) {
 				try {
-					final FurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(item.getItems().get(0).itemId());
+					final IFurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(item.getItems().get(0).itemId());
 					
 					if (itemDefinition == null) {
 						return;
@@ -247,7 +247,7 @@ public class LegacyPurchaseHandler implements ICatalogPurchaseHandler {
 			}
 			
 			for (ICatalogBundledItem bundledItem : item.getItems()) {
-				FurnitureDefinition def = ItemManager.getInstance().getDefinition(bundledItem.itemId());
+				IFurnitureDefinition def = ItemManager.getInstance().getDefinition(bundledItem.itemId());
 				
 				if (def == null) {
 					continue;
@@ -408,7 +408,7 @@ public class LegacyPurchaseHandler implements ICatalogPurchaseHandler {
 				if (giftData != null) {
 					giftData.setExtraData(extraData);
 					
-					FurnitureDefinition itemDefinition = ItemManager.getInstance().getBySpriteId(giftData.getSpriteId());
+					IFurnitureDefinition itemDefinition = ItemManager.getInstance().getBySpriteId(giftData.getSpriteId());
 					
 					purchases.add(new CatalogPurchase(playerIdToDeliver, itemDefinition == null ? CatalogManager.getInstance().getGiftBoxesOld().get(0) : itemDefinition.getId(), GiftData.EXTRA_DATA_HEADER + JsonUtil.getInstance().toJson(giftData)));
 				} else {

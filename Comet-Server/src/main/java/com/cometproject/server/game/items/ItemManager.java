@@ -2,7 +2,7 @@ package com.cometproject.server.game.items;
 
 import com.cometproject.api.game.furniture.IFurnitureService;
 import com.cometproject.api.game.furniture.types.CrackableReward;
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.game.furniture.types.IMusicData;
 import com.cometproject.server.storage.queries.items.ItemDao;
 import com.cometproject.server.storage.queries.items.MusicDao;
@@ -22,7 +22,7 @@ public class ItemManager implements IFurnitureService {
 	
 	private Logger log = Logger.getLogger(ItemManager.class.getName());
 	
-	private Map<Integer, FurnitureDefinition> itemDefinitions;
+	private Map<Integer, IFurnitureDefinition> itemDefinitions;
 	
 	private Map<Integer, Integer> itemSpriteIdToDefinitionId;
 	private Map<Integer, IMusicData> musicData;
@@ -65,7 +65,7 @@ public class ItemManager implements IFurnitureService {
 	
 	@Override
 	public void loadItemDefinitions() {
-		Map<Integer, FurnitureDefinition> tempMap = this.itemDefinitions;
+		Map<Integer, IFurnitureDefinition> tempMap = this.itemDefinitions;
 		Map<Integer, Integer> tempSpriteIdItemMap = this.itemSpriteIdToDefinitionId;
 		
 		try {
@@ -145,7 +145,7 @@ public class ItemManager implements IFurnitureService {
 	}
 	
 	@Override
-	public FurnitureDefinition getDefinition(int itemId) {
+	public IFurnitureDefinition getDefinition(int itemId) {
 		return this.getItemDefinitions().getOrDefault(itemId, null);
 	}
 	
@@ -166,7 +166,7 @@ public class ItemManager implements IFurnitureService {
 	}
 	
 	@Override
-	public FurnitureDefinition getBySpriteId(int spriteId) {
+	public IFurnitureDefinition getBySpriteId(int spriteId) {
 		return this.itemDefinitions.get(this.itemSpriteIdToDefinitionId.get(spriteId));
 	}
 	
@@ -176,7 +176,7 @@ public class ItemManager implements IFurnitureService {
 	}
 	
 	@Override
-	public Map<Integer, FurnitureDefinition> getItemDefinitions() {
+	public Map<Integer, IFurnitureDefinition> getItemDefinitions() {
 		return this.itemDefinitions;
 	}
 	

@@ -1,6 +1,6 @@
 package com.cometproject.api.game.groups.types.components;
 
-import com.cometproject.api.game.groups.types.GroupComponent;
+import com.cometproject.api.game.groups.types.IGroupComponent;
 import com.cometproject.api.game.groups.types.GroupMemberAvatar;
 import com.cometproject.api.game.groups.types.components.membership.IGroupMember;
 import com.cometproject.api.networking.messages.IMessageComposer;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public interface IMembershipComponent extends GroupComponent {
+public interface IMembershipComponent extends IGroupComponent {
     void broadcastMessage(ISessionService sessionService, IMessageComposer messageComposer, int sender);
 
     boolean hasMembership(final int playerId);

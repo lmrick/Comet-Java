@@ -141,7 +141,7 @@ public class RoomMapping {
 			//                    return false;
 			//                }
 			//            } else if(entity instanceof PlayerEntity) {
-			//                RoomEntity myEntity = this.getRoom().getEntities().getEntity(entityId);
+			//                IRoomEntity myEntity = this.getRoom().getEntities().getEntity(entityId);
 			//
 			//                if(myEntity != null) {
 			//                    if (myEntity.getMountedEntity() != null && myEntity.getMountedEntity() == entity)) {

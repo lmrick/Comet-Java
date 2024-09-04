@@ -45,11 +45,11 @@ public class UpdateInfoMessageComposer extends MessageComposer {
         msg.writeInt(achievementPoints);
     }
 
-//    public static Composer compose(RoomEntity entity) {
+//    public static Composer compose(IRoomEntity entity) {
 //        return compose(entity.getId(), entity.getFigure(), entity.getGender(), entity.getMotto(), (entity instanceof PlayerEntity) ? ((PlayerEntity) entity).getPlayer().getData().getAchievementPoints() : 0);
 //    }
 //
-//    public static Composer compose(boolean isMe, RoomEntity entity) {
+//    public static Composer compose(boolean isMe, IRoomEntity entity) {
 //        if (!isMe) {
 //            return compose(entity.getId(), entity.getFigure(), entity.getGender(), entity.getMotto(), (entity instanceof PlayerEntity) ? ((PlayerEntity) entity).getPlayer().getData().getAchievementPoints() : 0);
 //        } else {

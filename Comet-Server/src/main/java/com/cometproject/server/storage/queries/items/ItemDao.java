@@ -3,7 +3,7 @@ package com.cometproject.server.storage.queries.items;
 import com.cometproject.api.game.furniture.types.CrackableReward;
 import com.cometproject.api.game.furniture.types.CrackableRewardType;
 import com.cometproject.api.game.furniture.types.CrackableType;
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.server.game.items.ItemManager;
 import com.cometproject.server.game.items.types.ItemDefinition;
 import com.cometproject.server.storage.SQLUtility;
@@ -17,12 +17,12 @@ import java.util.Map;
 
 
 public class ItemDao {
-    public static Map<Integer, FurnitureDefinition> getDefinitions() {
+    public static Map<Integer, IFurnitureDefinition> getDefinitions() {
         Connection sqlConnection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        Map<Integer, FurnitureDefinition> data = new HashMap<>();
+        Map<Integer, IFurnitureDefinition> data = new HashMap<>();
 
         try {
             sqlConnection = SQLUtility.getConnection();

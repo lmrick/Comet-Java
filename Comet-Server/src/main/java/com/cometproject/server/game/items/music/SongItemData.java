@@ -1,10 +1,10 @@
 package com.cometproject.server.game.items.music;
 
-import com.cometproject.api.game.furniture.types.SongItem;
+import com.cometproject.api.game.furniture.types.ISongItem;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItemSnapshot;
 import com.cometproject.server.game.players.components.types.inventory.InventoryItemSnapshot;
 
-public class SongItemData implements SongItem {
+public class SongItemData implements ISongItem {
 	
 	private final InventoryItemSnapshot itemSnapshot;
 	private int songId;

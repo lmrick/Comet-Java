@@ -1,7 +1,7 @@
 package com.cometproject.server.api.routes;
 
 import com.cometproject.api.game.catalog.types.purchase.CatalogPurchase;
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.game.furniture.types.GiftData;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.utilities.JsonUtil;
@@ -50,7 +50,7 @@ public class RewardRoutes {
             return result;
         }
 
-        FurnitureDefinition giftDefinition = ItemManager.getInstance().getBySpriteId(giftSprite);
+        IFurnitureDefinition giftDefinition = ItemManager.getInstance().getBySpriteId(giftSprite);
 
         if (giftDefinition == null) {
             result.put("error", "No gift box available");

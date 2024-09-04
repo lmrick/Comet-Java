@@ -1,8 +1,8 @@
 package com.cometproject.server.game.players.components.types;
 
 import com.cometproject.api.game.furniture.types.GiftData;
-import com.cometproject.api.game.furniture.types.LimitedEditionItem;
-import com.cometproject.api.game.furniture.types.SongItem;
+import com.cometproject.api.game.furniture.types.ILimitedEditionItem;
+import com.cometproject.api.game.furniture.types.ISongItem;
 import com.cometproject.api.game.players.components.PlayerComponentContext;
 import com.cometproject.api.game.players.data.components.IPlayerInventory;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
@@ -228,7 +228,7 @@ public class InventoryComponent extends PlayerComponent implements IPlayerInvent
 	}
 	
 	@Override
-	public IPlayerItem add(long id, int itemId, String extraData, GiftData giftData, LimitedEditionItem limitedEditionItem) {
+	public IPlayerItem add(long id, int itemId, String extraData, GiftData giftData, ILimitedEditionItem limitedEditionItem) {
 		IPlayerItem item = new InventoryItem(id, itemId, extraData, giftData, limitedEditionItem);
 		
 		this.inventoryItems.put(id, item);
@@ -239,12 +239,12 @@ public class InventoryComponent extends PlayerComponent implements IPlayerInvent
 	}
 	
 	@Override
-	public List<SongItem> getSongs() {
+	public List<ISongItem> getSongs() {
 		return this.inventoryItems.values().stream().filter(inventoryItem -> inventoryItem.getDefinition().isSong()).map(inventoryItem -> new SongItemData((InventoryItemSnapshot) inventoryItem.createSnapshot(), inventoryItem.getDefinition().getSongId())).collect(Collectors.toList());
 	}
 	
 	@Override
-	public void add(long id, int itemId, String extraData, LimitedEditionItem limitedEditionItem) {
+	public void add(long id, int itemId, String extraData, ILimitedEditionItem limitedEditionItem) {
 		add(id, itemId, extraData, null, limitedEditionItem);
 	}
 	

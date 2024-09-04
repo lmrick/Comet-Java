@@ -1,6 +1,6 @@
 package com.cometproject.server.game.rooms.objects.items;
 
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.game.rooms.objects.IFloorItem;
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
 import com.cometproject.api.game.utilities.Position;
@@ -22,7 +22,7 @@ import java.util.List;
 
 public abstract class RoomItemFloor extends RoomItem implements Collidable, IFloorItem {
 	
-	private FurnitureDefinition itemDefinition;
+	private IFurnitureDefinition itemDefinition;
 	private RoomEntity collidedEntity;
 	private boolean hasQueuedSave;
 	private String coreState;
@@ -72,7 +72,7 @@ public abstract class RoomItemFloor extends RoomItem implements Collidable, IFlo
 		this.serialize(msg, false);
 	}
 	
-	public FurnitureDefinition getDefinition() {
+	public IFurnitureDefinition getDefinition() {
 		if (this.itemDefinition == null) {
 			this.itemDefinition = ItemManager.getInstance().getDefinition(this.getItemData().getItemId());
 		}

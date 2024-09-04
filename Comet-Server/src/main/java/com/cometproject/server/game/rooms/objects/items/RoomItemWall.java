@@ -1,6 +1,6 @@
 package com.cometproject.server.game.rooms.objects.items;
 
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.items.ItemManager;
@@ -10,7 +10,7 @@ import com.cometproject.storage.api.StorageContext;
 
 public abstract class RoomItemWall extends RoomItem {
 	
-	private FurnitureDefinition itemDefinition;
+	private IFurnitureDefinition itemDefinition;
 	
 	private String wallPosition;
 	
@@ -57,7 +57,7 @@ public abstract class RoomItemWall extends RoomItem {
 	}
 	
 	@Override
-	public FurnitureDefinition getDefinition() {
+	public IFurnitureDefinition getDefinition() {
 		if (this.itemDefinition == null) {
 			this.itemDefinition = ItemManager.getInstance().getDefinition(this.getItemData().getItemId());
 		}

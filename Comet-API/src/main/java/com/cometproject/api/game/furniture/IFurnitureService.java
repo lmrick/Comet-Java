@@ -1,7 +1,7 @@
 package com.cometproject.api.game.furniture;
 
 import com.cometproject.api.game.furniture.types.CrackableReward;
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.game.furniture.types.IMusicData;
 import com.cometproject.api.utilities.Initializable;
 import org.apache.log4j.Logger;
@@ -23,7 +23,7 @@ public interface IFurnitureService extends Initializable {
 
     int roomIdByItemId(long itemId);
 
-    FurnitureDefinition getDefinition(int itemId);
+    IFurnitureDefinition getDefinition(int itemId);
 
     IMusicData getMusicData(int songId);
 
@@ -31,11 +31,11 @@ public interface IFurnitureService extends Initializable {
 
     Map<Long, Integer> getItemIdToVirtualIds();
 
-    FurnitureDefinition getBySpriteId(int spriteId);
+    IFurnitureDefinition getBySpriteId(int spriteId);
 
     Logger getLogger();
 
-    Map<Integer, FurnitureDefinition> getItemDefinitions();
+    Map<Integer, IFurnitureDefinition> getItemDefinitions();
 
     Map<Integer, CrackableReward> getCrackableRewards();
 

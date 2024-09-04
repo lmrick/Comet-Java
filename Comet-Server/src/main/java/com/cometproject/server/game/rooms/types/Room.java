@@ -6,7 +6,7 @@ import com.cometproject.api.game.groups.types.IGroup;
 import com.cometproject.api.game.pets.IPetData;
 import com.cometproject.api.game.rooms.IRoom;
 import com.cometproject.api.game.rooms.IRoomData;
-import com.cometproject.api.game.rooms.RoomCategory;
+import com.cometproject.api.game.rooms.IRoomCategory;
 import com.cometproject.api.game.rooms.settings.RoomType;
 import com.cometproject.api.game.rooms.models.CustomFloorMapData;
 import com.cometproject.api.game.rooms.models.IRoomModel;
@@ -135,7 +135,7 @@ public class Room implements Attributable, IRoom {
 		return this;
 	}
 	
-	public RoomCategory getCategory() {
+	public IRoomCategory getCategory() {
 		return NavigatorManager.getInstance().getCategory(this.data.getCategoryId());
 	}
 	

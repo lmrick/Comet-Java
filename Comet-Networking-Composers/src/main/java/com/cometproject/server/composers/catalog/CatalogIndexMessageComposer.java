@@ -4,7 +4,7 @@ import com.cometproject.api.game.catalog.ICatalogService;
 import com.cometproject.api.game.catalog.types.ICatalogItem;
 import com.cometproject.api.game.catalog.types.ICatalogPage;
 import com.cometproject.api.game.furniture.IFurnitureService;
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
@@ -75,7 +75,7 @@ public class CatalogIndexMessageComposer extends MessageComposer {
 			for (ICatalogItem item : child.getItems().values()) {
 				if (item.getItemId().equals("-1")) continue;
 				
-				FurnitureDefinition itemDefinition = this.furnitureService.getDefinition(item.getItems().get(0).itemId());
+				IFurnitureDefinition itemDefinition = this.furnitureService.getDefinition(item.getItems().get(0).itemId());
 				
 				if (itemDefinition != null) {
 					int offerId = itemDefinition.getOfferId();

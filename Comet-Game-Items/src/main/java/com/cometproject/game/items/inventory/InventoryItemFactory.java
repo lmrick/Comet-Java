@@ -2,7 +2,7 @@ package com.cometproject.game.items.inventory;
 
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.furniture.IFurnitureService;
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.game.furniture.types.ItemType;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItemFactory;
@@ -21,7 +21,7 @@ public class InventoryItemFactory implements IPlayerItemFactory {
             this.furnitureService = GameContext.getCurrent().getFurnitureService();
         }
 
-        final FurnitureDefinition itemDefinition = this.furnitureService.getDefinition(itemData.baseId());
+        final IFurnitureDefinition itemDefinition = this.furnitureService.getDefinition(itemData.baseId());
 
         if (itemDefinition.isWired()) {
             return new WiredInventoryItem(itemData, itemDefinition);

@@ -1,8 +1,8 @@
 package com.cometproject.game.items.inventory;
 
 import com.cometproject.api.game.GameContext;
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
-import com.cometproject.api.game.furniture.types.LimitedEditionItem;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
+import com.cometproject.api.game.furniture.types.ILimitedEditionItem;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.api.game.players.data.components.inventory.InventoryItemData;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItemSnapshot;
@@ -10,9 +10,9 @@ import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 
 public class InventoryItem implements IPlayerItem {
 	private final InventoryItemData itemData;
-	private final FurnitureDefinition furnitureDefinition;
+	private final IFurnitureDefinition furnitureDefinition;
 	
-	public InventoryItem(InventoryItemData itemData, FurnitureDefinition furnitureDefinition) {
+	public InventoryItem(InventoryItemData itemData, IFurnitureDefinition furnitureDefinition) {
 		this.itemData = itemData;
 		this.furnitureDefinition = furnitureDefinition;
 	}
@@ -93,7 +93,7 @@ public class InventoryItem implements IPlayerItem {
 	}
 	
 	@Override
-	public FurnitureDefinition getDefinition() {
+	public IFurnitureDefinition getDefinition() {
 		return this.furnitureDefinition;
 	}
 	
@@ -108,7 +108,7 @@ public class InventoryItem implements IPlayerItem {
 	}
 	
 	@Override
-	public LimitedEditionItem getLimitedEditionItem() {
+	public ILimitedEditionItem getLimitedEditionItem() {
 		return this.itemData.limitedEditionItem();
 	}
 	

@@ -1,6 +1,6 @@
 package com.cometproject.api.game.rooms.entities;
 
-public interface RoomEntity {
+public interface IRoomEntity {
     int getId();
 
 

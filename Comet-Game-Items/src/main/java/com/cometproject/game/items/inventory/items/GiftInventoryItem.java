@@ -1,6 +1,6 @@
 package com.cometproject.game.items.inventory.items;
 
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.game.furniture.types.GiftData;
 import com.cometproject.api.game.furniture.types.LegacyGiftData;
 import com.cometproject.api.game.players.data.components.inventory.InventoryItemData;
@@ -12,7 +12,7 @@ public class GiftInventoryItem extends InventoryItem {
 
     private final GiftData giftData;
 
-    public GiftInventoryItem(InventoryItemData inventoryItemData, FurnitureDefinition furnitureDefinition) {
+    public GiftInventoryItem(InventoryItemData inventoryItemData, IFurnitureDefinition furnitureDefinition) {
         super(inventoryItemData, furnitureDefinition);
 
         this.giftData = this.getGiftData(inventoryItemData.extraData());

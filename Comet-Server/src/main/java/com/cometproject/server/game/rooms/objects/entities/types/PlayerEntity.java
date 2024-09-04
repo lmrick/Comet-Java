@@ -7,7 +7,7 @@ import com.cometproject.api.game.bots.BotMode;
 import com.cometproject.api.game.bots.BotType;
 import com.cometproject.api.game.groups.types.IGroupData;
 import com.cometproject.api.game.quests.QuestType;
-import com.cometproject.api.game.rooms.entities.PlayerRoomEntity;
+import com.cometproject.api.game.rooms.entities.IPlayerRoomEntity;
 import com.cometproject.api.game.rooms.entities.RoomEntityStatus;
 import com.cometproject.api.game.rooms.settings.RoomAccessType;
 import com.cometproject.api.game.utilities.Position;
@@ -62,7 +62,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class PlayerEntity extends RoomEntity implements IPlayerEntityAccess, Attributable, PlayerRoomEntity {
+public class PlayerEntity extends RoomEntity implements IPlayerEntityAccess, Attributable, IPlayerRoomEntity {
 	
 	private static final Logger log = Logger.getLogger(PlayerEntity.class.getName());
 	private Player player;

@@ -1,6 +1,6 @@
 package com.cometproject.api.game.rooms.objects.data;
 
-import com.cometproject.api.game.furniture.types.LimitedEditionItem;
+import com.cometproject.api.game.furniture.types.ILimitedEditionItem;
 import com.cometproject.api.game.rooms.objects.IRoomItemData;
 import com.cometproject.api.game.utilities.Position;
 
@@ -17,9 +17,9 @@ public class RoomItemData implements IRoomItemData {
 	private Position floorPosition;
 	private String wallPosition;
 	
-	private final LimitedEditionItem limitedEdition;
+	private final ILimitedEditionItem limitedEdition;
 	
-	public RoomItemData(long id, int itemId, int ownerId, String ownerName, Position position, int rotation, String data, String wallPosition, LimitedEditionItem limitedEditionItem) {
+	public RoomItemData(long id, int itemId, int ownerId, String ownerName, Position position, int rotation, String data, String wallPosition, ILimitedEditionItem limitedEditionItem) {
 		this.id = id;
 		this.itemId = itemId;
 		this.ownerId = ownerId;
@@ -95,7 +95,7 @@ public class RoomItemData implements IRoomItemData {
 	}
 	
 	@Override
-	public LimitedEditionItem getLimitedEdition() {
+	public ILimitedEditionItem getLimitedEdition() {
 		return limitedEdition;
 	}
 	

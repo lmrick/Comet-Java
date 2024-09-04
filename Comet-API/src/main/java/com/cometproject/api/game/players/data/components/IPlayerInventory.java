@@ -1,8 +1,8 @@
 package com.cometproject.api.game.players.data.components;
 
 import com.cometproject.api.game.furniture.types.GiftData;
-import com.cometproject.api.game.furniture.types.LimitedEditionItem;
-import com.cometproject.api.game.furniture.types.SongItem;
+import com.cometproject.api.game.furniture.types.ILimitedEditionItem;
+import com.cometproject.api.game.furniture.types.ISongItem;
 import com.cometproject.api.game.players.components.IPlayerComponent;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 
@@ -37,11 +37,11 @@ public interface IPlayerInventory extends IPlayerComponent {
 
     String[] equippedBadges();
 
-    IPlayerItem add(long id, int itemId, String extraData, GiftData giftData, LimitedEditionItem limitedEditionItem);
+    IPlayerItem add(long id, int itemId, String extraData, GiftData giftData, ILimitedEditionItem limitedEditionItem);
 
-    List<SongItem> getSongs();
+    List<ISongItem> getSongs();
 
-    void add(long id, int itemId, String extraData, LimitedEditionItem limitedEditionItem);
+    void add(long id, int itemId, String extraData, ILimitedEditionItem limitedEditionItem);
 
     void addItem(IPlayerItem item);
 

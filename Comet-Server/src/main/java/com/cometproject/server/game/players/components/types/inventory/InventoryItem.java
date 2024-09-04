@@ -19,7 +19,7 @@ public class InventoryItem implements IPlayerItem {
 	private int baseId;
 	private String extraData;
 	private GiftData giftData;
-	private LimitedEditionItem limitedEditionItem;
+	private ILimitedEditionItem limitedEditionItem;
 	
 	public InventoryItem(ResultSet data) throws SQLException {
 		this.id = data.getLong("id");
@@ -41,7 +41,7 @@ public class InventoryItem implements IPlayerItem {
 		}
 	}
 	
-	public InventoryItem(long id, int baseId, String extraData, GiftData giftData, LimitedEditionItem limitEditionItem) {
+	public InventoryItem(long id, int baseId, String extraData, GiftData giftData, ILimitedEditionItem limitEditionItem) {
 		this.init(id, baseId, extraData, giftData);
 		
 		this.limitedEditionItem = limitEditionItem;
@@ -170,7 +170,7 @@ public class InventoryItem implements IPlayerItem {
 		}
 		
 		if (isLimited && !isGift) {
-			LimitedEditionItem limitedEditionItem = this.getLimitedEditionItem();
+			ILimitedEditionItem limitedEditionItem = this.getLimitedEditionItem();
 			
 			msg.writeInt(limitedEditionItem.getLimitedRare());
 			msg.writeInt(limitedEditionItem.getLimitedRareTotal());
@@ -250,7 +250,7 @@ public class InventoryItem implements IPlayerItem {
 		}
 		
 		if (isLimited && !isGift) {
-			LimitedEditionItem limitedEditionItem = this.getLimitedEditionItem();
+			ILimitedEditionItem limitedEditionItem = this.getLimitedEditionItem();
 			
 			msg.writeInt(limitedEditionItem.getLimitedRare());
 			msg.writeInt(limitedEditionItem.getLimitedRareTotal());
@@ -270,7 +270,7 @@ public class InventoryItem implements IPlayerItem {
 	}
 	
 	@Override
-	public FurnitureDefinition getDefinition() {
+	public IFurnitureDefinition getDefinition() {
 		return ItemManager.getInstance().getDefinition(this.getBaseId());
 	}
 	
@@ -289,7 +289,7 @@ public class InventoryItem implements IPlayerItem {
 	}
 	
 	@Override
-	public LimitedEditionItem getLimitedEditionItem() {
+	public ILimitedEditionItem getLimitedEditionItem() {
 		return limitedEditionItem;
 	}
 	

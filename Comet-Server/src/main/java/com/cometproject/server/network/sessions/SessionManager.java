@@ -2,9 +2,8 @@ package com.cometproject.server.network.sessions;
 
 import com.cometproject.api.networking.messages.IMessageComposer;
 import com.cometproject.api.networking.sessions.ISession;
-import com.cometproject.api.networking.sessions.ISessionManager;
 import com.cometproject.api.networking.sessions.ISessionService;
-import com.cometproject.api.networking.sessions.SessionManagerAccessor;
+import com.cometproject.api.networking.sessions.SessionContext;
 import com.cometproject.server.game.players.PlayerManager;
 import com.cometproject.server.network.ws.messages.WsMessage;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,16 +11,12 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.GlobalEventExecutor;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
-public final class SessionManager implements ISessionManager, ISessionService {
+public final class SessionManager implements ISessionService {
     public static final AttributeKey<Session> SESSION_ATTR = AttributeKey.valueOf("Session.attr");
     public static final AttributeKey<Integer> CHANNEL_ID_ATTR = AttributeKey.valueOf("ChannelId.attr");
     public static boolean isLocked = false;
@@ -31,7 +26,7 @@ public final class SessionManager implements ISessionManager, ISessionService {
     private final ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     public SessionManager() {
-        SessionManagerAccessor.getInstance().setSessionManager(this);
+        SessionContext.getInstance().setSessionService(this);
     }
 
     public boolean add(ChannelHandlerContext channel) {

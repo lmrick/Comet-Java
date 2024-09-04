@@ -1,6 +1,6 @@
 package com.cometproject.api.game.rooms;
 
-public interface RoomCategory {
+public interface IRoomCategory {
     int getId();
 
     String getCategory();

@@ -1,9 +1,9 @@
 package com.cometproject.server.game.rooms.types.components;
 
 import com.cometproject.api.config.CometSettings;
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.game.furniture.types.ItemType;
-import com.cometproject.api.game.furniture.types.LimitedEditionItem;
+import com.cometproject.api.game.furniture.types.ILimitedEditionItem;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
 import com.cometproject.api.game.utilities.Position;
@@ -86,7 +86,7 @@ public class ItemsComponent {
 			
 			if (items.has()) {
 				items.get().forEach(roomItem -> {
-					final FurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(roomItem.getItemId());
+					final IFurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(roomItem.getItemId());
 					if (itemDefinition == null) return;
 					if (itemDefinition.getItemType() == ItemType.FLOOR) {
 						this.floorItems.put(roomItem.getId(), RoomItemFactory.createFloor(roomItem, room, itemDefinition));
@@ -181,7 +181,7 @@ public class ItemsComponent {
 		return (MoodLightWallItem) this.getWallItem(this.moodLightId);
 	}
 	
-	public RoomItemFloor addFloorItem(long id, int baseId, Room room, int ownerId, String ownerName, int x, int y, int rot, double height, String data, LimitedEditionItem limitedEditionItem) {
+	public RoomItemFloor addFloorItem(long id, int baseId, Room room, int ownerId, String ownerName, int x, int y, int rot, double height, String data, ILimitedEditionItem limitedEditionItem) {
 		final RoomItemData itemData = new RoomItemData(id, baseId, ownerId, ownerName, new Position(x, y, height), rot, data, "", limitedEditionItem);
 		
 		RoomItemFloor floor = RoomItemFactory.createFloor(itemData, room, ItemManager.getInstance().getDefinition(baseId));
@@ -450,7 +450,7 @@ public class ItemsComponent {
 		return true;
 	}
 	
-	private boolean verifyItemPosition(FurnitureDefinition item, RoomItemFloor floor, RoomTile tile, Position currentPosition, int rotation) {
+	private boolean verifyItemPosition(IFurnitureDefinition item, RoomItemFloor floor, RoomTile tile, Position currentPosition, int rotation) {
 		if (tile != null) {
 			if (currentPosition != null && currentPosition.getX() == tile.getPosition().getX() && currentPosition.getY() == tile.getPosition().getY())
 				return false;
@@ -475,7 +475,7 @@ public class ItemsComponent {
 		return false;
 	}
 	
-	private boolean verifyItemTilePosition(FurnitureDefinition item, RoomItemFloor floorItem, RoomTile tile, int rotation) {
+	private boolean verifyItemTilePosition(IFurnitureDefinition item, RoomItemFloor floorItem, RoomTile tile, int rotation) {
 		if (!tile.canPlaceItemHere()) {
 			return false;
 		}

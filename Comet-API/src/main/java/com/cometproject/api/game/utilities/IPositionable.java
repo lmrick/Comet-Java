@@ -1,6 +1,6 @@
 package com.cometproject.api.game.utilities;
 
-public interface Positionable {
+public interface IPositionable {
 	
 	Position getPosition();
 	

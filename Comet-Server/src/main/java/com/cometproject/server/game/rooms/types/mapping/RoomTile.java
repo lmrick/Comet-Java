@@ -16,7 +16,6 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.groups.Group
 import com.cometproject.server.game.rooms.objects.items.types.floor.pet.breeding.BreedingBoxFloorItem;
 import com.cometproject.server.game.rooms.objects.items.types.floor.snowboarding.SnowboardJumpFloorItem;
 import com.cometproject.server.utilities.collections.ConcurrentHashSet;
-import com.google.common.collect.Lists;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -192,7 +191,7 @@ public class RoomTile {
                 movementNode = RoomEntityMovementNode.END_OF_ROUTE;
             }
 
-            if (!item.getDefinition().canStack()) {
+            if (item.getDefinition().canStack()) {
                 this.canStack = false;
             }
 

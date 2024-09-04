@@ -1,6 +1,6 @@
 package com.cometproject.server.network.messages.outgoing.room.gifts;
 
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.game.furniture.types.GiftData;
 import com.cometproject.api.game.furniture.types.ItemType;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
@@ -12,9 +12,9 @@ public class OpenGiftMessageComposer extends MessageComposer {
     private final int presentId;
     private final String type;
     private final GiftData giftData;
-    private final FurnitureDefinition itemDefinition;
+    private final IFurnitureDefinition itemDefinition;
 
-    public OpenGiftMessageComposer(final int presentId, final String type, final GiftData giftData, final FurnitureDefinition itemDefinition) {
+    public OpenGiftMessageComposer(final int presentId, final String type, final GiftData giftData, final IFurnitureDefinition itemDefinition) {
         this.presentId = presentId;
         this.type = type;
         this.giftData = giftData;

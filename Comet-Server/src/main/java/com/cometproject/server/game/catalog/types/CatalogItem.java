@@ -2,7 +2,7 @@ package com.cometproject.server.game.catalog.types;
 
 import com.cometproject.api.game.catalog.types.ICatalogBundledItem;
 import com.cometproject.api.game.catalog.types.ICatalogItem;
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.catalog.CatalogManager;
@@ -85,7 +85,7 @@ public class CatalogItem implements ICatalogItem {
             List<ICatalogBundledItem> itemsToRemove = new ArrayList<>();
 					
 					this.items.forEach(catalogBundledItem -> {
-						final FurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(catalogBundledItem.itemId());
+						final IFurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(catalogBundledItem.itemId());
 						if (itemDefinition == null) {
 							itemsToRemove.add(catalogBundledItem);
 						}
@@ -109,7 +109,7 @@ public class CatalogItem implements ICatalogItem {
 
     @Override
     public void compose(IComposerDataWrapper msg) {
-        final FurnitureDefinition firstItem = this.itemId.equals("-1") ? null : ItemManager.getInstance().getDefinition(this.getItems().get(0).itemId());
+        final IFurnitureDefinition firstItem = this.itemId.equals("-1") ? null : ItemManager.getInstance().getDefinition(this.getItems().get(0).itemId());
 
         msg.writeInt(this.getId());
         msg.writeString(this.getDisplayName());
@@ -143,7 +143,7 @@ public class CatalogItem implements ICatalogItem {
 
         if (!this.isBadgeOnly()) {
 					this.getItems().forEach(bundledItem -> {
-						FurnitureDefinition def = ItemManager.getInstance().getDefinition(bundledItem.itemId());
+						IFurnitureDefinition def = ItemManager.getInstance().getDefinition(bundledItem.itemId());
 						msg.writeString(def.getType());
 						msg.writeInt(def.getSpriteId());
 						msg.writeString(this.getDisplayName().contains("wallpaper_single") || this.getDisplayName().contains("floor_single") || this.getDisplayName().contains("landscape_single") ? this.getDisplayName().split("_")[2] : bundledItem.presetData());

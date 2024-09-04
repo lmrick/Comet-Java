@@ -1,6 +1,6 @@
 package com.cometproject.server.game.rooms.objects.items;
 
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.game.furniture.types.GiftData;
 import com.cometproject.api.game.furniture.types.LegacyGiftData;
 import com.cometproject.api.game.rooms.objects.data.LimitedEditionItemData;
@@ -258,7 +258,7 @@ public class RoomItemFactory {
 		}};
 	}
 	
-	public static RoomItemFloor createFloor(RoomItemData itemData, Room room, FurnitureDefinition def) {
+	public static RoomItemFloor createFloor(RoomItemData itemData, Room room, IFurnitureDefinition def) {
 		RoomItemFloor floorItem = null;
 		
 		if (def == null) {
@@ -318,7 +318,7 @@ public class RoomItemFactory {
 		return floorItem;
 	}
 	
-	public static RoomItemWall createWall(RoomItemData itemData, Room room, FurnitureDefinition def) {
+	public static RoomItemWall createWall(RoomItemData itemData, Room room, IFurnitureDefinition def) {
 		if (def == null) {
 			return null;
 		}

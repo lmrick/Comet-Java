@@ -1,6 +1,6 @@
 package com.cometproject.storage.mysql.repositories.types.inventory;
 
-import com.cometproject.api.game.furniture.types.LimitedEditionItem;
+import com.cometproject.api.game.furniture.types.ILimitedEditionItem;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItemFactory;
 import com.cometproject.api.game.players.data.components.inventory.InventoryItemData;
@@ -39,7 +39,7 @@ public class MySQLInventoryRepository extends MySQLRepository implements IInvent
         final int baseId = data.readInteger("base_item");
         final String extra_data = data.readString("extra_data");
 
-        LimitedEditionItem limitedEditionItemData = null;
+        ILimitedEditionItem limitedEditionItemData = null;
 
         if (data.readInteger("limited_id") != 0) {
             limitedEditionItemData = new LimitedEditionItemData(data.readLong("id"),

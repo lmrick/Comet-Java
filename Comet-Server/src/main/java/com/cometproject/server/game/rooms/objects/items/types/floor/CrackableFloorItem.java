@@ -1,7 +1,7 @@
 package com.cometproject.server.game.rooms.objects.items.types.floor;
 
 import com.cometproject.api.game.furniture.types.CrackableReward;
-import com.cometproject.api.game.furniture.types.FurnitureDefinition;
+import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.items.ItemManager;
@@ -45,7 +45,7 @@ public class CrackableFloorItem extends RoomItemFloor {
 			switch (crackableReward.getRewardType()) {
 				case ITEM -> {
 					// we need to turn into this item!
-					final FurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(crackableReward.getRewardDataInt());
+					final IFurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(crackableReward.getRewardDataInt());
 					
 					if (itemDefinition != null) {
 						this.getRoom().getItems().removeItem(this, player.getSession(), false);

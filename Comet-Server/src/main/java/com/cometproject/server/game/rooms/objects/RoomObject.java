@@ -3,19 +3,17 @@ package com.cometproject.server.game.rooms.objects;
 import com.cometproject.api.game.bots.BotType;
 import com.cometproject.api.game.rooms.objects.IRoomObject;
 import com.cometproject.api.game.utilities.Position;
-import com.cometproject.api.game.utilities.Positionable;
+import com.cometproject.api.game.utilities.IPositionable;
 import com.cometproject.server.game.rooms.objects.entities.types.BotEntity;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.mapping.RoomTile;
 import com.cometproject.server.utilities.comporators.PositionComparator;
-import com.google.common.collect.Sets;
-import org.apache.commons.collections4.SetUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public abstract class RoomObject implements IRoomObject, Positionable {
+public abstract class RoomObject implements IRoomObject, IPositionable {
 	
 	private final Room room;
 	private Position position;
