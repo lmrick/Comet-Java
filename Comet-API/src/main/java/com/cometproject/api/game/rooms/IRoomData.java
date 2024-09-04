@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface IRoomData {
+    
     int getId();
 
     String getName();
@@ -143,4 +144,5 @@ public interface IRoomData {
     boolean isWiredHidden();
 
     void setIsWiredHidden(boolean hiddenWired);
+    
 }

@@ -7,6 +7,7 @@ import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.network.sessions.SessionManager;
 import io.netty.channel.ChannelHandlerContext;
 
+@SuppressWarnings({"unchecked","rawtypes"})
 public class NetSessionFactory implements INetSessionFactory {
     private final SessionManager sessionManager;
     private final IMessageHandler messageHandler;
@@ -24,9 +25,8 @@ public class NetSessionFactory implements INetSessionFactory {
         }
 
         final Session session = channel.attr(SessionManager.SESSION_ATTR).get();
-        final INetSession netSession = new NetSession(session, this.messageHandler);
-
-        return netSession;
+			
+			return new NetSession(session, this.messageHandler);
     }
 
     @Override

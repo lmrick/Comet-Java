@@ -1,5 +1,7 @@
 package com.cometproject.api.game.achievements.types;
 
+import java.util.Arrays;
+
 public enum AchievementType {
     AVATAR_LOOKS("ACH_AvatarLooks"),
     MOTTO("ACH_Motto"),
@@ -20,7 +22,7 @@ public enum AchievementType {
     CAMERA_PHOTO("ACH_CameraPhotoCount"),
     FOOTBALL_GOAL("ACH_FootballGoalScoredInRoom");
 
-    private String groupName;
+    private final String groupName;
 
     AchievementType(String groupName) {
         this.groupName = groupName;
@@ -31,12 +33,7 @@ public enum AchievementType {
     }
 
     public static AchievementType getTypeByName(String name) {
-        for (AchievementType type : AchievementType.values()) {
-            if (type.groupName.equals(name)) {
-                return type;
-            }
-        }
-
-        return null;
-    }
+			return Arrays.stream(AchievementType.values()).filter(type -> type.groupName.equals(name)).findFirst().orElse(null);
+		}
+  
 }

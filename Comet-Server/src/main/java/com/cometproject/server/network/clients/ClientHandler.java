@@ -19,92 +19,95 @@ import java.io.IOException;
 import static io.netty.channel.ChannelHandler.*;
 
 @Sharable
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class ClientHandler extends SimpleChannelInboundHandler<MessageEvent> {
-    private static final AttributeKey<INetSession> ATTR_SESSION = AttributeKey.newInstance("NetSession");
-    private static Logger log = Logger.getLogger(ClientHandler.class.getName());
-    private static ClientHandler clientHandlerInstance;
-    private final INetSessionFactory sessionFactory;
-
-    public ClientHandler(INetSessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    public static ClientHandler getInstance(INetSessionFactory netSessionFactory) {
-        if (clientHandlerInstance == null) clientHandlerInstance = new ClientHandler(netSessionFactory);
-        return clientHandlerInstance;
-    }
-
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) {
-
-        final INetSession session = this.sessionFactory.createSession(ctx);
-
-        ctx.attr(ATTR_SESSION).set(session);
-        if (session == null) {
-            ctx.disconnect();
-        }
-    }
-
-    @Override
-    public void channelInactive(ChannelHandlerContext ctx) {
-        if (ctx.attr(ATTR_SESSION).get() == null) {
-            return;
-        }
-
-        try {
-            INetSession session = ctx.attr(ATTR_SESSION).get();
-
-            this.sessionFactory.disposeSession(session);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        ctx.attr(ATTR_SESSION).remove();
-    }
-
-    @Override
-    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
-        if (NetworkManager.IDLE_TIMER_ENABLED) {
-            if (evt instanceof IdleStateEvent e) {
-							if (e.state() == IdleState.READER_IDLE) {
-                    ctx.close();
-                } else if (e.state() == IdleState.WRITER_IDLE) {
-                    ctx.writeAndFlush(new PingMessageComposer(), ctx.voidPromise());
-                }
-            }
-        }
-
-        if (evt instanceof ChannelInputShutdownEvent) {
-            ctx.close();
-        }
-    }
-
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        if (ctx.channel().isActive()) {
-            ctx.close();
-        }
-
-        if (cause instanceof IOException) return;
-
-        log.error("Exception caught in ClientHandler", cause);
-    }
-
-    @Override
-    public void channelRead0(ChannelHandlerContext channelHandlerContext, MessageEvent event) {
-        try {
-            final INetSession session = channelHandlerContext.attr(ATTR_SESSION).get();
-
-            if (session != null) {
-                session.getMessageHandler().handleMessage(event, session);
-            }
-        } catch (Exception e) {
-            log.error("Error while receiving message", e);
-        }
-    }
-
-    @Override
-    public void channelReadComplete(ChannelHandlerContext context) {
-        context.flush();
-    }
+	
+	private static final AttributeKey<INetSession> ATTR_SESSION = AttributeKey.newInstance("NetSession");
+	private static final Logger log = Logger.getLogger(ClientHandler.class.getName());
+	private static ClientHandler clientHandlerInstance;
+	private final INetSessionFactory sessionFactory;
+	
+	public ClientHandler(INetSessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
+	public static ClientHandler getInstance(INetSessionFactory netSessionFactory) {
+		if (clientHandlerInstance == null) clientHandlerInstance = new ClientHandler(netSessionFactory);
+		return clientHandlerInstance;
+	}
+	
+	@Override
+	public void channelActive(ChannelHandlerContext ctx) {
+		
+		final INetSession session = this.sessionFactory.createSession(ctx);
+		
+		ctx.attr(ATTR_SESSION).set(session);
+		if (session == null) {
+			ctx.disconnect();
+		}
+	}
+	
+	@Override
+	public void channelInactive(ChannelHandlerContext ctx) {
+		if (ctx.attr(ATTR_SESSION).get() == null) {
+			return;
+		}
+		
+		try {
+			INetSession session = ctx.attr(ATTR_SESSION).get();
+			
+			this.sessionFactory.disposeSession(session);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		ctx.attr(ATTR_SESSION).remove();
+	}
+	
+	@Override
+	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
+		if (NetworkManager.IDLE_TIMER_ENABLED) {
+			if (evt instanceof IdleStateEvent e) {
+				if (e.state() == IdleState.READER_IDLE) {
+					ctx.close();
+				} else if (e.state() == IdleState.WRITER_IDLE) {
+					ctx.writeAndFlush(new PingMessageComposer(), ctx.voidPromise());
+				}
+			}
+		}
+		
+		if (evt instanceof ChannelInputShutdownEvent) {
+			ctx.close();
+		}
+	}
+	
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		if (ctx.channel().isActive()) {
+			ctx.close();
+		}
+		
+		if (cause instanceof IOException) return;
+		
+		log.error("Exception caught in ClientHandler", cause);
+	}
+	
+	@Override
+	public void channelRead0(ChannelHandlerContext channelHandlerContext, MessageEvent event) {
+		try {
+			final INetSession session = channelHandlerContext.attr(ATTR_SESSION).get();
+			
+			if (session != null) {
+				session.getMessageHandler().handleMessage(event, session);
+			}
+		} catch (Exception e) {
+			log.error("Error while receiving message", e);
+		}
+	}
+	
+	@Override
+	public void channelReadComplete(ChannelHandlerContext context) {
+		context.flush();
+	}
+	
 }

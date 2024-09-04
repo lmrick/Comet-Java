@@ -14,6 +14,10 @@ import java.util.Set;
 
 public class CometSettings {
     
+    public static final int fastFoodGameThreads = 2;
+    public static final String fastFoodGameHost = "0.0.0.0";
+    public static final short fastFoodGamePort = 30010;
+    
     public static final LocalDate date = LocalDate.now();
     public static final Calendar calendar = Calendar.getInstance();
     

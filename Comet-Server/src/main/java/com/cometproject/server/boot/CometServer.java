@@ -2,9 +2,6 @@ package com.cometproject.server.boot;
 
 import com.cometproject.api.config.Configuration;
 import com.cometproject.api.game.GameContext;
-import com.cometproject.server.api.APIManager;
-import com.cometproject.server.boot.utils.gui.CometGui;
-import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.GameCycle;
 import com.cometproject.server.game.achievements.AchievementManager;
 import com.cometproject.server.game.catalog.CatalogManager;
@@ -24,6 +21,7 @@ import com.cometproject.server.game.quests.QuestManager;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.bundles.RoomBundleManager;
 import com.cometproject.server.game.utilities.validator.PlayerFigureValidator;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.logging.LogManager;
 import com.cometproject.server.modules.ModuleManager;
 import com.cometproject.server.network.NetworkManager;
@@ -48,7 +46,6 @@ public class CometServer {
 	
 	public void init() {
 		ModuleManager.getInstance().initialize();
-		//APIManager.getInstance().initialize();
 		PlayerFigureValidator.loadFigureData();
 		
 		CometThreadManager.getInstance().initialize();
@@ -90,11 +87,6 @@ public class CometServer {
 		ModuleManager.getInstance().setupModules();
 		GameContext.getCurrent().getGroupService().setItemService(new GroupItemManager());
 		GameCycle.getInstance().initialize();
-		
-		if (Comet.showGui) {
-			CometGui gui = new CometGui();
-			gui.setVisible(true);
-		}
 		
 		if (Comet.isDebugging) {
 			log.debug("Comet Server is debugging");

@@ -1,7 +1,7 @@
 package com.cometproject.storage.mysql.models.factories.rooms;
 
 import com.cometproject.api.game.rooms.IRoomData;
-import com.cometproject.api.game.rooms.RoomType;
+import com.cometproject.api.game.rooms.settings.RoomType;
 import com.cometproject.api.game.rooms.settings.*;
 import com.cometproject.storage.api.data.rooms.RoomData;
 

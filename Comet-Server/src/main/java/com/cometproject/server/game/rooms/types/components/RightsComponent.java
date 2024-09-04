@@ -2,7 +2,7 @@ package com.cometproject.server.game.rooms.types.components;
 
 import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.game.rooms.IRoom;
-import com.cometproject.api.game.rooms.components.IRightsComponent;
+import com.cometproject.api.game.rooms.components.types.IRightsComponent;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.types.Room;

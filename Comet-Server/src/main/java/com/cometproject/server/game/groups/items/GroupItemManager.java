@@ -10,57 +10,55 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class GroupItemManager implements IGroupItemService {
-    private static final Logger log = Logger.getLogger(GroupItemManager.class.getName());
-    private List<IGroupBadgeItem> bases;
-    private List<IGroupBadgeItem> symbols;
-    private List<IGroupBadgeItem> baseColours;
-    private Map<Integer, IGroupBadgeItem> symbolColours;
-    private Map<Integer, IGroupBadgeItem> backgroundColours;
-
-    public GroupItemManager() {
-        this.load();
-    }
-
-    public void load() {
-        if (bases == null) {
-            // If bases is null, gotta assume all the others are...
-            bases = new ArrayList<>();
-            symbols = new ArrayList<>();
-            baseColours = new ArrayList<>();
-            symbolColours = new HashMap<>();
-            backgroundColours = new HashMap<>();
-        } else {
-            bases.clear();
-            symbols.clear();
-            baseColours.clear();
-            symbolColours.clear();
-            backgroundColours.clear();
-        }
-
-        int itemCount = GroupItemDao.loadGroupItems(bases, symbols, baseColours, symbolColours, backgroundColours);
-
-        log.info("Loaded " + itemCount + " group items");
-    }
-
-    public List<IGroupBadgeItem> getBases() {
-        return this.bases;
-    }
-
-    public List<IGroupBadgeItem> getSymbols() {
-        return this.symbols;
-    }
-
-    public List<IGroupBadgeItem> getBaseColours() {
-        return this.baseColours;
-    }
-
-    public Map<Integer, IGroupBadgeItem> getSymbolColours() {
-        return this.symbolColours;
-    }
-
-    public Map<Integer, IGroupBadgeItem> getBackgroundColours() {
-        return this.backgroundColours;
-    }
+	private static final Logger log = Logger.getLogger(GroupItemManager.class.getName());
+	private List<IGroupBadgeItem> bases;
+	private List<IGroupBadgeItem> symbols;
+	private List<IGroupBadgeItem> baseColours;
+	private Map<Integer, IGroupBadgeItem> symbolColours;
+	private Map<Integer, IGroupBadgeItem> backgroundColours;
+	
+	public GroupItemManager() {
+		this.load();
+	}
+	
+	public void load() {
+		if (bases == null) {
+			bases = new ArrayList<>();
+			symbols = new ArrayList<>();
+			baseColours = new ArrayList<>();
+			symbolColours = new HashMap<>();
+			backgroundColours = new HashMap<>();
+		} else if (symbols == null && baseColours == null && symbolColours == null && backgroundColours == null) {
+			bases.clear();
+			symbols.clear();
+			baseColours.clear();
+			symbolColours.clear();
+			backgroundColours.clear();
+		}
+		
+		int itemCount = GroupItemDao.loadGroupItems(bases, symbols, baseColours, symbolColours, backgroundColours);
+		log.info("Loaded " + itemCount + " group items");
+	}
+	
+	public List<IGroupBadgeItem> getBases() {
+		return this.bases;
+	}
+	
+	public List<IGroupBadgeItem> getSymbols() {
+		return this.symbols;
+	}
+	
+	public List<IGroupBadgeItem> getBaseColours() {
+		return this.baseColours;
+	}
+	
+	public Map<Integer, IGroupBadgeItem> getSymbolColours() {
+		return this.symbolColours;
+	}
+	
+	public Map<Integer, IGroupBadgeItem> getBackgroundColours() {
+		return this.backgroundColours;
+	}
+	
 }

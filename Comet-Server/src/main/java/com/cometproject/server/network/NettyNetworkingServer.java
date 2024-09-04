@@ -31,7 +31,7 @@ public class NettyNetworkingServer implements INetworkingServer {
                     }
                 });
 
-                log.info("CometServer listening on port: " + port);
+                log.info("Comet Server listening on port: " + port);
             } catch (Exception e) {
                 log.error("Failed to start sockets on " + this.serverConfig.getHost() + ", port: " + port, e);
             }

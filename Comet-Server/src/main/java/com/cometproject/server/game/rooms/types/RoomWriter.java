@@ -3,7 +3,7 @@ package com.cometproject.server.game.rooms.types;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.groups.types.IGroupData;
 import com.cometproject.api.game.rooms.IRoomData;
-import com.cometproject.api.game.rooms.RoomType;
+import com.cometproject.api.game.rooms.settings.RoomType;
 import com.cometproject.api.game.rooms.settings.RoomAccessType;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.navigator.NavigatorManager;

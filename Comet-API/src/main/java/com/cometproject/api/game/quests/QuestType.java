@@ -1,5 +1,7 @@
 package com.cometproject.api.game.quests;
 
+import java.util.Arrays;
+
 public enum QuestType {
 
     FURNI_MOVE(0, "MOVE_ITEM"),
@@ -21,8 +23,8 @@ public enum QuestType {
     PROFILE_BADGE(16, "WEAR_BADGE"),
     EXPLORE_FIND_ITEM(17, "FIND_STUFF");
 
-    private int questType;
-    private String action;
+    private final int questType;
+    private final String action;
 
     QuestType(int type, String action) {
         this.questType = type;
@@ -38,12 +40,7 @@ public enum QuestType {
     }
 
     public static QuestType getById(int id) {
-        for (QuestType type : values()) {
-            if (type.getQuestType() == id) {
-                return type;
-            }
-        }
-
-        return QuestType.EXPLORE_FIND_ITEM; // default
-    }
+			return Arrays.stream(values()).filter(type -> type.getQuestType() == id).findFirst().orElse(QuestType.EXPLORE_FIND_ITEM);
+		}
+		
 }

@@ -8,7 +8,7 @@ public enum HelpTicketState {
     RESOLVED(0),
     ABUSIVE(0);
 
-    private int tabId;
+    private final int tabId;
 
     HelpTicketState(int tabId) {
         this.tabId = tabId;

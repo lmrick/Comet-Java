@@ -13,6 +13,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import java.io.FileInputStream;
 import java.lang.management.ManagementFactory;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -22,7 +23,6 @@ public class Comet {
 	public static long start;
 	public static volatile boolean isDebugging = false;
 	public static volatile boolean isRunning = true;
-	public static boolean showGui = false;
 	public static boolean daemon = false;
 	private static final Logger log = Logger.getLogger(Comet.class.getName());
 	private static CometServer server;
@@ -38,7 +38,6 @@ public class Comet {
 		}
 		
 		log.info("Comet Server - " + getBuild());
-		
 		log.info("  /$$$$$$                                      /$$    ");
 		log.info(" /$$__  $$                                    | $$    ");
 		log.info("| $$  \\__/  /$$$$$$  /$$$$$$/$$$$   /$$$$$$  /$$$$$$  ");
@@ -58,9 +57,8 @@ public class Comet {
 			log.debug("No config args found, falling back to default configuration!");
 			server = new CometServer(null);
 		} else {
-			Map<String, String> cometConfiguration = new HashMap<>();
-			List<String> arguments = new ArrayList<>();
-			
+			var cometConfiguration = new HashMap<String, String>();
+			var arguments = new ArrayList<String>();
 			Arrays.stream(args).forEachOrdered(arg -> {
 				if (arg.contains(" ")) {
 					final String[] splitString = arg.split(" ");
@@ -71,27 +69,11 @@ public class Comet {
 			});
 			
 			for (String arg : arguments) {
-				if (arg.equals("--debug-logging")) {
-					logLevel = Level.TRACE;
-				}
-				
-				if (arg.equals("--gui")) {
-					// start GUI!
-					showGui = true;
-				}
-				
-				if (arg.equals("--daemon")) {
-					daemon = true;
-				}
-				
-				if (arg.startsWith("--instance-name=")) {
-					instanceId = arg.replace("--instance-name=", "");
-				}
-				
+				if (arg.equals("--debug-logging")) logLevel = Level.TRACE;
+				if (arg.equals("--daemon")) daemon = true;
+				if (arg.startsWith("--instance-name=")) instanceId = arg.replace("--instance-name=", "");
 				if (!arg.contains("=")) continue;
-				
 				String[] splitArgs = arg.split("=");
-				
 				cometConfiguration.put(splitArgs[0], splitArgs.length != 1 ? splitArgs[1] : "");
 			}
 			
@@ -109,7 +91,7 @@ public class Comet {
 	}
 	
 	public static void exit(String message) {
-		log.error("Comet has shutdown. Reason: \"" + message + "\"");
+		log.error(MessageFormat.format("Comet has shutdown. Reason: \"{0}\"", message));
 		System.exit(0);
 	}
 	
@@ -135,7 +117,7 @@ public class Comet {
 		statsInstance.setProcessId(CometRuntime.processId);
 		statsInstance.setAllocatedMemory((Runtime.getRuntime().totalMemory() / 1024) / 1024);
 		statsInstance.setUsedMemory(statsInstance.getAllocatedMemory() - (Runtime.getRuntime().freeMemory() / 1024) / 1024);
-		statsInstance.setOperatingSystem(CometRuntime.operatingSystem + " (" + CometRuntime.operatingSystemArchitecture + ")");
+		statsInstance.setOperatingSystem(MessageFormat.format("{0} ({1})", CometRuntime.operatingSystem, CometRuntime.operatingSystemArchitecture));
 		statsInstance.setCpuCores(Runtime.getRuntime().availableProcessors());
 		
 		return statsInstance;

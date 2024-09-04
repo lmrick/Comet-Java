@@ -14,9 +14,9 @@ public class PositionComparator implements Comparator<RoomFloorObject> {
 	}
 	
 	@Override
-	public int compare(RoomFloorObject o1, RoomFloorObject o2) {
-		final double distanceOne = o1.getPosition().distanceTo(this.roomFloorObject.getPosition());
-		final double distanceTwo = o2.getPosition().distanceTo(this.roomFloorObject.getPosition());
+	public int compare(RoomFloorObject firstObject, RoomFloorObject secondObject) {
+		final double distanceOne = firstObject.getPosition().distanceTo(this.roomFloorObject.getPosition());
+		final double distanceTwo = secondObject.getPosition().distanceTo(this.roomFloorObject.getPosition());
 		
 		if (distanceOne > distanceTwo) return 1;
 		else if (distanceOne < distanceTwo) return -1;

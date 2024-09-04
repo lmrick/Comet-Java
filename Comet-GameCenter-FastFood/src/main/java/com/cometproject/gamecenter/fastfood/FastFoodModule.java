@@ -1,5 +1,6 @@
 package com.cometproject.gamecenter.fastfood;
 
+import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.modules.ModuleConfig;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.modules.BaseModule;
@@ -18,7 +19,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 public class FastFoodModule extends BaseModule {
 	private MySQLFastFoodRepository fastFoodRepository;
-	private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
+	private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(CometSettings.fastFoodGameThreads);
 	
 	public FastFoodModule(ModuleConfig config, IGameService gameService) {
 		super(config, gameService);
@@ -31,9 +32,11 @@ public class FastFoodModule extends BaseModule {
 	
 	@Override
 	public void initialiseServices(GameContext gameContext) {
-		final short serverPort = 30010;
-		
-		INetworkingServer fastFoodServer = NetworkingContext.getCurrentContext().serverFactory().createServer(new NetworkingServerConfig("0.0.0.0", Sets.newHashSet(serverPort)), new SessionFactory(new FastFoodMessageHandler(this.executorService, gameContext.getPlayerService(), this.fastFoodRepository)));
+		INetworkingServer fastFoodServer = NetworkingContext.getCurrentContext().serverFactory()
+						.createServer(new NetworkingServerConfig(CometSettings.fastFoodGameHost, Sets.newHashSet(CometSettings.fastFoodGamePort)),
+													new SessionFactory(
+													new FastFoodMessageHandler(this.executorService, gameContext.getPlayerService(),
+													this.fastFoodRepository)));
 		
 		fastFoodServer.start();
 	}
