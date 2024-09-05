@@ -18,6 +18,6 @@ public class AcceptTradeMessageEvent implements Event {
             return;
         }
 
-        trade.accept(trade.getUserNumber(client.getPlayer().getEntity()));
+        trade.accept(trade.getPlayerIndex(client.getPlayer().getEntity()));
     }
 }

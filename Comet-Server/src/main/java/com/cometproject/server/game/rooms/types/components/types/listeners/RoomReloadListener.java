@@ -15,7 +15,6 @@ public class RoomReloadListener {
 
     public RoomReloadListener(final Room room, BiConsumer<Set<Player>, Room> consumer) {
         this.consumer = consumer;
-
         this.addPlayers(room);
     }
 

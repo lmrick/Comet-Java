@@ -35,7 +35,7 @@ public class TradeComponent extends RoomComponent implements ITradeComponent {
     }
 
     public Trade get(PlayerEntity client) {
-			return this.getTrades().stream().filter(trade -> trade.getUser1() == client || trade.getUser2() == client).findFirst().orElse(null);
+			return this.getTrades().stream().filter(trade -> trade.getFirstPlayer() == client || trade.getSecondPlayer() == client).findFirst().orElse(null);
 			
 		}
 

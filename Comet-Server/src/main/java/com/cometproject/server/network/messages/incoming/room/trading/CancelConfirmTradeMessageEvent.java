@@ -16,7 +16,7 @@ public class CancelConfirmTradeMessageEvent implements Event {
             return;
         }
 
-        trade.cancel(trade.getUser1().getPlayerId());
-        trade.cancel(trade.getUser2().getPlayerId());
+        trade.cancel(trade.getFirstPlayer().getPlayerId());
+        trade.cancel(trade.getSecondPlayer().getPlayerId());
     }
 }

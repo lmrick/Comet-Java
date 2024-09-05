@@ -19,329 +19,246 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-
 public class Trade {
-    private PlayerEntity user1, user2;
-    private int stage = 1;
-    private Set<IPlayerItem> user1Items, user2Items;
-    private boolean user1Accepted = false, user2Accepted = false;
-    private TradeComponent tradeComponent;
-
-    public Trade(PlayerEntity user1, PlayerEntity user2) {
-        this.user1 = user1;
-        this.user2 = user2;
-
-        user1Items = new ConcurrentHashSet<>();
-        user2Items = new ConcurrentHashSet<>();
-
-        if (!user1.hasStatus(RoomEntityStatus.TRADE)) {
-            user1.addStatus(RoomEntityStatus.TRADE, "");
-            user1.markNeedsUpdate();
-        }
-
-        if (!user2.getPlayer().getEntity().hasStatus(RoomEntityStatus.TRADE)) {
-            user2.addStatus(RoomEntityStatus.TRADE, "");
-            user2.markNeedsUpdate();
-        }
-
-        user1.getPlayer().getSession().getPlayer().getInventory().send();//send(new InventoryMessageComposer(user1.getPlayer().getInventory()));
-        user2.getPlayer().getSession().getPlayer().getInventory().send();//new InventoryMessageComposer(user2.getPlayer().getInventory()));
-
-        sendToUsers(new TradeStartMessageComposer(user1.getPlayer().getId(), user2.getPlayer().getId()));
-    }
-
-    /**
-     * Cancel the trade
-     *
-     * @param userId The user which is cancelling the trade
-     */
-    public void cancel(int userId) {
-        this.cancel(userId, true);
-    }
-
-    /**
-     * Cancel the trade
-     *
-     * @param userId  The user which is cancelling the trade
-     * @param isLeave Is the user leaving the room?
-     */
-    public void cancel(int userId, boolean isLeave) {
-        this.user1Items.clear();
-        this.user2Items.clear();
-
-        boolean sendToUser1 = true;
-        boolean sendToUser2 = true;
-
-        if (isLeave) {
-            if (user1.getPlayer() == null || userId == user1.getPlayer().getId()) {
-                sendToUser1 = false;
-            } else {
-                sendToUser2 = false;
-            }
-        }
-
-        if (user1 != null && user1.getPlayer() != null && sendToUser1) {
-            user1.removeStatus(RoomEntityStatus.TRADE);
-            user1.markNeedsUpdate();
-        }
-
-        if (user2 != null && user2.getPlayer() != null && sendToUser2) {
-            user2.removeStatus(RoomEntityStatus.TRADE);
-            user2.markNeedsUpdate();
-        }
-
-        this.sendToUsers(new TradeCloseMessageComposer(userId));
-        this.tradeComponent.remove(this);
-    }
-
-    /**
-     * Add an item to the trade
-     *
-     * @param user The user which is adding an item
-     * @param item The chosen item
-     */
-    public void addItem(int user, IPlayerItem item, boolean update) {
-        if(this.user1Accepted || this.user2Accepted) {
-            return;
-        }
-
-        if (user == 1) {
-            this.user1Items.add(item);
-        } else {
-            this.user2Items.add(item);
-        }
-
-        if (user1 != null && user1.getPlayer() != null) {
-            this.sendToUsers(new TradeAcceptUpdateMessageComposer(user1.getPlayer().getId(), false));
-            this.user1Accepted = false;
-        }
-
-        if (user2 != null && user2.getPlayer() != null) {
-            this.sendToUsers(new TradeAcceptUpdateMessageComposer(user2.getPlayer().getId(), false));
-            this.user2Accepted = false;
-        }
-
-        if (this.stage == 2)
-            this.stage = 1;
-
-        if (update) {
-            this.updateWindow();
-        }
-    }
-
-    public boolean isOffered(IPlayerItem item) {
-        return this.user1Items.contains(item) || this.user2Items.contains(item);
-    }
-
-    /**
-     * Get the participant id
-     *
-     * @param user The user who is trading
-     * @return participant ID
-     */
-    public int getUserNumber(PlayerEntity user) {
-        return (user1 == user) ? 1 : 0;
-    }
-
-    /**
-     * Remove an item from the trade
-     *
-     * @param user The user which is removing an item
-     * @param item The chosen item
-     */
-    public void removeItem(int user, IPlayerItem item) {
-        if(this.user1Accepted || this.user2Accepted) {
-            return;
-        }
-
-        if (user == 1) {
-            this.user1Items.remove(item);
-        } else {
-            this.user2Items.remove(item);
-        }
-
-        this.updateWindow();
-    }
-
-    /**
-     * Accept the trade
-     *
-     * @param user The user which is accepting the trade
-     */
-    public void accept(int user) {
-        if (user == 1)
-            this.user1Accepted = true;
-        else
-            this.user2Accepted = true;
-
-        this.sendToUsers(new TradeAcceptUpdateMessageComposer(((user == 1) ? user1 : user2).getPlayer().getId(), true));
-
-        if (user1Accepted && user2Accepted) {
-            this.stage++;
-            this.sendToUsers(new TradeConfirmationMessageComposer());
-            this.user1Accepted = false;
-            this.user2Accepted = false;
-        }
-    }
-
-    public void unaccept(int user) {
-        if (this.user1Accepted && user2Accepted) {
-            this.stage--;
-        }
-
-        if (user == 1)
-            this.user1Accepted = false;
-        else
-            this.user2Accepted = false;
-
-        this.sendToUsers(new TradeAcceptUpdateMessageComposer(((user == 1) ? user1 : user2).getPlayer().getId(), false));
-    }
-
-    /**
-     * Confirm the trade
-     *
-     * @param user The user which is confirming the trade
-     */
-    public void confirm(int user) {
-        if (stage < 2) {
-            return;
-        }
-
-        if (user == 1)
-            this.user1Accepted = true;
-        else
-            this.user2Accepted = true;
-
-        sendToUsers(new TradeAcceptUpdateMessageComposer(((user == 1) ? user1 : user2).getPlayer().getId(), true));
-
-        if (user1Accepted && user2Accepted) {
-            complete();
-
-            this.user1Items.clear();
-            this.user2Items.clear();
-
-            if (user1.getPlayer().getEntity().hasStatus(RoomEntityStatus.TRADE)) {
-                user1.getPlayer().getEntity().removeStatus(RoomEntityStatus.TRADE);
-                user1.getPlayer().getEntity().markNeedsUpdate();
-            }
-
-            if (user2.getPlayer().getEntity().hasStatus(RoomEntityStatus.TRADE)) {
-                user2.getPlayer().getEntity().removeStatus(RoomEntityStatus.TRADE);
-                user2.getPlayer().getEntity().markNeedsUpdate();
-            }
-        }
-    }
-
-    /**
-     * Complete the trade, provide each of the items within the trade to the users
-     */
-    public void complete() {
-        // confirm the items still exist before making any permanent changes.
-        for (IPlayerItem item : this.user1Items) {
-            if (user1.getPlayer().getInventory().getItem(item.getId()) == null) {
-                sendToUsers(new AlertMessageComposer(Locale.get("game.trade.error")));
-                return;
-            }
-        }
-
-        for (IPlayerItem item : this.user2Items) {
-            if (user2.getPlayer().getInventory().getItem(item.getId()) == null) {
-                sendToUsers(new AlertMessageComposer(Locale.get("game.trade.error")));
-                return;
-            }
-        }
-
-        final Map<Long, Integer> itemsToSave = new HashMap<>();
-
-        for (IPlayerItem item : this.user1Items) {
-            user1.getPlayer().getInventory().removeItem(item);
-            user2.getPlayer().getInventory().addItem(item);
-
-            itemsToSave.put(item.getId(), user2.getPlayer().getId());
-        }
-
-        for (IPlayerItem item : this.user2Items) {
-            user2.getPlayer().getInventory().removeItem(item);
-            user1.getPlayer().getInventory().addItem(item);
-
-
-            itemsToSave.put(item.getId(), user1.getPlayer().getId());
-        }
-
-        CometThreadManager.getInstance().executeOnce(() -> {
-            TradeDao.updateTradeItems(itemsToSave);
-            itemsToSave.clear();
-        });
-
-        user1.getPlayer().getSession().send(new UnseenItemsMessageComposer(user2Items, ItemManager.getInstance()));
-        user2.getPlayer().getSession().send(new UnseenItemsMessageComposer(user1Items, ItemManager.getInstance()));
-
-        sendToUsers(new UpdateInventoryMessageComposer());
-        sendToUsers(new TradeCompletedMessageComposer());
-
-        this.tradeComponent.remove(this);
-    }
-
-    /**
-     * Send the packet which updates the trade window
-     */
-    public void updateWindow() {
-        this.sendToUsers(new TradeUpdateMessageComposer(
-                this.user1.getPlayerId(),
-                this.user2.getPlayerId(),
-                this.user1Items,
-                this.user2Items
-        ));
-    }
-
-    /**
-     * Send a packet to each player participating in the trade
-     *
-     * @param msg The packet
-     */
-    public void sendToUsers(MessageComposer msg) {
-        if (user1 != null && user1.getPlayer() != null && user1.getPlayer().getSession() != null) {
-            user1.getPlayer().getSession().send(msg);
-        }
-
-        if (user2 != null && user2.getPlayer() != null && user2.getPlayer().getSession() != null) {
-            user2.getPlayer().getSession().send(msg);
-        }
-    }
-
-    /**
-     * Get the user 1 participating in the trade
-     *
-     * @return user 1
-     */
-    public PlayerEntity getUser1() {
-        return this.user1;
-    }
-
-    /**
-     * Get the user 2 participating in the trade
-     *
-     * @return user 2
-     */
-    public PlayerEntity getUser2() {
-        return this.user2;
-    }
-
-    /**
-     * The component instance which stores the trades
-     *
-     * @return The instance
-     */
-    public TradeComponent getTradeComponent() {
-        return tradeComponent;
-    }
-
-    /**
-     * Set the trade component instance
-     *
-     * @param tradeComponent The trade instance
-     */
-    public void setTradeComponent(TradeComponent tradeComponent) {
-        this.tradeComponent = tradeComponent;
-    }
+	private final PlayerEntity firstPlayer;
+	private final PlayerEntity secondPlayer;
+	private int tradeStage = 1;
+	private final Set<IPlayerItem> firstPlayerItems;
+	private final Set<IPlayerItem> secondPlayerItems;
+	private boolean firstPlayerAccepted = false;
+	private boolean secondPlayerAccepted = false;
+	private TradeComponent tradeComponent;
+	
+	public Trade(PlayerEntity firstPlayer, PlayerEntity secondPlayer) {
+		this.firstPlayer = firstPlayer;
+		this.secondPlayer = secondPlayer;
+		
+		firstPlayerItems = new ConcurrentHashSet<>();
+		secondPlayerItems = new ConcurrentHashSet<>();
+		
+		if (!firstPlayer.hasStatus(RoomEntityStatus.TRADE)) {
+			firstPlayer.addStatus(RoomEntityStatus.TRADE, "");
+			firstPlayer.markNeedsUpdate();
+		}
+		
+		if (!secondPlayer.getPlayer().getEntity().hasStatus(RoomEntityStatus.TRADE)) {
+			secondPlayer.addStatus(RoomEntityStatus.TRADE, "");
+			secondPlayer.markNeedsUpdate();
+		}
+		
+		firstPlayer.getPlayer().getSession().getPlayer().getInventory().send();
+		secondPlayer.getPlayer().getSession().getPlayer().getInventory().send();
+		
+		sendToPLayers(new TradeStartMessageComposer(firstPlayer.getPlayer().getId(), secondPlayer.getPlayer().getId()));
+	}
+	
+	public void cancel(int playerId) {
+		this.cancel(playerId, true);
+	}
+	
+	public void cancel(int playerId, boolean isLeave) {
+		this.firstPlayerItems.clear();
+		this.secondPlayerItems.clear();
+		
+		boolean sendToFirstPlayer = true;
+		boolean sendToSecondPlayer = true;
+		
+		if (isLeave) {
+			if (firstPlayer.getPlayer() == null || playerId == firstPlayer.getPlayer().getId()) {
+				sendToFirstPlayer = false;
+			} else {
+				sendToSecondPlayer = false;
+			}
+		}
+		
+		if (firstPlayer != null && firstPlayer.getPlayer() != null && sendToFirstPlayer) {
+			firstPlayer.removeStatus(RoomEntityStatus.TRADE);
+			firstPlayer.markNeedsUpdate();
+		}
+		
+		if (secondPlayer != null && secondPlayer.getPlayer() != null && sendToSecondPlayer) {
+			secondPlayer.removeStatus(RoomEntityStatus.TRADE);
+			secondPlayer.markNeedsUpdate();
+		}
+		
+		this.sendToPLayers(new TradeCloseMessageComposer(playerId));
+		this.tradeComponent.remove(this);
+	}
+	
+	public void addItem(int playerIndex, IPlayerItem item, boolean update) {
+		if (this.firstPlayerAccepted || this.secondPlayerAccepted) {
+			return;
+		}
+		
+		if (playerIndex == 1) {
+			this.firstPlayerItems.add(item);
+		} else {
+			this.secondPlayerItems.add(item);
+		}
+		
+		if (firstPlayer != null && firstPlayer.getPlayer() != null) {
+			this.sendToPLayers(new TradeAcceptUpdateMessageComposer(firstPlayer.getPlayer().getId(), false));
+			this.firstPlayerAccepted = false;
+		}
+		
+		if (secondPlayer != null && secondPlayer.getPlayer() != null) {
+			this.sendToPLayers(new TradeAcceptUpdateMessageComposer(secondPlayer.getPlayer().getId(), false));
+			this.secondPlayerAccepted = false;
+		}
+		
+		if (this.tradeStage == 2) this.tradeStage = 1;
+		
+		if (update) {
+			this.updateWindow();
+		}
+	}
+	
+	public boolean isOffered(IPlayerItem item) {
+		return this.firstPlayerItems.contains(item) || this.secondPlayerItems.contains(item);
+	}
+	
+	public int getPlayerIndex(PlayerEntity playerEntity) {
+		return (firstPlayer == playerEntity) ? 1 : 0;
+	}
+	
+	public void removeItem(int playerIndex, IPlayerItem item) {
+		if (this.firstPlayerAccepted || this.secondPlayerAccepted) {
+			return;
+		}
+		
+		if (playerIndex == 1) {
+			this.firstPlayerItems.remove(item);
+		} else {
+			this.secondPlayerItems.remove(item);
+		}
+		
+		this.updateWindow();
+	}
+	
+	public void accept(int playerIndex) {
+		if (playerIndex == 1) this.firstPlayerAccepted = true;
+		else this.secondPlayerAccepted = true;
+		
+		this.sendToPLayers(new TradeAcceptUpdateMessageComposer(((playerIndex == 1) ? firstPlayer : secondPlayer).getPlayer().getId(), true));
+		
+		if (firstPlayerAccepted && secondPlayerAccepted) {
+			this.tradeStage++;
+			this.sendToPLayers(new TradeConfirmationMessageComposer());
+			this.firstPlayerAccepted = false;
+			this.secondPlayerAccepted = false;
+		}
+	}
+	
+	public void unAccept(int playerIndex) {
+		if (this.firstPlayerAccepted && secondPlayerAccepted) {
+			this.tradeStage--;
+		}
+		
+		if (playerIndex == 1) this.firstPlayerAccepted = false;
+		else this.secondPlayerAccepted = false;
+		
+		this.sendToPLayers(new TradeAcceptUpdateMessageComposer(((playerIndex == 1) ? firstPlayer : secondPlayer).getPlayer().getId(), false));
+	}
+	
+	public void confirm(int playerIndex) {
+		if (tradeStage < 2) {
+			return;
+		}
+		
+		if (playerIndex == 1) this.firstPlayerAccepted = true;
+		else this.secondPlayerAccepted = true;
+		
+		sendToPLayers(new TradeAcceptUpdateMessageComposer(((playerIndex == 1) ? firstPlayer : secondPlayer).getPlayer().getId(), true));
+		
+		if (firstPlayerAccepted && secondPlayerAccepted) {
+			complete();
+			
+			this.firstPlayerItems.clear();
+			this.secondPlayerItems.clear();
+			
+			if (firstPlayer.getPlayer().getEntity().hasStatus(RoomEntityStatus.TRADE)) {
+				firstPlayer.getPlayer().getEntity().removeStatus(RoomEntityStatus.TRADE);
+				firstPlayer.getPlayer().getEntity().markNeedsUpdate();
+			}
+			
+			if (secondPlayer.getPlayer().getEntity().hasStatus(RoomEntityStatus.TRADE)) {
+				secondPlayer.getPlayer().getEntity().removeStatus(RoomEntityStatus.TRADE);
+				secondPlayer.getPlayer().getEntity().markNeedsUpdate();
+			}
+		}
+	}
+	
+	public void complete() {
+		for (IPlayerItem item : this.firstPlayerItems) {
+			if (firstPlayer.getPlayer().getInventory().getItem(item.getId()) == null) {
+				sendToPLayers(new AlertMessageComposer(Locale.get("game.trade.error")));
+				return;
+			}
+		}
+		
+		for (IPlayerItem item : this.secondPlayerItems) {
+			if (secondPlayer.getPlayer().getInventory().getItem(item.getId()) == null) {
+				sendToPLayers(new AlertMessageComposer(Locale.get("game.trade.error")));
+				return;
+			}
+		}
+		
+		final Map<Long, Integer> itemsToSave = new HashMap<>();
+		
+		this.firstPlayerItems.forEach(item -> {
+			firstPlayer.getPlayer().getInventory().removeItem(item);
+			secondPlayer.getPlayer().getInventory().addItem(item);
+			itemsToSave.put(item.getId(), secondPlayer.getPlayer().getId());
+		});
+		
+		this.secondPlayerItems.forEach(item -> {
+			secondPlayer.getPlayer().getInventory().removeItem(item);
+			firstPlayer.getPlayer().getInventory().addItem(item);
+			itemsToSave.put(item.getId(), firstPlayer.getPlayer().getId());
+		});
+		
+		CometThreadManager.getInstance().executeOnce(() -> {
+			TradeDao.updateTradeItems(itemsToSave);
+			itemsToSave.clear();
+		});
+		
+		firstPlayer.getPlayer().getSession().send(new UnseenItemsMessageComposer(secondPlayerItems, ItemManager.getInstance()));
+		secondPlayer.getPlayer().getSession().send(new UnseenItemsMessageComposer(firstPlayerItems, ItemManager.getInstance()));
+		
+		sendToPLayers(new UpdateInventoryMessageComposer());
+		sendToPLayers(new TradeCompletedMessageComposer());
+		
+		this.tradeComponent.remove(this);
+	}
+	
+	public void updateWindow() {
+		this.sendToPLayers(new TradeUpdateMessageComposer(this.firstPlayer.getPlayerId(), this.secondPlayer.getPlayerId(), this.firstPlayerItems, this.secondPlayerItems));
+	}
+	
+	public void sendToPLayers(MessageComposer msg) {
+		if (firstPlayer != null && firstPlayer.getPlayer() != null && firstPlayer.getPlayer().getSession() != null) {
+			firstPlayer.getPlayer().getSession().send(msg);
+		}
+		
+		if (secondPlayer != null && secondPlayer.getPlayer() != null && secondPlayer.getPlayer().getSession() != null) {
+			secondPlayer.getPlayer().getSession().send(msg);
+		}
+	}
+	
+	public PlayerEntity getFirstPlayer() {
+		return this.firstPlayer;
+	}
+	
+	public PlayerEntity getSecondPlayer() {
+		return this.secondPlayer;
+	}
+	
+	public TradeComponent getTradeComponent() {
+		return tradeComponent;
+	}
+	
+	public void setTradeComponent(TradeComponent tradeComponent) {
+		this.tradeComponent = tradeComponent;
+	}
+	
 }

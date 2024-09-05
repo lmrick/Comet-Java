@@ -4,7 +4,6 @@ public class RoomBan {
     private int playerId;
     private String playerName;
     private int expireTimestamp;
-
     private boolean isPermanent;
 
     public RoomBan(int playerId, String playerName, int expireTimestamp) {

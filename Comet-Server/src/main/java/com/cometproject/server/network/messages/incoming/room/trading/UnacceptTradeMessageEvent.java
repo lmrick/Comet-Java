@@ -15,6 +15,6 @@ public class UnacceptTradeMessageEvent implements Event {
 
         if (trade == null) return;
 
-        trade.unaccept(trade.getUserNumber(client.getPlayer().getEntity()));
+        trade.unAccept(trade.getPlayerIndex(client.getPlayer().getEntity()));
     }
 }

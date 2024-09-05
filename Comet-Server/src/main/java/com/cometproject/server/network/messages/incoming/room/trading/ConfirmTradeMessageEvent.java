@@ -14,6 +14,6 @@ public class ConfirmTradeMessageEvent implements Event {
             return;
         }
 
-        trade.confirm(trade.getUserNumber(client.getPlayer().getEntity()));
+        trade.confirm(trade.getPlayerIndex(client.getPlayer().getEntity()));
     }
 }

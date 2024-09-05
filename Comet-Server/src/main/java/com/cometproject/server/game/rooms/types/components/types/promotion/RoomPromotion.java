@@ -3,14 +3,10 @@ package com.cometproject.server.game.rooms.types.components.types.promotion;
 import com.cometproject.server.boot.Comet;
 
 public class RoomPromotion {
-	
 	public static final int DEFAULT_PROMO_LENGTH = 120;
-	
 	private int roomId;
-	
 	private String promotionName;
 	private String promotionDescription;
-	
 	private long timestampStart;
 	private long timestampFinish;
 	

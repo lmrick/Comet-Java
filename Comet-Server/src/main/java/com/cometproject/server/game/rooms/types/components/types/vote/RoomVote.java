@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RoomVote {
-	
 	private final int playerId;
 	private final int[] roomIds;
 	private final AtomicInteger[] votes;

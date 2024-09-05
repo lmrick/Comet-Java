@@ -31,7 +31,7 @@ public class TradingOfferItemsMessageEvent implements Event {
             if (playerItem.getBaseId() == item.getBaseId() && !trade.isOffered(playerItem)) {
                 i++;
 
-                trade.addItem(trade.getUserNumber(client.getPlayer().getEntity()), playerItem, false);
+                trade.addItem(trade.getPlayerIndex(client.getPlayer().getEntity()), playerItem, false);
             }
         }
 
