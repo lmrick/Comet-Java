@@ -93,7 +93,7 @@ public class LegacyPurchaseHandler implements ICatalogPurchaseHandler {
 		if (client == null || client.getPlayer() == null) return;
 		
 		if (amount > 100) {
-			client.send(new AlertMessageComposer(Locale.get("catalog.error.toomany")));
+			client.send(new AlertMessageComposer(Locale.get("catalog.error.tooMany")));
 			return;
 		}
 		
@@ -146,7 +146,7 @@ public class LegacyPurchaseHandler implements ICatalogPurchaseHandler {
 				
 				if (client.getPlayer().getLastGift() != 0 && !client.getPlayer().getPermissions().getRank().floodBypass()) {
 					if (((int) Comet.getTime() - client.getPlayer().getLastGift()) < CometSettings.playerGiftCooldown) {
-						client.send(new AdvancedAlertMessageComposer(Locale.get("catalog.error.gifttoofast")));
+						client.send(new AdvancedAlertMessageComposer(Locale.get("catalog.error.giftTooFast")));
 						client.send(new BoughtItemMessageComposer(BoughtItemMessageComposer.PurchaseType.BADGE));
 						return;
 					}
@@ -166,7 +166,7 @@ public class LegacyPurchaseHandler implements ICatalogPurchaseHandler {
 			}
 			
 			if (amount > 1 && !item.allowOffer()) {
-				client.send(new AlertMessageComposer(Locale.get("catalog.error.nooffer")));
+				client.send(new AlertMessageComposer(Locale.get("catalog.error.noOffer")));
 				
 				return;
 			}
@@ -206,7 +206,7 @@ public class LegacyPurchaseHandler implements ICatalogPurchaseHandler {
 			
 			if ((!CometSettings.playerInfiniteBalance && (client.getPlayer().getData().getCredits() < totalCostCredits || client.getPlayer().getData().getActivityPoints() < totalCostActivityPoints)) || client.getPlayer().getData().getVipPoints() < totalCostPoints) {
 				client.getLogger().warn("Player with ID: " + client.getPlayer().getId() + " tried to purchase item with ID: " + item.getId() + " with the incorrect amount of credits or points.");
-				client.send(new AlertMessageComposer(Locale.get("catalog.error.notenough")));
+				client.send(new AlertMessageComposer(Locale.get("catalog.error.notEnough")));
 				return;
 			}
 			
@@ -501,7 +501,7 @@ public class LegacyPurchaseHandler implements ICatalogPurchaseHandler {
 			
 			client.send(new UnseenItemsMessageComposer(unseenItems, ItemManager.getInstance()));
 			client.send(new UpdateInventoryMessageComposer());
-			client.send(new NotificationMessageComposer("gift_received", Locale.getOrDefault("notification.gift_received", "You have just received a gift from %username%!").replace("%username%", senderUsername)));
+			client.send(new NotificationMessageComposer("gift_received", Locale.getOrDefault("notification.giftReceived", "You have just received a gift from %username%!").replace("%username%", senderUsername)));
 			
 		}
 	}

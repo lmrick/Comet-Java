@@ -30,7 +30,7 @@ public class ModToolRoomChatlogMessageEvent implements Event {
 		IRoomData roomData = GameContext.getCurrent().getRoomService().getRoomData(roomId);
 		
 		if (roomData != null) {
-			client.send(new ModToolRoomChatlogMessageComposer(roomData.getId(), roomData.getName(), LogQueries.getChatlogsForRoom(roomData.getId())));
+			client.send(new ModToolRoomChatlogMessageComposer(roomData.getId(), roomData.getName(), LogQueries.getChatLogsForRoom(roomData.getId())));
 		} else {
 			client.send(new AdvancedAlertMessageComposer("Notice", "There seems to be an issue with fetching the logs for this room (ID: " + roomId + ", Context: " + context + ")"));
 		}

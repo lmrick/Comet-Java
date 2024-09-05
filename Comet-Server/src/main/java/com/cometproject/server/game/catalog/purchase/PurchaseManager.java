@@ -30,7 +30,7 @@ public class PurchaseManager {
 	
 	public void handlePurchase(Session session, int pageId, int itemId, String data, int amount, GiftData giftData) {
 		if (amount > 100) {
-			session.send(new AlertMessageComposer(Locale.get("catalog.error.toomany")));
+			session.send(new AlertMessageComposer(Locale.get("catalog.error.tooMany")));
 			return;
 		}
 		

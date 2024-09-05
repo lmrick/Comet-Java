@@ -5,16 +5,16 @@ import com.cometproject.server.logging.AbstractLogEntry;
 import com.cometproject.server.logging.LogEntryType;
 
 public class CommandLogEntry extends AbstractLogEntry {
-    private int roomId;
-    private int playerId;
-    private String message;
-    private int timestamp;
+    private final int roomId;
+    private final int playerId;
+    private final String message;
+    private final long timestamp;
 
     public CommandLogEntry(int roomId, int playerId, String message) {
         this.roomId = roomId;
         this.playerId = playerId;
         this.message = message;
-        this.timestamp = (int) Comet.getTime();
+        this.timestamp = Comet.getTime();
     }
 
     @Override
@@ -28,7 +28,7 @@ public class CommandLogEntry extends AbstractLogEntry {
     }
 
     @Override
-    public int getTimestamp() {
+    public long getTimestamp() {
         return this.timestamp;
     }
 

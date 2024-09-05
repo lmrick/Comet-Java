@@ -53,7 +53,7 @@ public class Comet {
 		Level logLevel = Level.INFO;
 		
 		if (args.length < 1) {
-			log.debug("No config args found, falling back to default configuration!");
+			log.warn("No config args found, falling back to default configuration!");
 			server = new CometServer(null);
 		} else {
 			var cometConfiguration = new HashMap<String, String>();

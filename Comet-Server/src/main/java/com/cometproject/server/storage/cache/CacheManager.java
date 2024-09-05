@@ -16,9 +16,12 @@ import redis.clients.jedis.JedisPoolConfig;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.time.Duration;
 import java.util.Arrays;
 
 public class CacheManager extends CachableObject implements Initializable {
+	
 	private static CacheManager cacheManager;
 	private final Logger log = Logger.getLogger(CacheManager.class.getName());
 	private final String keyPrefix;
@@ -65,8 +68,7 @@ public class CacheManager extends CachableObject implements Initializable {
 		
 		this.doSubscriptions(new ISubscriber[] { new RefreshDataSubscriber(), new GoToRoomSubscriber() });
 		
-		log.info("Redis caching is enabled");
-		
+		log.info("Redis Caching is enabled");
 	}
 	
 	private boolean initializeConfig() {
@@ -92,7 +94,7 @@ public class CacheManager extends CachableObject implements Initializable {
 		try {
 			final JedisPoolConfig poolConfig = new JedisPoolConfig();
 			poolConfig.setMaxTotal(100);
-			poolConfig.setMaxWaitMillis(100);
+			poolConfig.setMaxWait(Duration.ofMillis(100));
 			
 			this.jedis = new JedisPool(poolConfig, this.host, this.port, 3000);
 			
@@ -107,7 +109,7 @@ public class CacheManager extends CachableObject implements Initializable {
 		Arrays.stream(subscribers).forEachOrdered(subscriber -> {
 			subscriber.setJedis(this.jedis);
 			CometThreadManager.getInstance().executeOnce(subscriber::subscribe);
-			log.info("Subscriber " + subscriber.getClass().getSimpleName() + " initialized");
+			log.info(MessageFormat.format("Subscriber {0} initialized", subscriber.getClass().getSimpleName()));
 		});
 	}
 	
@@ -123,12 +125,12 @@ public class CacheManager extends CachableObject implements Initializable {
 				
 				jedis.set(this.getKey(key), objectData);
 				
-				log.info("DataWrapper put to redis: " + object.getClass().getSimpleName() + " in " + new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds() + "ms");
+				log.info(MessageFormat.format("DataWrapper put to redis: {0} in {1}ms", object.getClass().getSimpleName(), new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds()));
 			} catch (Exception e) {
 				throw e;
 			}
 		} catch (Exception e) {
-			log.error("Error while setting object in Redis with key: " + key + ", type: " + object.getClass().getSimpleName(), e);
+			log.error(MessageFormat.format("Error while setting object in Redis with key: {0}, type: {1}", key, object.getClass().getSimpleName()), e);
 		}
 	}
 	
@@ -145,7 +147,7 @@ public class CacheManager extends CachableObject implements Initializable {
 				
 				if (setter && setterKey != null) jedis.set(this.getKey(setterKey), value);
 				
-				log.info("DataWrapper published to redis channel: " + key + " in " + new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds() + "ms");
+				log.info(MessageFormat.format("DataWrapper published to redis channel: {0} in {1}ms", key, new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds()));
 			} catch (Exception e) {
 				throw e;
 			}
@@ -165,7 +167,7 @@ public class CacheManager extends CachableObject implements Initializable {
 				
 				jedis.set(this.getKey(key), value);
 				
-				log.info("DataWrapper put to redis with key: " + key + " in " + new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds() + "ms");
+				log.info(MessageFormat.format("DataWrapper put to redis with key: {0} in {1}ms", key, new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds()));
 			} catch (Exception e) {
 				throw e;
 			}
@@ -182,7 +184,7 @@ public class CacheManager extends CachableObject implements Initializable {
 				throw e;
 			}
 		} catch (Exception e) {
-			log.error("Error while reading string from Redis with key: " + key, e);
+			log.error(MessageFormat.format("Error while reading string from Redis with key: {0}", key), e);
 		}
 		
 		return null;
@@ -202,7 +204,7 @@ public class CacheManager extends CachableObject implements Initializable {
 				throw e;
 			}
 		} catch (Exception e) {
-			log.error("Error while reading object from Redis with key: " + key + ", type: " + clazz.getSimpleName(), e);
+			log.error(MessageFormat.format("Error while reading object from Redis with key: {0}, type: {1}", key, clazz.getSimpleName()), e);
 		}
 		
 		return null;
@@ -216,14 +218,14 @@ public class CacheManager extends CachableObject implements Initializable {
 				throw e;
 			}
 		} catch (Exception e) {
-			log.error("Error while reading EXISTS from redis, key: " + key, e);
+			log.error(MessageFormat.format("Error while reading EXISTS from redis, key: {0}", key), e);
 		}
 		
 		return false;
 	}
 	
 	private String getKey(final String key) {
-		return this.keyPrefix + "." + key;
+		return "%s.%s".formatted(this.keyPrefix, key);
 	}
 	
 	public boolean isEnabled() {

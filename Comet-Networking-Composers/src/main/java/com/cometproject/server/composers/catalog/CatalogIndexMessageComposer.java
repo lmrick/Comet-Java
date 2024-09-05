@@ -10,12 +10,11 @@ import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CatalogIndexMessageComposer extends MessageComposer {
-	
 	private final IFurnitureService furnitureService;
 	private final ICatalogService catalogService;
-	
 	private final int playerRank;
 	
 	public CatalogIndexMessageComposer(final ICatalogService catalogService, final IFurnitureService furnitureService, final int playerRank) {
@@ -39,13 +38,9 @@ public class CatalogIndexMessageComposer extends MessageComposer {
 		msg.writeInt(0);
 		msg.writeInt(this.countAccessiblePages(this.catalogService.getParentPages()));
 		
-		for (final ICatalogPage page : this.catalogService.getParentPages()) {
-			if (page.getMinRank() > this.playerRank) {
-				continue;
-			}
-			
-			composePage(page, msg);
-		}
+		this.catalogService.getParentPages().stream()
+						.filter(page -> page.getMinRank() <= this.playerRank)
+						.forEachOrdered(page -> composePage(page, msg));
 		
 		msg.writeBoolean(false);
 		msg.writeString("NORMAL");
@@ -60,54 +55,23 @@ public class CatalogIndexMessageComposer extends MessageComposer {
 		msg.writeInt(0);
 		msg.writeInt(this.countAccessiblePages(page.getChildren()));
 		
-		for (final ICatalogPage child : page.getChildren()) {
-			if (child.getMinRank() > this.playerRank) {
-				continue;
-			}
-			
+		page.getChildren().stream()
+						.filter(child -> child.getMinRank() <= this.playerRank)
+						.forEachOrdered(child -> {
 			msg.writeBoolean(true);
 			msg.writeInt(child.getIcon());
 			msg.writeInt(child.isEnabled() ? child.getId() : -1);
 			msg.writeString(child.getLinkName().equals("undefined") ? child.getCaption().toLowerCase().replaceAll("[^A-Za-z0-9]", "").replace(" ", "_") : child.getLinkName());
 			msg.writeString(child.getCaption());
 			msg.writeInt(child.getOfferSize());
-			
-			for (ICatalogItem item : child.getItems().values()) {
-				if (item.getItemId().equals("-1")) continue;
-				
-				IFurnitureDefinition itemDefinition = this.furnitureService.getDefinition(item.getItems().get(0).itemId());
-				
-				if (itemDefinition != null) {
-					int offerId = itemDefinition.getOfferId();
-					
-					if (offerId != -1) {
-						msg.writeInt(offerId);
-					}
-				}
-			}
-			
+			child.getItems().values().stream().filter(item -> !item.getItemId().equals("-1")).map(item -> this.furnitureService.getDefinition(item.getItems().getFirst().itemId())).filter(Objects::nonNull).mapToInt(IFurnitureDefinition::getOfferId).filter(offerId -> offerId != -1).forEachOrdered(msg::writeInt);
 			msg.writeInt(this.countAccessiblePages(child.getChildren()));
-			
-			for (final ICatalogPage childTwo : child.getChildren()) {
-				if (child.getMinRank() > this.playerRank) {
-					continue;
-				}
-				
-				composePage(childTwo, msg);
-			}
-		}
+			child.getChildren().stream().filter(childTwo -> child.getMinRank() <= this.playerRank).forEachOrdered(childTwo -> composePage(childTwo, msg));
+		});
 	}
 	
 	private int countAccessiblePages(final List<ICatalogPage> pages) {
-		int count = 0;
-		
-		for (final ICatalogPage catalogPage : pages) {
-			if (catalogPage.getMinRank() <= this.playerRank) {
-				count++;
-			}
-		}
-		
-		return count;
+		return (int) pages.stream().filter(catalogPage -> catalogPage.getMinRank() <= this.playerRank).count();
 	}
 	
 }

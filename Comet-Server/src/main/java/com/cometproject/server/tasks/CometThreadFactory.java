@@ -5,7 +5,6 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CometThreadFactory implements ThreadFactory {
-	
 	private final String baseName;
 	private final AtomicInteger threadCounter;
 	
@@ -15,9 +14,9 @@ public class CometThreadFactory implements ThreadFactory {
 	}
 	
 	@Override
-	public Thread newThread(@Nonnull Runnable r) {
+	public Thread newThread(@Nonnull Runnable runnable) {
 		int threadId = this.threadCounter.incrementAndGet();
-		return new Thread(r, String.format("Comet-%s-%s", baseName, threadId));
+		return new Thread(runnable, String.format("Comet-%s-%s", baseName, threadId));
 	}
 	
 }

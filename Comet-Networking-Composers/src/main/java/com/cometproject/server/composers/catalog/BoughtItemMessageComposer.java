@@ -8,10 +8,8 @@ import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class BoughtItemMessageComposer extends MessageComposer {
-	
 	private final ICatalogItem catalogItem;
 	private final IFurnitureDefinition itemDefinition;
-	
 	private final boolean isGroup;
 	
 	private BoughtItemMessageComposer(final ICatalogItem catalogItem, final IFurnitureDefinition itemDefinition, final boolean isGroup) {

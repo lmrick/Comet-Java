@@ -2,6 +2,7 @@ package com.cometproject.server.network.ws;
 
 import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.server.network.ws.handlers.*;
+import com.cometproject.server.network.ws.handlers.types.*;
 import com.cometproject.server.network.ws.request.WsRequest;
 import com.cometproject.server.network.ws.request.WsRequestType;
 import io.netty.channel.ChannelHandlerContext;
@@ -13,9 +14,10 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class WsMessageHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+	
 	private static final Logger log = Logger.getLogger(WsMessageHandler.class);
 	
-	private static final Map<WsRequestType, WsHandler> handlers = new ConcurrentHashMap<>() {{
+	private static final Map<WsRequestType, IWsHandler> handlers = new ConcurrentHashMap<>() {{
 		put(WsRequestType.AUTH, new AuthMessageHandler());
 		put(WsRequestType.PIANO_PLAY_NOTE, new PlayPianoMessageHandler());
 		put(WsRequestType.OPEN_ROOM, new OpenRoomMessageHandler());
@@ -26,8 +28,8 @@ public class WsMessageHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame frame) throws Exception {
 		try {
-			final WsRequest request = JsonUtil.getInstance().fromJson(frame.text(), WsRequest.class);
-			final WsHandler handler = handlers.get(request.getType());
+			final var request = JsonUtil.getInstance().fromJson(frame.text(), WsRequest.class);
+			final var handler = handlers.get(request.type());
 			
 			if (handler != null) {
 				handler.handle(frame.text(), ctx);

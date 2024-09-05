@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.log4j.Logger;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -24,7 +25,6 @@ public class EventHandlerService implements IEventHandler {
 	
 	public EventHandlerService() {
 		this.asyncEventExecutor = Executors.newCachedThreadPool();
-		
 		this.listeners = Maps.newConcurrentMap();
 		this.chatCommands = Maps.newConcurrentMap();
 		this.commandInfo = Maps.newConcurrentMap();
@@ -63,16 +63,16 @@ public class EventHandlerService implements IEventHandler {
 			this.listeners.put(consumer.getClass(), Lists.newArrayList(consumer));
 		}
 		
-		log.debug(String.format("Registered event listener for %s", consumer.getClass().getSimpleName()));
+		log.info(String.format("Registered event listener for %s", consumer.getClass().getSimpleName()));
 	}
 	
 	@Override
 	public <T extends EventArgs> boolean handleEvent(Class<? extends Event<T>> eventClass, T args) {
 		if (this.listeners.containsKey(eventClass)) {
 			this.invoke(eventClass, args);
-			log.debug(String.format("Event handled: %s\n", eventClass.getSimpleName()));
+			log.info(String.format("Event handled: %s\n", eventClass.getSimpleName()));
 		} else {
-			log.debug(String.format("Unhandled event: %s\n", eventClass.getSimpleName()));
+			log.info(String.format("Unhandled event: %s\n", eventClass.getSimpleName()));
 		}
 		
 		return args.isCancelled();
@@ -98,7 +98,7 @@ public class EventHandlerService implements IEventHandler {
 		try {
 			chatCommand.accept(session, arguments);
 		} catch (Exception e) {
-			log.warn("Failed to execute module command: " + commandExecutor);
+			log.warn(MessageFormat.format("Failed to execute module command: {0}", commandExecutor));
 		}
 		
 		return true;

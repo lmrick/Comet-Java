@@ -25,14 +25,14 @@ public class PetRacesMessageComposer extends MessageComposer {
     public void compose(IComposerDataWrapper msg) {
         msg.writeString(this.raceString);
         msg.writeInt(this.races.size());
-
-        for (IPetRace race : this.races) {
-            msg.writeInt(race.getRaceId());
-            msg.writeInt(race.getColour1());
-            msg.writeInt(race.getColour2());
-            msg.writeBoolean(race.hasColour1());
-            msg.writeBoolean(race.hasColour2());
-        }
+			
+			this.races.forEach(race -> {
+				msg.writeInt(race.getRaceId());
+				msg.writeInt(race.getColour1());
+				msg.writeInt(race.getColour2());
+				msg.writeBoolean(race.hasColour1());
+				msg.writeBoolean(race.hasColour2());
+			});
     }
 
     @Override

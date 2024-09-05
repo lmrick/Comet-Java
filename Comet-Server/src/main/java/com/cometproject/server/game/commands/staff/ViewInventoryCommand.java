@@ -45,7 +45,7 @@ public class ViewInventoryCommand extends ChatCommand {
 			error = true;
 		} finally {
 			if (error) {
-				sendNotification(Locale.getOrDefault("command.viewinventory.error", "Error!, maybe the user you searched for does not exist!"), client);
+				sendNotification(Locale.getOrDefault("command.viewinventory.error", "Error! Maybe the user you searched for does not exist!"), client);
 			}
 		}
 		

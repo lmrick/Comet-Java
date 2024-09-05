@@ -33,6 +33,7 @@ import org.apache.log4j.Logger;
 import java.util.Map;
 
 public class CometServer {
+	
 	public static final String CLIENT_VERSION = "PRODUCTION-201709192204-203982672";
 	private final Logger log = Logger.getLogger(CometServer.class.getName());
 	
@@ -54,7 +55,7 @@ public class CometServer {
 		
 		ConfigDao.getAll();
 		Locale.initialize();
-
+		
 		PermissionsManager.getInstance().initialize();
 		RoomBundleManager.getInstance().initialize();
 		ItemManager.getInstance().initialize();
@@ -89,7 +90,7 @@ public class CometServer {
 		GameCycle.getInstance().initialize();
 		
 		if (Comet.isDebugging) {
-			log.debug("Comet Server is debugging");
+			log.debug("Comet Server is debugging!");
 		}
 	}
 	

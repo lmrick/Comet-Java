@@ -4,17 +4,19 @@ import com.cometproject.server.boot.Comet;
 import com.cometproject.server.logging.AbstractLogEntry;
 import com.cometproject.server.logging.LogEntryType;
 
+import java.text.MessageFormat;
+
 public class MessengerChatLogEntry extends AbstractLogEntry {
-    private int senderId;
-    private int receiverId;
-    private String message;
-    private int timestamp;
+    private final int senderId;
+    private final int receiverId;
+    private final String message;
+    private final long timestamp;
 
     public MessengerChatLogEntry(int senderId, int receiverId, String message) {
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.message = message;
-        this.timestamp = (int) Comet.getTime();
+        this.timestamp = Comet.getTime();
     }
 
     @Override
@@ -24,11 +26,11 @@ public class MessengerChatLogEntry extends AbstractLogEntry {
 
     @Override
     public String getString() {
-        return "To: " + this.receiverId + ", Message: " + this.message;
+        return MessageFormat.format("To: {0}, Message: {1}", this.receiverId, this.message);
     }
 
     @Override
-    public int getTimestamp() {
+    public long getTimestamp() {
         return this.timestamp;
     }
 

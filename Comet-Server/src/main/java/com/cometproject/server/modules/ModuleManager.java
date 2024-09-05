@@ -52,8 +52,8 @@ public class ModuleManager implements Initializable {
 	
 	private void loadCoreModule(Class<? extends BaseModule> moduleClass) {
 		try {
-			Constructor<? extends BaseModule> constructor = moduleClass.getConstructor(ModuleConfig.class, IGameService.class);
-			BaseModule cometModule = constructor.newInstance(null, this.gameService);
+			var constructor = moduleClass.getConstructor(ModuleConfig.class, IGameService.class);
+			var cometModule = constructor.newInstance(null, this.gameService);
 			cometModule.loadModule();
 			this.modules.put(moduleClass.getSimpleName(), cometModule);
 		} catch (Exception e) {

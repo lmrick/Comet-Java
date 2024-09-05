@@ -112,7 +112,7 @@ public class CommandManager implements Initializable {
 		this.addCommand(Locale.get("command.togglefriends.name"), new ToggleFriendsCommand());
 		this.addCommand(Locale.get("command.enablecommand.name"), new EnableCommand());
 		this.addCommand(Locale.get("command.disablecommand.name"), new DisableCommand());
-		this.addCommand("screenshot", new ScreenshotCommand());
+		this.addCommand(Locale.getOrDefault("command.screenshot.name","screenshot"), new ScreenshotCommand());
 		this.addCommand(Locale.get("command.colour.name"), new ColourCommand());
 		this.addCommand(Locale.get("command.flagme.name"), new FlagMeCommand());
 		this.addCommand(Locale.get("command.flaguser.name"), new FlagUserCommand());

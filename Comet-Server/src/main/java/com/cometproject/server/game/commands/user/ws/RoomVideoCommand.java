@@ -4,7 +4,7 @@ import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.commands.ChatCommand;
 import com.cometproject.server.network.sessions.Session;
-import com.cometproject.server.network.ws.messages.YouTubeVideoMessage;
+import com.cometproject.server.network.ws.messages.youtube.YouTubeVideoMessage;
 
 public class RoomVideoCommand extends ChatCommand {
 	

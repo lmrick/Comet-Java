@@ -5,12 +5,12 @@ import java.text.MessageFormat;
 
 public class CometThread extends Thread {
 	
-	public CometThread(Runnable r) {
-		super(r, "Comet Thread");
+	public CometThread(Runnable runnable) {
+		super(runnable, "Comet Thread");
 	}
 	
-	public CometThread(Runnable r, String identifier) {
-		super(r, MessageFormat.format("Comet Thread [{0}]", identifier));
+	public CometThread(Runnable runnable, String identifier) {
+		super(runnable, MessageFormat.format("Comet Thread [{0}]", identifier));
 	}
 	
 	public CometThread(ICometTask task) {

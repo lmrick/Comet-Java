@@ -22,13 +22,11 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class NavigatorSearchService implements ICometTask {
-	
 	private static NavigatorSearchService searchServiceInstance;
-	
-	private Executor searchExecutor = Executors.newFixedThreadPool(8);
+	private final Executor searchExecutor = Executors.newFixedThreadPool(8);
 	
 	public NavigatorSearchService() {
-		//        CometThreadManager.getInstance().executePeriodic(this, 0, 3000, TimeUnit.MILLISECONDS);
+		//CometThreadManager.getInstance().executePeriodic(this, 0, 3000, TimeUnit.MILLISECONDS);
 	}
 	
 	public static List<IRoomData> order(List<IRoomData> rooms, int limit) {
@@ -61,7 +59,7 @@ public class NavigatorSearchService implements ICometTask {
 	public void submitRequest(Player player, String category, String data) {
 		this.searchExecutor.execute(() -> {
 			if (data.isEmpty()) {
-				// send categories.
+				
 				List<Category> categoryList = Lists.newArrayList();
 				
 				for (Category navigatorCategory : NavigatorManager.getInstance().getCategories().values()) {

@@ -7,39 +7,37 @@ import com.cometproject.server.protocol.messages.MessageComposer;
 
 import java.util.List;
 
-
 public class GroupForumThreadsMessageComposer extends MessageComposer {
-
-    private final int groupId;
-    private final List<IForumThread> threads;
-    private final int start;
-
-    public GroupForumThreadsMessageComposer(int groupId, List<IForumThread> threads, int start) {
-        this.groupId = groupId;
-        this.threads = threads;
-
-        this.start = start;
-}
-
-    @Override
-    public short getId() {
-        return Composers.ThreadsListDataMessageComposer;
-    }
-
-    @Override
-    public void compose(IComposerDataWrapper msg) {
-        msg.writeInt(this.groupId);
-        msg.writeInt(this.start); // start index.
-
-        msg.writeInt(this.threads.size());
-
-        for(IForumThread forumThread : this.threads) {
-            forumThread.compose(msg);
-        }
-    }
-
-    @Override
-    public void dispose() {
-        this.threads.clear();
-    }
+	
+	private final int groupId;
+	private final List<IForumThread> threads;
+	private final int start;
+	
+	public GroupForumThreadsMessageComposer(int groupId, List<IForumThread> threads, int start) {
+		this.groupId = groupId;
+		this.threads = threads;
+		
+		this.start = start;
+	}
+	
+	@Override
+	public short getId() {
+		return Composers.ThreadsListDataMessageComposer;
+	}
+	
+	@Override
+	public void compose(IComposerDataWrapper msg) {
+		msg.writeInt(this.groupId);
+		msg.writeInt(this.start); // start index.
+		
+		msg.writeInt(this.threads.size());
+		
+		this.threads.forEach(forumThread -> forumThread.compose(msg));
+	}
+	
+	@Override
+	public void dispose() {
+		this.threads.clear();
+	}
+	
 }

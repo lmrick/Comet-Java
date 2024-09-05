@@ -6,15 +6,16 @@ import com.cometproject.networking.api.sessions.INetSession;
 import com.cometproject.server.network.sessions.net.NetSession;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
+@SuppressWarnings("rawtypes")
 public class GameMessageHandler implements IMessageHandler {
-
-    @Override
-    public void handleMessage(IEventDataWrapper messageEvent, INetSession session) {
-        if (!(session instanceof NetSession)) {
-            return;
-        }
-
-        final NetSession netSession = (NetSession) session;
-        netSession.getGameSession().handleMessageEvent((MessageEvent) messageEvent);
-    }
+	
+	@Override
+	public void handleMessage(IEventDataWrapper messageEvent, INetSession session) {
+		if (!(session instanceof NetSession netSession)) {
+			return;
+		}
+		
+		netSession.getGameSession().handleMessageEvent((MessageEvent) messageEvent);
+	}
+	
 }

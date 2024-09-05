@@ -5,6 +5,7 @@ import com.cometproject.networking.api.sessions.INetSession;
 import com.cometproject.server.network.sessions.Session;
 import io.netty.channel.ChannelHandlerContext;
 
+@SuppressWarnings("rawtypes")
 public class NetSession implements INetSession<Session> {
 
     private final Session session;

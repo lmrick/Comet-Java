@@ -3,7 +3,6 @@ package com.cometproject.server.network.messages.incoming.moderation;
 import com.cometproject.server.game.moderation.chatlog.UserChatlogContainer;
 import com.cometproject.server.logging.LogManager;
 import com.cometproject.server.logging.database.queries.LogQueries;
-import com.cometproject.server.logging.entries.RoomVisitLogEntry;
 import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.messages.outgoing.moderation.ModToolUserChatlogMessageComposer;
 import com.cometproject.server.network.messages.outgoing.notification.AdvancedAlertMessageComposer;
@@ -25,7 +24,7 @@ public class ModToolUserChatlogMessageEvent implements Event {
 		}
 		
 		UserChatlogContainer chatlogContainer = new UserChatlogContainer();
-		LogQueries.getLastRoomVisits(userId, 500).forEach(visit -> chatlogContainer.addAll(visit.getRoomId(), LogQueries.getChatlogsByCriteria(visit.getPlayerId(), visit.getRoomId(), visit.getEntryTime(), visit.getExitTime())));
+		LogQueries.getLastRoomVisits(userId, 500).forEach(visit -> chatlogContainer.addAll(visit.getRoomId(), LogQueries.getChatLogsByCriteria(visit.getPlayerId(), visit.getRoomId(), visit.getEntryTime(), visit.getExitTime())));
 		
 		client.send(new ModToolUserChatlogMessageComposer(userId, chatlogContainer));
 	}

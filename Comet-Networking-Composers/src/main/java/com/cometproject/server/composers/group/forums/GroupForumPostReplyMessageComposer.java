@@ -6,26 +6,27 @@ import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class GroupForumPostReplyMessageComposer extends MessageComposer {
-    private int groupId;
-    private int threadId;
-    private IForumThreadReply reply;
-
-    public GroupForumPostReplyMessageComposer(int groupId, int threadId, IForumThreadReply reply) {
-        this.groupId = groupId;
-        this.threadId = threadId;
-        this.reply = reply;
-    }
-
-    @Override
-    public short getId() {
-        return Composers.ThreadReplyMessageComposer;
-    }
-
-    @Override
-    public void compose(IComposerDataWrapper msg) {
-        msg.writeInt(this.groupId);
-        msg.writeInt(this.threadId);
-
-        this.reply.compose(msg);
-    }
+	private final int groupId;
+	private final int threadId;
+	private final IForumThreadReply reply;
+	
+	public GroupForumPostReplyMessageComposer(int groupId, int threadId, IForumThreadReply reply) {
+		this.groupId = groupId;
+		this.threadId = threadId;
+		this.reply = reply;
+	}
+	
+	@Override
+	public short getId() {
+		return Composers.ThreadReplyMessageComposer;
+	}
+	
+	@Override
+	public void compose(IComposerDataWrapper msg) {
+		msg.writeInt(this.groupId);
+		msg.writeInt(this.threadId);
+		
+		this.reply.compose(msg);
+	}
+	
 }

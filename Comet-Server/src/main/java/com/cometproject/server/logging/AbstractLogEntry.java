@@ -4,7 +4,7 @@ public abstract class AbstractLogEntry {
 	
 	public abstract LogEntryType getType();
 	public abstract String getString();
-	public abstract int getTimestamp();
+	public abstract long getTimestamp();
 	
 	public int getRoomId() {
 		return -1;

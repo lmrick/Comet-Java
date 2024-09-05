@@ -25,7 +25,7 @@ public abstract class ChatCommand {
 	}
 	
 	public static void isExecuted(Session session) {
-		session.send(new NotificationMessageComposer("up", Locale.getOrDefault("command.executed", "Command is executed successfully.")));
+		session.send(new NotificationMessageComposer("up", Locale.getOrDefault("command.executed", "Command was executed successfully!")));
 	}
 	
 	public abstract void execute(Session client, String[] params);

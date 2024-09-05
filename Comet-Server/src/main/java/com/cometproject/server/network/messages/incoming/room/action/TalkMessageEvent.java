@@ -16,7 +16,7 @@ import com.cometproject.server.network.messages.outgoing.notification.Notificati
 import com.cometproject.server.network.messages.outgoing.room.avatar.TalkMessageComposer;
 import com.cometproject.server.network.messages.outgoing.room.avatar.WhisperMessageComposer;
 import com.cometproject.server.network.sessions.Session;
-import com.cometproject.server.network.ws.messages.PlayerMentionMessage;
+import com.cometproject.server.network.ws.messages.mention.PlayerMentionMessage;
 import com.cometproject.server.protocol.messages.MessageEvent;
 import com.google.common.collect.Maps;
 

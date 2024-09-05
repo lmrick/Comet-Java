@@ -168,7 +168,7 @@ public class Session implements ISession {
 		
 		String username = player.getData().getUsername();
 		
-		this.logger = Logger.getLogger("[" + username + "][" + player.getId() + "]");
+		this.logger = Logger.getLogger(MessageFormat.format("[{0}][{1}]", username, player.getId()));
 		this.player = player;
 		
 		int channelId = this.channel.attr(SessionManager.CHANNEL_ID_ATTR).get();

@@ -6,8 +6,8 @@ import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class GroupForumUpdateThreadMessageComposer extends MessageComposer {
-    private int groupId;
-    private IForumThread forumThread;
+    private final int groupId;
+    private final IForumThread forumThread;
 
     public GroupForumUpdateThreadMessageComposer(int groupId, IForumThread forumThread) {
         this.groupId = groupId;

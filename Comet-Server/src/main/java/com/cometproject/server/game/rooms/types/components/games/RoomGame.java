@@ -14,6 +14,7 @@ import com.cometproject.server.tasks.ICometTask;
 import com.cometproject.server.tasks.CometThreadManager;
 import org.apache.log4j.Logger;
 
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -33,7 +34,7 @@ public class RoomGame implements ICometTask {
 	private final RoomGameLogic[] logicHandlers;
 	
 	public RoomGame(Room room) {
-		this.log = Logger.getLogger("RoomGame [" + room.getData().getName() + "][" + room.getData().getId() + "]");
+		this.log = Logger.getLogger(MessageFormat.format("RoomGame [{0}][{1}]", room.getData().getName(), room.getData().getId()));
 		this.room = room;
 		
 		this.logicHandlers = new RoomGameLogic[] { new BanzaiGame(), new FreezeGame(), };

@@ -20,16 +20,12 @@ public class TimeSpan {
 		StringBuilder text = new StringBuilder();
 		if (ms > DAY) {
 			text.append(ms / DAY).append("d ");
-			ms %= DAY;
 		} else if (ms > HOUR) {
 			text.append(ms / HOUR).append("h ");
-			ms %= HOUR;
 		} else if (ms > MINUTE) {
 			text.append(ms / MINUTE).append("min ");
-			ms %= MINUTE;
 		} else if (ms > SECOND) {
 			text.append(ms / SECOND).append("sec ");
-			ms %= SECOND;
 		}
 		
 		return text.toString();

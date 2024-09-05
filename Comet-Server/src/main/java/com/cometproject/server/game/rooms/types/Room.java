@@ -28,7 +28,7 @@ import com.cometproject.server.game.rooms.types.components.types.promotion.RoomP
 import com.cometproject.server.game.rooms.types.mapping.RoomMapping;
 import com.cometproject.server.network.messages.outgoing.room.polls.QuickPollMessageComposer;
 import com.cometproject.server.network.messages.outgoing.room.polls.QuickPollResultsMessageComposer;
-import com.cometproject.server.network.ws.messages.YouTubeVideoMessage;
+import com.cometproject.server.network.ws.messages.youtube.YouTubeVideoMessage;
 import com.cometproject.server.storage.cache.CacheManager;
 import com.cometproject.server.storage.cache.objects.RoomDataObject;
 import com.cometproject.server.storage.cache.objects.items.FloorItemDataObject;

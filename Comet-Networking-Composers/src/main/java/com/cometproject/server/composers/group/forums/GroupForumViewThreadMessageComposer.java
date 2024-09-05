@@ -9,33 +9,32 @@ import com.cometproject.server.protocol.messages.MessageComposer;
 import java.util.List;
 
 public class GroupForumViewThreadMessageComposer extends MessageComposer {
-
-    private IGroupData groupData;
-    private final int threadId;
-    private List<IForumThreadReply> replies;
-    private int start;
-
-    public GroupForumViewThreadMessageComposer(IGroupData groupData, int threadId, List<IForumThreadReply> threadReplies, int start) {
-        this.groupData = groupData;
-        this.threadId = threadId;
-        this.replies = threadReplies;
-        this.start = start;
-    }
-
-    @Override
-    public short getId() {
-        return Composers.ThreadDataMessageComposer;
-    }
-
-    @Override
-    public void compose(IComposerDataWrapper msg) {
-        msg.writeInt(this.groupData.getId());
-        msg.writeInt(this.threadId);
-        msg.writeInt(this.start);
-        msg.writeInt(this.replies.size());
-
-        for(IForumThreadReply reply : this.replies) {
-            reply.compose(msg);
-        }
-    }
+	
+	private final IGroupData groupData;
+	private final int threadId;
+	private final List<IForumThreadReply> replies;
+	private final int start;
+	
+	public GroupForumViewThreadMessageComposer(IGroupData groupData, int threadId, List<IForumThreadReply> threadReplies, int start) {
+		this.groupData = groupData;
+		this.threadId = threadId;
+		this.replies = threadReplies;
+		this.start = start;
+	}
+	
+	@Override
+	public short getId() {
+		return Composers.ThreadDataMessageComposer;
+	}
+	
+	@Override
+	public void compose(IComposerDataWrapper msg) {
+		msg.writeInt(this.groupData.getId());
+		msg.writeInt(this.threadId);
+		msg.writeInt(this.start);
+		msg.writeInt(this.replies.size());
+		
+		this.replies.forEach(reply -> reply.compose(msg));
+	}
+	
 }

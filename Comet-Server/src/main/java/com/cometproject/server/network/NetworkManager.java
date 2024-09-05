@@ -73,7 +73,7 @@ public class NetworkManager {
 			
 			sb.bind();
 		} catch (Exception e) {
-			System.out.println("Failed to initialise NetworkManager");
+			System.out.println("Failed to initialize Network Manager");
 			System.exit(0);
 			return;
 		}

@@ -3,6 +3,7 @@ package com.cometproject.server.locale;
 import com.cometproject.server.storage.queries.config.LocaleDao;
 import org.apache.log4j.Logger;
 
+import java.text.MessageFormat;
 import java.util.Map;
 
 public class Locale {
@@ -19,7 +20,7 @@ public class Locale {
 		}
 		
 		locale = LocaleDao.getAll();
-		log.info("Loaded " + locale.size() + " locale strings");
+		log.info(MessageFormat.format("Loaded {0} locale strings", locale.size()));
 	}
 	
 	public static String get(String key) {

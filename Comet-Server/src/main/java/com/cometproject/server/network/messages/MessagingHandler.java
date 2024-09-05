@@ -2,14 +2,14 @@ package com.cometproject.server.network.messages;
 
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.network.messages.incoming.Event;
-import com.cometproject.server.network.messages.types.tasks.MessageEventTask;
+import com.cometproject.server.network.messages.tasks.MessageEventTask;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.headers.Events;
 import com.cometproject.server.protocol.messages.MessageEvent;
-
 import java.text.MessageFormat;
 
 public class MessagingHandler {
+	
 	private final MessageHandler messageHandler;
 	
 	public MessagingHandler(MessageHandler messageHandler) {

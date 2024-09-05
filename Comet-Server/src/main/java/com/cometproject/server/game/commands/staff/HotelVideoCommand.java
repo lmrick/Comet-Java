@@ -5,7 +5,7 @@ import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.commands.ChatCommand;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.sessions.Session;
-import com.cometproject.server.network.ws.messages.YouTubeVideoMessage;
+import com.cometproject.server.network.ws.messages.youtube.YouTubeVideoMessage;
 
 public class HotelVideoCommand extends ChatCommand {
 	

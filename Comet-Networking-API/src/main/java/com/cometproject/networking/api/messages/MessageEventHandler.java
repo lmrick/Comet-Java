@@ -4,6 +4,7 @@ import com.cometproject.api.networking.messages.wrappers.IEventDataWrapper;
 import com.cometproject.api.networking.messages.IMessageEventHandler;
 import org.apache.log4j.Logger;
 
+import java.text.MessageFormat;
 import java.util.function.Consumer;
 
 public abstract class MessageEventHandler<T extends MessageParser> implements IMessageEventHandler {
@@ -19,7 +20,7 @@ public abstract class MessageEventHandler<T extends MessageParser> implements IM
 		try {
 			this.parserType = (this.getClass().getDeclaredField("parserTypeField").getType());
 		} catch (Exception e) {
-			log.error("Failed to get parser type for event: " + this.getClass().getName(), e);
+			log.error(MessageFormat.format("Failed to get parser type for event: {0}", this.getClass().getName()), e);
 		}
 	}
 	
