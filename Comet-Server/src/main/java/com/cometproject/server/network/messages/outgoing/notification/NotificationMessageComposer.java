@@ -41,15 +41,15 @@ public class NotificationMessageComposer extends MessageComposer {
     public void compose(IComposerDataWrapper msg) {
         msg.writeString(type);
 
-        if (parameters == null || parameters.size() == 0) {
+        if (parameters == null || parameters.isEmpty()) {
             msg.writeInt(0);
         } else {
             msg.writeInt(parameters.size());
-
-            for (Map.Entry<String, String> param : parameters.entrySet()) {
-                msg.writeString(param.getKey());
-                msg.writeString(param.getValue());
-            }
+					
+					parameters.forEach((key, value) -> {
+						msg.writeString(key);
+						msg.writeString(value);
+					});
         }
     }
 

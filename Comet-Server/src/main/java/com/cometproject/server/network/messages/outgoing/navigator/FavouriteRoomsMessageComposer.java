@@ -6,28 +6,29 @@ import com.cometproject.server.protocol.messages.MessageComposer;
 
 import java.util.Set;
 
-
 public class FavouriteRoomsMessageComposer extends MessageComposer {
-    private static final int MAX_FAVOURITE_ROOMS = 30;
-
-    private final Set<Integer> favouriteRooms;
-
-    public FavouriteRoomsMessageComposer(final Set<Integer> favouriteRooms) {
-        this.favouriteRooms = favouriteRooms;
-    }
-
-    @Override
-    public short getId() {
-        return Composers.FavouritesMessageComposer;
-    }
-
-    @Override
-    public void compose(IComposerDataWrapper msg) {
-        msg.writeInt(MAX_FAVOURITE_ROOMS);
-        msg.writeInt(this.favouriteRooms.size());//size
-
-        for (int roomId : this.favouriteRooms) {
-            msg.writeInt(roomId);
-        }
-    }
+	
+	private static final int MAX_FAVOURITE_ROOMS = 30;
+	
+	private final Set<Integer> favouriteRooms;
+	
+	public FavouriteRoomsMessageComposer(final Set<Integer> favouriteRooms) {
+		this.favouriteRooms = favouriteRooms;
+	}
+	
+	@Override
+	public short getId() {
+		return Composers.FavouritesMessageComposer;
+	}
+	
+	@Override
+	public void compose(IComposerDataWrapper msg) {
+		msg.writeInt(MAX_FAVOURITE_ROOMS);
+		msg.writeInt(this.favouriteRooms.size());//size
+		
+		for (int roomId : this.favouriteRooms) {
+			msg.writeInt(roomId);
+		}
+	}
+	
 }

@@ -7,19 +7,20 @@ import com.cometproject.server.network.messages.outgoing.room.settings.RoomSetti
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
-
 public class GetRoomSettingsDataMessageEvent implements Event {
-    public void handle(Session client, MessageEvent msg) {
-        int roomId = msg.readInt();
-
-        Room room = RoomManager.getInstance().get(roomId);
-
-        if (room == null) {
-            return;
-        }
-
-        if (room.getData().getOwnerId() == client.getPlayer().getId() || client.getPlayer().getPermissions().getRank().roomFullControl()) {
-            client.send(new RoomSettingsDataMessageComposer(room, client.getPlayer().getPermissions().getRank().modTool()));
-        }
-    }
+	
+	public void handle(Session client, MessageEvent msg) {
+		int roomId = msg.readInt();
+		
+		Room room = RoomManager.getInstance().get(roomId);
+		
+		if (room == null) {
+			return;
+		}
+		
+		if (room.getData().getOwnerId() == client.getPlayer().getId() || client.getPlayer().getPermissions().getRank().roomFullControl()) {
+			client.send(new RoomSettingsDataMessageComposer(room, client.getPlayer().getPermissions().getRank().modTool()));
+		}
+	}
+	
 }

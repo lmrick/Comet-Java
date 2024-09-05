@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 import java.util.Map;
-
+import java.util.stream.Collectors;
 
 public class FloorItemsMessageComposer extends MessageComposer {
     private final Room room;
@@ -28,14 +28,14 @@ public class FloorItemsMessageComposer extends MessageComposer {
 
     @Override
     public void compose(IComposerDataWrapper msg) {
-        if (room.getItems().getFloorItems().size() > 0) {
+        if (!room.getItems().getFloorItems().isEmpty()) {
             //if (room.getGroup() == null) {
             msg.writeInt(room.getItems().getItemOwners().size());
-
-            for (Map.Entry<Integer, String> itemOwner : room.getItems().getItemOwners().entrySet()) {
-                msg.writeInt(itemOwner.getKey());
-                msg.writeString(itemOwner.getValue());
-            }
+					
+					room.getItems().getItemOwners().forEach((key, value) -> {
+						msg.writeInt(key);
+						msg.writeString(value);
+					});
             /* } else {
                 final Group group = room.getGroup();
 
@@ -63,25 +63,15 @@ public class FloorItemsMessageComposer extends MessageComposer {
             }*/
 
             if (room.getData().isWiredHidden()) {
-                List<RoomItemFloor> items = Lists.newArrayList();
-
-                for (RoomItemFloor item : room.getItems().getFloorItems().values()) {
-                    if (!(item instanceof WiredFloorItem) && !(item instanceof WiredAddonRandomEffect) && !(item instanceof WiredAddonUnseenEffect)) {
-                        items.add(item);
-                    }
-                }
-
-                msg.writeInt(items.size());
-
-                for (RoomItemFloor item : items) {
-                    item.serialize(msg);
-                }
+                List<RoomItemFloor> items = room.getItems().getFloorItems().values().stream().filter(item -> !(item instanceof WiredFloorItem) && !(item instanceof WiredAddonRandomEffect) && !(item instanceof WiredAddonUnseenEffect)).collect(Collectors.toList());
+							
+							msg.writeInt(items.size());
+							
+							items.forEach(item -> item.serialize(msg));
             } else {
                 msg.writeInt(room.getItems().getFloorItems().size());
-
-                for (RoomItemFloor item : room.getItems().getFloorItems().values()) {
-                    item.serialize((msg));
-                }
+							
+							room.getItems().getFloorItems().values().forEach(item -> item.serialize((msg)));
             }
 
         } else {

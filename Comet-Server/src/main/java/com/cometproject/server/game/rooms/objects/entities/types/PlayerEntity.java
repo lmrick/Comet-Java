@@ -312,7 +312,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntityAccess, Att
 			this.getPlayer().getSession().send(new RoomErrorMessageComposer(4008));
 		}
 		
-	
+		
 		this.getRoom().getEntities().broadcastMessage(new LeaveRoomMessageComposer(this.getId()));
 		
 		if (!isOffline && toHotelView && this.getPlayer() != null && this.getPlayer().getSession() != null) {
@@ -571,7 +571,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntityAccess, Att
 	
 	@Override
 	public String getUsername() {
-		return this.playerData == null ? "UnknownPlayer" + this.playerId : this.playerData.getUsername();
+		return this.playerData == null ? "Unknown Player" + this.playerId : this.playerData.getUsername();
 	}
 	
 	@Override

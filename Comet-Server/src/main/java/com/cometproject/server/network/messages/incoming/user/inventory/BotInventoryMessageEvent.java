@@ -7,6 +7,7 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 
 public class BotInventoryMessageEvent implements Event {
 	
+	@Override
 	public void handle(Session client, MessageEvent msg) {
 		client.send(new BotInventoryMessageComposer(client.getPlayer().getBots().getBots()));
 	}

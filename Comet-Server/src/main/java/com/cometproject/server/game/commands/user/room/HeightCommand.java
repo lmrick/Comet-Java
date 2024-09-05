@@ -56,5 +56,10 @@ public class HeightCommand extends ChatCommand {
 		return Locale.get("command.height.description");
 	}
 	
+	@Override
+	public boolean isAsync() {
+		return true;
+	}
+	
 }
 

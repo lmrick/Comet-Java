@@ -32,7 +32,7 @@ public class ConfirmLoveLockMessageEvent implements Event {
 		
 		RoomItemFloor floorItem = room.getItems().getFloorItem(itemId);
 		
-		if (floorItem == null || !(floorItem instanceof LoveLockFloorItem)) return;
+		if (!(floorItem instanceof LoveLockFloorItem)) return;
 		
 		final int leftEntity = ((LoveLockFloorItem) floorItem).getLeftEntity();
 		final int rightEntity = ((LoveLockFloorItem) floorItem).getRightEntity();

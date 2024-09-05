@@ -5,22 +5,23 @@ import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
-
 public class UpdateFloorItemMessageComposer extends MessageComposer {
-    private final RoomItemFloor item;
-
-    public UpdateFloorItemMessageComposer(RoomItemFloor item) {
-        this.item = item;
-    }
-
-    @Override
-    public short getId() {
-        return Composers.ObjectUpdateMessageComposer;
-    }
-
-    @Override
-    public void compose(IComposerDataWrapper msg) {
-        this.item.serialize(msg);
-        msg.writeInt(this.item.getItemData().getOwnerId());
-    }
+	
+	private final RoomItemFloor item;
+	
+	public UpdateFloorItemMessageComposer(RoomItemFloor item) {
+		this.item = item;
+	}
+	
+	@Override
+	public short getId() {
+		return Composers.ObjectUpdateMessageComposer;
+	}
+	
+	@Override
+	public void compose(IComposerDataWrapper msg) {
+		this.item.serialize(msg);
+		msg.writeInt(this.item.getItemData().getOwnerId());
+	}
+	
 }

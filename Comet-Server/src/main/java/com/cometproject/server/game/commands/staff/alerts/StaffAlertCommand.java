@@ -17,7 +17,6 @@ public class StaffAlertCommand extends ChatCommand {
 		}
 		
 		ModerationManager.getInstance().getModerators().forEach(player -> player.send(msg));
-		
 	}
 	
 	@Override

@@ -68,41 +68,26 @@ public class PushCommand extends ChatCommand {
 		
 		if (!((Math.abs((posX - playerX)) >= 2) || (Math.abs(posY - playerY) >= 2))) {
 			switch (rot) {
-				case 4:
-					posY += 1;
-					break;
-				
-				case 0:
-					posY -= 1;
-					break;
-				
-				case 6:
-					posX -= 1;
-					break;
-				
-				case 2:
-					posX += 1;
-					break;
-				
-				case 3:
+				case 4 -> posY += 1;
+				case 0 -> posY -= 1;
+				case 6 -> posX -= 1;
+				case 2 -> posX += 1;
+				case 3 -> {
 					posX += 1;
 					posY += 1;
-					break;
-				
-				case 1:
+				}
+				case 1 -> {
 					posX += 1;
 					posY -= 1;
-					break;
-				
-				case 7:
+				}
+				case 7 -> {
 					posX -= 1;
 					posY -= 1;
-					break;
-				
-				case 5:
+				}
+				case 5 -> {
 					posX -= 1;
 					posY += 1;
-					break;
+				}
 			}
 			
 			IRoomModel model = client.getPlayer().getEntity().getRoom().getModel();
@@ -143,6 +128,11 @@ public class PushCommand extends ChatCommand {
 	
 	@Override
 	public boolean canDisable() {
+		return true;
+	}
+	
+	@Override
+	public boolean isAsync() {
 		return true;
 	}
 	

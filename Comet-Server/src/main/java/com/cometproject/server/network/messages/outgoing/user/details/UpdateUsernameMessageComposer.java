@@ -5,7 +5,7 @@ import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class UpdateUsernameMessageComposer extends MessageComposer {
-    private String user;
+    private final String user;
 
     public UpdateUsernameMessageComposer(String user) {
         this.user = user;

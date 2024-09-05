@@ -21,7 +21,7 @@ public class GroupFurnitureWidgetMessageEvent implements Event {
         if (client.getPlayer().getEntity() != null && client.getPlayer().getEntity().getRoom() != null) {
             RoomItemFloor floorItem = client.getPlayer().getEntity().getRoom().getItems().getFloorItem(itemId);
 
-            if (floorItem != null && floorItem instanceof GroupFloorItem) {
+            if (floorItem instanceof GroupFloorItem) {
                 IGroup group = GameContext.getCurrent().getGroupService().getGroup(((GroupFloorItem) floorItem).getGroupId());
 
                 if (group != null) {

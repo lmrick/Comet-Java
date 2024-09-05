@@ -52,7 +52,7 @@ public class PermissionsManager implements Initializable {
 	
 	public void loadPerks() {
 		try {
-			if (this.getPerks().size() != 0) {
+			if (!this.getPerks().isEmpty()) {
 				this.getPerks().clear();
 			}
 			
@@ -68,7 +68,7 @@ public class PermissionsManager implements Initializable {
 	
 	public void loadRankPermissions() {
 		try {
-			if (this.getRankPermissions().size() != 0) {
+			if (!this.getRankPermissions().isEmpty()) {
 				this.getRankPermissions().clear();
 			}
 			
@@ -83,7 +83,7 @@ public class PermissionsManager implements Initializable {
 	
 	public void loadCommands() {
 		try {
-			if (this.getCommands().size() != 0) {
+			if (!this.getCommands().isEmpty()) {
 				this.getCommands().clear();
 			}
 			
@@ -99,7 +99,7 @@ public class PermissionsManager implements Initializable {
 	
 	public void loadOverrideCommands() {
 		try {
-			if (this.getOverrideCommands().size() != 0) {
+			if (!this.getOverrideCommands().isEmpty()) {
 				this.getOverrideCommands().clear();
 			}
 			
@@ -115,7 +115,7 @@ public class PermissionsManager implements Initializable {
 	
 	public void loadEffects() {
 		try {
-			if (this.getEffects().size() != 0) {
+			if (!this.getEffects().isEmpty()) {
 				this.getEffects().clear();
 			}
 			
@@ -130,7 +130,7 @@ public class PermissionsManager implements Initializable {
 	}
 	
 	public void loadChatBubbles() {
-		if (this.chatBubbles.size() != 0) {
+		if (!this.chatBubbles.isEmpty()) {
 			this.chatBubbles.clear();
 		}
 		

@@ -12,7 +12,8 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class InviteFriendsMessageEvent implements Event {
     @Override
@@ -47,13 +48,9 @@ public class InviteFriendsMessageEvent implements Event {
         }
 
         int friendCount = msg.readInt();
-        List<Integer> friends = new ArrayList<>();
-
-        for (int i = 0; i < friendCount; i++) {
-            friends.add(msg.readInt());
-        }
-
-        String message = msg.readString();
+        List<Integer> friends = IntStream.range(0, friendCount).mapToObj(i -> msg.readInt()).collect(Collectors.toList());
+			
+			String message = msg.readString();
 
         if (!client.getPlayer().getPermissions().getRank().roomFilterBypass()) {
             FilterResult filterResult = RoomManager.getInstance().getFilter().filter(message);

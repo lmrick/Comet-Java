@@ -6,8 +6,8 @@ import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class UpdateActivityPointsMessageComposer extends MessageComposer {
 
-    private int activityPoints;
-    private int change;
+    private final int activityPoints;
+    private final int change;
 
     public UpdateActivityPointsMessageComposer(int activityPoints, int change) {
         this.activityPoints = activityPoints;

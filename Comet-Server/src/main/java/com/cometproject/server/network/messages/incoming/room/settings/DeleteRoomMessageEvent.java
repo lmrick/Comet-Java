@@ -25,73 +25,72 @@ import com.cometproject.server.storage.queries.rooms.RoomDao;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class DeleteRoomMessageEvent implements Event {
-
-    @Override
-    public void handle(Session client, MessageEvent msg) throws Exception {
-        PlayerEntity entity = client.getPlayer().getEntity();
-
-        if (entity == null)
-            return;
-
-        Room room = entity.getRoom();
-
-        if (room == null || (room.getData().getOwnerId() != client.getPlayer().getId() && !client.getPlayer().getPermissions().getRank().roomFullControl())) {
-            return;
-        }
-
-        final int roomId = room.getId();
-
-        if (room.getGroup() != null) {
-            client.send(new AlertMessageComposer(Locale.getOrDefault("room.delete.error.group", "You cannot delete a room with a group, please delete the group first!")));
-            return;
-        }
-
-        List<RoomItem> itemsToRemove = new ArrayList<>();
-        itemsToRemove.addAll(room.getItems().getFloorItems().values());
-        itemsToRemove.addAll(room.getItems().getWallItems().values());
-
-        for (RoomItem item : itemsToRemove) {
-            if (item instanceof RoomItemFloor) {
-                room.getItems().removeItem((RoomItemFloor) item, client);
-            } else if (item instanceof RoomItemWall) {
-                room.getItems().removeItem((RoomItemWall) item, client, true);
-            }
-        }
-
-        for (BotEntity bot : room.getEntities().getBotEntities()) {
-            client.getPlayer().getBots().addBot(bot.getData());
-
-            RoomBotDao.setRoomId(0, bot.getData().getId());
-        }
-
-        for (PetEntity pet : room.getEntities().getPetEntities()) {
-            client.getPlayer().getPets().addPet(pet.getData());
-
-            RoomPetDao.updatePet(0, 0, 0, pet.getData().getId());
-        }
-
-        RoomManager.getInstance().forceUnload(room.getId());
-        RoomManager.getInstance().removeData(room.getId());
-
-        if (client.getPlayer().getSettings().getHomeRoom() == roomId) {
-            client.send(new HomeRoomMessageComposer(client.getPlayer().getSettings().getHomeRoom(), 0));
-            client.getPlayer().getSettings().setHomeRoom(0);
-        }
-
-        PlayerDao.resetHomeRoom(roomId);
-
-        client.getLogger().info("Room deleted: " + room.getId() + " by " + client.getPlayer().getId() + " / " + client.getPlayer().getData().getUsername());
-        RoomDao.deleteRoom(room.getId());
-        RoomManager.getInstance().roomDeleted(room.getId());
-
-        client.getPlayer().getRooms().remove((Integer) roomId);
-
-        client.send(new UpdateInventoryMessageComposer());
-        client.send(new PetInventoryMessageComposer(client.getPlayer().getPets().getPets()));
-        client.send(new BotInventoryMessageComposer(client.getPlayer().getBots().getBots()));
-
-        itemsToRemove.clear();
-    }
+	
+	@Override
+	public void handle(Session client, MessageEvent msg) throws Exception {
+		PlayerEntity entity = client.getPlayer().getEntity();
+		
+		if (entity == null) return;
+		
+		Room room = entity.getRoom();
+		
+		if (room == null || (room.getData().getOwnerId() != client.getPlayer().getId() && !client.getPlayer().getPermissions().getRank().roomFullControl())) {
+			return;
+		}
+		
+		final int roomId = room.getId();
+		
+		if (room.getGroup() != null) {
+			client.send(new AlertMessageComposer(Locale.getOrDefault("room.delete.error.group", "You cannot delete a room with a group, please delete the group first!")));
+			return;
+		}
+		
+		List<RoomItem> itemsToRemove = new ArrayList<>();
+		itemsToRemove.addAll(room.getItems().getFloorItems().values());
+		itemsToRemove.addAll(room.getItems().getWallItems().values());
+		
+		for (RoomItem item : itemsToRemove) {
+			if (item instanceof RoomItemFloor) {
+				room.getItems().removeItem((RoomItemFloor) item, client);
+			} else if (item instanceof RoomItemWall) {
+				room.getItems().removeItem((RoomItemWall) item, client, true);
+			}
+		}
+		
+		for (BotEntity bot : room.getEntities().getBotEntities()) {
+			client.getPlayer().getBots().addBot(bot.getData());
+			
+			RoomBotDao.setRoomId(0, bot.getData().getId());
+		}
+		
+		for (PetEntity pet : room.getEntities().getPetEntities()) {
+			client.getPlayer().getPets().addPet(pet.getData());
+			
+			RoomPetDao.updatePet(0, 0, 0, pet.getData().getId());
+		}
+		
+		RoomManager.getInstance().forceUnload(room.getId());
+		RoomManager.getInstance().removeData(room.getId());
+		
+		if (client.getPlayer().getSettings().getHomeRoom() == roomId) {
+			client.send(new HomeRoomMessageComposer(client.getPlayer().getSettings().getHomeRoom(), 0));
+			client.getPlayer().getSettings().setHomeRoom(0);
+		}
+		
+		PlayerDao.resetHomeRoom(roomId);
+		
+		client.getLogger().info("Room deleted: " + room.getId() + " by " + client.getPlayer().getId() + " / " + client.getPlayer().getData().getUsername());
+		RoomDao.deleteRoom(room.getId());
+		RoomManager.getInstance().roomDeleted(room.getId());
+		
+		client.getPlayer().getRooms().remove((Integer) roomId);
+		
+		client.send(new UpdateInventoryMessageComposer());
+		client.send(new PetInventoryMessageComposer(client.getPlayer().getPets().getPets()));
+		client.send(new BotInventoryMessageComposer(client.getPlayer().getBots().getBots()));
+		
+		itemsToRemove.clear();
+	}
+	
 }

@@ -41,7 +41,6 @@ public abstract class RoomItem extends BigRoomFloorObject implements Attributabl
 	public boolean toggleInteract(boolean state) {
 		if (!state) {
 			if (!(this instanceof WiredFloorItem)) this.getItemData().setData("0");
-			
 			return true;
 		}
 		
@@ -50,14 +49,9 @@ public abstract class RoomItem extends BigRoomFloorObject implements Attributabl
 		}
 		
 		if (this.getDefinition().getInteractionCycleCount() > 1) {
-			if (this.getItemData().getData().isEmpty() || this.getItemData().getData().equals(" ")) {
-				this.getItemData().setData("0");
-			}
-			
-			int i = Integer.parseInt(this.getItemData().getData()) + 1;
-			
-			this.getItemData().setData(i > (this.getDefinition().getInteractionCycleCount() - 1) ? "0" : i + "");
-			
+			if (this.getItemData().getData().isEmpty() || this.getItemData().getData().equals(" ")) this.getItemData().setData("0");
+			int interactionState = Integer.parseInt(this.getItemData().getData()) + 1;
+			this.getItemData().setData(interactionState > (this.getDefinition().getInteractionCycleCount() - 1) ? "0" : interactionState + "");
 			return true;
 		} else {
 			return false;
@@ -194,7 +188,7 @@ public abstract class RoomItem extends BigRoomFloorObject implements Attributabl
 	public abstract void sendUpdate();
 	public abstract void save();
 	public abstract void saveData();
-  public abstract int getRotation();
+	public abstract int getRotation();
 	
 	public void dispose() {
 	

@@ -495,7 +495,7 @@ public final class MessageHandler {
 	}
 	
 	private void registerCamera() {
-		this.getMessages().put(Events.ThumbnailMessageEvent, new ThumbnailMessageEvent());
+		this.getMessages().put(Events.RenderRoomThumbnailMessageEvent, new ThumbnailMessageEvent());
 		this.getMessages().put(Events.RenderRoomMessageEvent, new RenderRoomMessageEvent());
 		this.getMessages().put(Events.PurchasePhotoMessageEvent, new PurchasePhotoMessageEvent());
 		this.getMessages().put(Events.PhotoPricingMessageEvent, new PhotoPricingMessageEvent());

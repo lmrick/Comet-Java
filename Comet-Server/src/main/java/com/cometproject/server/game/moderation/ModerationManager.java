@@ -19,19 +19,14 @@ import java.util.List;
 import java.util.Map;
 
 public class ModerationManager implements Initializable {
-	
 	private static ModerationManager moderationManagerInstance;
-	
 	private List<String> userPresets;
 	private List<String> roomPresets;
 	private List<ActionCategory> actionCategories;
-	
 	private Map<Integer, HelpTicket> tickets;
-	
 	private ConcurrentHashSet<Session> moderators;
 	private ConcurrentHashSet<Session> logChatUsers;
-	
-	private Logger log = Logger.getLogger(ModerationManager.class.getName());
+	private static final Logger log = Logger.getLogger(ModerationManager.class.getName());
 	
 	public ModerationManager() {
 	
@@ -69,9 +64,7 @@ public class ModerationManager implements Initializable {
 		if (actionCategories == null) {
 			actionCategories = new ArrayList<>();
 		} else {
-			for (ActionCategory actionCategory : actionCategories) {
-				actionCategory.dispose();
-			}
+			actionCategories.forEach(ActionCategory::dispose);
 			
 			actionCategories.clear();
 		}
@@ -138,11 +131,7 @@ public class ModerationManager implements Initializable {
 	}
 	
 	public HelpTicket getTicketByUserId(int id) {
-		for (HelpTicket ticket : tickets.values()) {
-			if (ticket.getSubmitterId() == id) return ticket;
-		}
-		
-		return null;
+		return tickets.values().stream().filter(ticket -> ticket.getSubmitterId() == id).findFirst().orElse(null);
 	}
 	
 	public List<String> getUserPresets() {

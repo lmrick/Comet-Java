@@ -8,23 +8,25 @@ import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
 public class UseMoodlightMessageEvent implements Event {
-    public void handle(Session client, MessageEvent msg) {
-        if (client.getPlayer() == null || client.getPlayer().getEntity() == null) return;
-        if (client.getPlayer().getEntity().getRoom() == null) return;
-
-        Room room = client.getPlayer().getEntity().getRoom();
-
-        if (!room.getRights().hasRights(client.getPlayer().getEntity().getPlayerId()) && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
-            return;
-        }
-
-        MoodLightWallItem moodlight = room.getItems().getMoodLight();
-
-        if (moodlight == null) {
-            return;
-        }
-
-        if (moodlight.getMoodlightData() == null) return;
-        client.send(new MoodlightMessageComposer(moodlight));
-    }
+	
+	public void handle(Session client, MessageEvent msg) {
+		if (client.getPlayer() == null || client.getPlayer().getEntity() == null) return;
+		if (client.getPlayer().getEntity().getRoom() == null) return;
+		
+		Room room = client.getPlayer().getEntity().getRoom();
+		
+		if (!room.getRights().hasRights(client.getPlayer().getEntity().getPlayerId()) && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
+			return;
+		}
+		
+		MoodLightWallItem moodlight = room.getItems().getMoodLight();
+		
+		if (moodlight == null) {
+			return;
+		}
+		
+		if (moodlight.getMoodlightData() == null) return;
+		client.send(new MoodlightMessageComposer(moodlight));
+	}
+	
 }

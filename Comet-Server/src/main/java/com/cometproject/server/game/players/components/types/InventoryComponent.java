@@ -26,6 +26,7 @@ import com.cometproject.server.storage.queries.player.inventory.InventoryDao;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class InventoryComponent extends PlayerComponent implements IPlayerInventory {
+	
 	private Map<Long, IPlayerItem> inventoryItems;
 	
 	private Map<String, Integer> badges;

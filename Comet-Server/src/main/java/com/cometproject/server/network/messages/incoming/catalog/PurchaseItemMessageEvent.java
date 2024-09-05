@@ -7,6 +7,7 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 
 public class PurchaseItemMessageEvent implements Event {
 	
+	@Override
 	public void handle(Session client, MessageEvent msg) {
 		int pageId = msg.readInt();
 		int itemId = msg.readInt();

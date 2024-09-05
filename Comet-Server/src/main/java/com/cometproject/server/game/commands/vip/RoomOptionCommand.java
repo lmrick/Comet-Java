@@ -40,14 +40,17 @@ public class RoomOptionCommand extends ChatCommand {
 		}
 	}
 	
+	@Override
 	public String getPermission() {
 		return "roomoption_command";
 	}
 	
+	@Override
 	public String getParameter() {
 		return "%option%";
 	}
 	
+	@Override
 	public String getDescription() {
 		return Locale.get("command.roomoption.description");
 	}

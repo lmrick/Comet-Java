@@ -17,31 +17,33 @@ import com.cometproject.storage.api.StorageContext;
 import com.cometproject.storage.api.data.DataWrapper;
 import com.google.common.collect.Sets;
 
+import java.text.MessageFormat;
+
 public class PurchasePhotoMessageEvent implements Event {
-    @Override
-    public void handle(Session client, MessageEvent msg) throws Exception {
-        final String code = client.getPlayer().getLastPhoto();
-        final long time = System.currentTimeMillis();
-        final String photoUrl = CometSettings.cameraPhotoUrl.replace("%photoId%", code);
-
-        final String itemExtraData = "{\"t\":" + time + ",\"u\":\"" + code + "\",\"n\":\"" +
-                client.getPlayer().getData().getUsername() + "\",\"m\":\"\",\"s\":" + client.getPlayer().getId() + ",\"w\":\"" +
-                photoUrl + "\"}";
-
-        final DataWrapper<Long> itemIdData = DataWrapper.createEmpty();
-        StorageContext.getCurrentContext().getRoomItemRepository().createItem(client.getPlayer().getId(), CometSettings.cameraPhotoItemId, itemExtraData, itemIdData::set);
-
-        final IPlayerItem playerItem = new InventoryItem(itemIdData.get(), CometSettings.cameraPhotoItemId, itemExtraData);
-
-        client.getPlayer().getInventory().addItem(playerItem);
-
-        client.send(new NotificationMessageComposer("generic", Locale.getOrDefault("camera.photoTaken", "You successfully took a photo!")));
-        client.send(new UpdateInventoryMessageComposer());
-
-        client.send(new UnseenItemsMessageComposer(Sets.newHashSet(playerItem), ItemManager.getInstance()));
-        client.send(new PurchasedPhotoMessageComposer());
-
-        client.getPlayer().getAchievements().progressAchievement(AchievementType.CAMERA_PHOTO, 1);
-        StorageContext.getCurrentContext().getPhotoRepository().savePhoto(client.getPlayer().getId(), client.getPlayer().getEntity().getRoom().getId(), photoUrl, (int) time/1000);
-    }
+	
+	@Override
+	public void handle(Session client, MessageEvent msg) throws Exception {
+		final String code = client.getPlayer().getLastPhoto();
+		final long time = System.currentTimeMillis();
+		final String photoUrl = CometSettings.cameraPhotoUrl.replace("%photoId%", code);
+		
+		final String itemExtraData = MessageFormat.format("'{'\"t\":{0},\"u\":\"{1}\",\"n\":\"{2}\",\"m\":\"\",\"s\":{3},\"w\":\"{4}\"'}'", time, code, client.getPlayer().getData().getUsername(), client.getPlayer().getId(), photoUrl);
+		
+		final DataWrapper<Long> itemIdData = DataWrapper.createEmpty();
+		StorageContext.getCurrentContext().getRoomItemRepository().createItem(client.getPlayer().getId(), CometSettings.cameraPhotoItemId, itemExtraData, itemIdData::set);
+		
+		final IPlayerItem playerItem = new InventoryItem(itemIdData.get(), CometSettings.cameraPhotoItemId, itemExtraData);
+		
+		client.getPlayer().getInventory().addItem(playerItem);
+		
+		client.send(new NotificationMessageComposer("generic", Locale.getOrDefault("camera.photoTaken", "You successfully took a photo!")));
+		client.send(new UpdateInventoryMessageComposer());
+		
+		client.send(new UnseenItemsMessageComposer(Sets.newHashSet(playerItem), ItemManager.getInstance()));
+		client.send(new PurchasedPhotoMessageComposer());
+		
+		client.getPlayer().getAchievements().progressAchievement(AchievementType.CAMERA_PHOTO, 1);
+		StorageContext.getCurrentContext().getPhotoRepository().savePhoto(client.getPlayer().getId(), client.getPlayer().getEntity().getRoom().getId(), photoUrl, (int) time / 1000);
+	}
+	
 }

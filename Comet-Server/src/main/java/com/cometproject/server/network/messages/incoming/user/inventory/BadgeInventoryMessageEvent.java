@@ -11,6 +11,7 @@ import com.cometproject.server.storage.queries.player.inventory.InventoryDao;
 
 public class BadgeInventoryMessageEvent implements Event {
 	
+	@Override
 	public void handle(Session client, MessageEvent msg) {
 		int userId = msg.readInt();
 		

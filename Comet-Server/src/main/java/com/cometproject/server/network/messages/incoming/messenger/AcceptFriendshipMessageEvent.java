@@ -9,37 +9,29 @@ import com.cometproject.server.storage.queries.player.messenger.MessengerDao;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class AcceptFriendshipMessageEvent implements Event {
     public void handle(Session client, MessageEvent msg) {
         int amount = msg.readInt();
-        List<Integer> requests = new ArrayList<>();
-
-        for (int i = 0; i < amount; i++) {
-            requests.add(client.getPlayer().getMessenger().getRequestBySender(msg.readInt()));
-        }
-
-        for (Integer request : requests) {
-            if (request == null) continue;
-
-            MessengerDao.createFriendship(request, client.getPlayer().getId());
-            MessengerDao.deleteRequestData(request, client.getPlayer().getId());
-
-            Session friend = NetworkManager.getInstance().getSessions().getByPlayerId(request);
-
-            if (friend != null) {
-                friend.getPlayer().getMessenger().addFriend(new MessengerFriend(client.getPlayer().getId(), client.getPlayer().getData()));
-                friend.getPlayer().getMessenger().sendStatus(true, friend.getPlayer().getEntity() != null);
-            } else {
-                client.getPlayer().getMessenger().sendOffline(request, false, false);
-            }
-
-            client.getPlayer().getMessenger().addFriend(new MessengerFriend(request, client.getPlayer().getData()));
-            client.getPlayer().getMessenger().sendStatus(true, client.getPlayer().getEntity() != null);
-
-            client.getPlayer().getMessenger().removeRequest(request);
-        }
+        List<Integer> requests = IntStream.range(0, amount).mapToObj(i -> client.getPlayer().getMessenger().getRequestBySender(msg.readInt())).collect(Collectors.toList());
+			
+			requests.stream().filter(Objects::nonNull).forEachOrdered(request -> {
+				MessengerDao.createFriendship(request, client.getPlayer().getId());
+				MessengerDao.deleteRequestData(request, client.getPlayer().getId());
+				Session friend = NetworkManager.getInstance().getSessions().getByPlayerId(request);
+				if (friend != null) {
+					friend.getPlayer().getMessenger().addFriend(new MessengerFriend(client.getPlayer().getId(), client.getPlayer().getData()));
+					friend.getPlayer().getMessenger().sendStatus(true, friend.getPlayer().getEntity() != null);
+				} else {
+					client.getPlayer().getMessenger().sendOffline(request, false, false);
+				}
+				client.getPlayer().getMessenger().addFriend(new MessengerFriend(request, client.getPlayer().getData()));
+				client.getPlayer().getMessenger().sendStatus(true, client.getPlayer().getEntity() != null);
+				client.getPlayer().getMessenger().removeRequest(request);
+			});
 
         requests.clear();
     }

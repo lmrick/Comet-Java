@@ -33,7 +33,62 @@ public class PlayerDao {
 		try {
 			sqlConnection = SQLUtility.getConnection();
 			
-			preparedStatement = SQLUtility.prepare("SELECT p.id as playerId, p.username AS playerData_username, p.figure AS playerData_figure, p.motto AS playerData_motto, p.credits AS playerData_credits, p.vip_points AS playerData_vipPoints, p.rank AS playerData_rank, p.last_ip AS playerData_lastIp, p.seasonal_points AS playerData_seasonalPoints, " + " p.vip AS playerData_vip, p.gender AS playerData_gender, p.last_online AS playerData_lastOnline, p.reg_timestamp AS playerData_regTimestamp, p.reg_date AS playerData_regDate, p.favourite_group AS playerData_favouriteGroup, p.achievement_points AS playerData_achievementPoints," + " p.email AS playerData_email, p.activity_points AS playerData_activityPoints, p.quest_id AS playerData_questId, p.time_muted AS playerData_timeMuted, p.name_colour AS playerData_nameColour, \n" + "  pSettings.volume AS playerSettings_volume, pSettings.home_room AS playerSettings_homeRoom, pSettings.hide_online AS playerSettings_hideOnline, pSettings.hide_inroom AS playerSettings_hideInRoom, pSettings.ignore_invites AS playerSettings_ignoreInvites, \n" + "   pSettings.allow_friend_requests AS playerSettings_allowFriendRequests, pSettings.allow_trade AS playerSettings_allowTrade, pSettings.allow_follow AS playerSettings_allowFollow, pSettings.allow_mimic AS playerSettings_allowMimic, pSettings.wardrobe AS playerSettings_wardrobe, pSettings.playlist AS playerSettings_playlist, pSettings.chat_oldstyle AS playerSettings_useOldChat,\n" + " pSettings.navigator_x AS playerSettings_navigatorX, pSettings.navigator_y AS playerSettings_navigatorY, pSettings.navigator_height AS playerSettings_navigatorHeight, pSettings.navigator_width AS playerSettings_navigatorWidth, pSettings.navigator_show_searches AS playerSettings_navigatorShowSearches, pSettings.ignore_events AS playerSettings_ignoreEvents, pSettings.disable_whisper AS playerSettings_disableWhisper, pSettings.send_login_notif AS playerSettings_sendLoginNotif, pSettings.mention_type AS playerSettings_mentionType, pSettings.personalstaff AS playerSettings_personalstaff, " + "  pStats.achievement_score AS playerStats_achievementPoints, pStats.daily_respects AS playerStats_dailyRespects, pStats.total_respect_points AS playerStats_totalRespectPoints, pStats.help_tickets AS playerStats_helpTickets, pStats.help_tickets_abusive AS playerStats_helpTicketsAbusive, pStats.cautions AS playerStats_cautions, pStats.bans AS playerStats_bans, pStats.daily_scratches AS playerStats_scratches \n" + "FROM players p\n" + " JOIN player_settings pSettings ON pSettings.player_id = p.id \n" + " JOIN player_stats pStats ON pStats.player_id = p.id\n" + "\n" + "WHERE p.auth_ticket = ?", sqlConnection);
+			preparedStatement = SQLUtility.prepare("""
+																						 SELECT p.id as playerId,
+																						 p.username AS playerData_username,
+																						 p.figure AS playerData_figure,
+																						 p.motto AS playerData_motto,
+																						 p.credits AS playerData_credits,
+																						 p.vip_points AS playerData_vipPoints,
+																						 p.rank AS playerData_rank,
+																						 p.last_ip AS playerData_lastIp,
+																						 p.seasonal_points AS playerData_seasonalPoints,
+																						 p.vip AS playerData_vip,
+																						 p.gender AS playerData_gender,
+																						 p.last_online AS playerData_lastOnline,
+																						 p.reg_timestamp AS playerData_regTimestamp,
+																						 p.reg_date AS playerData_regDate,
+																						 p.favourite_group AS playerData_favouriteGroup,
+																						 p.achievement_points AS playerData_achievementPoints,
+																						 p.email AS playerData_email,
+																						 p.activity_points AS playerData_activityPoints,
+																						 p.quest_id AS playerData_questId,
+																						 p.time_muted AS playerData_timeMuted,
+																						 p.name_colour AS playerData_nameColour,
+																						 pSettings.volume AS playerSettings_volume,
+																						 pSettings.home_room AS playerSettings_homeRoom,
+																						 pSettings.hide_online AS playerSettings_hideOnline,
+																						 pSettings.hide_inroom AS playerSettings_hideInRoom,
+																						 pSettings.camera_follow AS playerSettings_cameraFollow,
+																						 pSettings.ignore_invites AS playerSettings_ignoreInvites,
+																						 pSettings.allow_friend_requests AS playerSettings_allowFriendRequests,
+																						 pSettings.allow_trade AS playerSettings_allowTrade,
+																						 pSettings.allow_follow AS playerSettings_allowFollow,
+																						 pSettings.allow_mimic AS playerSettings_allowMimic,
+																						 pSettings.wardrobe AS playerSettings_wardrobe,
+																						 pSettings.playlist AS playerSettings_playlist,
+																						 pSettings.chat_oldstyle AS playerSettings_useOldChat,
+																						 pSettings.navigator_x AS playerSettings_navigatorX,
+																						 pSettings.navigator_y AS playerSettings_navigatorY,
+																						 pSettings.navigator_height AS playerSettings_navigatorHeight,
+																						 pSettings.navigator_width AS playerSettings_navigatorWidth,
+																						 pSettings.navigator_show_searches AS playerSettings_navigatorShowSearches,
+																						 pSettings.ignore_events AS playerSettings_ignoreEvents,
+																						 pSettings.disable_whisper AS playerSettings_disableWhisper,
+																						 pSettings.send_login_notif AS playerSettings_sendLoginNotif,
+																						 pSettings.mention_type AS playerSettings_mentionType,
+																						 pSettings.personalstaff AS playerSettings_personalstaff,
+																						 pStats.achievement_score AS playerStats_achievementPoints,
+																						 pStats.daily_respects AS playerStats_dailyRespects,
+																						 pStats.total_respect_points AS playerStats_totalRespectPoints,
+																						 pStats.help_tickets AS playerStats_helpTickets,
+																						 pStats.help_tickets_abusive AS playerStats_helpTicketsAbusive,
+																						 pStats.cautions AS playerStats_cautions, pStats.bans AS playerStats_bans,
+																						 pStats.daily_scratches AS playerStats_scratches FROM players p
+																						 JOIN player_settings pSettings ON pSettings.player_id = p.id
+																						 JOIN player_stats pStats ON pStats.player_id = p.id
+																						 WHERE p.auth_ticket = ?
+																						 """, sqlConnection);
 			preparedStatement.setString(1, ssoTicket);
 			
 			resultSet = preparedStatement.executeQuery();
@@ -61,7 +116,29 @@ public class PlayerDao {
 		try {
 			sqlConnection = SQLUtility.getConnection();
 			
-			preparedStatement = SQLUtility.prepare("SELECT p.id as playerId, p.username AS playerData_username, p.figure AS playerData_figure, p.motto AS playerData_motto, p.credits AS playerData_credits, p.vip_points AS playerData_vipPoints, p.rank AS playerData_rank, p.vip AS playerData_vip, p.gender AS playerData_gender, p.last_online AS playerData_lastOnline, p.reg_timestamp AS playerData_regTimestamp, p.reg_date AS playerData_regDate, p.favourite_group AS playerData_favouriteGroup, p.achievement_points AS playerData_achievementPoints, p.email AS playerData_email, p.activity_points AS playerData_activityPoints, p.seasonal_points AS playerData_seasonalPoints, p.quest_id AS playerData_questId, p.last_ip AS playerData_lastIp, p.time_muted AS playerData_timeMuted, p.name_colour AS playerData_nameColour \n" + "FROM players p " + "WHERE p.auth_ticket = ?", sqlConnection);
+			preparedStatement = SQLUtility.prepare("""
+																						 SELECT p.id as playerId,
+																						 p.username AS playerData_username,
+																						 p.figure AS playerData_figure,
+																						 p.motto AS playerData_motto,
+																						 p.credits AS playerData_credits,
+																						 p.vip_points AS playerData_vipPoints,
+																						 p.rank AS playerData_rank,
+																						 p.vip AS playerData_vip,
+																						 p.gender AS playerData_gender,
+																						 p.last_online AS playerData_lastOnline,
+																						 p.reg_timestamp AS playerData_regTimestamp,
+																						 p.reg_date AS playerData_regDate,
+																						 p.favourite_group AS playerData_favouriteGroup,
+																						 p.achievement_points AS playerData_achievementPoints,
+																						 p.email AS playerData_email, p.activity_points AS playerData_activityPoints,
+																						 p.seasonal_points AS playerData_seasonalPoints,
+																						 p.quest_id AS playerData_questId,
+																						 p.last_ip AS playerData_lastIp,
+																						 p.time_muted AS playerData_timeMuted,
+																						 p.name_colour AS playerData_nameColour
+																						 FROM players p WHERE p.auth_ticket = ?
+																						 """, sqlConnection);
 			preparedStatement.setString(1, ssoTicket);
 			
 			resultSet = preparedStatement.executeQuery();
@@ -144,19 +221,10 @@ public class PlayerDao {
 		try {
 			sqlConnection = SQLUtility.getConnection();
 			
-			String query;
-			
-			switch (mode) {
-				case IPlayerAvatar.USERNAME_FIGURE:
-					query = "SELECT username, figure, gender, motto, reg_timestamp FROM players WHERE id = ?";
-					break;
-				
-				
-				default:
-				case IPlayerAvatar.USERNAME_FIGURE_MOTTO:
-					query = "SELECT username, figure, gender, motto, reg_timestamp FROM players WHERE id = ?";
-					break;
-			}
+			String query = switch (mode) {
+				case IPlayerAvatar.USERNAME_FIGURE -> "SELECT username, figure, gender, motto, reg_timestamp FROM players WHERE id = ?";
+				default -> "SELECT username, figure, gender, motto, reg_timestamp FROM players WHERE id = ?";
+			};
 			
 			preparedStatement = SQLUtility.prepare(query, sqlConnection);
 			
@@ -237,7 +305,7 @@ public class PlayerDao {
 				// close old statement
 				SQLUtility.closeSilently(preparedStatement);
 				
-				preparedStatement = SQLUtility.prepare("INSERT into player_settings (`player_id`) VALUES(?)", sqlConnection);
+				preparedStatement = SQLUtility.prepare("INSERT into player_settings (`player_id`) VALUES (?)", sqlConnection);
 				preparedStatement.setInt(1, id);
 				
 				SQLUtility.executeStatementSilently(preparedStatement, false);
@@ -275,7 +343,7 @@ public class PlayerDao {
 			} else {
 				SQLUtility.closeSilently(preparedStatement);
 				
-				preparedStatement = SQLUtility.prepare("INSERT into player_stats (`player_id`) VALUES(?)", sqlConnection);
+				preparedStatement = SQLUtility.prepare("INSERT INTO player_stats (`player_id`) VALUES (?)", sqlConnection);
 				preparedStatement.setInt(1, id);
 				
 				SQLUtility.executeStatementSilently(preparedStatement, false);

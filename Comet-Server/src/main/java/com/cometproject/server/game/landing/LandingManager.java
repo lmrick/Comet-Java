@@ -16,7 +16,6 @@ public class LandingManager implements Initializable {
     private static final Logger log = Logger.getLogger(LandingManager.class.getName());
     private static LandingManager landingManagerInstance;
     private Map<Integer, PromoArticle> articles;
-
     private Map<IPlayerAvatar, Integer> hallOfFame;
 
     public LandingManager() {
@@ -50,8 +49,7 @@ public class LandingManager implements Initializable {
 
         if (CometSettings.hallOfFameEnabled) {
             this.hallOfFame = LandingDao.getHallOfFame(CometSettings.hallOfFameCurrency, 10);
-
-            // Queue it to be refreshed again in X minutes
+            
             CometThreadManager.getInstance().executeSchedule(
                     this::loadHallOfFame,
                     CometSettings.hallOfFameRefreshMinutes,

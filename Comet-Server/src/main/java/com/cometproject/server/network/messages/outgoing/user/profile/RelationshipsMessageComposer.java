@@ -37,7 +37,7 @@ public class RelationshipsMessageComposer extends MessageComposer {
     public void compose(IComposerDataWrapper msg) {
         msg.writeInt(playerId);
 
-        if (relationships == null || relationships.size() == 0) {
+        if (relationships == null || relationships.isEmpty()) {
             msg.writeInt(0);
             return;
         }

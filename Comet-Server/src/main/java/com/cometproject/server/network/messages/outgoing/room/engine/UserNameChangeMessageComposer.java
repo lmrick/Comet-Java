@@ -5,9 +5,9 @@ import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class UserNameChangeMessageComposer extends MessageComposer {
-    private int roomId;
-    private int playerId;
-    private String username;
+    private final int roomId;
+    private final int playerId;
+    private final String username;
 
     public UserNameChangeMessageComposer(int roomId, int playerId, String username) {
         this.roomId = roomId;

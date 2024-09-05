@@ -39,6 +39,7 @@ public class PlayerSettings implements IPlayerSettings {
 	private boolean navigatorShowSearches;
 	private boolean disableWhisper;
 	private boolean ignoreEvents;
+	private boolean cameraFollow;
 	private Player player;
 	private boolean sendLoginNotification;
 	private MentionType mentionType;
@@ -53,6 +54,7 @@ public class PlayerSettings implements IPlayerSettings {
 			this.allowFriendRequests = data.getString("playerSettings_allowFriendRequests").equals("1");
 			this.allowTrade = data.getString("playerSettings_allowTrade").equals("1");
 			this.allowFollow = data.getString("playerSettings_allowFollow").equals("1");
+			this.cameraFollow = data.getString("playerSettings_cameraFollow").equals("1");
 			this.allowMimic = data.getString("playerSettings_allowMimic").equals("1");
 			this.personalStaff = data.getString("playerSettings_personalstaff").equals("1");
 			this.homeRoom = data.getInt("playerSettings_homeRoom");
@@ -84,8 +86,9 @@ public class PlayerSettings implements IPlayerSettings {
 			this.hideInRoom = data.getString("hide_inroom").equals("1");
 			this.allowFriendRequests = data.getString("allow_friend_requests").equals("1");
 			this.allowTrade = data.getString("allow_trade").equals("1");
+			this.cameraFollow = data.getString("camera_follow").equals("1");
 			this.allowFollow = data.getString("allow_follow").equals("1");
-			this.allowFollow = data.getString("allow_mimic").equals("1");
+			this.allowMimic = data.getString("allow_mimic").equals("1");
 			this.personalStaff = data.getString("personalstaff").equals("1");
 			this.homeRoom = data.getInt("home_room");
 			
@@ -120,6 +123,7 @@ public class PlayerSettings implements IPlayerSettings {
 		this.hideOnline = false;
 		this.allowFriendRequests = true;
 		this.allowTrade = true;
+		this.cameraFollow = false;
 		this.allowFollow = true;
 		this.allowMimic = true;
 		this.wardrobe = new ArrayList<>();
@@ -149,6 +153,14 @@ public class PlayerSettings implements IPlayerSettings {
 	
 	public boolean getAllowFriendRequests() {
 		return this.allowFriendRequests;
+	}
+	
+	public boolean isCameraFollow() {
+		return cameraFollow;
+	}
+	
+	public void setCameraFollow(boolean cameraFollow) {
+		this.cameraFollow = cameraFollow;
 	}
 	
 	public void setAllowFriendRequests(boolean allowFriendRequests) {
@@ -297,6 +309,7 @@ public class PlayerSettings implements IPlayerSettings {
 		
 		coreObject.add("wardrobe", wardrobeArray);
 		
+		coreObject.addProperty("cameraFollow", cameraFollow);
 		coreObject.addProperty("hideOnline", hideOnline);
 		coreObject.addProperty("hideInRoom", hideInRoom);
 		coreObject.addProperty("allowFriendRequests", allowFriendRequests);

@@ -5,10 +5,11 @@ import com.cometproject.server.network.messages.outgoing.user.achievements.Achie
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
-
 public class AchievementsListMessageEvent implements Event {
-    @Override
-    public void handle(Session client, MessageEvent msg) throws Exception {
-        client.send(new AchievementsListMessageComposer(client.getPlayer().getAchievements()));
-    }
+	
+	@Override
+	public void handle(Session client, MessageEvent msg) throws Exception {
+		client.send(new AchievementsListMessageComposer(client.getPlayer().getAchievements()));
+	}
+	
 }

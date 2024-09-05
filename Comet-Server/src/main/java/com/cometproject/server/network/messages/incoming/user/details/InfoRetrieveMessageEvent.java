@@ -13,25 +13,24 @@ import com.cometproject.server.network.messages.outgoing.user.wardrobe.FigureSet
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
-
 public class InfoRetrieveMessageEvent implements Event {
-    public void handle(Session client, MessageEvent msg) {
-        client.getPlayer().sendBalance();
-
-        // TODO: Queue these & send all at once.
-        client.send(new UserObjectMessageComposer(client.getPlayer()));
-        client.send(new BuildersClubMembershipMessageComposer());
-        client.send(new AllowancesMessageComposer(client.getPlayer().getData().getRank()));
-//        client.send(new CitizenshipStatusMessageComposer());
-        client.send(new AchievementPointsMessageComposer(client.getPlayer().getData().getAchievementPoints()));
-
-        client.send(new MessengerConfigMessageComposer());
-
-        client.send(new BadgeInventoryMessageComposer(client.getPlayer().getInventory().getBadges()));
-        client.send(new AchievementRequirementsMessageComposer(
-                AchievementManager.getInstance().getAchievementGroups().values()));
-
-        client.send(new FigureSetIdsMessageComposer(client.getPlayer().getWardrobe().getClothing()));
-        client.getPlayer().getMessenger().sendStatus(true, client.getPlayer().getEntity() != null);
-    }
+	
+	@Override
+	public void handle(Session client, MessageEvent msg) {
+		client.getPlayer().sendBalance();
+		
+		client.sendQueue(new UserObjectMessageComposer(client.getPlayer()));
+		client.sendQueue(new BuildersClubMembershipMessageComposer());
+		client.sendQueue(new AllowancesMessageComposer(client.getPlayer().getData().getRank()));
+		//client.send(new CitizenshipStatusMessageComposer());
+		client.sendQueue(new AchievementPointsMessageComposer(client.getPlayer().getData().getAchievementPoints()));
+		client.sendQueue(new MessengerConfigMessageComposer());
+		client.sendQueue(new BadgeInventoryMessageComposer(client.getPlayer().getInventory().getBadges()));
+		client.sendQueue(new AchievementRequirementsMessageComposer(AchievementManager.getInstance().getAchievementGroups().values()));
+		client.sendQueue(new FigureSetIdsMessageComposer(client.getPlayer().getWardrobe().getClothing()));
+		client.getPlayer().getMessenger().sendStatus(true, client.getPlayer().getEntity() != null);
+		
+		client.flush();
+	}
+	
 }

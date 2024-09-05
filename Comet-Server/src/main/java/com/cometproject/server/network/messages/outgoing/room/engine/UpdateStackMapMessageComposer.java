@@ -6,6 +6,7 @@ import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 import java.util.List;
+import java.util.Objects;
 
 public class UpdateStackMapMessageComposer extends MessageComposer {
     private final List<RoomTile> tilesToUpdate;
@@ -35,16 +36,14 @@ public class UpdateStackMapMessageComposer extends MessageComposer {
 
     @Override
     public void compose(IComposerDataWrapper msg) {
-        msg.writeByte(singleTile != null ? 1 : tilesToUpdate.size());
+        msg.writeByte(singleTile != null ? 1 : Objects.requireNonNull(tilesToUpdate).size());
 
         if (singleTile != null) {
             this.composeUpdate(this.singleTile, msg);
             return;
         }
-
-        for (RoomTile tile : tilesToUpdate) {
-            this.composeUpdate(tile, msg);
-        }
+			
+			tilesToUpdate.forEach(tile -> this.composeUpdate(tile, msg));
     }
 
     private void composeUpdate(RoomTile tile, IComposerDataWrapper msg) {

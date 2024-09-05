@@ -5,9 +5,11 @@ import com.cometproject.server.network.messages.outgoing.help.SanctionStatusComp
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
-
 public class GetSanctionStatusEvent implements Event {
-    public void handle(Session client, MessageEvent msg) {
-        client.send(new SanctionStatusComposer());
-    }
+	
+    @Override
+	public void handle(Session client, MessageEvent msg) {
+		client.send(new SanctionStatusComposer());
+	}
+	
 }

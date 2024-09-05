@@ -67,4 +67,9 @@ public class KissCommand extends ChatCommand {
 		return Locale.get("command.kiss.description");
 	}
 	
+	@Override
+	public boolean isAsync() {
+		return true;
+	}
+	
 }

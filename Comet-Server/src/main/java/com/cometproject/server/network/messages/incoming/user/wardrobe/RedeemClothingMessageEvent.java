@@ -13,39 +13,40 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 import com.cometproject.server.storage.queries.player.PlayerClothingDao;
 
 public class RedeemClothingMessageEvent implements Event {
-    @Override
-    public void handle(Session client, MessageEvent msg) throws Exception {
-        final int itemId = msg.readInt();
-
-        if (client.getPlayer() == null || client.getPlayer().getEntity() == null) {
-            return;
-        }
-
-        final PlayerEntity playerEntity = client.getPlayer().getEntity();
-
-        if (playerEntity.getRoom() == null) {
-            return;
-        }
-
-        final Room room = playerEntity.getRoom();
-        final RoomItemFloor floorItem = room.getItems().getFloorItem(itemId);
-
-        if (floorItem == null || floorItem.getItemData().getOwnerId() != playerEntity.getPlayerId()) {
-            return;
-        }
-
-        final IClothingItem clothingItem =
-                CatalogManager.getInstance().getClothingItems().get(floorItem.getDefinition().getItemName());
-
-        if (clothingItem == null) {
-            return;
-        }
-
-        client.getPlayer().getWardrobe().getClothing().add(clothingItem.itemName());
-        PlayerClothingDao.redeemClothing(client.getPlayer().getId(), clothingItem.itemName());
-
-        room.getItems().removeItem(floorItem, client, false, true);
-        client.send(new FigureSetIdsMessageComposer(client.getPlayer().getWardrobe().getClothing()));
-        client.send(new NotificationMessageComposer("figureset.redeemed.success"));
-    }
+	
+	@Override
+	public void handle(Session client, MessageEvent msg) throws Exception {
+		final int itemId = msg.readInt();
+		
+		if (client.getPlayer() == null || client.getPlayer().getEntity() == null) {
+			return;
+		}
+		
+		final PlayerEntity playerEntity = client.getPlayer().getEntity();
+		
+		if (playerEntity.getRoom() == null) {
+			return;
+		}
+		
+		final Room room = playerEntity.getRoom();
+		final RoomItemFloor floorItem = room.getItems().getFloorItem(itemId);
+		
+		if (floorItem == null || floorItem.getItemData().getOwnerId() != playerEntity.getPlayerId()) {
+			return;
+		}
+		
+		final IClothingItem clothingItem = CatalogManager.getInstance().getClothingItems().get(floorItem.getDefinition().getItemName());
+		
+		if (clothingItem == null) {
+			return;
+		}
+		
+		client.getPlayer().getWardrobe().getClothing().add(clothingItem.itemName());
+		PlayerClothingDao.redeemClothing(client.getPlayer().getId(), clothingItem.itemName());
+		
+		room.getItems().removeItem(floorItem, client, false, true);
+		client.send(new FigureSetIdsMessageComposer(client.getPlayer().getWardrobe().getClothing()));
+		client.send(new NotificationMessageComposer("figureset.redeemed.success"));
+	}
+	
 }

@@ -4,24 +4,25 @@ import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
-
 public class RoomEntryInfoMessageComposer extends MessageComposer {
-    private final int id;
-    private final boolean hasOwnershipPermission;
-
-    public RoomEntryInfoMessageComposer(final int id, final boolean hasOwnershipPermission) {
-        this.id = id;
-        this.hasOwnershipPermission = hasOwnershipPermission;
-    }
-
-    @Override
-    public short getId() {
-        return Composers.RoomEntryInfoMessageComposer;
-    }
-
-    @Override
-    public void compose(IComposerDataWrapper msg) {
-        msg.writeInt(id);
-        msg.writeBoolean(hasOwnershipPermission);
-    }
+	
+	private final int id;
+	private final boolean hasOwnershipPermission;
+	
+	public RoomEntryInfoMessageComposer(final int id, final boolean hasOwnershipPermission) {
+		this.id = id;
+		this.hasOwnershipPermission = hasOwnershipPermission;
+	}
+	
+	@Override
+	public short getId() {
+		return Composers.RoomEntryInfoMessageComposer;
+	}
+	
+	@Override
+	public void compose(IComposerDataWrapper msg) {
+		msg.writeInt(id);
+		msg.writeBoolean(hasOwnershipPermission);
+	}
+	
 }

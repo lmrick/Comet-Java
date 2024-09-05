@@ -11,6 +11,8 @@ import com.cometproject.server.storage.queries.player.relationships.Relationship
 
 
 public class SetRelationshipMessageEvent implements Event {
+    
+    @Override
     public void handle(Session client, MessageEvent msg) {
         int user = msg.readInt();
         int level = msg.readInt();
@@ -50,4 +52,5 @@ public class SetRelationshipMessageEvent implements Event {
         client.send(new UpdateFriendStateMessageComposer(friend.getAvatar(),
                 friend.isOnline(), friend.isInRoom(), client.getPlayer().getRelationships().get(user)));
     }
+    
 }

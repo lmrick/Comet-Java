@@ -4,24 +4,25 @@ import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
-
 public class RoomPropertyMessageComposer extends MessageComposer {
-    private final String key;
-    private final String value;
-
-    public RoomPropertyMessageComposer(final String key, final String value) {
-        this.key = key;
-        this.value = value;
-    }
-
-    @Override
-    public short getId() {
-        return Composers.RoomPropertyMessageComposer;
-    }
-
-    @Override
-    public void compose(IComposerDataWrapper msg) {
-        msg.writeString(this.key);
-        msg.writeString(this.value);
-    }
+	
+	private final String key;
+	private final String value;
+	
+	public RoomPropertyMessageComposer(final String key, final String value) {
+		this.key = key;
+		this.value = value;
+	}
+	
+	@Override
+	public short getId() {
+		return Composers.RoomPropertyMessageComposer;
+	}
+	
+	@Override
+	public void compose(IComposerDataWrapper msg) {
+		msg.writeString(this.key);
+		msg.writeString(this.value);
+	}
+	
 }

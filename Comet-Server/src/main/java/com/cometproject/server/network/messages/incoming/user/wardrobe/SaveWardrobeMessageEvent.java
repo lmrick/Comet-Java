@@ -10,32 +10,33 @@ import com.cometproject.server.storage.queries.player.PlayerDao;
 
 import java.util.List;
 
-
 public class SaveWardrobeMessageEvent implements Event {
-    @Override
-    public void handle(Session client, MessageEvent msg) throws Exception {
-        int slot = msg.readInt();
-        String figure = msg.readString();
-        String gender = msg.readString();
-
-        List<IWardrobeItem> wardrobe = client.getPlayer().getSettings().getWardrobe();
-
-        boolean wardrobeUpdated = false;
-
-        for (IWardrobeItem item : wardrobe) {
-            if (item.getSlot() == slot) {
-                item.setFigure(figure);
-                item.setGender(gender);
-
-                wardrobeUpdated = true;
-            }
-        }
-
-        if (!wardrobeUpdated) {
-            wardrobe.add(new WardrobeItem(slot, gender, figure));
-        }
-
-        client.getPlayer().getSettings().setWardrobe(wardrobe);
-        PlayerDao.saveWardrobe(JsonUtil.getInstance().toJson(wardrobe), client.getPlayer().getId());
-    }
+	
+	@Override
+	public void handle(Session client, MessageEvent msg) throws Exception {
+		int slot = msg.readInt();
+		String figure = msg.readString();
+		String gender = msg.readString();
+		
+		List<IWardrobeItem> wardrobe = client.getPlayer().getSettings().getWardrobe();
+		
+		boolean wardrobeUpdated = false;
+		
+		for (IWardrobeItem item : wardrobe) {
+			if (item.getSlot() == slot) {
+				item.setFigure(figure);
+				item.setGender(gender);
+				
+				wardrobeUpdated = true;
+			}
+		}
+		
+		if (!wardrobeUpdated) {
+			wardrobe.add(new WardrobeItem(slot, gender, figure));
+		}
+		
+		client.getPlayer().getSettings().setWardrobe(wardrobe);
+		PlayerDao.saveWardrobe(JsonUtil.getInstance().toJson(wardrobe), client.getPlayer().getId());
+	}
+	
 }

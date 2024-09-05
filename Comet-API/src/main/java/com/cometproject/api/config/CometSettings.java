@@ -53,12 +53,12 @@ public class CometSettings {
     public static int floorEditorMaxY = 0;
     public static int floorEditorMaxTotal = 0;
 
-    public static int roomMaxPlayers = 150;
+    public static int roomMaxPlayers = 50000;
     public static boolean roomEncryptPasswords = false;
     public static int roomPasswordEncryptionRounds = 10;
     public static boolean roomCanPlaceItemOnEntity = false;
-    public static int roomMaxBots = 15;
-    public static int roomMaxPets = 15;
+    public static int roomMaxBots = 100;
+    public static int roomMaxPets = 100;
     public static int roomIdleMinutes = 20;
 
     public static FilterMode wordFilterMode = FilterMode.DEFAULT;
@@ -77,8 +77,8 @@ public class CometSettings {
     public static boolean messengerLogMessages = false;
 
     public static int cameraPhotoItemId = 50001;
-    public static String cameraPhotoUrl = "http://localhost:8080/camera/photo/%photoId%";
-    public static String cameraUploadUrl = "http://localhost:8080/camera/upload/%photoId%";
+    public static String cameraPhotoUrl = "http://localhost:8080/camera/photos/%photoId%";
+    public static String cameraUploadUrl = "http://dev-comet.test/camera/thumbnails/%photoId%";
 
     public static int roomWiredRewardMinimumRank = 7;
     public static boolean asyncCatalogPurchase = false;
@@ -92,7 +92,7 @@ public class CometSettings {
 
     public static boolean playerRightsItemPlacement = true;
 
-    public static boolean groupChatEnabled = false;
+    public static boolean groupChatEnabled = true;
     public static boolean logCatalogPurchases = false;
 
     public static boolean hallOfFameEnabled = false;

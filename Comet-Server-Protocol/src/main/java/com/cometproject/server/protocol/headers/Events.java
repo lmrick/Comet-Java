@@ -7,19 +7,16 @@ import java.util.Map;
 
 public class Events {
 	
-	public static final short ConfirmUsernameMessageEvent = 1590;//3199
 	public static final short GetRoomBannedUsersMessageEvent = 2652;//824
 	public static final short GetPetInventoryMessageEvent = 567;//2326
 	public static final short DropHandItemMessageEvent = 2846;//1454
 	public static final short ReleaseTicketMessageEvent = 3042;//893
 	public static final short GetModeratorRoomInfoMessageEvent = 1299;//1701
 	public static final short KickUserMessageEvent = 3838;//310
-	public static final short SaveWiredEffectConfigMessageEvent = 1843;//3789
-	public static final short RespectPetMessageEvent = 31;//856
 	public static final short GenerateSecretKeyMessageEvent = 412;//1127
 	public static final short GetModeratorTicketChatlogsMessageEvent = 3461;//1660
 	public static final short GetAchievementsMessageEvent = 3047;//1039
-	public static final short SaveWiredTriggerConfigMessageEvent = 2167;//2954
+	
 	public static final short AcceptGroupMembershipMessageEvent = 2891;//3155
 	public static final short GetGroupFurniSettingsMessageEvent = 2666;//1123
 	public static final short TakeAdminRightsMessageEvent = 2542;//3630
@@ -27,7 +24,52 @@ public class Events {
 	public static final short UpdateThreadMessageEvent = 777;//1911
 	public static final short ManageGroupMessageEvent = 2697;//1992
 	public static final short ModifyRoomFilterListMessageEvent = 2973;//514
-	public static final short SSOTicketMessageEvent = 286;//2190
+	
+	//WIREDS
+	public static final short SaveWiredEffectConfigMessageEvent = 1843;
+	public static final short SaveWiredTriggerConfigMessageEvent = 2167;
+	
+	//HANDSHAKE
+	public static final short ConfirmUsernameMessageEvent = 1590;
+	public static final short SSOTicketMessageEvent = 286;
+	
+	//NEW
+	public static final short VersionCheckMessageEvent = 3638;
+	public static final short GetCreditsInfoMessageEvent = 3598;
+	public static final short GetUnreadForumsCountMessageEvent = 888;
+	public static final short GetBadgePointLimitsEvent = 3417;
+	public static final short GetSoundSettingsEvent = 1742;
+	public static final short GetFriendRequestsMessageEvent = 1642;
+	public static final short GetNextTargetedOfferEvent = 2076;
+	public static final short FriendListUpdateMessageEvent = 1366;
+	public static final short GetHabboGroupBadgesMessageEvent = 278;
+	public static final short RoomCompetitionInitMessageEvent = 3995;
+	
+	//PLAYER SETTINGS
+	public static final short SetUIFlagsMessageEvent = 1045;
+	public static final short SetRoomCameraFollowMessageEvent = 3527;
+	public static final short SetChatStylePreferenceEvent = 1647;
+	public static final short SetChatPreferenceMessageEvent = 3378;
+	public static final short SetMessengerInviteStatusMessageEvent = 2702;
+	public static final short ResizeNavigatorMessageEvent = 3072;
+	public static final short SetSoundSettingsMessageEvent = 1718;
+	
+	//MISC
+	public static final short LatencyPingReportMessageEvent = 1322;
+	
+	//MONSTERPLANT
+	public static final short CompostPlantMessageEvent = 1932;
+	
+	//PETS
+	public static final short RespectPetMessageEvent = 31;
+	public static final short GiveSupplementToPetMessageEvent = 726;
+	public static final short HarvestPetMessageEvent = 1116;
+	public static final short RideHorseMessageEvent = 45;
+	public static final short MovePetMessageEvent = 3160;
+	public static final short TogglePetBreedingPermissionMessageEvent = 130;
+	public static final short ModifyWhoCanRideHorseMessageEvent = 579;
+	
+	
 	public static final short JoinGroupMessageEvent = 2529;//887
 	public static final short DeclineGroupMembershipMessageEvent = 2688;//40
 	public static final short UniqueIDMessageEvent = 921;//522
@@ -41,7 +83,7 @@ public class Events {
 	public static final short RefreshCampaignMessageEvent = 2260;//1409
 	public static final short GetPromotableRoomsMessageEvent = 2372;//381
 	public static final short UseOneWayGateMessageEvent = 3521;//1136
-	public static final short AddStickyNoteMessageEvent = 890;//1554
+	public static final short AddStickyNoteMessageEvent = 890;
 	public static final short GetSelectedBadgesMessageEvent = 904;//3562
 	public static final short UpdateStickyNoteMessageEvent = 3742;//1858
 	public static final short CloseTicketMesageEvent = 3406;//78
@@ -73,7 +115,6 @@ public class Events {
 	public static final short StartQuestMessageEvent = 2425;//646
 	public static final short GetGiftWrappingConfigurationMessageEvent = 3335;//1400
 	public static final short UpdateGroupIdentityMessageEvent = 1885;//3296
-	public static final short RideHorseMessageEvent = 45;//3097
 	public static final short ApplySignMessageEvent = 1195;//619
 	public static final short FindRandomFriendingRoomMessageEvent = 1275;//2960
 	public static final short GetModeratorUserChatlogMessageEvent = 1925;//1655
@@ -127,7 +168,7 @@ public class Events {
 	public static final short GetForumStatsMessageEvent = 2932;//952
 	public static final short GetPromoArticlesMessageEvent = 1293;//1090
 	public static final short SitMessageEvent = 1805;//1250
-	public static final short SetSoundSettingsMessageEvent = 1718;//1266
+	
 	public static final short ModerationCautionMessageEvent = 2849;//3585
 	public static final short InitializeFloorPlanSessionMessageEvent = 698;//228
 	public static final short ModeratorActionMessageEvent = 1992;//1282
@@ -152,7 +193,6 @@ public class Events {
 	public static final short SetMannequinFigureMessageEvent = 190;//2975
 	public static final short AssignRightsMessageEvent = 2578;//1917
 	public static final short GetYouTubeTelevisionMessageEvent = 1183;//1443
-	public static final short SetMessengerInviteStatusMessageEvent = 2702;//625
 	public static final short UpdateFloorPropertiesMessageEvent = 400;//2141
 	public static final short GetMoodlightConfigMessageEvent = 2090;//749
 	public static final short PurchaseRoomPromotionMessageEvent = 2937;//1403
@@ -188,7 +228,6 @@ public class Events {
 	public static final short GetGroupFurniConfigMessageEvent = 2183;//38
 	public static final short RemoveGroupFavouriteMessageEvent = 1332;//73
 	public static final short PlacePetMessageEvent = 2174;//3332
-	public static final short ModifyWhoCanRideHorseMessageEvent = 579;//921
 	public static final short GetRelationshipsMessageEvent = 716;//2220
 	public static final short GetCatalogIndexMessageEvent = 2069;//3285
 	public static final short ScrGetUserInfoMessageEvent = 857;//2657
@@ -204,11 +243,9 @@ public class Events {
 	public static final short GoToFlatMessageEvent = 586;//3021
 	public static final short GetModeratorUserRoomVisitsMessageEvent = 2828;//757
 	public static final short GetSanctionStatusMessageEvent = 1654;//25
-	public static final short SetChatPreferenceMessageEvent = 3378;//3027
-	public static final short ResizeNavigatorMessageEvent = 3072;//3831
-	public static final short CameraDataMessageEvent = 654;//782
-	public static final short RenderRoomMessageEvent = 1184;//2505
-	public static final short BuyPhotoMessageEvent = 1554;//2358
+
+	
+
 	public static final short SongInventoryMessageEvent = 1218;//2675
 	public static final short SongIdMessageEvent = 37;//2365
 	public static final short SongDataMessageEvent = 2675;//217
@@ -249,7 +286,7 @@ public class Events {
 	public static final short GuardianAcceptRequestMessageEvent = 706;//3429
 	public static final short RequestReportUserBullyingMessageEvent = 2385;//2388
 	public static final short ReportBullyMessageEvent = 318;//3543
-	public static final short GetUserTagsMessageEvent = 1468;//702
+	public static final short GetUserTagsMessageEvent = 1468;
 	public static final short FindNewFriendsMessageEvent = 488;//531
 	public static final short SaveNavigatorSearchMessageEvent = 3301;//3718
 	public static final short DeleteNavigatorSavedSearchMessageEvent = 2235;//1800
@@ -258,14 +295,19 @@ public class Events {
 	public static final short SaveFootballGateMessageEvent = 177;//3832
 	public static final short GroupConfirmRemoveMemberMessageEvent = 423;//3478
 	public static final short GetGroupPartsMessageEvent = 2047;//2451
-	public static final short SetRoomCameraFollowMessageEvent = 3527;//3279
+	
 	public static final short BreedPetsMessageEvent = 2162;//2805
 	public static final short OpenPetPackageMessageEvent = 455;//2249
 	public static final short RedeemClothingMessageEvent = 3162;//2699
 	public static final short EquipEffectMessageEvent = 2255;//295
-	public static final short ThumbnailMessageEvent = 2046;
+	
+	public static final short PhotoCompetitionMessageEvent = 3201;
+	public static final short PublishPhotoMessageEvent = 1817;
+	public static final short RenderRoomMessageEvent = 1184;
+	public static final short RenderRoomThumbnailMessageEvent = 2046;
 	public static final short PurchasePhotoMessageEvent = 1554;
 	public static final short PhotoPricingMessageEvent = 654;
+	
 	public static final short GetGameListMessageEvent = 1288;
 	public static final short GetGameAchievementsMessageEvent = 97;
 	public static final short GetGameStatusMessageEvent = 1740;

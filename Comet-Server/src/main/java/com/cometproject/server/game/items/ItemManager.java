@@ -39,10 +39,7 @@ public class ItemManager implements IFurnitureService {
 	}
 	
 	public static ItemManager getInstance() {
-		if (itemManagerInstance == null) {
-			itemManagerInstance = new ItemManager();
-		}
-		
+		if (itemManagerInstance == null) itemManagerInstance = new ItemManager();
 		return itemManagerInstance;
 	}
 	

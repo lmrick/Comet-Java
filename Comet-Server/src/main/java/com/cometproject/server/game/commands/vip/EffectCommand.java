@@ -57,4 +57,9 @@ public class EffectCommand extends ChatCommand {
 		return true;
 	}
 	
+	@Override
+	public boolean isAsync() {
+		return true;
+	}
+	
 }

@@ -45,8 +45,6 @@ public class HelpTicket {
 	}
 	
 	public void save() {
-		// Queue to be saved ??
-		
 		TicketDao.saveTicket(this);
 	}
 	

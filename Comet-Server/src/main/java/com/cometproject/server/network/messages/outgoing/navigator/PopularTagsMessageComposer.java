@@ -21,12 +21,12 @@ public class PopularTagsMessageComposer extends MessageComposer {
 
     @Override
     public void compose(IComposerDataWrapper msg) {
-        msg.writeInt(popularTags.size() > 50 ? 50 : popularTags.size());
-
-        for (Map.Entry<String, Integer> entry : popularTags.entrySet()) {
-            msg.writeString(entry.getKey());
-            msg.writeInt(entry.getValue());
-        }
+        msg.writeInt(Math.min(popularTags.size(), 50));
+			
+			popularTags.forEach((key, value) -> {
+				msg.writeString(key);
+				msg.writeInt(value);
+			});
     }
 
     @Override

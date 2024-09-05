@@ -5,10 +5,11 @@ import com.cometproject.server.network.messages.outgoing.user.wardrobe.WardrobeM
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
-
 public class WardrobeMessageEvent implements Event {
-    @Override
-    public void handle(Session client, MessageEvent msg) throws Exception {
-        client.send(new WardrobeMessageComposer(client.getPlayer().getSettings().getWardrobe()));
-    }
+	
+	@Override
+	public void handle(Session client, MessageEvent msg) throws Exception {
+		client.send(new WardrobeMessageComposer(client.getPlayer().getSettings().getWardrobe()));
+	}
+	
 }

@@ -15,12 +15,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 public class PetEntity extends RoomEntity {
-    private IPetData data;
-    private PetAI ai;
-
+    private final IPetData data;
+    private final PetAI ai;
     private int cycleCount = 0;
-
-    private Map<String, Object> attributes = new ConcurrentHashMap<>();
+    private final Map<String, Object> attributes = new ConcurrentHashMap<>();
 
     public PetEntity(IPetData data, int identifier, Position startPosition, int startBodyRotation, int startHeadRotation, Room roomInstance) {
         super(identifier, startPosition, startBodyRotation, startHeadRotation, roomInstance);
@@ -52,17 +50,11 @@ public class PetEntity extends RoomEntity {
         if (this.getMountedEntity() != null) {
             final RoomEntity entity = this.getMountedEntity();
             entity.getMountedEntity().setHasMount(false);
-
             this.setMountedEntity(null);
-
             entity.getPosition().setZ(entity.getTile().getWalkHeight());
-
             entity.updateVisibility(false);
             entity.updateVisibility(true);
-
             entity.markNeedsUpdate();
-            //entity.moveTo(entity.getPosition().squareInFront(entity.getBodyRotation()));
-
             entity.setMountedEntity(null);
             entity.setHasMount(false);
             entity.applyEffect(null);
@@ -80,10 +72,8 @@ public class PetEntity extends RoomEntity {
 
     @Override
     public boolean onRoomDispose() {
-//        PetDao.savePosition(this.getPosition().getX(), this.getPosition().getY(), this.data.getId());
-
+        PetDao.savePosition(this.getPosition().getX(), this.getPosition().getY(), this.data.getId());
         this.getRoom().getEntities().broadcastMessage(new LeaveRoomMessageComposer(this.getId()));
-
         this.attributes.clear();
         return true;
     }
@@ -116,7 +106,7 @@ public class PetEntity extends RoomEntity {
 
         StringBuilder composer = new StringBuilder(data.getLook().toLowerCase() + " ");
 
-        if (this.getData().getTypeId() == 15 /*is horse*/) {
+        if (this.getData().getTypeId() == 15 ) {
             composer.append(this.getData().isSaddled() ? "3" : "2")
                     .append(" 2 ")
                     .append(this.getData().getHair())

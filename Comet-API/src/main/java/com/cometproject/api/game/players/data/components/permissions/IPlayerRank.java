@@ -40,6 +40,8 @@ public interface IPlayerRank {
     boolean aboutDetailed();
 
     boolean aboutStats();
-
+    
+    boolean roomSeeWhispers();
+    boolean sendLoginNotif();
     String namePrefix();
 }

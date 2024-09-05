@@ -5,8 +5,10 @@ import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
 public class ReportForumPostMessageEvent implements Event {
-    @Override
-    public void handle(Session client, MessageEvent msg) throws Exception {
-
-    }
+	
+	@Override
+	public void handle(Session client, MessageEvent msg) throws Exception {
+	
+	}
+	
 }

@@ -83,4 +83,9 @@ public class SuperPullCommand extends ChatCommand {
 		return true;
 	}
 	
+	@Override
+	public boolean isAsync() {
+		return true;
+	}
+	
 }

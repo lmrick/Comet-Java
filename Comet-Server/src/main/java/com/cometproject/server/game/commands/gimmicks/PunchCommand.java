@@ -68,4 +68,9 @@ public class PunchCommand extends ChatCommand {
 		return Locale.get("command.punch.description");
 	}
 	
+	@Override
+	public boolean isAsync() {
+		return true;
+	}
+	
 }

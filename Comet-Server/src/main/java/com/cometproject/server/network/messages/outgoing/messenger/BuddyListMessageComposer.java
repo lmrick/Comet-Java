@@ -17,6 +17,7 @@ import com.google.common.collect.Maps;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class BuddyListMessageComposer extends MessageComposer {
@@ -35,16 +36,8 @@ public class BuddyListMessageComposer extends MessageComposer {
         this.player = player;
         this.friends = Maps.newHashMap(friends);
         this.avatars = Lists.newArrayList();
-
-        for (Map.Entry<Integer, IMessengerFriend> friend : friends.entrySet()) {
-            if (friend.getValue() != null) {
-                final IPlayerAvatar playerAvatar = friend.getValue().getAvatar();
-
-                if (playerAvatar != null) {
-                    avatars.add(playerAvatar);
-                }
-            }
-        }
+			
+			friends.values().stream().filter(Objects::nonNull).map(IMessengerFriend::getAvatar).filter(Objects::nonNull).forEachOrdered(avatars::add);
 
         this.groups = groups;
     }
@@ -140,25 +133,23 @@ public class BuddyListMessageComposer extends MessageComposer {
 
 
         if (CometSettings.groupChatEnabled) {
-            for (Integer groupId : this.groups) {
-                final IGroup group = GameContext.getCurrent().getGroupService().getGroup(groupId);
-
-                msg.writeInt(-groupId);
-                msg.writeString(group == null || group.getData() == null ? "Unknown Group" : group.getData().getTitle());
-                msg.writeInt(0);
-                msg.writeBoolean(true);
-                msg.writeBoolean(false);
-                msg.writeString(group == null || group.getData() == null ? "" : group.getData().getBadge());
-                msg.writeInt(1);
-                msg.writeString("");
-                msg.writeString("");
-                msg.writeString("");
-                msg.writeBoolean(false);
-                msg.writeBoolean(false);
-                msg.writeBoolean(false);
-                msg.writeShort(0);
-
-            }
+					this.groups.forEach(groupId -> {
+						final IGroup group = GameContext.getCurrent().getGroupService().getGroup(groupId);
+						msg.writeInt(-groupId);
+						msg.writeString(group == null || group.getData() == null ? "Unknown Group" : group.getData().getTitle());
+						msg.writeInt(0);
+						msg.writeBoolean(true);
+						msg.writeBoolean(false);
+						msg.writeString(group == null || group.getData() == null ? "" : group.getData().getBadge());
+						msg.writeInt(1);
+						msg.writeString("");
+						msg.writeString("");
+						msg.writeString("");
+						msg.writeBoolean(false);
+						msg.writeBoolean(false);
+						msg.writeBoolean(false);
+						msg.writeShort(0);
+					});
         }
     }
 

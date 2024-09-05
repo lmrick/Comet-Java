@@ -11,6 +11,7 @@ public class SSOTicketMessageEvent implements Event {
 	
 	public static final String TICKET_DELIMITER = ":";
 	
+	@Override
 	public void handle(Session client, MessageEvent msg) {
 		if (BanManager.getInstance().hasBan(client.getUniqueId(), BanType.MACHINE)) {
 			client.getLogger().warn("Banned player: " + client.getUniqueId() + " tried logging in");

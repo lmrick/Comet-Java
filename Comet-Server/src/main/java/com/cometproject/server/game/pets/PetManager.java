@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class PetManager implements Initializable {
     private static PetManager petManagerInstance;
     private final Map<Integer, IPetData> pendingPetDataSaves = Maps.newConcurrentMap();
-    private Logger log = Logger.getLogger(PetManager.class.getName());
+    private static final Logger log = Logger.getLogger(PetManager.class.getName());
     private List<PetRace> petRaces;
     private Map<Integer, PetSpeech> petMessages;
     private Map<String, String> transformablePets;
@@ -31,9 +31,7 @@ public class PetManager implements Initializable {
     }
 
     public static PetManager getInstance() {
-        if (petManagerInstance == null)
-            petManagerInstance = new PetManager();
-
+        if (petManagerInstance == null) petManagerInstance = new PetManager();
         return petManagerInstance;
     }
 
@@ -57,7 +55,6 @@ public class PetManager implements Initializable {
 
         try {
             this.petRaces = PetDao.getRaces();
-
             log.info("Loaded " + this.petRaces.size() + " pet races");
         } catch (Exception e) {
             log.error("Error while loading pet races", e);
@@ -71,7 +68,6 @@ public class PetManager implements Initializable {
 
         try {
             this.petBreedPallets = PetDao.getPetBreedPallets();
-
             log.info("Loaded " + this.petBreedPallets.size() + " pet breed pallet sets");
         } catch (Exception e) {
             log.error("Error while loading pet breed pallets", e);
@@ -86,7 +82,6 @@ public class PetManager implements Initializable {
         try {
             AtomicInteger petSpeechCount = new AtomicInteger(0);
             this.petMessages = PetDao.getMessages(petSpeechCount);
-
             log.info("Loaded " + this.petMessages.size() + " pet message sets and " + petSpeechCount.get() + " total messages");
         } catch (Exception e) {
             log.error("Error while loading pet messages");
@@ -158,7 +153,4 @@ public class PetManager implements Initializable {
         return petBreedPallets;
     }
 
-    //    public String[] getSpeech(int petType) {
-//        return this.petSpeech.get(petType);
-//    }
 }

@@ -11,4 +11,5 @@ public class CitizenshipStatusMessageEvent implements Event {
     public void handle(Session client, MessageEvent msg) throws Exception {
 //        client.send(new CitizenshipStatusMessageComposer());
     }
+    
 }

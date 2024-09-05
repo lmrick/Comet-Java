@@ -258,26 +258,26 @@ public class RoomItemFactory {
 		}};
 	}
 	
-	public static RoomItemFloor createFloor(RoomItemData itemData, Room room, IFurnitureDefinition def) {
+	public static RoomItemFloor createFloor(RoomItemData itemData, Room room, IFurnitureDefinition definition) {
 		RoomItemFloor floorItem = null;
 		
-		if (def == null) {
+		if (definition == null) {
 			return null;
 		}
 		
-		if (def.canSit()) {
+		if (definition.canSit()) {
 			floorItem = new SeatFloorItem(itemData, room);
 		}
 		
-		if (def.getItemName().startsWith(STACK_TOOL)) {
+		if (definition.getItemName().startsWith(STACK_TOOL)) {
 			floorItem = new MagicStackFloorItem(itemData, room);
 		}
 		
-		if (def.isAdFurni()) {
+		if (definition.isAdFurni()) {
 			floorItem = new AdsFloorItem(itemData, room);
 		}
 		
-		if (def.getItemName().contains("yttv")) {
+		if (definition.getItemName().contains("yttv")) {
 			floorItem = new VideoPlayerFloorItem(itemData, room);
 		}
 		
@@ -288,20 +288,20 @@ public class RoomItemFactory {
 				return null;
 			}
 		} else {
-			if (itemDefinitionMap.containsKey(def.getInteraction())) {
+			if (itemDefinitionMap.containsKey(definition.getInteraction())) {
 				try {
 					Constructor<? extends RoomItemFloor> constructor;
 					
-					if (itemConstructorCache.containsKey(def.getInteraction())) {
-						constructor = itemConstructorCache.get(def.getInteraction());
+					if (itemConstructorCache.containsKey(definition.getInteraction())) {
+						constructor = itemConstructorCache.get(definition.getInteraction());
 					} else {
-						constructor = itemDefinitionMap.get(def.getInteraction()).getConstructor(RoomItemData.class, Room.class);
-						itemConstructorCache.put(def.getInteraction(), constructor);
+						constructor = itemDefinitionMap.get(definition.getInteraction()).getConstructor(RoomItemData.class, Room.class);
+						itemConstructorCache.put(definition.getInteraction(), constructor);
 					}
 					
 					if (constructor != null) floorItem = constructor.newInstance(itemData, room);
 				} catch (Exception e) {
-					log.warn("Failed to create instance for item: " + itemData.getId() + ", type: " + def.getInteraction(), e);
+					log.warn("Failed to create instance for item: " + itemData.getId() + ", type: " + definition.getInteraction(), e);
 				}
 			}
 		}
@@ -318,14 +318,14 @@ public class RoomItemFactory {
 		return floorItem;
 	}
 	
-	public static RoomItemWall createWall(RoomItemData itemData, Room room, IFurnitureDefinition def) {
-		if (def == null) {
+	public static RoomItemWall createWall(RoomItemData itemData, Room room, IFurnitureDefinition definition) {
+		if (definition == null) {
 			return null;
 		}
 		
-		RoomItemWall wallItem = null;
+		RoomItemWall wallItem;
 		
-		switch (def.getInteraction()) {
+		switch (definition.getInteraction()) {
 			case "habbowheel" -> wallItem = new WheelWallItem(itemData, room);
 			case "dimmer" -> wallItem = new MoodLightWallItem(itemData, room);
 			case "postit" -> wallItem = new PostItWallItem(itemData, room);

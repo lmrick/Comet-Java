@@ -8,7 +8,6 @@ import com.cometproject.server.tasks.CometThreadManager;
 import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractItemEvent implements ICometTask {
-	
 	private final RoomItemFloor floorItem;
 	private final RoomEntity entity;
 	

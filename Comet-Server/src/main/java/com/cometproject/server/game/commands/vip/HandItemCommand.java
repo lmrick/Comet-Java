@@ -44,4 +44,9 @@ public class HandItemCommand extends ChatCommand {
 		return true;
 	}
 	
+	@Override
+	public boolean isAsync() {
+		return true;
+	}
+	
 }

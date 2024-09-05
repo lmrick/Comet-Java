@@ -7,6 +7,7 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 
 public class OpenInventoryMessageEvent implements Event {
 	
+	@Override
 	public void handle(Session client, MessageEvent msg) {
 		PlayerManager.getInstance().getPlayerLoadExecutionService().submit(() -> {
 			if (!client.getPlayer().getInventory().itemsLoaded()) {

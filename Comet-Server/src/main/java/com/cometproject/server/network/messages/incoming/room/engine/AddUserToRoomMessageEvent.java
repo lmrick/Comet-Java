@@ -58,17 +58,11 @@ public class AddUserToRoomMessageEvent implements Event {
 		
 		Map<Integer, String> groupsInRoom = new HashMap<>();
 		
-		for (PlayerEntity playerEntity : room.getEntities().getPlayerEntities()) {
-			if (playerEntity.getPlayer() != null && playerEntity.getPlayer().getData() != null) {
-				if (playerEntity.getPlayer().getData().getFavouriteGroup() != 0) {
-					IGroupData groupData = GameContext.getCurrent().getGroupService().getData(playerEntity.getPlayer().getData().getFavouriteGroup());
-					
-					if (groupData == null) continue;
-					
-					groupsInRoom.put(playerEntity.getPlayer().getData().getFavouriteGroup(), groupData.getBadge());
-				}
-			}
-		}
+		room.getEntities().getPlayerEntities().stream().filter(playerEntity -> playerEntity.getPlayer() != null && playerEntity.getPlayer().getData() != null).filter(playerEntity -> playerEntity.getPlayer().getData().getFavouriteGroup() != 0).forEachOrdered(playerEntity -> {
+			IGroupData groupData = GameContext.getCurrent().getGroupService().getData(playerEntity.getPlayer().getData().getFavouriteGroup());
+			if (groupData == null) return;
+			groupsInRoom.put(playerEntity.getPlayer().getData().getFavouriteGroup(), groupData.getBadge());
+		});
 		
 		client.sendQueue(new GroupBadgesMessageComposer(groupsInRoom));
 		client.sendQueue(new RoomEntryInfoMessageComposer(room.getId(), room.getData().getOwnerId() == client.getPlayer().getId() || client.getPlayer().getPermissions().getRank().roomFullControl()));
@@ -78,26 +72,22 @@ public class AddUserToRoomMessageEvent implements Event {
 			client.getPlayer().getEntity().applyEffect(new PlayerEffect(client.getPlayer().getInventory().getEquippedEffect(), false));
 		}
 		
-		if (room.getEntities().getAllEntities().size() > 0)
+		if (!room.getEntities().getAllEntities().isEmpty())
 			client.sendQueue(new AvatarUpdateMessageComposer(room.getEntities().getAllEntities().values()));
 		
-		for (RoomEntity av : room.getEntities().getAllEntities().values()) {
+		room.getEntities().getAllEntities().values().forEach(av -> {
 			if (av.getCurrentEffect() != null) {
 				client.sendQueue(new ApplyEffectMessageComposer(av.getId(), av.getCurrentEffect().getEffectId()));
 			}
-			
 			if (av.getDanceId() != 0) {
 				client.sendQueue(new DanceMessageComposer(av.getId(), av.getDanceId()));
 			}
-			
 			if (av.getHandItem() != 0) {
 				client.sendQueue(new HandItemMessageComposer(av.getId(), av.getHandItem()));
 			}
-			
 			if (av.isIdle()) {
 				client.sendQueue(new IdleStatusMessageComposer((PlayerEntity) av, true));
 			}
-			
 			if (av.getAI() != null) {
 				if (av instanceof PetEntity && ((PetEntity) av).getData().getTypeId() == 15) {
 					client.send(new HorseFigureMessageComposer(((PetEntity) av)));
@@ -105,7 +95,7 @@ public class AddUserToRoomMessageEvent implements Event {
 				
 				av.getAI().onPlayerEnter(client.getPlayer().getEntity());
 			}
-		}
+		});
 		
 		client.sendQueue(new RoomVisualizationSettingsMessageComposer(room.getData().getHideWalls(), room.getData().getWallThickness(), room.getData().getFloorThickness()));
 		client.getPlayer().getMessenger().sendStatus(true, true);

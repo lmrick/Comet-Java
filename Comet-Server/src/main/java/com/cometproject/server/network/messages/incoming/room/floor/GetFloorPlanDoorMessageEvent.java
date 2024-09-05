@@ -6,17 +6,17 @@ import com.cometproject.server.network.messages.outgoing.room.floor.FloorPlanDoo
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
-
 public class GetFloorPlanDoorMessageEvent implements Event {
-
-    @Override
-    public void handle(Session client, MessageEvent msg) throws Exception {
-        if (client.getPlayer().getEntity() != null) {
-            IRoomModel model = client.getPlayer().getEntity().getRoom().getModel();
-
-            if (model == null) return;
-
-            client.send(new FloorPlanDoorMessageComposer(model.getDoorX(), model.getDoorY(), model.getDoorRotation()));
-        }
-    }
+	
+	@Override
+	public void handle(Session client, MessageEvent msg) throws Exception {
+		if (client.getPlayer().getEntity() != null) {
+			IRoomModel model = client.getPlayer().getEntity().getRoom().getModel();
+			
+			if (model == null) return;
+			
+			client.send(new FloorPlanDoorMessageComposer(model.getDoorX(), model.getDoorY(), model.getDoorRotation()));
+		}
+	}
+	
 }

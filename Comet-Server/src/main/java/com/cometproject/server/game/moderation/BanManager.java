@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BanManager implements Initializable {
 	
@@ -44,18 +45,10 @@ public class BanManager implements Initializable {
 	}
 	
 	public void processBans() {
-		List<Ban> bansToRemove = Lists.newArrayList();
+		List<Ban> bansToRemove = this.bans.values().stream().filter(ban -> ban.getExpire() != 0 && Comet.getTime() >= ban.getExpire()).collect(Collectors.toList());
 		
-		for (Ban ban : this.bans.values()) {
-			if (ban.getExpire() != 0 && Comet.getTime() >= ban.getExpire()) {
-				bansToRemove.add(ban);
-			}
-		}
-		
-		if (bansToRemove.size() != 0) {
-			for (Ban ban : bansToRemove) {
-				this.bans.remove(ban.getData());
-			}
+		if (!bansToRemove.isEmpty()) {
+			bansToRemove.forEach(ban -> this.bans.remove(ban.getData()));
 		}
 		
 		bansToRemove.clear();

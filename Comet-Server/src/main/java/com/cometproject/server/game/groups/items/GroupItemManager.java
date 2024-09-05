@@ -5,6 +5,7 @@ import com.cometproject.api.game.groups.items.IGroupBadgeItem;
 import com.cometproject.server.storage.queries.groups.GroupItemDao;
 import org.apache.log4j.Logger;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,7 @@ public class GroupItemManager implements IGroupItemService {
 		}
 		
 		int itemCount = GroupItemDao.loadGroupItems(bases, symbols, baseColours, symbolColours, backgroundColours);
-		log.info("Loaded " + itemCount + " group items");
+		log.info(MessageFormat.format("Loaded {0} group items", itemCount));
 	}
 	
 	public List<IGroupBadgeItem> getBases() {

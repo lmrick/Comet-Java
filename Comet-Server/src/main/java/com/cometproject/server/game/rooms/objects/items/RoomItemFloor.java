@@ -58,7 +58,6 @@ public abstract class RoomItemFloor extends RoomItem implements Collidable, IFlo
 		}
 		
 		msg.writeInt(-1);
-		//msg.writeInt(!this.getDefinition().getInteraction().equals("default") ? 1 : 0);
 		msg.writeInt(!(this instanceof DefaultFloorItem) && !(this instanceof SoundMachineFloorItem) ? 1 : 0);
 		msg.writeInt(this.getItemData().getOwnerId());
 		
@@ -169,23 +168,16 @@ public abstract class RoomItemFloor extends RoomItem implements Collidable, IFlo
 	
 	public List<RoomItemFloor> getItemsOnStack() {
 		List<RoomItemFloor> floorItems = Lists.newArrayList();
-		
 		List<AffectedTile> affectedTiles = AffectedTile.getAffectedTilesAt(this.getDefinition().getLength(), this.getDefinition().getWidth(), this.getPosition().getX(), this.getPosition().getY(), this.getRotation());
-		
 		floorItems.addAll(this.getRoom().getItems().getItemsOnSquare(this.getPosition().getX(), this.getPosition().getY()));
-		
 		affectedTiles.forEach(tile -> this.getRoom().getItems().getItemsOnSquare(tile.x, tile.y).stream().filter(floorItem -> !floorItems.contains(floorItem)).forEachOrdered(floorItems::add));
-		
 		return floorItems;
 	}
 	
 	public List<RoomEntity> getEntitiesOnItem() {
 		List<RoomEntity> entities = Lists.newArrayList();
-		
 		entities.addAll(this.getRoom().getEntities().getEntitiesAt(this.getPosition()));
-		
 		AffectedTile.getAffectedTilesAt(this.getDefinition().getLength(), this.getDefinition().getWidth(), this.getPosition().getX(), this.getPosition().getY(), this.getRotation()).stream().map(affectedTile -> this.getRoom().getEntities().getEntitiesAt(new Position(affectedTile.x, affectedTile.y))).forEachOrdered(entities::addAll);
-		
 		return entities;
 	}
 	

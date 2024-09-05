@@ -10,63 +10,64 @@ import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 import com.cometproject.server.storage.queries.player.PlayerDao;
 
-
 public class WallItemsMessageComposer extends MessageComposer {
-    private final Room room;
-
-    public WallItemsMessageComposer(Room room) {
-        this.room = room;
-    }
-
-    @Override
-    public short getId() {
-        return Composers.ItemsMessageComposer;
-    }
-
-    @Override
-    public void compose(IComposerDataWrapper msg) {
-        int size = room.getItems().getWallItems().size();
-
-        if (size > 0) {
-            if (room.getGroup() == null) {
-                msg.writeInt(1);
-                msg.writeInt(room.getData().getOwnerId());
-                msg.writeString(room.getData().getOwner());
-            } else {
-                final IGroup group = room.getGroup();
-
-                if (group.getData().canMembersDecorate()) {
-                    msg.writeInt(group.getMembers().getAll().size());
-
-                    for (IGroupMember groupMember : group.getMembers().getAll().values()) {
-                        msg.writeInt(groupMember.getPlayerId());
-                        msg.writeString(PlayerDao.getUsernameByPlayerId(groupMember.getPlayerId()));
-                    }
-                } else {
-                    msg.writeInt(group.getMembers().getAdministrators().size());
-
-                    for (Integer groupMember : group.getMembers().getAdministrators()) {
-                        msg.writeInt(groupMember);
-                        msg.writeString(PlayerDao.getUsernameByPlayerId(groupMember));
-                    }
-                }
-            }
-
-        } else {
-            msg.writeInt(0);
-        }
-
-        msg.writeInt(size);
-
-        for (RoomItemWall item : room.getItems().getWallItems().values()) {
-            String extradata = (item instanceof PostItWallItem ? item.getItemData().getData().split(" ")[0] : item.getItemData().getData());
-            msg.writeString(item.getVirtualId());
-            msg.writeInt(item.getDefinition().getSpriteId());
-            msg.writeString(item.getWallPosition());
-            msg.writeString(extradata);
-            msg.writeInt(0);
-            msg.writeInt(room.getData().getOwnerId());
-            msg.writeInt(0);
-        }
-    }
+	
+	private final Room room;
+	
+	public WallItemsMessageComposer(Room room) {
+		this.room = room;
+	}
+	
+	@Override
+	public short getId() {
+		return Composers.ItemsMessageComposer;
+	}
+	
+	@Override
+	public void compose(IComposerDataWrapper msg) {
+		int size = room.getItems().getWallItems().size();
+		
+		if (size > 0) {
+			if (room.getGroup() == null) {
+				msg.writeInt(1);
+				msg.writeInt(room.getData().getOwnerId());
+				msg.writeString(room.getData().getOwner());
+			} else {
+				final IGroup group = room.getGroup();
+				
+				if (group.getData().canMembersDecorate()) {
+					msg.writeInt(group.getMembers().getAll().size());
+					
+					group.getMembers().getAll().values().forEach(groupMember -> {
+						msg.writeInt(groupMember.getPlayerId());
+						msg.writeString(PlayerDao.getUsernameByPlayerId(groupMember.getPlayerId()));
+					});
+				} else {
+					msg.writeInt(group.getMembers().getAdministrators().size());
+					
+					group.getMembers().getAdministrators().forEach(groupMember -> {
+						msg.writeInt(groupMember);
+						msg.writeString(PlayerDao.getUsernameByPlayerId(groupMember));
+					});
+				}
+			}
+			
+		} else {
+			msg.writeInt(0);
+		}
+		
+		msg.writeInt(size);
+		
+		room.getItems().getWallItems().values().forEach(item -> {
+			String extradata = (item instanceof PostItWallItem ? item.getItemData().getData().split(" ")[0] : item.getItemData().getData());
+			msg.writeString(item.getVirtualId());
+			msg.writeInt(item.getDefinition().getSpriteId());
+			msg.writeString(item.getWallPosition());
+			msg.writeString(extradata);
+			msg.writeInt(0);
+			msg.writeInt(room.getData().getOwnerId());
+			msg.writeInt(0);
+		});
+	}
+	
 }

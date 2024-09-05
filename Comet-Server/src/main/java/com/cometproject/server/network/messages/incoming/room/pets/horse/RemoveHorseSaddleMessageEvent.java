@@ -15,34 +15,36 @@ import com.cometproject.storage.api.data.DataWrapper;
 import com.google.common.collect.Sets;
 
 public class RemoveHorseSaddleMessageEvent implements Event {
-    @Override
-    public void handle(Session client, MessageEvent msg) throws Exception {
-        final int petId = msg.readInt();
-
-        if (client.getPlayer().getEntity() == null || client.getPlayer().getEntity().getRoom() == null) {
-            return;
-        }
-
-        final Room room = client.getPlayer().getEntity().getRoom();
-
-        PetEntity petEntity = room.getEntities().getEntityByPetId(petId);
-
-        if (petEntity == null || petEntity.getData().getOwnerId() != client.getPlayer().getId()) {
-            return;
-        }
-
-        if (ItemManager.getInstance().getSaddleId() != null) {
-            petEntity.getData().setSaddled(false);
-            petEntity.getData().saveHorseData();
-
-            room.getEntities().broadcastMessage(new HorseFigureMessageComposer(petEntity));
-
-            final DataWrapper<Long> itemId = DataWrapper.createEmpty();
-            StorageContext.getCurrentContext().getRoomItemRepository().createItem(client.getPlayer().getId(), ItemManager.getInstance().getSaddleId(), "", itemId::set);
-
-            IPlayerItem playerItem = client.getPlayer().getInventory().add(itemId.get(), ItemManager.getInstance().getSaddleId(), "", null, null);
-            client.send(new UnseenItemsMessageComposer(Sets.newHashSet(playerItem), ItemManager.getInstance()));
-            client.send(new UpdateInventoryMessageComposer());
-        }
-    }
+	
+	@Override
+	public void handle(Session client, MessageEvent msg) throws Exception {
+		final int petId = msg.readInt();
+		
+		if (client.getPlayer().getEntity() == null || client.getPlayer().getEntity().getRoom() == null) {
+			return;
+		}
+		
+		final Room room = client.getPlayer().getEntity().getRoom();
+		
+		PetEntity petEntity = room.getEntities().getEntityByPetId(petId);
+		
+		if (petEntity == null || petEntity.getData().getOwnerId() != client.getPlayer().getId()) {
+			return;
+		}
+		
+		if (ItemManager.getInstance().getSaddleId() != null) {
+			petEntity.getData().setSaddled(false);
+			petEntity.getData().saveHorseData();
+			
+			room.getEntities().broadcastMessage(new HorseFigureMessageComposer(petEntity));
+			
+			final DataWrapper<Long> itemId = DataWrapper.createEmpty();
+			StorageContext.getCurrentContext().getRoomItemRepository().createItem(client.getPlayer().getId(), ItemManager.getInstance().getSaddleId(), "", itemId::set);
+			
+			IPlayerItem playerItem = client.getPlayer().getInventory().add(itemId.get(), ItemManager.getInstance().getSaddleId(), "", null, null);
+			client.send(new UnseenItemsMessageComposer(Sets.newHashSet(playerItem), ItemManager.getInstance()));
+			client.send(new UpdateInventoryMessageComposer());
+		}
+	}
+	
 }
