@@ -1,91 +1,64 @@
 package com.cometproject.storage.api;
 
+import java.util.HashMap;
+import java.util.Map;
 import com.cometproject.storage.api.repositories.*;
 
 public final class StorageContext {
-	
 	private static StorageContext storageContext;
-	
-	private IGroupRepository groupRepository;
-	private IGroupMemberRepository groupMemberRepository;
-	private IGroupForumRepository groupForumRepository;
-	
-	private IRoomItemRepository roomItemRepository;
-	private IRoomRepository roomRepository;
-	private IInventoryRepository inventoryRepository;
-	private IRewardRepository rewardRepository;
-	private IPhotoRepository photoRepository;
-	
+	private final Map<Class<?>, Object> repositories = new HashMap<>();
+
+	public StorageContext() {
+		
+	}
+
+	public <T> void setRepository(Class<T> repositoryClass, T repository) {
+		repositories.put(repositoryClass, repository);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T getRepository(Class<T> repositoryClass) {
+		return (T) repositories.get(repositoryClass);
+	}
+
 	public static void setCurrentContext(StorageContext ctx) {
 		storageContext = ctx;
 	}
-	
+
 	public static StorageContext getCurrentContext() {
 		return storageContext;
 	}
-	
+
 	public IGroupRepository getGroupRepository() {
-		return groupRepository;
+		return getRepository(IGroupRepository.class);
 	}
-	
-	public void setGroupRepository(IGroupRepository groupRepository) {
-		this.groupRepository = groupRepository;
-	}
-	
+
 	public IGroupMemberRepository getGroupMemberRepository() {
-		return groupMemberRepository;
+		return getRepository(IGroupMemberRepository.class);
 	}
-	
-	public void setGroupMemberRepository(IGroupMemberRepository groupMemberRepository) {
-		this.groupMemberRepository = groupMemberRepository;
-	}
-	
+
 	public IGroupForumRepository getGroupForumRepository() {
-		return groupForumRepository;
+		return getRepository(IGroupForumRepository.class);
 	}
-	
-	public void setGroupForumRepository(IGroupForumRepository groupForumRepository) {
-		this.groupForumRepository = groupForumRepository;
-	}
-	
+
 	public IRoomItemRepository getRoomItemRepository() {
-		return roomItemRepository;
+		return getRepository(IRoomItemRepository.class);
 	}
-	
-	public void setRoomItemRepository(IRoomItemRepository roomItemRepository) {
-		this.roomItemRepository = roomItemRepository;
-	}
-	
+
 	public IInventoryRepository getInventoryRepository() {
-		return inventoryRepository;
+		return getRepository(IInventoryRepository.class);
 	}
-	
-	public void setInventoryRepository(IInventoryRepository inventoryRepository) {
-		this.inventoryRepository = inventoryRepository;
-	}
-	
+
 	public IRoomRepository getRoomRepository() {
-		return roomRepository;
+		return getRepository(IRoomRepository.class);
 	}
-	
-	public void setRoomRepository(IRoomRepository roomRepository) {
-		this.roomRepository = roomRepository;
-	}
-	
+
 	public IRewardRepository getRewardRepository() {
-		return rewardRepository;
+		return getRepository(IRewardRepository.class);
 	}
-	
-	public void setRewardRepository(IRewardRepository rewardRepository) {
-		this.rewardRepository = rewardRepository;
-	}
-	
+
 	public IPhotoRepository getPhotoRepository() {
-		return photoRepository;
+		return getRepository(IPhotoRepository.class);
 	}
-	
-	public void setPhotoRepository(IPhotoRepository photoRepository) {
-		this.photoRepository = photoRepository;
-	}
-	
+
 }

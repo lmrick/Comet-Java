@@ -1,7 +1,7 @@
 package com.cometproject.test;
 
 import com.cometproject.api.game.utilities.Position;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 import java.util.HashMap;
@@ -22,4 +22,5 @@ public class PositionMapTest extends TestCase {
         Assert.assertTrue(this.positionMap.containsKey(pos));
         Assert.assertEquals(this.positionMap.get(pos), "lala");
     }
+    
 }

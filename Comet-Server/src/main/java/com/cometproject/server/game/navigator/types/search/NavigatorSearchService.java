@@ -13,7 +13,6 @@ import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.network.messages.outgoing.navigator.updated.NavigatorSearchResultSetMessageComposer;
 import com.cometproject.server.tasks.ICometTask;
 import com.google.common.collect.Lists;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;

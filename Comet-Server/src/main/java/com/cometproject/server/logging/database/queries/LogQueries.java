@@ -130,6 +130,10 @@ public class LogQueries {
 			LogDatabaseHelper.closeSilently(sqlConnection);
 		}
 	}
+
+	public static List<RoomChatLogEntry> getChatLogsByCriteria(int playerId, int roomId, long entryTime, long exitTime) {
+		return getChatLogsByCriteria(playerId, roomId, entryTime, exitTime);
+	}
 	
 	public static List<RoomChatLogEntry> getChatLogsByCriteria(int playerId, int roomId, int entryTime, int exitTime) {
 		final int limit = 150;

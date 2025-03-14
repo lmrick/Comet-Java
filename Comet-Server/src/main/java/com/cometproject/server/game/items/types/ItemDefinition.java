@@ -43,26 +43,20 @@ public class ItemDefinition implements IFurnitureDefinition {
 		this.length = data.getInt("length");
 		final double height = data.getDouble("stack_height");
 		this.spriteId = data.getInt("sprite_id");
-		
 		this.canStack = data.getString("can_stack").equals("1");
 		this.canSit = data.getString("can_sit").equals("1");
 		this.canWalk = data.getString("is_walkable").equals("1");
 		this.canTrade = data.getString("allow_trade").equals("1");
 		this.canInventoryStack = data.getString("allow_inventory_stack").equals("1");
-		
 		this.offerId = data.getInt("flat_id");
-		
 		this.canRecycle = false;
 		this.canMarket = false;
 		this.canGift = data.getString("allow_gift").equals("1");
-		
 		this.effectId = data.getInt("effect_id");
 		this.interaction = data.getString("interaction_type");
 		this.interactionCycleCount = data.getInt("interaction_modes_count");
 		this.vendingIds = data.getString("vending_ids").isEmpty() ? new String[0] : data.getString("vending_ids").split(",");
-		
 		this.requiresRights = data.getString("requires_rights").equals("1");
-		
 		this.songId = data.getInt("song_id");
 		
 		final String variableHeightData = data.getString("variable_heights");
@@ -82,8 +76,8 @@ public class ItemDefinition implements IFurnitureDefinition {
 			this.variableHeights = null;
 		}
 		
-		if (height == 0.0) {
-			this.height = 0.001;
+		if (height == 0.0D) {
+			this.height = 0.001D;
 		} else {
 			this.height = height;
 		}
@@ -205,7 +199,12 @@ public class ItemDefinition implements IFurnitureDefinition {
 	
 	@Override
 	public boolean isWired() {
-		return this.getInteraction().startsWith("wtf_act") || this.getInteraction().startsWith("wtf_trg") || this.getInteraction().startsWith("wf_cnd");
+		return 
+		this.getInteraction().startsWith("wtf_act") 
+		|| this.getInteraction().startsWith("wtf_trg")
+		|| this.getInteraction().startsWith("wf_xtra")
+		|| this.getInteraction().startsWith("wf_var") 
+		|| this.getInteraction().startsWith("wf_cnd");
 	}
 	
 	public int getSongId() {

@@ -4,7 +4,6 @@ import com.cometproject.api.game.groups.types.components.forum.ForumPermission;
 import com.cometproject.api.game.groups.types.components.forum.IForumSettings;
 
 public class GroupForumSettingsData implements IForumSettings {
-
     private final int groupId;
     private ForumPermission readPermission;
     private ForumPermission postPermission;

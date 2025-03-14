@@ -14,4 +14,5 @@ public class GroupForumMessageFactory {
     public IForumThreadReply createThreadReply(int id, int index, String message, int threadId, int authorId, int authorTimestamp, int state, int adminId, String adminUsername) {
         return new GroupForumThreadMessageData(id, index, message, threadId, authorId, authorTimestamp, state, adminId, adminUsername);
     }
+    
 }

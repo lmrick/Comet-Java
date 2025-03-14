@@ -1,14 +1,14 @@
-package com.cometproject.storage.mysql.queues.items;
+package com.cometproject.storage.mysql.queues.types.items;
 
-import com.cometproject.storage.mysql.queues.BlockingMySQLStorageQueue;
 import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.queues.types.BlockingMySQLStorageQueue;
 
 import java.sql.PreparedStatement;
 
 public class ItemDataUpdateQueue extends BlockingMySQLStorageQueue<Long, String> {
 
-    public ItemDataUpdateQueue(MySQLConnectionProvider connectionProvider) {
-        super(connectionProvider, "UPDATE items SET extra_data = ? WHERE id = ?;", 25);
+    public ItemDataUpdateQueue(int batchThreshold, MySQLConnectionProvider connectionProvider) {
+        super(connectionProvider, "UPDATE items SET extra_data = ? WHERE id = ?;", batchThreshold);
     }
 
     @Override
@@ -18,4 +18,5 @@ public class ItemDataUpdateQueue extends BlockingMySQLStorageQueue<Long, String>
 
         preparedStatement.addBatch();
     }
+    
 }

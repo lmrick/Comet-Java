@@ -6,7 +6,6 @@ import com.cometproject.api.game.groups.types.components.forum.IForumThreadReply
 import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.google.common.collect.Lists;
-
 import java.util.ArrayList;
 import java.util.List;
 

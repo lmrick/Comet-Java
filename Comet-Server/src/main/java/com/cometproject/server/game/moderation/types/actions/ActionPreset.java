@@ -4,13 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ActionPreset {
-	
 	private final int id;
 	private final int categoryId;
 	private final String name;
 	private final String message;
 	private final String description;
-	
 	private final int banLength;
 	private final int avatarBanLength;
 	private final int muteLength;

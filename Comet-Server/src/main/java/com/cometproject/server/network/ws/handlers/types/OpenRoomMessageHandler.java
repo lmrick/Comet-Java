@@ -14,7 +14,7 @@ public class OpenRoomMessageHandler extends AbstractWsHandler<OpenRoomRequest> {
 	
 	@Override
 	protected void onMessage(OpenRoomRequest message, ChannelHandlerContext ctx) {
-		final Session session = ctx.attr(SESSION).get();
+		final Session session = ctx.channel().attr(SESSION).get();
 		
 		if (session != null) {
 			session.send(new RoomForwardMessageComposer(message.roomId()));

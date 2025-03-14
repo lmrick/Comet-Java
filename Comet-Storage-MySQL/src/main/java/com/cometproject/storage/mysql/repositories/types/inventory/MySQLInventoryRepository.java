@@ -10,7 +10,6 @@ import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
 import com.cometproject.storage.mysql.data.results.IResultReader;
 import com.cometproject.storage.mysql.repositories.MySQLRepository;
 import com.google.common.collect.Lists;
-
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -27,7 +26,7 @@ public class MySQLInventoryRepository extends MySQLRepository implements IInvent
     public void getInventoryByPlayerId(int playerId, Consumer<List<IPlayerItem>> itemConsumer) {
         final List<IPlayerItem> items = Lists.newArrayList();
 
-        select("SELECT i.*, ltd.limited_id, ltd.limited_total FROM items i LEFT JOIN items_limited_edition ltd ON ltd.item_id = i.id WHERE room_id = 0 AND user_id = ? ORDER by id DESC;", (data) -> {
+        select("SELECT i.*, ltd.limited_id, ltd.limited_total FROM items i LEFT JOIN items_limited_edition ltd ON ltd.item_id = i.id WHERE room_id = 0 AND user_id = ? ORDER by id DESC;", data -> {
             items.add(this.buildItem(data));
         }, playerId);
 
@@ -43,7 +42,8 @@ public class MySQLInventoryRepository extends MySQLRepository implements IInvent
 
         if (data.readInteger("limited_id") != 0) {
             limitedEditionItemData = new LimitedEditionItemData(data.readLong("id"),
-                    data.readInteger("limited_id"), data.readInteger("limited_total"));
+            data.readInteger("limited_id"), 
+            data.readInteger("limited_total"));
         }
 
         return this.playerItemFactory.createItem(new InventoryItemData(id, baseId, extra_data, limitedEditionItemData));

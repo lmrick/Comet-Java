@@ -20,12 +20,12 @@ public class NetSessionFactory implements INetSessionFactory {
 	}
 	
 	@Override
-	public INetSession createSession(ChannelHandlerContext channel) {
+	public INetSession<?> createSession(ChannelHandlerContext channel) {
 		if (!sessionManager.add(channel)) {
 			return null;
 		}
 		
-		final Session session = channel.attr(SessionManager.SESSION_ATTR).get();
+		final Session session = channel.channel().attr(SessionManager.SESSION_ATTR).get();
 		
 		return new NetSession(session, this.messageHandler);
 	}

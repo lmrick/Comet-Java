@@ -7,7 +7,6 @@ import com.cometproject.server.game.navigator.types.publics.PublicRoom;
 import com.cometproject.server.storage.queries.navigator.NavigatorDao;
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class NavigatorManager implements Initializable {
-	
 	private static NavigatorManager navigatorManagerInstance;
 	private final Logger log = Logger.getLogger(NavigatorManager.class.getName());
 	private Map<Integer, Category> categories;

@@ -26,4 +26,5 @@ public class RoomDataFactory {
                 bubbleScroll, chatDistance, antiFloodSettings, disabledCommands, groupId,
                 requiredBadge, thumbnail, wiredHidden);
     }
+    
 }

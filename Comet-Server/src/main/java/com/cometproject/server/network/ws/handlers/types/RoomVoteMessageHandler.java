@@ -18,7 +18,7 @@ public class RoomVoteMessageHandler extends AbstractWsHandler<RoomVoteRequest> {
 	@Override
 	protected void onMessage(RoomVoteRequest message, ChannelHandlerContext ctx) {
 		final RoomVote roomVote = RoomManager.getInstance().getRoomVote();
-		final Session session = ctx.attr(SESSION).get();
+		final Session session = ctx.channel().attr(SESSION).get();
 		
 		if (roomVote != null && session.getPlayer() != null) {
 			if (roomVote.hasVoted(session.getPlayer().getId())) {

@@ -14,7 +14,6 @@ import com.cometproject.storage.mysql.repositories.MySQLRepository;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
@@ -22,9 +21,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class MySQLRoomRepository extends MySQLRepository implements IRoomRepository {
-    private static final Type STRING_LIST_TYPE = new TypeToken<List<String>>() {
-    }.getType();
-
+    private static final Type STRING_LIST_TYPE = new TypeToken<List<String>>() { }.getType();
     private final RoomDataFactory roomDataFactory;
     private final RoomModelDataFactory roomModelDataFactory;
 
@@ -39,7 +36,7 @@ public class MySQLRoomRepository extends MySQLRepository implements IRoomReposit
     public void getAllModels(Consumer<Map<String, RoomModelData>> modelConsumer) {
         final Map<String, RoomModelData> roomModels = Maps.newHashMap();
 
-        select("SELECT * FROM room_models", (data) -> {
+        select("SELECT * FROM room_models", data -> {
             final String id = data.readString("id");
             final String heightmap = data.readString("heightmap");
             final int doorX = data.readInteger("door_x");
@@ -54,7 +51,7 @@ public class MySQLRoomRepository extends MySQLRepository implements IRoomReposit
 
     @Override
     public void getRoomDataById(int roomId, Consumer<IRoomData> dataConsumer) {
-        select("SELECT * FROM rooms WHERE id = ? LIMIT 1;", (data) -> {
+        select("SELECT * FROM rooms WHERE id = ? LIMIT 1;", data -> {
             final IRoomData roomData = readRoomData(data);
 
             if (roomData != null) {
@@ -71,7 +68,6 @@ public class MySQLRoomRepository extends MySQLRepository implements IRoomReposit
             if (i != 0) {
                 tagString.append(",");
             }
-
             tagString.append(data.getTags()[i]);
         }
 
@@ -141,7 +137,6 @@ public class MySQLRoomRepository extends MySQLRepository implements IRoomReposit
                 data.getThumbnail(),
                 data.isWiredHidden() ? "1" : "0",
                 data.getId());
-
     }
 
     private IRoomData readRoomData(final IResultReader room) throws Exception {
@@ -157,7 +152,9 @@ public class MySQLRoomRepository extends MySQLRepository implements IRoomReposit
 
         String accessTypeString = room.readString("access_type");
 
-        if (!accessTypeString.equals("open") && !accessTypeString.equals("doorbell") && !accessTypeString.equals("password")) {
+        if (!accessTypeString.equals("open") 
+        && !accessTypeString.equals("doorbell") 
+        && !accessTypeString.equals("password")) {
             accessTypeString = "open";
         }
 
@@ -167,18 +164,15 @@ public class MySQLRoomRepository extends MySQLRepository implements IRoomReposit
 
         final int score = room.readInteger("score");
 
-        final String[] tags = room.readString("tags").isEmpty() ? new String[0] :
-                room.readString("tags").split(",");
+        final String[] tags = room.readString("tags").isEmpty() 
+        ? new String[0] : room.readString("tags").split(",");
 
         final Map<String, String> decorations = new HashMap<>();
 
         String[] decorationsArray = room.readString("decorations").split(",");
-
         for (int i = 0; i < decorationsArray.length; i++) {
             String[] decoration = decorationsArray[i].split("=");
-
-            if (decoration.length == 2)
-                decorations.put(decoration[0], decoration[1]);
+            if (decoration.length == 2) decorations.put(decoration[0], decoration[1]);
         }
 
         final String model = room.readString("model");
@@ -212,4 +206,5 @@ public class MySQLRoomRepository extends MySQLRepository implements IRoomReposit
                 bubbleScroll, chatDistance, antiFloodSettings, disabledCommands == null ? Lists.newArrayList() : disabledCommands,
                 groupId, requiredBadge, thumbnail, wiredHidden);
     }
+
 }

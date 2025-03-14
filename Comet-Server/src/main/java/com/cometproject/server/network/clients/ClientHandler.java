@@ -5,7 +5,6 @@ import com.cometproject.networking.api.sessions.INetSessionFactory;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.messages.outgoing.misc.PingMessageComposer;
 import com.cometproject.server.protocol.messages.MessageEvent;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.ChannelInputShutdownEvent;
@@ -41,7 +40,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageEvent> {
 		
 		final INetSession session = this.sessionFactory.createSession(ctx);
 		
-		ctx.attr(ATTR_SESSION).set(session);
+		ctx.channel().attr(ATTR_SESSION).set(session);
 		if (session == null) {
 			ctx.disconnect();
 		}
@@ -49,19 +48,18 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageEvent> {
 	
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) {
-		if (ctx.attr(ATTR_SESSION).get() == null) {
+		if (ctx.channel().attr(ATTR_SESSION).get() == null) {
 			return;
 		}
 		
 		try {
-			INetSession session = ctx.attr(ATTR_SESSION).get();
-			
+			INetSession session = ctx.channel().attr(ATTR_SESSION).get();
 			this.sessionFactory.disposeSession(session);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		ctx.attr(ATTR_SESSION).remove();
+		ctx.channel().attr(ATTR_SESSION).getAndSet(null);
 	}
 	
 	@Override
@@ -95,7 +93,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<MessageEvent> {
 	@Override
 	public void channelRead0(ChannelHandlerContext channelHandlerContext, MessageEvent event) {
 		try {
-			final INetSession session = channelHandlerContext.attr(ATTR_SESSION).get();
+			final INetSession session = channelHandlerContext.channel().attr(ATTR_SESSION).get();
 			
 			if (session != null) {
 				session.getMessageHandler().handleMessage(event, session);

@@ -96,7 +96,7 @@ public class APIManager implements Initializable {
         if (!this.enabled)
             return;
 
-        Spark.setPort(this.port);
+        Spark.port(this.port);
 
         this.jsonTransformer = new JsonTransformer();
     }

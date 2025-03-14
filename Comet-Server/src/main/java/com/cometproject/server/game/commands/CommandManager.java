@@ -43,7 +43,6 @@ import com.cometproject.server.network.messages.outgoing.messenger.InstantChatMe
 import com.cometproject.server.network.sessions.Session;
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

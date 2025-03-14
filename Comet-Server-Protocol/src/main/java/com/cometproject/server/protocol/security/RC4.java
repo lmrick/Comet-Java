@@ -4,7 +4,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 
 public class RC4 {
-	
 	private static final int POOL_SIZE = 256;
 	private int i = 0;
 	private int j = 0;
@@ -16,7 +15,6 @@ public class RC4 {
 	
 	public RC4(byte[] key) {
 		this.table = new int[POOL_SIZE];
-		
 		this.init(key);
 	}
 	

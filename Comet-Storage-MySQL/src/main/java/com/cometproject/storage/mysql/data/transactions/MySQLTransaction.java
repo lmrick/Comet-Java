@@ -3,7 +3,6 @@ package com.cometproject.storage.mysql.data.transactions;
 import java.sql.Connection;
 
 public class MySQLTransaction implements Transaction {
-
     private final Connection connection;
 
     public MySQLTransaction(Connection connection) {
@@ -27,4 +26,10 @@ public class MySQLTransaction implements Transaction {
     public void rollback() throws Exception {
         this.connection.rollback();
     }
+
+    @Override
+    public void close() throws Exception {
+        this.connection.close();
+    }
+
 }

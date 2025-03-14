@@ -35,8 +35,6 @@
         <module>Comet-Game-Items</module>
         <module>Comet-Game-Rooms</module>
 
-        <module>Comet-GameCenter-FastFood</module>
-
         <module>Comet-Storage-API</module>
         <module>Comet-Storage-MySQL</module>
 

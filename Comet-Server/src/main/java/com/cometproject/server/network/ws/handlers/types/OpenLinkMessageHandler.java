@@ -14,7 +14,7 @@ public class OpenLinkMessageHandler extends AbstractWsHandler<OpenLinkRequest> {
 	
 	@Override
 	protected void onMessage(OpenLinkRequest message, ChannelHandlerContext ctx) {
-		final Session session = ctx.attr(SESSION).get();
+		final Session session = ctx.channel().attr(SESSION).get();
 		
 		if (session.getPlayer() != null) {
 			session.send(new OpenLinkMessageComposer(message.link()));

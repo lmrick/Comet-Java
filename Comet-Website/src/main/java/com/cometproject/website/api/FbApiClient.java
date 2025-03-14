@@ -24,11 +24,11 @@ public class FbApiClient {
 
         try {
             Future<Response> responseFuture = this.httpClient.prepareGet("https://graph.facebook.com/" + FB_API_VERSION + "/oauth/access_token")
-                    .addQueryParameter("client_id", FB_APP_ID)
-                    .addQueryParameter("client_secret", FB_APP_SECRET)
-                    .addQueryParameter("code", code)
-                    .addQueryParameter("scope", "email")
-                    .addQueryParameter("redirect_uri", Configuration.getInstance().getSiteUrl() + "/facebook")
+                    .addQueryParam("client_id", FB_APP_ID)
+                    .addQueryParam("client_secret", FB_APP_SECRET)
+                    .addQueryParam("code", code)
+                    .addQueryParam("scope", "email")
+                    .addQueryParam("redirect_uri", Configuration.getInstance().getSiteUrl() + "/facebook")
                     .execute();
 
             Response res = responseFuture.get();
@@ -58,8 +58,8 @@ public class FbApiClient {
 
         try {
             Future<Response> responseFuture = this.httpClient.prepareGet("https://graph.facebook.com/" + FB_API_VERSION + "/me")
-                    .addQueryParameter("access_token", accessToken)
-                    .addQueryParameter("fields", "id,email,name")
+                    .addQueryParam("access_token", accessToken)
+                    .addQueryParam("fields", "id,email,name")
                     .execute();
 
             Response res = responseFuture.get();

@@ -1,7 +1,6 @@
 package com.cometproject.server.game.permissions.types;
 
 public class Perk {
-	
 	private final int id;
 	private final String title;
 	private final String data;

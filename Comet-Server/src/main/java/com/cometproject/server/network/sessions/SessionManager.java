@@ -34,21 +34,21 @@ public final class SessionManager implements ISessionService {
 
         session.initialise();
 
-        channel.attr(SessionManager.SESSION_ATTR).set(session);
+        channel.channel().attr(SessionManager.SESSION_ATTR).set(session);
         this.channelGroup.add(channel.channel());
-        channel.attr(CHANNEL_ID_ATTR).set(this.idGenerator.incrementAndGet());
+        channel.channel().attr(CHANNEL_ID_ATTR).set(this.idGenerator.incrementAndGet());
 
-        return (this.sessions.putIfAbsent(channel.attr(CHANNEL_ID_ATTR).get(), session) == null);
+        return (this.sessions.putIfAbsent(channel.channel().attr(CHANNEL_ID_ATTR).get(), session) == null);
     }
 
     public boolean remove(ChannelHandlerContext channel) {
-        if (channel.attr(CHANNEL_ID_ATTR).get() == null) {
+        if (channel.channel().attr(CHANNEL_ID_ATTR).get() == null) {
             return false;
         }
 
-        if (this.sessions.containsKey(channel.attr(CHANNEL_ID_ATTR).get())) {
+        if (this.sessions.containsKey(channel.channel().attr(CHANNEL_ID_ATTR).get())) {
             this.channelGroup.remove(channel.channel());
-            this.sessions.remove(channel.attr(CHANNEL_ID_ATTR).get());
+            this.sessions.remove(channel.channel().attr(CHANNEL_ID_ATTR).get());
 
             return true;
         }

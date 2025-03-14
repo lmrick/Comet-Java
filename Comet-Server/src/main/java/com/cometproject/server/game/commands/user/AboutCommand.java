@@ -58,7 +58,7 @@ public class AboutCommand extends ChatCommand {
 			about.append("Record since last reboot: ").append(GameCycle.getInstance().getCurrentOnlineRecord()).append("<br>");
 		}
 		
-		about.append("<br><b>Comet Server (PRIVATE-2020)</b><br>Official Comet Server, a private server made with | in the UK.");
+		about.append("<br><b>Comet Server</b><br>Official Comet Server, a private server made with | in the UK.");
 		
 		client.send(new AdvancedAlertMessageComposer(MessageFormat.format("Comet Server - {0}", Comet.getBuild()), about.toString(), "www.cometsrv.com", "https://www.cometsrv.com", CometSettings.aboutImg));
 	}

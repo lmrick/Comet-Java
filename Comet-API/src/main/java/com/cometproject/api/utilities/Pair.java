@@ -9,8 +9,7 @@ public record Pair<L, R>(L left, R right) {
     
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Pair)) return false;
-        Pair pairo = (Pair) o;
+        if (!(o instanceof Pair<?, ?> pairo)) return false;
         return this.left.equals(pairo.left()) && this.right.equals(pairo.right());
     }
     

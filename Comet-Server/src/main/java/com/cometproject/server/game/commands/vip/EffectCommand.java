@@ -18,7 +18,6 @@ public class EffectCommand extends ChatCommand {
 		
 		try {
 			int effectId = Integer.parseInt(params[0]);
-			
 			PlayerEntity entity = client.getPlayer().getEntity();
 			
 			if (entity.getCurrentEffect() != null) {

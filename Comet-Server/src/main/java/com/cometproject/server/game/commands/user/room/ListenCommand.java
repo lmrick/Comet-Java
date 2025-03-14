@@ -37,7 +37,7 @@ public class ListenCommand extends ChatCommand {
 	
 	@Override
 	public String getParameter() {
-		return "%user%";
+		return "%username%";
 	}
 	
 	@Override

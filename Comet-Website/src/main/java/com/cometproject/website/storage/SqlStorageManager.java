@@ -26,7 +26,7 @@ public class SqlStorageManager {
             config.addDataSourceProperty("password", Configuration.getInstance().getDbPassword());
             config.setMaximumPoolSize(Configuration.getInstance().getDbPoolSize());
             config.setLeakDetectionThreshold(300000);
-            config.setInitializationFailFast(true);
+            config.setInitializationFailTimeout(10000);
 
             this.connections = new HikariDataSource(config);
             DaoHelper.init(this);

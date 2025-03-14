@@ -15,6 +15,7 @@ import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.channel.WriteBufferWaterMark;
 
 public class NettyNetworkingServerFactory implements INetworkingServerFactory {
     private static final String CFG_EPOLL = "comet.network.epoll";
@@ -44,8 +45,7 @@ public class NettyNetworkingServerFactory implements INetworkingServerFactory {
         this.initialiseLoopGroups(Epoll.isAvailable() && epoll, ioGroupCount, channelGroupCount, acceptGroupCount);
     }
 
-    private void initialiseLoopGroups(final boolean epoll, final int ioLoopCount, final int channelLoopCount,
-                                      final int acceptGroupCount) {
+    private void initialiseLoopGroups(final boolean epoll, final int ioLoopCount, final int channelLoopCount, final int acceptGroupCount) {
         this.ioLoopGroup = epoll ? new EpollEventLoopGroup(ioLoopCount) : new NioEventLoopGroup(ioLoopCount);
         this.channelLoopGroup = epoll ? new EpollEventLoopGroup(channelLoopCount) : new NioEventLoopGroup(channelLoopCount);
         this.acceptLoopGroup = epoll ? new EpollEventLoopGroup(acceptGroupCount) : new NioEventLoopGroup(acceptGroupCount);
@@ -59,15 +59,13 @@ public class NettyNetworkingServerFactory implements INetworkingServerFactory {
                 .childHandler(new NetworkChannelInitializer(this.channelLoopGroup, sessionFactory))
                 .option(ChannelOption.SO_BACKLOG, Integer.parseInt((String) this.configuration.getOrDefault(CFG_NETWORK_BACKLOG, "500")))
                 .option(ChannelOption.TCP_NODELAY, true)
-                .option(ChannelOption.WRITE_BUFFER_LOW_WATER_MARK, 32 * 1024)
-                .option(ChannelOption.WRITE_BUFFER_HIGH_WATER_MARK, 64 * 1024)
+                .option(ChannelOption.WRITE_BUFFER_WATER_MARK, new WriteBufferWaterMark(32 * 1024, 64 * 1024))
                 .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
                 .option(ChannelOption.MESSAGE_SIZE_ESTIMATOR, DefaultMessageSizeEstimator.DEFAULT)
                 .childOption(ChannelOption.TCP_NODELAY, true)
                 .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
-                .childOption(ChannelOption.WRITE_BUFFER_LOW_WATER_MARK, 32 * 1024)
-                .childOption(ChannelOption.WRITE_BUFFER_HIGH_WATER_MARK, 64 * 1024);
-
+                .childOption(ChannelOption.WRITE_BUFFER_WATER_MARK, new WriteBufferWaterMark(32 * 1024, 64 * 1024));
+               
         return new NettyNetworkingServer(serverConfig, sessionFactory, bootstrap);
     }
 }

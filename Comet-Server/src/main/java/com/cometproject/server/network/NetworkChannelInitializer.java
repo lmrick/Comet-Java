@@ -71,4 +71,9 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
 
         ch.pipeline().addLast(this.executor, "clientHandler", this.clientHandler);
     }
+
+    public ClientHandler getClientHandler() {
+        return clientHandler;
+    }
+
 }

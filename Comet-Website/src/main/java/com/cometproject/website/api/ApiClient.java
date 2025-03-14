@@ -64,9 +64,9 @@ public class ApiClient {
 
         try {
             Future<Response> responseFuture = asyncHttpClient.prepareGet("https://www.google.com/recaptcha/api/siteverify")
-                    .addQueryParameter("secret", RECAPTCHA_SECRET)
-                    .addQueryParameter("response", response)
-                    .addQueryParameter("remoteip", ipAddress)
+                    .addQueryParam("secret", RECAPTCHA_SECRET)
+                    .addQueryParam("response", response)
+                    .addQueryParam("remoteip", ipAddress)
                     .execute();
 
             Response res = responseFuture.get();

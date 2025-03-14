@@ -12,6 +12,6 @@ public class MySQLPhotoRepository extends MySQLRepository implements IPhotoRepos
 
     @Override
     public void savePhoto(int playerId, int roomId, String photoId, int timestamp) {
-        update("INSERT into player_photos (player_id, room_id, photo, timestamp) VALUES(?, ?, ?, ?);", playerId, roomId, photoId, timestamp);
+        update("INSERT INTO player_photos (player_id, room_id, photo, timestamp) VALUES (?, ?, ?, ?);", playerId, roomId, photoId, timestamp);
     }
 }

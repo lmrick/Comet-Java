@@ -16,7 +16,9 @@ public class DiceCommand extends ChatCommand {
 	public void execute(Session client, String[] params) {
 		PlayerEntity entity = client.getPlayer().getEntity();
 		
-		Arrays.stream(entity.getTile().getAllAdjacentTiles()).forEachOrdered(tile -> tile.getItems().stream().filter(DiceFloorItem.class::isInstance).forEachOrdered(floorItem -> floorItem.onInteract(entity, floorItem.getItemData().getData().equals("0") ? 0 : -1, false)));
+		Arrays.stream(entity.getTile().getAllAdjacentTiles())
+		.forEachOrdered(tile -> tile.getItems().stream().filter(DiceFloorItem.class::isInstance)
+		.forEachOrdered(floorItem -> floorItem.onInteract(entity, floorItem.getItemData().getData().equals("0") ? 0 : -1, false)));
 	}
 	
 	@Override

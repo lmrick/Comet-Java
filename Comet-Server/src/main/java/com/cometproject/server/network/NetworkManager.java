@@ -42,6 +42,7 @@ public class NetworkManager {
 	private int serverPort;
 	private SessionManager sessions;
 	private MessageHandler messageHandler;
+	private GameMessageHandler gameMessageHandler = new GameMessageHandler();
 	private RSA rsa;
 	
 	public NetworkManager() {
@@ -85,7 +86,7 @@ public class NetworkManager {
 		System.setProperty("io.netty.leakDetectionLevel", "disabled");
 		ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);
 		
-		final INetSessionFactory sessionFactory = new NetSessionFactory(this.sessions, new GameMessageHandler());
+		final INetSessionFactory sessionFactory = new NetSessionFactory(this.sessions, gameMessageHandler);
 		final INetworkingServerFactory serverFactory = new NettyNetworkingServerFactory(Configuration.currentConfig());
 		final NetworkingContext networkingContext = new NetworkingContext(serverFactory);
 		
@@ -110,6 +111,10 @@ public class NetworkManager {
 	
 	public MessageHandler getMessages() {
 		return this.messageHandler;
+	}
+
+	public GameMessageHandler getGameMessageHandler() {
+		return gameMessageHandler;
 	}
 	
 	public RSA getRSA() {

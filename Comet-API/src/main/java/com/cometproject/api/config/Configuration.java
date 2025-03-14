@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Properties;

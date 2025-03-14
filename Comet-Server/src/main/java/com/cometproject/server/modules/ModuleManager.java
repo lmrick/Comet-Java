@@ -8,11 +8,8 @@ import com.cometproject.api.server.IGameService;
 import com.cometproject.api.utilities.Initializable;
 import com.cometproject.game.groups.GroupsModule;
 import com.cometproject.game.rooms.RoomsModule;
-import com.cometproject.gamecenter.fastfood.FastFoodModule;
 import com.cometproject.server.modules.events.EventHandlerService;
 import org.apache.log4j.Logger;
-
-import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -46,7 +43,6 @@ public class ModuleManager implements Initializable {
 		ModuleManager.getInstance().getEventHandler().initialize();
 		
 		this.loadCoreModule(GroupsModule.class);
-		this.loadCoreModule(FastFoodModule.class);
 		this.loadCoreModule(RoomsModule.class);
 	}
 	

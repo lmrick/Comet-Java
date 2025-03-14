@@ -5,12 +5,10 @@ import com.cometproject.api.game.rooms.IRoomData;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.types.RoomWriter;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class FeaturedRoom {
-	
 	private final int id;
 	private final boolean isCategory;
 	private final BannerType bannerType;

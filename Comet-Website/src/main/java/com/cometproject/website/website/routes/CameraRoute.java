@@ -1,6 +1,6 @@
 package com.cometproject.website.website.routes;
 
-import org.apache.commons.io.IOUtil;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import spark.Request;
 import spark.Response;
@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 public class CameraRoute {
     public static String upload(final Request request, final Response response) {
         try {
-            final byte[] imageData = IOUtil.toByteArray(request.raw().getInputStream());
+            final byte[] imageData = IOUtils.toByteArray(request.raw().getInputStream());
             final String imageName = request.params("photoId");
 
             // Create the image file.
@@ -53,7 +53,7 @@ public class CameraRoute {
         try {
             final byte[] imageData = Files.readAllBytes(Paths.get("./camera-images/" + photoId + ".png"));
 
-            IOUtil.copy(imageData, response.raw().getOutputStream());
+            IOUtils.write(imageData, response.raw().getOutputStream());
             return "";
         } catch (Exception e) {
             response.status(404);

@@ -3,7 +3,7 @@ package com.cometproject.server.utilities.collections;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ConcurrentHashSet<E> extends AbstractSet<E> implements Set<E> {
+public class ConcurrentHashSet<E> extends AbstractSet<E> {
     private final Map<E, Boolean> backingMap;
     private final Set<E> backingMapSet;
 

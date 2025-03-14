@@ -10,15 +10,15 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class MySQLRewardRepository extends MySQLRepository implements IRewardRepository {
+    
     public MySQLRewardRepository(MySQLConnectionProvider connectionProvider) {
         super(connectionProvider);
     }
 
     @Override
     public void playerReceivedReward(int playerId, String badgeCode, Consumer<Boolean> consumer) {
-        select("SELECT COUNT(0) FROM player_badges WHERE player_id = ? AND badge_code = ?", (data) -> {
+        select("SELECT COUNT(0) FROM player_badges WHERE player_id = ? AND badge_code = ?", data -> {
             final int count = data.readInteger(1);
-
             consumer.accept(count == 1);
         }, playerId, badgeCode);
     }
@@ -26,8 +26,8 @@ public class MySQLRewardRepository extends MySQLRepository implements IRewardRep
     @Override
     public void giveReward(int playerId, String badgeCode, int vipPoints, int seasonalPoints) {
         transaction(transaction -> {
-            update("INSERT into player_events (player_id, events) VALUES(?, 1) ON DUPLICATE KEY UPDATE  events = events + 1;", transaction, playerId);
-            update("INSERT into player_badges (player_id, badge_code) VALUES(?, ?);", transaction, playerId, badgeCode);
+            update("INSERT INTO player_events (player_id, events) VALUES (?, 1) ON DUPLICATE KEY UPDATE  events = events + 1;", transaction, playerId);
+            update("INSERT INTO player_badges (player_id, badge_code) VALUES (?, ?);", transaction, playerId, badgeCode);
             update("UPDATE players SET vip_points = vip_points + ?, seasonal_points = seasonal_points + ? WHERE id = ?", transaction, vipPoints, seasonalPoints, playerId);
 
             transaction.commit();
@@ -38,8 +38,12 @@ public class MySQLRewardRepository extends MySQLRepository implements IRewardRep
     public void getActiveRewards(Consumer<Map<String, RewardData>> consumer) {
         final Map<String, RewardData> rewards = Maps.newConcurrentMap();
 
-        select("SELECT code, badge, vip_points, seasonal_points FROM player_rewards WHERE active = ?", (data) -> {
-            rewards.put(data.readString("code"), new RewardData(data.readString("code"), data.readString("badge"), data.readInteger("vip_points"), data.readInteger("seasonal_points")));
+        select("SELECT code, badge, vip_points, seasonal_points FROM player_rewards WHERE active = ?", data -> {
+            rewards.put(data.readString("code"), 
+            new RewardData(data.readString("code"), 
+            data.readString("badge"), 
+            data.readInteger("vip_points"), 
+            data.readInteger("seasonal_points")));
         }, "1");
 
         consumer.accept(rewards);
@@ -47,7 +51,7 @@ public class MySQLRewardRepository extends MySQLRepository implements IRewardRep
 
     @Override
     public void playerRedeemedReward(int playerId, String code, Consumer<Boolean> consumer) {
-        select("SELECT COUNT(0) FROM player_rewards_redeemed WHERE player_id = ? AND reward_code = ?;", (data) -> {
+        select("SELECT COUNT(0) FROM player_rewards_redeemed WHERE player_id = ? AND reward_code = ?;", data -> {
             final int count = data.readInteger(1);
 
             consumer.accept(count == 1);
@@ -57,8 +61,8 @@ public class MySQLRewardRepository extends MySQLRepository implements IRewardRep
     @Override
     public void redeemReward(int playerId, RewardData data) {
         transaction(transaction -> {
-            update("INSERT into player_rewards_redeemed (player_id, reward_code) VALUES(?, ?);", transaction, playerId, data.getCode());
-            update("INSERT into player_badges (player_id, badge_code) VALUES(?, ?);", transaction, playerId, data.getBadge());
+            update("INSERT INTO player_rewards_redeemed (player_id, reward_code) VALUES (?, ?);", transaction, playerId, data.getCode());
+            update("INSERT INTO player_badges (player_id, badge_code) VALUES (?, ?);", transaction, playerId, data.getBadge());
             update("UPDATE players SET vip_points = vip_points + ?, seasonal_points = seasonal_points + 1 WHERE id = ?", transaction, data.getDiamonds(), data.getSeasonal(), playerId);
 
             transaction.commit();

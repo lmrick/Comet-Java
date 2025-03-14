@@ -27,7 +27,7 @@ public class MySQLGroupRepository extends MySQLRepository implements IGroupRepos
     public void getDataById(int groupId, Consumer<IGroupData> consumer) {
         select("SELECT g.id, g.name, g.description, g.badge, g.owner_id, g.room_id, g.created, g.`type`, g.colour1, " +
                 "g.colour2, g.members_deco, g.has_forum, p.username as owner_name, p.figure as owner_figure, p.reg_timestamp AS owner_reg_timestamp, p.motto as owner_motto FROM groups g " +
-                "RIGHT JOIN players AS p ON p.id = g.owner_id where g.id = ?", (data -> consumer.accept(this.readGroup(data))), groupId);
+                "RIGHT JOIN players AS p ON p.id = g.owner_id where g.id = ?", data -> consumer.accept(this.readGroup(data)), groupId);
     }
 
     @Override
@@ -42,8 +42,8 @@ public class MySQLGroupRepository extends MySQLRepository implements IGroupRepos
 
     @Override
     public void create(IGroupData groupData) {
-        insert("INSERT into groups (`name`, `description`, `badge`, `owner_id`, `room_id`, `created`, `type`, `colour1`, `colour2`, `members_deco`, `has_forum`) " +
-                "VALUES(? ,?, ?, ?, ?, ?, ?, ?, ?, ?, '0');", (key) -> {
+        insert("INSERT INTO groups (`name`, `description`, `badge`, `owner_id`, `room_id`, `created`, `type`, `colour1`, `colour2`, `members_deco`, `has_forum`) " +
+                "VALUES(? ,?, ?, ?, ?, ?, ?, ?, ?, ?, '0');", key -> {
             final int groupId = key.readInteger(1);
 
             groupData.setId(groupId);
@@ -54,14 +54,14 @@ public class MySQLGroupRepository extends MySQLRepository implements IGroupRepos
 
     @Override
     public void createForumSettings(IForumComponent forumComponent) {
-        insert("INSERT into group_forum_settings (`group_id`, `read_permission`, `post_permission`, `thread_permission`, `moderate_permission`) " +
-                "VALUES(?,?,?,?,?);", (key) -> {
+        insert("INSERT INTO group_forum_settings (`group_id`, `read_permission`, `post_permission`, `thread_permission`, `moderate_permission`) " +
+                "VALUES(?,?,?,?,?);", key -> {
         }, forumComponent.getForumSettings().getGroupId(), forumComponent.getForumSettings().getReadPermission().name(), forumComponent.getForumSettings().getPostPermission().name(), forumComponent.getForumSettings().getStartThreadsPermission().name(), forumComponent.getForumSettings().getModeratePermission().name());
     }
 
     @Override
     public void getGroupIdByRoomId(int roomId, Consumer<Integer> consumer) {
-        select("SELECT g.id FROM groups g where g.room_id = ?", (data -> consumer.accept(data.readInteger(1))));
+        select("SELECT g.id FROM groups g where g.room_id = ?", data -> consumer.accept(data.readInteger(1)));
     }
 
     @Override

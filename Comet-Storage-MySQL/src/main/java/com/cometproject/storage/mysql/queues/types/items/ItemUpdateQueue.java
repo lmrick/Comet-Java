@@ -1,15 +1,15 @@
-package com.cometproject.storage.mysql.queues.items;
+package com.cometproject.storage.mysql.queues.types.items;
 
 import com.cometproject.api.game.rooms.objects.IFloorItem;
-import com.cometproject.storage.mysql.queues.BlockingMySQLStorageQueue;
 import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
+import com.cometproject.storage.mysql.queues.types.BlockingMySQLStorageQueue;
 
 import java.sql.PreparedStatement;
 
 public class ItemUpdateQueue extends BlockingMySQLStorageQueue<Long, IFloorItem> {
 
-    public ItemUpdateQueue(MySQLConnectionProvider connectionProvider) {
-        super(connectionProvider, "UPDATE items SET x = ?, y = ?, z = ?, rot = ?, extra_data = ? WHERE id = ?;", 25);
+    public ItemUpdateQueue(int batchThreshold, MySQLConnectionProvider connectionProvider) {
+        super(connectionProvider, "UPDATE items SET x = ?, y = ?, z = ?, rot = ?, extra_data = ? WHERE id = ?;", batchThreshold);
     }
 
     @Override
@@ -23,4 +23,5 @@ public class ItemUpdateQueue extends BlockingMySQLStorageQueue<Long, IFloorItem>
 
         preparedStatement.addBatch();
     }
+    
 }

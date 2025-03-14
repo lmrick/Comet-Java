@@ -6,15 +6,11 @@ import java.util.Random;
 
 public class DiffieHellman {
     public int BITLENGTH = 30;
-
     private BigInteger prime;
     private BigInteger generator;
-
     private BigInteger privateKey;
     private BigInteger publicKey;
-
     private BigInteger publicClientKey;
-
     private BigInteger sharedKey;
 
     public DiffieHellman() {

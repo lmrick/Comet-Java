@@ -1,6 +1,5 @@
 package com.cometproject.server.tasks;
 
-import javax.annotation.Nonnull;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,7 +13,7 @@ public class CometThreadFactory implements ThreadFactory {
 	}
 	
 	@Override
-	public Thread newThread(@Nonnull Runnable runnable) {
+	public Thread newThread(Runnable runnable) {
 		int threadId = this.threadCounter.incrementAndGet();
 		return new Thread(runnable, String.format("Comet-%s-%s", baseName, threadId));
 	}

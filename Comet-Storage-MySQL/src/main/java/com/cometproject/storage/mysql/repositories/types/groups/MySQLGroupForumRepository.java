@@ -29,7 +29,7 @@ public class MySQLGroupForumRepository extends MySQLRepository implements IGroup
 
     @Override
     public void getSettingsByGroupId(int groupId, Consumer<IForumSettings> forumSettingsConsumer) {
-        select("SELECT * FROM group_forum_settings WHERE group_id = ?", (data) -> {
+        select("SELECT * FROM group_forum_settings WHERE group_id = ?", data -> {
             forumSettingsConsumer.accept(this.buildSettings(groupId, data));
         }, groupId);
     }
@@ -37,7 +37,7 @@ public class MySQLGroupForumRepository extends MySQLRepository implements IGroup
     @Override
     public void saveSettings(IForumSettings forumSettings) {
         update("UPDATE group_forum_settings SET read_permission = ?, post_permission = ?, thread_permission = ?, " +
-                        "moderate_permission = ? WHERE group_id = ?",
+               "moderate_permission = ? WHERE group_id = ?",
                 forumSettings.getReadPermission().toString(),
                 forumSettings.getPostPermission().toString(),
                 forumSettings.getStartThreadsPermission().toString(),
@@ -50,7 +50,7 @@ public class MySQLGroupForumRepository extends MySQLRepository implements IGroup
         final Map<Integer, IForumThread> forumThreads = Maps.newConcurrentMap();
         final List<Integer> pinnedThreads = Lists.newCopyOnWriteArrayList();
 
-        select("SELECT * FROM group_forum_messages WHERE group_id = ? ORDER BY FIELD(type, 'THREAD', 'REPLY'), pinned DESC, author_timestamp DESC;", (data) -> {
+        select("SELECT * FROM group_forum_messages WHERE group_id = ? ORDER BY FIELD(type, 'THREAD', 'REPLY'), pinned DESC, author_timestamp DESC;", data -> {
             final ForumMessageType messageType = ForumMessageType.valueOf(data.readString("type"));
 
             switch (messageType) {
@@ -84,16 +84,16 @@ public class MySQLGroupForumRepository extends MySQLRepository implements IGroup
 
     @Override
     public void createThread(int groupId, String title, String message, int authorId, Consumer<Integer> threadId) {
-        insert("INSERT into group_forum_messages (type, group_id, title, message, author_id, author_timestamp) " +
-                "VALUES('THREAD', ?, ?, ?, ?, UNIX_TIMESTAMP());", (data) -> {
+        insert("INSERT INTO group_forum_messages (type, group_id, title, message, author_id, author_timestamp) " +
+               "VALUES ('THREAD', ?, ?, ?, ?, UNIX_TIMESTAMP());", data -> {
             threadId.accept(data.readInteger(1));
         }, groupId, title, message, authorId);
     }
 
     @Override
     public void createReply(int groupId, int threadId, String message, int authorId, Consumer<Integer> messageId) {
-        insert("INSERT into group_forum_messages (type, group_id, thread_id, message, " +
-                "author_id, author_timestamp) VALUES('REPLY', ?, ?, ?, ?, UNIX_TIMESTAMP());", (data) -> {
+        insert("INSERT INTO group_forum_messages (type, group_id, thread_id, message, " +
+               "author_id, author_timestamp) VALUES ('REPLY', ?, ?, ?, ?, UNIX_TIMESTAMP());", data -> {
             messageId.accept(data.readInteger(1));
         }, groupId, threadId, message, authorId);
     }
@@ -102,7 +102,6 @@ public class MySQLGroupForumRepository extends MySQLRepository implements IGroup
     public void saveMessageState(int messageId, int state, int modId, String modUsername) {
         update("UPDATE group_forum_messages SET state = ?, moderator_id = ?, moderator_username = ? WHERE id = ?",
                 state, modId, modUsername, messageId);
-
     }
 
     @Override
@@ -152,4 +151,5 @@ public class MySQLGroupForumRepository extends MySQLRepository implements IGroup
 
         return this.forumMessageFactory.createThreadReply(id, -1, message, threadId, authorId, authorTimestamp, state, moderatorId, moderatorUsername);
     }
+    
 }

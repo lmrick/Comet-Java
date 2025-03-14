@@ -4,13 +4,9 @@ import com.cometproject.api.networking.messages.wrappers.IEventDataWrapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.util.CharsetUtil;
-
-import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public final class MessageEvent implements IEventDataWrapper {
-	
 	private final short id;
 	private final int length;
 	private final ByteBuf buffer;
@@ -18,7 +14,6 @@ public final class MessageEvent implements IEventDataWrapper {
 	public MessageEvent(int length, ByteBuf buf) {
 		this.length = length;
 		this.buffer = (buf != null) && (buf.readableBytes() > 0) ? buf : Unpooled.EMPTY_BUFFER;
-		
 		this.id = this.content().readableBytes() >= 2 ? this.readShort() : 0;
 	}
 	

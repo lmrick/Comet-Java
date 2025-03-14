@@ -22,7 +22,7 @@ public class AuthMessageHandler extends AbstractWsHandler<AuthRequest> {
 			final Session session = NetworkManager.getInstance().getSessions().getByPlayerId(playerId);
 			
 			if (session != null) {
-				ctx.attr(SESSION).set(session);
+				ctx.channel().attr(SESSION).set(session);
 				session.setWsChannel(ctx);
 				
 				session.sendWs(new AuthOKMessage());

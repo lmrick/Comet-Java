@@ -26,7 +26,7 @@ public class MySQLGroupMemberRepository extends MySQLRepository implements IGrou
     public void getAllByGroupId(int groupId, Consumer<List<IGroupMember>> groupMembers) {
         final List<IGroupMember> members = new ArrayList<>();
 
-        select("SELECT * FROM group_memberships WHERE group_id = ?;", (data) -> {
+        select("SELECT * FROM group_memberships WHERE group_id = ?;", data -> {
             members.add(readMember(groupId, data));
         }, groupId);
 
@@ -43,7 +43,7 @@ public class MySQLGroupMemberRepository extends MySQLRepository implements IGrou
     public void create(int groupId, int playerId, GroupAccessLevel accessLevel, Consumer<IGroupMember> member) {
         final int dateJoined = (int) (System.currentTimeMillis() / 1000);
 
-        insert("INSERT into group_memberships (`group_id`, `player_id`, `access_level`, `date_joined`) VALUES(?, ?, ?, ?);",
+        insert("INSERT INTO group_memberships (`group_id`, `player_id`, `access_level`, `date_joined`) VALUES (?, ?, ?, ?);",
                 (data) -> member.accept(this.groupMemberFactory.create(data.readInteger(1), playerId, groupId, accessLevel, dateJoined)),
                 groupId, playerId, accessLevel.toString(), dateJoined);
     }
@@ -55,7 +55,7 @@ public class MySQLGroupMemberRepository extends MySQLRepository implements IGrou
 
     @Override
     public void createRequest(int groupId, int playerId) {
-        insert("INSERT into group_requests(`group_id`, `player_id`) VALUES(?, ?);", (data) -> {
+        insert("INSERT INTO group_requests(`group_id`, `player_id`) VALUES (?, ?);", data -> {
         }, groupId, playerId);
     }
 
@@ -73,7 +73,7 @@ public class MySQLGroupMemberRepository extends MySQLRepository implements IGrou
     public void getAllRequests(int groupId, Consumer<List<Integer>> requestsConsumer) {
         final List<Integer> requests = new ArrayList<>();
 
-        select("SELECT * FROM group_requests WHERE group_id = ?;", (data) -> {
+        select("SELECT * FROM group_requests WHERE group_id = ?;", data -> {
             requests.add(data.readInteger("player_id"));
         }, groupId);
 

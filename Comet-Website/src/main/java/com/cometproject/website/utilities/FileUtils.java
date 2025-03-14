@@ -1,8 +1,7 @@
 package com.cometproject.website.utilities;
 
-import org.apache.commons.io.IOUtil;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-
 import java.io.FileInputStream;
 import java.io.StringWriter;
 
@@ -16,7 +15,7 @@ public class FileUtils {
         try {
             fileInputStream = new FileInputStream(file);
 
-            IOUtil.copy(fileInputStream, stringWriter, "UTF-8");
+            IOUtils.copy(fileInputStream, stringWriter, "UTF-8");
         } catch(Exception e) {
             log.error("Error while loading file", e);
         } finally {

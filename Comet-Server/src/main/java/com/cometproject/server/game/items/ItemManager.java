@@ -10,17 +10,14 @@ import com.cometproject.server.storage.queries.items.TeleporterDao;
 import com.cometproject.storage.api.StorageContext;
 import com.cometproject.storage.api.data.DataWrapper;
 import org.apache.log4j.Logger;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ItemManager implements IFurnitureService {
-	
 	private static ItemManager itemManagerInstance;
-	
-	private Logger log = Logger.getLogger(ItemManager.class.getName());
+	private static Logger log = Logger.getLogger(ItemManager.class.getName());
 	
 	private Map<Integer, IFurnitureDefinition> itemDefinitions;
 	

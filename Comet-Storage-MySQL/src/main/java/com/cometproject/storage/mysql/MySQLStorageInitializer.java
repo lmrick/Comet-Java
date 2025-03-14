@@ -10,6 +10,14 @@ import com.cometproject.storage.api.factories.groups.GroupForumSettingsFactory;
 import com.cometproject.storage.api.factories.groups.GroupMemberFactory;
 import com.cometproject.storage.api.factories.rooms.RoomDataFactory;
 import com.cometproject.storage.api.factories.rooms.RoomModelDataFactory;
+import com.cometproject.storage.api.repositories.IGroupForumRepository;
+import com.cometproject.storage.api.repositories.IGroupMemberRepository;
+import com.cometproject.storage.api.repositories.IGroupRepository;
+import com.cometproject.storage.api.repositories.IInventoryRepository;
+import com.cometproject.storage.api.repositories.IPhotoRepository;
+import com.cometproject.storage.api.repositories.IRewardRepository;
+import com.cometproject.storage.api.repositories.IRoomItemRepository;
+import com.cometproject.storage.api.repositories.IRoomRepository;
 import com.cometproject.storage.mysql.repositories.types.groups.MySQLGroupForumRepository;
 import com.cometproject.storage.mysql.repositories.types.groups.MySQLGroupMemberRepository;
 import com.cometproject.storage.mysql.repositories.types.groups.MySQLGroupRepository;
@@ -30,14 +38,14 @@ public class MySQLStorageInitializer implements IStorageInitializer {
 	
 	@Override
 	public void setup(StorageContext storageContext) {
-		storageContext.setGroupRepository(new MySQLGroupRepository(new GroupDataFactory(), connectionProvider));
-		storageContext.setGroupMemberRepository(new MySQLGroupMemberRepository(new GroupMemberFactory(), connectionProvider));
-		storageContext.setGroupForumRepository(new MySQLGroupForumRepository(new GroupForumSettingsFactory(), new GroupForumMessageFactory(), connectionProvider));
-		storageContext.setInventoryRepository(new MySQLInventoryRepository(new InventoryItemFactory(), connectionProvider));
-		storageContext.setRoomItemRepository(new MySQLRoomItemRepository(connectionProvider));
-		storageContext.setRoomRepository(new MySQLRoomRepository(new RoomDataFactory(), new RoomModelDataFactory(), connectionProvider));
-		storageContext.setRewardRepository(new MySQLRewardRepository(connectionProvider));
-		storageContext.setPhotoRepository(new MySQLPhotoRepository(connectionProvider));
+		storageContext.setRepository(IGroupRepository.class, new MySQLGroupRepository(new GroupDataFactory(), connectionProvider));
+		storageContext.setRepository(IGroupMemberRepository.class, new MySQLGroupMemberRepository(new GroupMemberFactory(), connectionProvider));
+		storageContext.setRepository(IGroupForumRepository.class, new MySQLGroupForumRepository(new GroupForumSettingsFactory(), new GroupForumMessageFactory(), connectionProvider));
+		storageContext.setRepository(IInventoryRepository.class, new MySQLInventoryRepository(new InventoryItemFactory(), connectionProvider));
+		storageContext.setRepository(IRoomItemRepository.class, new MySQLRoomItemRepository(connectionProvider));
+		storageContext.setRepository(IRoomRepository.class, new MySQLRoomRepository(new RoomDataFactory(), new RoomModelDataFactory(), connectionProvider));
+		storageContext.setRepository(IRewardRepository.class, new MySQLRewardRepository(connectionProvider));
+		storageContext.setRepository(IPhotoRepository.class, new MySQLPhotoRepository(connectionProvider));
 	}
 	
 }

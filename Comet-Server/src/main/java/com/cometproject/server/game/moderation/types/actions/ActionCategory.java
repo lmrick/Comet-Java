@@ -2,13 +2,11 @@ package com.cometproject.server.game.moderation.types.actions;
 
 import com.cometproject.server.storage.queries.moderation.PresetDao;
 import com.google.common.collect.Lists;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 public class ActionCategory {
-	
 	private final int categoryId;
 	private final String categoryName;
 	private final List<ActionPreset> presets = Lists.newArrayList();
@@ -16,7 +14,6 @@ public class ActionCategory {
 	public ActionCategory(ResultSet resultSet) throws SQLException {
 		this.categoryId = resultSet.getInt("id");
 		this.categoryName = resultSet.getString("name");
-		
 		PresetDao.getActionPresetsForCategory(this.categoryId, presets);
 	}
 	

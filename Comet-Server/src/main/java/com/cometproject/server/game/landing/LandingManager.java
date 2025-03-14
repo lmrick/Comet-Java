@@ -7,7 +7,6 @@ import com.cometproject.server.game.landing.types.PromoArticle;
 import com.cometproject.server.storage.queries.landing.LandingDao;
 import com.cometproject.server.tasks.CometThreadManager;
 import org.apache.log4j.Logger;
-
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 

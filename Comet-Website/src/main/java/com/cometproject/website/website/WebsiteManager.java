@@ -31,8 +31,7 @@ public class WebsiteManager {
 
     private void configure() {
         System.setProperty("java.net.preferIPv4Stack", "true");
-
-        Spark.setPort(Configuration.getInstance().getSitePort());
+        Spark.port(Configuration.getInstance().getSitePort());
     }
 
     private void registerAccessLevels() {

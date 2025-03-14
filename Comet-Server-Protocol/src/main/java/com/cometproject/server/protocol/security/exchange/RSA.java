@@ -3,15 +3,11 @@ package com.cometproject.server.protocol.security.exchange;
 import java.math.BigInteger;
 
 public class RSA {
-    public BigInteger exponent; // public exponent
-    public BigInteger n; // modulus
-    // private key
+    public BigInteger exponent; 
+    public BigInteger n;
     public BigInteger privateKey;
-    // bools (can encrypt/decrypt?)
     public boolean decryptable;
-
     public boolean encry;
-
     private BigInteger zero = new BigInteger("0");
 
     public RSA() {

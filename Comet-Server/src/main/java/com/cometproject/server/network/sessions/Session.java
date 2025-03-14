@@ -5,10 +5,14 @@ import com.cometproject.api.game.players.PlayerContext;
 import com.cometproject.api.networking.messages.IMessageComposer;
 import com.cometproject.api.networking.sessions.ISession;
 import com.cometproject.api.utilities.JsonUtil;
+import com.cometproject.networking.api.messages.IMessageHandler;
+import com.cometproject.networking.api.sessions.INetSession;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.moderation.ModerationManager;
 import com.cometproject.server.game.players.PlayerManager;
 import com.cometproject.server.game.players.types.Player;
+import com.cometproject.server.network.NetworkManager;
+import com.cometproject.server.network.messages.GameMessageHandler;
 import com.cometproject.server.network.messages.outgoing.notification.LogoutMessageComposer;
 import com.cometproject.server.network.messages.outgoing.room.avatar.AvatarUpdateMessageComposer;
 import com.cometproject.server.network.messages.outgoing.room.items.UpdateFloorItemMessageComposer;
@@ -23,7 +27,7 @@ import java.net.InetSocketAddress;
 import java.text.MessageFormat;
 import java.util.UUID;
 
-public class Session implements ISession {
+public class Session implements ISession, INetSession<Session> {
 	
 	public static int CLIENT_VERSION = 0;
 	private final ChannelHandlerContext channel;
@@ -56,7 +60,7 @@ public class Session implements ISession {
 		PlayerManager.getInstance().getPlayerLoadExecutionService().submit(() -> {
 			try {
 				if (player != null && player.getData() != null)
-					PlayerManager.getInstance().remove(player.getId(), player.getData().getUsername(), this.channel.attr(SessionManager.CHANNEL_ID_ATTR).get(), this.getIpAddress());
+					PlayerManager.getInstance().remove(player.getId(), player.getData().getUsername(), this.channel.channel().attr(SessionManager.CHANNEL_ID_ATTR).get(), this.getIpAddress());
 				
 				this.eventHandler.dispose();
 				
@@ -171,7 +175,7 @@ public class Session implements ISession {
 		this.logger = Logger.getLogger(MessageFormat.format("[{0}][{1}]", username, player.getId()));
 		this.player = player;
 		
-		int channelId = this.channel.attr(SessionManager.CHANNEL_ID_ATTR).get();
+		int channelId = this.channel.channel().attr(SessionManager.CHANNEL_ID_ATTR).get();
 		
 		PlayerManager.getInstance().put(player.getId(), channelId, username, this.getIpAddress());
 		
@@ -182,10 +186,6 @@ public class Session implements ISession {
 		if (PlayerContext.getCurrentContext().getPlayer().getPermissions().getRank().messengerLogChat()) {
 			ModerationManager.getInstance().addLogChatUser(player.getSession());
 		}
-	}
-	
-	public ChannelHandlerContext getChannel() {
-		return this.channel;
 	}
 	
 	public String getUniqueId() {
@@ -222,6 +222,22 @@ public class Session implements ISession {
 	
 	public void setWsChannel(ChannelHandlerContext wsChannel) {
 		this.wsChannel = wsChannel;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public IMessageHandler<Session> getMessageHandler() {
+		return NetworkManager.getInstance().getGameMessageHandler();
+	}
+
+	@Override
+	public Session getGameSession() {
+		return this;
+	}
+
+	@Override
+	public ChannelHandlerContext getChannel() {
+		return this.channel;
 	}
 	
 }
