@@ -25,14 +25,14 @@ public class PurchasePhotoMessageEvent implements Event {
 	public void handle(Session client, MessageEvent msg) throws Exception {
 		final String code = client.getPlayer().getLastPhoto();
 		final long time = System.currentTimeMillis();
-		final String photoUrl = CometSettings.cameraPhotoUrl.replace("%photoId%", code);
+		final String photoUrl = CometSettings.CAMERA_PHOTO_URL.replace("%photoId%", code);
 		
 		final String itemExtraData = MessageFormat.format("'{'\"t\":{0},\"u\":\"{1}\",\"n\":\"{2}\",\"m\":\"\",\"s\":{3},\"w\":\"{4}\"'}'", time, code, client.getPlayer().getData().getUsername(), client.getPlayer().getId(), photoUrl);
 		
 		final DataWrapper<Long> itemIdData = DataWrapper.createEmpty();
-		StorageContext.getCurrentContext().getRoomItemRepository().createItem(client.getPlayer().getId(), CometSettings.cameraPhotoItemId, itemExtraData, itemIdData::set);
+		StorageContext.getCurrentContext().getRoomItemRepository().createItem(client.getPlayer().getId(), CometSettings.CAMERA_PHOTO_ITEM_ID, itemExtraData, itemIdData::set);
 		
-		final IPlayerItem playerItem = new InventoryItem(itemIdData.get(), CometSettings.cameraPhotoItemId, itemExtraData);
+		final IPlayerItem playerItem = new InventoryItem(itemIdData.get(), CometSettings.CAMERA_PHOTO_ITEM_ID, itemExtraData);
 		
 		client.getPlayer().getInventory().addItem(playerItem);
 		

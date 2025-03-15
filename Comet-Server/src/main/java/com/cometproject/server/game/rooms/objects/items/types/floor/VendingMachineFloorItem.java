@@ -31,7 +31,9 @@ public class VendingMachineFloorItem extends RoomItemFloor {
 				this.getRoom().getMapping().getTile(posInFront.getX(), posInFront.getY()).scheduleEvent(entity.getId(), (e) -> onInteract(e, requestData, false));
 			} catch (Exception e) {
 				// this isn't important, if we can't find the tile then we might as well just end it here.
+
 			}
+
 			return false;
 		}
 		
@@ -59,7 +61,7 @@ public class VendingMachineFloorItem extends RoomItemFloor {
 				this.sendUpdate();
 				
 				this.state = 1;
-				this.setTicks(RoomItemFactory.getProcessTime(0.5));
+				this.setTicks(RoomItemFactory.getProcessTime(0.5D));
 			}
 			case 1 -> {
 				if (this.getDefinition().getVendingIds().length != 0) {
@@ -68,7 +70,7 @@ public class VendingMachineFloorItem extends RoomItemFloor {
 				}
 				
 				this.state = 2;
-				this.setTicks(RoomItemFactory.getProcessTime(0.5));
+				this.setTicks(RoomItemFactory.getProcessTime(0.5D));
 			}
 			case 2 -> {
 				this.getItemData().setData("0");

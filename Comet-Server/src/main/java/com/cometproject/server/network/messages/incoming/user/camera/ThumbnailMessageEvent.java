@@ -44,14 +44,14 @@ public class ThumbnailMessageEvent implements Event {
 			try {
 				ByteBuf test = Unpooled.copiedBuffer(payload);
 				BufferedImage image = ImageIO.read(new ByteBufInputStream(test));
-				ImageIO.write(image, "png", new File(MessageFormat.format("{0}{1}.png", CometSettings.cameraUploadUrl, roomData.getId())));
+				ImageIO.write(image, "png", new File(MessageFormat.format("{0}{1}.png", CometSettings.CAMERA_UPLOAD_URL, roomData.getId())));
 			} catch (IOException e) {
 				e.printStackTrace();
 				client.getPlayer().sendNotification("Camera", "Failed to upload image");
 				return;
 			}
 			
-			roomData.setThumbnail(MessageFormat.format("{0}/{1}.png", CometSettings.cameraUploadUrl, roomData.getId()));
+			roomData.setThumbnail(MessageFormat.format("{0}/{1}.png", CometSettings.CAMERA_UPLOAD_URL, roomData.getId()));
 			GameContext.getCurrent().getRoomService().saveRoomData(roomData);
 			client.send(new RoomDataMessageComposer(client.getPlayer().getEntity().getRoom()));
 			client.send(new ThumbnailTakenMessageComposer());

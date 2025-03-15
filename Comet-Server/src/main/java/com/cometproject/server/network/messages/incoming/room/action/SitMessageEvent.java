@@ -18,7 +18,7 @@ public class SitMessageEvent implements Event {
 			}
 			
 			if (!playerEntity.hasStatus(RoomEntityStatus.SIT)) {
-				playerEntity.sit(0.5, playerEntity.getBodyRotation());
+				playerEntity.sit(0.5D, playerEntity.getBodyRotation());
 			}
 		}
 	}

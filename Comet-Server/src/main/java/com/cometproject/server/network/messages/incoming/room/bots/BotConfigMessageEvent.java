@@ -6,8 +6,8 @@ import com.cometproject.server.network.messages.outgoing.room.bots.BotConfigMess
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
-
 public class BotConfigMessageEvent implements Event {
+
     @Override
     public void handle(Session client, MessageEvent msg) throws Exception {
         int botId = msg.readInt();
@@ -40,4 +40,5 @@ public class BotConfigMessageEvent implements Event {
 
         client.send(new BotConfigMessageComposer(entity.getBotId(), skillId, message));
     }
+    
 }

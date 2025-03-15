@@ -58,9 +58,9 @@ public class ConfigDao {
                 CometSettings.messengerLogMessages = config.getBoolean("messenger_log_messages");
 //                CometSettings.storageItemQueueEnabled = config.getBoolean("storage_item_queue_enabled");
 //                CometSettings.storagePlayerQueueEnabled = config.getBoolean("storage_player_queue_enabled");
-                CometSettings.cameraPhotoUrl = config.getString("camera_photo_url");
-                CometSettings.cameraPhotoItemId = config.getInt("camera_photo_itemid");
-                CometSettings.cameraUploadUrl = config.getString("camera_photo_upload_url");
+                CometSettings.CAMERA_PHOTO_URL = config.getString("camera_photo_url");
+                CometSettings.CAMERA_PHOTO_ITEM_ID = config.getInt("camera_photo_itemid");
+                CometSettings.CAMERA_UPLOAD_URL = config.getString("camera_photo_upload_url");
 
                 CometSettings.maxConnectionsPerIpAddress = config.getInt("max_connections_per_ip");
                 CometSettings.maxConnectionsBlockSuspicious = config.getBoolean("max_connections_block_suspicious");

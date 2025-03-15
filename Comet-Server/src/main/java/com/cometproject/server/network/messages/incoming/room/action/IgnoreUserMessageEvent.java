@@ -10,6 +10,7 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 
 
 public class IgnoreUserMessageEvent implements Event {
+
     @Override
     public void handle(Session client, MessageEvent msg) throws Exception {
         String username = msg.readString();
@@ -38,6 +39,6 @@ public class IgnoreUserMessageEvent implements Event {
             client.getPlayer().ignorePlayer(playerEntity.getPlayerId());
             client.send(new UpdateIgnoreStatusMessageComposer(1, username));
         }
-
     }
+
 }

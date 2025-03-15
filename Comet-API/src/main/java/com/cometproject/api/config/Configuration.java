@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Properties;
 
 public class Configuration extends Properties {
-	
 	private static final Logger log = Logger.getLogger(Configuration.class.getName());
 	private static Configuration configuration;
 	

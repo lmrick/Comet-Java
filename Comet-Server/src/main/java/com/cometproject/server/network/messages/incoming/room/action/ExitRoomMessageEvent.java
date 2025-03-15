@@ -7,6 +7,8 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 
 
 public class ExitRoomMessageEvent implements Event {
+
+    @Override
     public void handle(Session client, MessageEvent msg) {
         if (client.getPlayer() == null || client.getPlayer().getEntity() == null || client.getPlayer().getEntity().getRoom() == null) {
             client.send(new HotelViewMessageComposer());
@@ -15,4 +17,5 @@ public class ExitRoomMessageEvent implements Event {
 
         client.getPlayer().getEntity().leaveRoom(false, false, true);
     }
+
 }

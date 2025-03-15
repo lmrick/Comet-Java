@@ -19,6 +19,7 @@ import com.cometproject.server.storage.queries.bots.RoomBotDao;
 
 public class PlaceBotMessageEvent implements Event {
 	
+	@Override
 	public void handle(Session client, MessageEvent msg) {
 		int botId = msg.readInt();
 		int x = msg.readInt();

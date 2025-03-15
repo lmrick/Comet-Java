@@ -4,8 +4,8 @@ import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
-
 public class DropHandItemMessageEvent implements Event {
+
     @Override
     public void handle(Session client, MessageEvent msg) throws Exception {
         if (client.getPlayer() == null || client.getPlayer().getEntity() == null) return;
@@ -16,4 +16,5 @@ public class DropHandItemMessageEvent implements Event {
 
         client.getPlayer().getEntity().carryItem(0);
     }
+
 }

@@ -76,9 +76,11 @@ public class CometSettings {
     public static int messengerMaxFriends = 1100;
     public static boolean messengerLogMessages = false;
 
-    public static int cameraPhotoItemId = 50001;
-    public static String cameraPhotoUrl = "http://localhost:8080/camera/photos/%photoId%";
-    public static String cameraUploadUrl = "http://dev-comet.test/camera/thumbnails/%photoId%";
+    public static int CAMERA_COINS_PRICE = 0;
+    public static int CAMERA_DUCKETS_PROCEI = 0;
+    public static int CAMERA_PHOTO_ITEM_ID = 50001;
+    public static String CAMERA_PHOTO_URL = "http://localhost:8080/camera/photos/%photoId%";
+    public static String CAMERA_UPLOAD_URL = "http://dev-comet.test/camera/thumbnails/%photoId%";
 
     public static int roomWiredRewardMinimumRank = 7;
     public static boolean asyncCatalogPurchase = false;

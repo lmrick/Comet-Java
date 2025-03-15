@@ -26,6 +26,10 @@ public class GiveHandItemMessageEvent implements Event {
 			return;
 		}
 		
+		if (providerEntity.getHandItem() == 0) {
+			return;
+		}
+		
 		receivingEntity.carryItem(providerEntity.getHandItem());
 		providerEntity.carryItem(0);
 	}

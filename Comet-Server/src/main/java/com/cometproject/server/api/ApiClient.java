@@ -26,7 +26,7 @@ public class ApiClient {
 
     public String savePhoto(final byte[] data, String photoId) {
         try {
-            String url = CometSettings.cameraUploadUrl.replace("%photoId%", photoId);
+            String url = CometSettings.CAMERA_UPLOAD_URL.replace("%photoId%", photoId);
             Future<Response> responseFuture = asyncHttpClient.preparePost(url)
                     .addHeader("Content-Type", "application/octet-stream")
                     .setBody(data)

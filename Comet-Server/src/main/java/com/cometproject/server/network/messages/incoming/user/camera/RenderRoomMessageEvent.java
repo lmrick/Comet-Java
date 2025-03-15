@@ -34,15 +34,15 @@ public class RenderRoomMessageEvent implements Event {
 		final String photoID = UUID.randomUUID().toString();
 		final String URL = MessageFormat.format("{0}_{1}.png", client.getPlayer().getData().getId(), photoID);
 		final String URL_SMALL = MessageFormat.format("{0}_{1}_small.png", client.getPlayer().getData().getId(), photoID);
-		final String base = CometSettings.cameraPhotoUrl.replace("%photoId%", "");
+		final String base = CometSettings.CAMERA_PHOTO_URL.replace("%photoId%", "");
 		client.getPlayer().setLastPhoto(URL);
 		
 		if (RenderRoomMessageEvent.isPngFile(payload)) {
 			try {
 				ByteBuf buf = Unpooled.copiedBuffer(payload);
 				BufferedImage image = ImageIO.read(new ByteBufInputStream(buf));
-				ImageIO.write(image, "png", new File(CometSettings.cameraUploadUrl + URL));
-				ImageIO.write(image, "png", new File(CometSettings.cameraUploadUrl + URL_SMALL));
+				ImageIO.write(image, "png", new File(CometSettings.CAMERA_UPLOAD_URL + URL));
+				ImageIO.write(image, "png", new File(CometSettings.CAMERA_UPLOAD_URL + URL_SMALL));
 			} catch (IOException e) {
 				e.printStackTrace();
 				client.getPlayer().sendNotification("Camera", "Failed to upload image");

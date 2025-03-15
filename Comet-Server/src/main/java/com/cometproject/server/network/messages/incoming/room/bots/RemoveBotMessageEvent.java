@@ -7,8 +7,8 @@ import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 import com.cometproject.server.storage.queries.bots.RoomBotDao;
 
-
 public class RemoveBotMessageEvent implements Event {
+
     @Override
     public void handle(Session client, MessageEvent msg) throws Exception {
         BotEntity entity = client.getPlayer().getEntity().getRoom().getEntities().getEntityByBotId(msg.readInt());
@@ -30,4 +30,5 @@ public class RemoveBotMessageEvent implements Event {
 
         entity.leaveRoom();
     }
+    
 }
