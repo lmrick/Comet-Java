@@ -2,7 +2,6 @@ package com.cometproject.server.locale;
 
 import com.cometproject.server.storage.queries.config.LocaleDao;
 import org.apache.log4j.Logger;
-
 import java.text.MessageFormat;
 import java.util.Map;
 

@@ -5,11 +5,11 @@ import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.sessions.Session;
 import spark.Request;
 import spark.Response;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class PhotoRoutes {
+
     public static Object purchase(Request req, Response res) {
         Map<String, Object> result = new HashMap<>();
         res.type("application/json");
@@ -53,4 +53,5 @@ public class PhotoRoutes {
 //        client.getPlayer().getAchievements().progressAchievement(AchievementType.CAMERA_PHOTO, 1);
         return result;
     }
+    
 }

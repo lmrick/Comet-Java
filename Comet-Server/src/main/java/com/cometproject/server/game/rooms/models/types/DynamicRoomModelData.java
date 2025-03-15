@@ -1,7 +1,6 @@
 package com.cometproject.server.game.rooms.models.types;
 
 public class DynamicRoomModelData {
-	
 	private String name;
 	private String heightmap;
 	private int doorX;

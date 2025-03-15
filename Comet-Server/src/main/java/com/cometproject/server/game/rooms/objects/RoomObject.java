@@ -9,7 +9,6 @@ import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.mapping.RoomTile;
 import com.cometproject.server.utilities.comporators.PositionComparator;
-
 import java.util.*;
 import java.util.stream.Collectors;
 

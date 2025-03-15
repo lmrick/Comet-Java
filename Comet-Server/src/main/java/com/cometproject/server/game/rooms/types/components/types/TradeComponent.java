@@ -6,26 +6,23 @@ import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.components.RoomComponent;
 import com.cometproject.server.game.rooms.types.components.types.trade.Trade;
-
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class TradeComponent extends RoomComponent implements ITradeComponent {
-    private final RoomComponentContext roomComponentContext;
     private final Room room;
     private final List<Trade> trades;
 
     public TradeComponent(RoomComponentContext roomComponentContext) {
         super(roomComponentContext);
         this.room = (Room) roomComponentContext.getRoom();
-        this.roomComponentContext = roomComponentContext;
         this.trades = new ArrayList<>();
     }
     
     @Override
     public RoomComponentContext getRoomComponentContext() {
-        return roomComponentContext;
+        return super.getRoomComponentContext();
     }
     
     public void add(Trade trade) {
@@ -35,7 +32,9 @@ public class TradeComponent extends RoomComponent implements ITradeComponent {
     }
 
     public Trade get(PlayerEntity client) {
-			return this.getTrades().stream().filter(trade -> trade.getFirstPlayer() == client || trade.getSecondPlayer() == client).findFirst().orElse(null);
+			return this.getTrades().stream()
+            .filter(trade -> trade.getFirstPlayer() == client || trade.getSecondPlayer() == client)
+            .findFirst().orElse(null);
 			
 		}
 

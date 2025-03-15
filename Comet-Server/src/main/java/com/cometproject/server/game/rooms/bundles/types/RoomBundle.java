@@ -4,14 +4,10 @@ import com.cometproject.api.game.catalog.types.bundles.IRoomBundle;
 import com.cometproject.api.game.catalog.types.bundles.RoomBundleConfig;
 import com.cometproject.api.game.catalog.types.bundles.RoomBundleItem;
 import com.cometproject.api.game.rooms.models.CustomFloorMapData;
-import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
-import com.cometproject.server.game.rooms.objects.items.RoomItemWall;
 import com.cometproject.server.game.rooms.objects.items.types.floor.SoundMachineFloorItem;
 import com.cometproject.server.game.rooms.objects.items.types.floor.TeleporterFloorItem;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.WiredFloorItem;
 import com.cometproject.server.game.rooms.types.Room;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,9 +41,14 @@ public class RoomBundle implements IRoomBundle {
 	public static RoomBundle create(Room room, String alias) {
 		CustomFloorMapData modelData = new CustomFloorMapData(room.getModel().getDoorX(), room.getModel().getDoorY(), room.getModel().getDoorRotation(), room.getModel().getMap(), room.getModel().getRoomModelData().getWallHeight());
 		
-		List<RoomBundleItem> bundleItems = room.getItems().getFloorItems().values().stream().filter(floorItem -> !(floorItem instanceof SoundMachineFloorItem) && !(floorItem instanceof TeleporterFloorItem) && !(floorItem instanceof WiredFloorItem)).map(floorItem -> new RoomBundleItem(floorItem.getItemData().getItemId(), floorItem.getPosition().getX(), floorItem.getPosition().getY(), floorItem.getPosition().getZ(), floorItem.getRotation(), null, floorItem.getDataObject())).collect(Collectors.toList());
+		List<RoomBundleItem> bundleItems = room.getItems().getFloorItems().values().stream()
+		.filter(floorItem -> !(floorItem instanceof SoundMachineFloorItem) && !(floorItem instanceof TeleporterFloorItem) && !(floorItem instanceof WiredFloorItem))
+		.map(floorItem -> new RoomBundleItem(floorItem.getItemData().getItemId(), floorItem.getPosition().getX(), floorItem.getPosition().getY(), floorItem.getPosition().getZ(), floorItem.getRotation(), null, floorItem.getDataObject()))
+		.collect(Collectors.toList());
 		
-		room.getItems().getWallItems().values().stream().map(wallItem -> new RoomBundleItem(wallItem.getItemData().getItemId(), -1, -1, -1, -1, wallItem.getWallPosition(), wallItem.getItemData().getData())).forEach(bundleItems::add);
+		room.getItems().getWallItems().values().stream()
+		.map(wallItem -> new RoomBundleItem(wallItem.getItemData().getItemId(), -1, -1, -1, -1, wallItem.getWallPosition(), wallItem.getItemData().getData()))
+		.forEach(bundleItems::add);
 		
 		return new RoomBundle(-1, room.getId(), alias, modelData, bundleItems, 20, 0, 0, 0, new RoomBundleConfig("%username%'s new room", room.getData().getDecorationString(), room.getData().getWallThickness(), room.getData().getFloorThickness(), room.getData().getHideWalls()));
 	}

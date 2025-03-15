@@ -14,7 +14,6 @@ import com.cometproject.server.storage.queries.system.StatisticsDao;
 import com.cometproject.server.tasks.ICometTask;
 import com.cometproject.server.tasks.CometThreadManager;
 import org.apache.log4j.Logger;
-
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.concurrent.ScheduledFuture;
@@ -43,7 +42,6 @@ public class GameCycle implements ICometTask, Initializable {
 	public void initialize() {
 		this.gameFuture = CometThreadManager.getInstance().executePeriodic(this, interval, interval, TimeUnit.MINUTES);
 		this.active = true;
-		
 		this.onlineRecord = StatisticsDao.getPlayerRecord();
 	}
 	

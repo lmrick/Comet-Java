@@ -1,7 +1,6 @@
 package com.cometproject.server.boot.utils;
 
 import com.cometproject.api.config.CometSettings;
-import com.cometproject.api.stats.CometStats;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.catalog.CatalogManager;
@@ -12,11 +11,8 @@ import com.cometproject.server.modules.ModuleManager;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.storage.SQLUtility;
 import org.apache.log4j.Logger;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ConsoleCommands {
 	

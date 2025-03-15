@@ -8,7 +8,6 @@ import com.cometproject.server.storage.cache.objects.items.FloorItemDataObject;
 import com.cometproject.server.storage.cache.objects.items.WallItemDataObject;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import java.util.List;
 import java.util.Map;
 

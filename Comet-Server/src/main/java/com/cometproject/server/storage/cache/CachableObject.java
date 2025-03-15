@@ -2,7 +2,6 @@ package com.cometproject.server.storage.cache;
 
 import com.cometproject.api.utilities.JsonUtil;
 import com.google.gson.JsonObject;
-
 import java.io.Serializable;
 
 public abstract class CachableObject implements Serializable {

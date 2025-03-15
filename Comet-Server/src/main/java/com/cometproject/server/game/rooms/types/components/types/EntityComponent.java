@@ -1,5 +1,6 @@
 package com.cometproject.server.game.rooms.types.components.types;
 
+import com.cometproject.api.game.rooms.IRoom;
 import com.cometproject.api.game.rooms.components.RoomComponentContext;
 import com.cometproject.api.game.rooms.components.types.IEntityComponent;
 import com.cometproject.api.game.utilities.Position;
@@ -20,7 +21,6 @@ import com.cometproject.server.network.ws.messages.WsMessage;
 import com.cometproject.server.protocol.messages.MessageComposer;
 import com.cometproject.server.utilities.collections.ConcurrentHashSet;
 import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +30,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class EntityComponent extends RoomComponent implements IEntityComponent {
-	private final RoomComponentContext roomComponentContext;
 	private static final Logger log = Logger.getLogger(EntityComponent.class.getName());
 	private final Map<Integer, RoomEntity> entities = new ConcurrentHashMap<>();
 	private final Map<Integer, Integer> playerIdToEntity = new ConcurrentHashMap<>();
@@ -39,19 +38,18 @@ public class EntityComponent extends RoomComponent implements IEntityComponent {
 	private final Map<String, Integer> nameToPlayerEntity = new ConcurrentHashMap<>();
 	private final Set<PlayerEntity> playerEntities = new ConcurrentHashSet<>();
 	private final Set<RoomEntity> intelligentEntities = new ConcurrentHashSet<>();
-	private final Room room;
+	private final IRoom room;
 	private final AtomicInteger entityIdGenerator = new AtomicInteger();
 	
 	public EntityComponent(RoomComponentContext roomComponentContext) {
 		super(roomComponentContext);
 		
-		this.room = (Room) roomComponentContext.getRoom();
-		this.roomComponentContext = roomComponentContext;
+		this.room = roomComponentContext.getRoom();
 	}
 	
 	@Override
 	public RoomComponentContext getRoomComponentContext() {
-		return roomComponentContext;
+		return super.getRoomComponentContext();
 	}
 	
 	public List<RoomEntity> getEntitiesAt(Position position) {

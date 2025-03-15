@@ -6,12 +6,9 @@ import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.objects.items.types.state.FloorItemEvent;
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.utilities.collections.ConcurrentHashSet;
-
-import java.util.HashSet;
 import java.util.Set;
 
 public abstract class AdvancedFloorItem<T extends FloorItemEvent> extends RoomItemFloor {
-	
 	private final Set<T> itemEvents = new ConcurrentHashSet<T>();
 	
 	public AdvancedFloorItem(RoomItemData itemData, Room room) {
@@ -20,7 +17,7 @@ public abstract class AdvancedFloorItem<T extends FloorItemEvent> extends RoomIt
 	
 	@Override
 	public void onTick() {
-		final Set<T> finishedEvents = new HashSet<T>();
+		final Set<T> finishedEvents = new ConcurrentHashSet<T>();
 		
 		itemEvents.forEach(itemEvent -> {
 			Comet.getServer().getLogger().debug(this.getId() + " incrementing tick");

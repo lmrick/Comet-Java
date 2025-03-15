@@ -10,12 +10,12 @@ import com.cometproject.server.storage.queries.player.inventory.InventoryDao;
 import org.apache.commons.lang.StringUtils;
 import spark.Request;
 import spark.Response;
-
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class PlayerRoutes {
+
     public static Object reloadPlayerData(Request request, Response response) {
         Map<String, Object> result = new HashMap<>();
         response.type("application/json");
@@ -170,4 +170,5 @@ public class PlayerRoutes {
         result.put("success", true);
         return result;
     }
+    
 }

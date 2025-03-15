@@ -1,5 +1,6 @@
 package com.cometproject.server.game.rooms.types.components.types;
 
+import com.cometproject.api.game.rooms.IRoom;
 import com.cometproject.api.game.rooms.components.RoomComponentContext;
 import com.cometproject.api.game.rooms.components.types.IItemsProcessComponent;
 import com.cometproject.api.game.rooms.objects.IRoomItemData;
@@ -17,7 +18,6 @@ import com.cometproject.storage.api.StorageContext;
 import com.google.common.collect.Queues;
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
-
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
@@ -25,10 +25,9 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class ItemProcessComponent extends RoomComponent implements ICometTask, IItemsProcessComponent {
-	private final RoomComponentContext roomComponentContext;
 	private static final int INTERVAL = 500;
 	private static final int FLAG = 400;
-	private final Room room;
+	private final IRoom room;
 	private final Logger log;
 	private ScheduledFuture<?> future;
 	private ScheduledFuture<?> saveFuture;
@@ -37,15 +36,14 @@ public class ItemProcessComponent extends RoomComponent implements ICometTask, I
 	
 	public ItemProcessComponent(RoomComponentContext roomComponentContext) {
 		super(roomComponentContext);
-		this.room = (Room) roomComponentContext.getRoom();
-		this.roomComponentContext = roomComponentContext;
+		this.room = roomComponentContext.getRoom();
 		
 		log = Logger.getLogger("Item Process [" + room.getData().getName() + "]");
 	}
 	
 	@Override
 	public RoomComponentContext getRoomComponentContext() {
-		return roomComponentContext;
+		return super.getRoomComponentContext();
 	}
 	
 	public void start() {
@@ -167,7 +165,7 @@ public class ItemProcessComponent extends RoomComponent implements ICometTask, I
 	}
 	
 	public Room getRoom() {
-		return this.room;
+		return (Room) this.room;
 	}
 	
 }

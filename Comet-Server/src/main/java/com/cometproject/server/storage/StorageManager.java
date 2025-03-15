@@ -32,7 +32,8 @@ public class StorageManager implements Initializable {
 		initializer.setup(storageContext);
 		
 		StorageContext.setCurrentContext(storageContext);
-		registerQueues();
+		this.registerQueues();
+		MySQLQueueManager.getInstance().initialize();
 		
 		CacheManager.getInstance().initialize();
 		SQLUtility.init(hikariConnectionProvider);
@@ -47,8 +48,6 @@ public class StorageManager implements Initializable {
 	
 		MySQLQueueManager.getInstance().registerBlockingQueue("itemDataUpdateQueue", new ItemDataUpdateQueue(25, hikariConnectionProvider));
 		MySQLQueueManager.getInstance().registerBlockingQueue("itemUpdateQueue", new ItemUpdateQueue(25, hikariConnectionProvider));
-	
-		MySQLQueueManager.getInstance().initialize();
 	}
 
 	public MySQLQueueManager getQueueManager() {

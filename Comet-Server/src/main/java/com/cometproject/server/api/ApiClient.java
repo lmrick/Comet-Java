@@ -4,7 +4,6 @@ import com.cometproject.api.config.CometSettings;
 import com.cometproject.server.boot.Comet;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.Response;
-
 import java.util.concurrent.Future;
 
 public class ApiClient {
@@ -17,9 +16,7 @@ public class ApiClient {
     }
 
     public static ApiClient getInstance() {
-        if (apiClient == null)
-            apiClient = new ApiClient();
-
+        if (apiClient == null) apiClient = new ApiClient();
         return apiClient;
     }
 
@@ -36,7 +33,6 @@ public class ApiClient {
                     .execute();
 
             Response res = responseFuture.get();
-
             String response = res.getResponseBody();
 
             Comet.getServer().getLogger().info("camera response (url=" + url + ", statusCode=" + res.getStatusCode() + "): " + response);

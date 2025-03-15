@@ -18,11 +18,11 @@ import com.cometproject.server.network.messages.outgoing.moderation.ModToolMessa
 import com.cometproject.server.storage.queries.config.ConfigDao;
 import spark.Request;
 import spark.Response;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class SystemRoutes {
+    
     public static Object status(Request req, Response res) {
         Map<String, Object> result = new HashMap<>();
         res.type("application/json");

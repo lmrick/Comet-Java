@@ -1,7 +1,6 @@
 package com.cometproject.server.game.rooms.types.components.types.chat.emotions;
 
 import com.cometproject.server.game.rooms.RoomManager;
-
 import java.util.HashMap;
 import java.util.Map;
 

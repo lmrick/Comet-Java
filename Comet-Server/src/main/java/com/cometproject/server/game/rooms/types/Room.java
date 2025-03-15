@@ -90,7 +90,6 @@ public class Room implements Attributable, IRoom {
 		
 		this.roomContext = new RoomContext(this);
 		RoomContext.setCurrentContext(this.roomContext);
-		
 	}
 	
 	private void injectComponentDependencies() {
@@ -162,7 +161,6 @@ public class Room implements Attributable, IRoom {
 		
 		this.attributes = new HashMap<>();
 		this.ratings = new HashSet<>();
-		
 		this.mapping = new RoomMapping(this);
 		
 		injectComponentDependencies();

@@ -11,21 +11,16 @@ import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.components.RoomComponent;
 import com.cometproject.server.storage.queries.bots.RoomBotDao;
 import com.google.common.collect.Maps;
-
 import java.util.List;
 import java.util.Map;
 
-
 public class RoomBotComponent extends RoomComponent implements IRoomBotComponent {
-    private final RoomComponentContext roomComponentContext;
     private final Room room;
     private final Map<String, Integer> botNameToId;
 
     public RoomBotComponent(RoomComponentContext roomComponentContext) {
         super(roomComponentContext);
         this.room = (Room) roomComponentContext.getRoom();
-        this.roomComponentContext = roomComponentContext;
-
         this.botNameToId = Maps.newHashMap();
 
         this.load();
@@ -33,7 +28,7 @@ public class RoomBotComponent extends RoomComponent implements IRoomBotComponent
     
     @Override
     public RoomComponentContext getRoomComponentContext() {
-        return roomComponentContext;
+        return super.getRoomComponentContext();
     }
     
     @Override

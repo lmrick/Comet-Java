@@ -1,7 +1,6 @@
 package com.cometproject.common.caching;
 
 import com.cometproject.api.caching.Cache;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -10,7 +9,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 
 public class LastReferenceCache<TKey, TObj> implements Cache<TKey, TObj> {
-	
 	private final Map<TKey, CacheEntry<TObj>> cache;
 	private final long objectLifetimeMillis;
 	private final BiConsumer<TKey, TObj> expireConsumer;

@@ -31,6 +31,7 @@ import com.cometproject.server.tasks.ICometTask;
 import com.cometproject.server.tasks.CometThreadManager;
 import com.cometproject.server.utilities.TimeSpan;
 import org.apache.log4j.Logger;
+import org.checkerframework.checker.units.qual.s;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class ProcessComponent extends RoomComponent implements ICometTask, IProcessComponent {
-	private final RoomComponentContext roomComponentContext;
 	private final Room room;
 	private final Logger log;
 	private ScheduledFuture<?> processFuture;
@@ -58,7 +58,6 @@ public class ProcessComponent extends RoomComponent implements ICometTask, IProc
 		super(roomComponentContext);
 		
 		this.room = (Room) roomComponentContext.getRoom();
-		this.roomComponentContext = roomComponentContext;
 		
 		this.log = Logger.getLogger("Room Process [" + room.getData().getName() + ", #" + room.getId() + "]");
 		this.adaptiveProcessTimes = CometSettings.adaptiveEntityProcessDelay;
@@ -66,7 +65,7 @@ public class ProcessComponent extends RoomComponent implements ICometTask, IProc
 	
 	@Override
 	public RoomComponentContext getRoomComponentContext() {
-		return roomComponentContext;
+		return super.getRoomComponentContext();
 	}
 	
 	public void tick() {

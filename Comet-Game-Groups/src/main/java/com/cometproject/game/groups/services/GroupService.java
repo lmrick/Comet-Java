@@ -19,7 +19,6 @@ import com.cometproject.storage.api.repositories.IGroupRepository;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-
 import java.util.*;
 
 public class GroupService implements IGroupService {

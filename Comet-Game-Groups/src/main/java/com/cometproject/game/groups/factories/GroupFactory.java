@@ -11,7 +11,6 @@ import com.cometproject.api.game.groups.types.components.membership.IGroupMember
 import com.cometproject.game.groups.types.Group;
 import com.cometproject.game.groups.types.components.ForumComponent;
 import com.cometproject.game.groups.types.components.MembershipComponent;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,9 +36,8 @@ public class GroupFactory {
         }
 
         final IGroup group = new Group(groupData, membershipComponent, forumComponent);
-
-        // Do anything else to it? E.g
-
+        
         return group;
     }
+
 }

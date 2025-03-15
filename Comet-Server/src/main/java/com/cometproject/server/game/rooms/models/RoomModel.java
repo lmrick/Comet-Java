@@ -4,11 +4,9 @@ import com.cometproject.api.game.rooms.models.InvalidModelException;
 import com.cometproject.api.game.rooms.models.RoomTileState;
 import com.cometproject.api.utilities.ModelUtils;
 import org.apache.log4j.Logger;
-
 import java.util.Arrays;
 
 public abstract class RoomModel {
-	
 	private String name;
 	private String map = "";
 	private int doorX;

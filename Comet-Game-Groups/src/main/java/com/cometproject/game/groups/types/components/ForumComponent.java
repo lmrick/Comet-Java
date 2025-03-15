@@ -6,7 +6,6 @@ import com.cometproject.api.game.groups.types.components.forum.IForumSettings;
 import com.cometproject.api.game.groups.types.components.forum.IForumThread;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.google.common.collect.Lists;
-
 import java.util.List;
 import java.util.Map;
 

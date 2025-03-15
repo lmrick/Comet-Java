@@ -1,5 +1,6 @@
 package com.cometproject.server.game.rooms.types.components.types;
 
+import com.cometproject.api.game.rooms.IRoom;
 import com.cometproject.api.game.rooms.components.RoomComponentContext;
 import com.cometproject.api.game.rooms.components.types.IGameComponent;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
@@ -24,9 +25,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class GameComponent extends RoomComponent implements IGameComponent {
-	private final RoomComponentContext roomComponentContext;
 	private final AtomicInteger blobCounter = new AtomicInteger(0);
-	private final Room room;
+	private final IRoom room;
 	private RoomGame instance;
 	private final Map<GameTeam, List<Integer>> teams;
 	private Map<GameTeam, Integer> scores;
@@ -58,13 +58,12 @@ public class GameComponent extends RoomComponent implements IGameComponent {
 		this.eventConsumingItems = new ConcurrentHashSet<>();
 		
 		this.resetScores();
-		this.room = (Room) roomComponentContext.getRoom();
-		this.roomComponentContext = roomComponentContext;
+		this.room = roomComponentContext.getRoom();
 	}
 	
 	@Override
 	public RoomComponentContext getRoomComponentContext() {
-		return roomComponentContext;
+		return super.getRoomComponentContext();
 	}
 	
 	public void increaseScore(PlayerEntity playerEntity, int score) {

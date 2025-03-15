@@ -12,7 +12,6 @@ import com.cometproject.game.groups.services.GroupService;
 import com.cometproject.storage.api.StorageContext;
 
 public class GroupsModule extends BaseModule {
-
     private GroupService groupService;
 
     public GroupsModule(ModuleConfig config, IGameService gameService) {
@@ -34,8 +33,6 @@ public class GroupsModule extends BaseModule {
                 StorageContext.getCurrentContext().getGroupRepository(),
                 StorageContext.getCurrentContext().getGroupMemberRepository(),
                 StorageContext.getCurrentContext().getGroupForumRepository());
-
-//        this.registerMessage(new JoinGroupMessageEvent(this.messageHandler::joinGroup));
     }
 
     @Override

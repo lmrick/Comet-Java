@@ -22,7 +22,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 public class RightsComponent extends RoomComponent implements IRightsComponent {
-	private final RoomComponentContext roomComponentContext;
 	private final Room room;
 	private List<Integer> rights;
 	private final Map<Integer, RoomBan> bannedPlayers;
@@ -31,7 +30,6 @@ public class RightsComponent extends RoomComponent implements IRightsComponent {
 	public RightsComponent(RoomComponentContext roomComponentContext) {
 		super(roomComponentContext);
 		
-		this.roomComponentContext = roomComponentContext;
 		this.room = (Room) roomComponentContext.getRoom();
 		
 		try {
@@ -51,7 +49,7 @@ public class RightsComponent extends RoomComponent implements IRightsComponent {
 	
 	@Override
 	public RoomComponentContext getRoomComponentContext() {
-		return this.roomComponentContext;
+		return super.getRoomComponentContext();
 	}
 	
 	@Override

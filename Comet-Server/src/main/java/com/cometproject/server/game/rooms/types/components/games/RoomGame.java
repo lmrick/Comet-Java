@@ -13,7 +13,6 @@ import com.cometproject.server.game.rooms.types.components.games.freeze.FreezeGa
 import com.cometproject.server.tasks.ICometTask;
 import com.cometproject.server.tasks.CometThreadManager;
 import org.apache.log4j.Logger;
-
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.ScheduledFuture;

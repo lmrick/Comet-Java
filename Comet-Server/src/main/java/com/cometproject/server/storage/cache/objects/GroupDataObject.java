@@ -5,7 +5,6 @@ import com.cometproject.api.game.groups.types.components.forum.IForumSettings;
 import com.cometproject.api.game.groups.types.components.forum.IForumThread;
 import com.cometproject.api.game.groups.types.components.membership.IGroupMember;
 import com.cometproject.server.storage.cache.CachableObject;
-
 import java.util.List;
 import java.util.Map;
 

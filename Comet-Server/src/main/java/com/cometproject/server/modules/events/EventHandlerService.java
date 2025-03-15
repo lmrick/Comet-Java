@@ -8,7 +8,6 @@ import com.cometproject.api.networking.sessions.ISession;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.log4j.Logger;
-
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;

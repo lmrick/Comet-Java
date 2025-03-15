@@ -11,8 +11,6 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.OneWayGateFl
 import com.cometproject.server.game.rooms.objects.items.types.floor.pet.breeding.BreedingBoxFloorItem;
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.api.game.utilities.RandomUtil;
-import com.google.common.collect.Lists;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,7 +54,8 @@ public class RoomMapping {
 	}
 	
 	public void dispose() {
-		Arrays.stream(tiles).forEachOrdered(roomTiles -> Arrays.stream(roomTiles).filter(Objects::nonNull).forEachOrdered(RoomTile::dispose));
+		Arrays.stream(tiles).forEachOrdered(roomTiles -> Arrays.stream(roomTiles)
+		.filter(Objects::nonNull).forEachOrdered(RoomTile::dispose));
 	}
 	
 	public void tick() {
@@ -67,7 +66,10 @@ public class RoomMapping {
 				
 				try {
 					
-					entitiesToRemove = roomTile.getEntities().stream().filter(PlayerEntity.class::isInstance).filter(entity -> ((PlayerEntity) entity).getPlayer() == null).collect(Collectors.toList());
+					entitiesToRemove = roomTile.getEntities().stream()
+					.filter(PlayerEntity.class::isInstance)
+					.filter(entity -> ((PlayerEntity) entity).getPlayer() == null)
+					.collect(Collectors.toList());
 					
 					entitiesToRemove.forEach(entityToRemove -> roomTile.getEntities().remove(entityToRemove));
 				} catch (Exception e) {

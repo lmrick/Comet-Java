@@ -6,7 +6,6 @@ import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.network.messages.outgoing.notification.AdvancedAlertMessageComposer;
 import spark.Request;
 import spark.Response;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.Map;
 
 
 public class RoomRoutes {
+    
     public static Object getAllActiveRooms(Request request, Response response) {
         response.type("application/json");
         Map<String, Object> result = new HashMap<>();
@@ -84,4 +84,5 @@ public class RoomRoutes {
 
         return result;
     }
+    
 }

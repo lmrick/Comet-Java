@@ -43,7 +43,7 @@ public class RoomManager implements Initializable {
 	
 	private Map<Integer, RoomPromotion> roomPromotions;
 	
-	private Map<String, StaticRoomModel> models;
+	//private Map<String, StaticRoomModel> models;
 	private WordFilter filterManager;
 	
 	private RoomCycle globalCycle;
@@ -88,8 +88,7 @@ public class RoomManager implements Initializable {
 			return roomThread;
 		});
 		
-		this.roomDataInstances = new LastReferenceCache<>(43200 * 1000, 10000, (key, val) -> {
-		}, CometThreadManager.getInstance().getCoreExecutor());
+		this.roomDataInstances = new LastReferenceCache<>(43200 * 1000, 10000, (key, val) -> {}, CometThreadManager.getInstance().getCoreExecutor());
 		
 		log.info("RoomManager initialized");
 	}

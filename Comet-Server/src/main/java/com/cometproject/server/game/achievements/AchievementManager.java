@@ -5,7 +5,6 @@ import com.cometproject.api.game.achievements.types.AchievementType;
 import com.cometproject.api.game.achievements.types.IAchievementGroup;
 import com.cometproject.server.storage.queries.achievements.AchievementDao;
 import org.apache.log4j.Logger;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -34,7 +33,9 @@ public class AchievementManager implements IAchievementsService {
 	@Override
 	public void loadAchievements() {
 		if (!this.achievementGroups.isEmpty()) {
-			this.achievementGroups.values().stream().filter(achievementGroup -> !achievementGroup.achievements().isEmpty()).forEachOrdered(achievementGroup -> achievementGroup.achievements().clear());
+			this.achievementGroups.values().stream()
+			.filter(achievementGroup -> !achievementGroup.achievements().isEmpty())
+			.forEachOrdered(achievementGroup -> achievementGroup.achievements().clear());
 			this.achievementGroups.clear();
 		}
 		

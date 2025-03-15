@@ -26,6 +26,7 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.WiredF
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.highscore.HighScoreFloorItem;
 import com.cometproject.server.game.rooms.objects.items.types.wall.MoodLightWallItem;
 import com.cometproject.server.game.rooms.types.Room;
+import com.cometproject.api.game.rooms.types.IRoom;
 import com.cometproject.server.game.rooms.types.mapping.RoomTile;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.messages.outgoing.notification.NotificationMessageComposer;
@@ -43,13 +44,13 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
+import org.checkerframework.checker.units.qual.s;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class ItemsComponent extends RoomComponent implements IItemsComponent {
-	private final RoomComponentContext roomComponentContext;
 	private static final int MAX_FOOTBALLS = 15;
 	private final Logger log;
 	private final Map<Long, RoomItemFloor> floorItems = new ConcurrentHashMap<>();
@@ -66,8 +67,7 @@ public class ItemsComponent extends RoomComponent implements IItemsComponent {
 		
 		this.log = Logger.getLogger("Room Items Component [" + roomComponentContext.getRoom().getData().getName() + "]");
 		this.room = (Room) roomComponentContext.getRoom();
-		this.roomComponentContext = roomComponentContext;
-		
+
 		this.itemClassIndex.put(HighScoreFloorItem.class, Sets.newConcurrentHashSet());
 		this.itemClassIndex.put(GameTimerFloorItem.class, Sets.newConcurrentHashSet());
 		
@@ -76,7 +76,7 @@ public class ItemsComponent extends RoomComponent implements IItemsComponent {
 	
 	@Override
 	public RoomComponentContext getRoomComponentContext() {
-		return roomComponentContext;
+		return super.getRoomComponentContext();
 	}
 	
 	private void loadItems() {

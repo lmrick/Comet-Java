@@ -11,7 +11,6 @@ import com.cometproject.storage.api.StorageContext;
 public abstract class RoomItemWall extends RoomItem {
 	
 	private IFurnitureDefinition itemDefinition;
-	
 	private String wallPosition;
 	
 	public RoomItemWall(RoomItemData roomItemData, Room room) {

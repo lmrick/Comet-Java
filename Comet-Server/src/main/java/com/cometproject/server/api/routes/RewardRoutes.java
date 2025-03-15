@@ -15,12 +15,12 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import spark.Request;
 import spark.Response;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class RewardRoutes {
+
     public static Object gift(Request req, Response res) {
         Map<String, Object> result = new HashMap<>();
         res.type("application/json");
@@ -77,4 +77,5 @@ public class RewardRoutes {
         result.put("success", true);
         return result;
     }
+    
 }

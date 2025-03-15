@@ -5,7 +5,6 @@ import com.cometproject.server.tasks.ICometTask;
 import com.cometproject.server.tasks.CometThreadManager;
 import com.cometproject.server.utilities.TimeSpan;
 import org.apache.log4j.Logger;
-
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.concurrent.ScheduledFuture;
@@ -42,7 +41,10 @@ public class RoomCycle implements ICometTask {
 			// run this before ticking
 			RoomManager.getInstance().unloadIdleRooms();
 			
-			List<Integer> expiredPromotedRooms = RoomManager.getInstance().getRoomPromotions().values().stream().filter(RoomPromotion::isExpired).map(RoomPromotion::getRoomId).collect(Collectors.toList());
+			List<Integer> expiredPromotedRooms = RoomManager.getInstance().getRoomPromotions().values().stream()
+			.filter(RoomPromotion::isExpired)
+			.map(RoomPromotion::getRoomId)
+			.collect(Collectors.toList());
 			
 			if (!expiredPromotedRooms.isEmpty()) {
 				expiredPromotedRooms.forEach(roomId -> RoomManager.getInstance().getRoomPromotions().remove(roomId));

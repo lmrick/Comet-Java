@@ -1,6 +1,8 @@
 package com.cometproject.api.game.utilities;
 
 import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
+import com.google.common.base.Objects;
+
 import java.text.MessageFormat;
 
 public class Position {
@@ -83,9 +85,9 @@ public class Position {
 	
 	public static double calculateHeight(IFurnitureDefinition definition) {
 		if (definition.getInteraction().equals("gate")) {
-			return 0;
+			return 0.0D;
 		} else if (definition.canSit()) {
-			return 0;
+			return 0.0D;
 		}
 		
 		return definition.getHeight();
@@ -269,7 +271,7 @@ public class Position {
 	
 	@Override
 	public int hashCode() {
-		return 0;
+		return Objects.hashCode(this.x, this.y, this.z);
 	}
 	
 	public int getFlag() {

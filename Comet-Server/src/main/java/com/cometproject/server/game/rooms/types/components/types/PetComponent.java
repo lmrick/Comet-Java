@@ -11,21 +11,19 @@ import com.cometproject.server.game.rooms.types.components.RoomComponent;
 import com.cometproject.server.storage.queries.pets.RoomPetDao;
 
 public class PetComponent extends RoomComponent implements IPetComponent {
-	private final RoomComponentContext roomComponentContext;
 	private final Room room;
 	
 	public PetComponent(RoomComponentContext roomComponentContext) {
 		super(roomComponentContext);
 		
 		this.room = (Room) roomComponentContext.getRoom();
-		this.roomComponentContext = roomComponentContext;
 		
 		this.load();
 	}
 	
 	@Override
 	public RoomComponentContext getRoomComponentContext() {
-		return roomComponentContext;
+		return super.getRoomComponentContext();
 	}
 	
 	public void load() {

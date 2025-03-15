@@ -9,7 +9,6 @@ import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.networking.messages.IMessageComposer;
 import com.cometproject.api.networking.sessions.ISessionService;
 import com.google.common.collect.Lists;
-
 import java.util.*;
 
 public class MembershipComponent implements IMembershipComponent {

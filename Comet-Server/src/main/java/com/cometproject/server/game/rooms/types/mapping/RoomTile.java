@@ -16,7 +16,6 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.groups.Group
 import com.cometproject.server.game.rooms.objects.items.types.floor.pet.breeding.BreedingBoxFloorItem;
 import com.cometproject.server.game.rooms.objects.items.types.floor.snowboarding.SnowboardJumpFloorItem;
 import com.cometproject.server.utilities.collections.ConcurrentHashSet;
-
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
@@ -31,10 +30,10 @@ public class RoomTile {
     private RoomTileStatusType status;
     private RoomTileState state;
     private boolean canStack;
-    private long topItem = 0;
-    private double stackHeight = 0d;
-    private long originalTopItem = 0;
-    private double originalHeight = 0d;
+    private long topItem = 0L;
+    private double stackHeight = 0.0D;
+    private long originalTopItem = 0L;
+    private double originalHeight = 0.0D;
     private Position redirect = null;
     private boolean canPlaceItemHere = false;
     private boolean hasItems = false;
@@ -83,9 +82,9 @@ public class RoomTile {
         this.status = RoomTileStatusType.NONE;
         this.canStack = true;
         this.hasMagicTile = false;
-        this.topItem = 0;
+        this.topItem = 0L;
         this.originalHeight = 0.0D;
-        this.originalTopItem = 0;
+        this.originalTopItem = 0L;
         this.stackHeight = 0.0D;
         this.hasAdjustableHeight = false;
         this.hasGate = false;
@@ -101,8 +100,8 @@ public class RoomTile {
         // component item is an item that can be used along with an item that overrides the height.
         boolean hasComponentItem = false;
 
-        double highestHeight = 0d;
-        long highestItem = 0;
+        double highestHeight = 0.0D;
+        long highestItem = 0L;
 
         Double staticOverrideHeight = null;
         Double overrideHeight = null;
@@ -115,7 +114,6 @@ public class RoomTile {
 					items.add(item);
 				} else {
 					List<AffectedTile> affectedTiles = AffectedTile.getAffectedTilesAt(item.getDefinition().getLength(), item.getDefinition().getWidth(), item.getPosition().getX(), item.getPosition().getY(), item.getRotation());
-					
 					affectedTiles.stream().filter(tile -> this.position.getX() == tile.x && this.position.getY() == tile.y).filter(tile -> !items.contains(item)).forEachOrdered(tile -> items.add(item));
 				}
 			});
@@ -130,7 +128,7 @@ public class RoomTile {
 
             this.hasItems = true;
 
-            final double totalHeight = item.getPosition().getZ() + (item.getOverrideHeight() != -1d ? item.getOverrideHeight() : item.getDefinition().getHeight());
+            final double totalHeight = item.getPosition().getZ() + (item.getOverrideHeight() != -1.0D ? item.getOverrideHeight() : item.getDefinition().getHeight());
 
             if (totalHeight > highestHeight) {
                 highestHeight = totalHeight;
@@ -266,7 +264,7 @@ public class RoomTile {
 
         if (roomItemFloor != null && !(roomItemFloor instanceof RollerFloorItem) && (roomItemFloor.getDefinition().canSit() || roomItemFloor instanceof BedFloorItem || roomItemFloor instanceof SnowboardJumpFloorItem)) {
             if (roomItemFloor instanceof SnowboardJumpFloorItem) {
-                height += 1.0;
+                height += 1.0D;
             } else {
                 if (roomItemFloor instanceof SeatFloorItem || roomItemFloor instanceof BedFloorItem)
                     height -= roomItemFloor.getDefinition().getHeight();

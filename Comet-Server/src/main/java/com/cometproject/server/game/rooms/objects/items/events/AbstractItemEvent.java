@@ -4,7 +4,6 @@ import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.tasks.ICometTask;
 import com.cometproject.server.tasks.CometThreadManager;
-
 import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractItemEvent implements ICometTask {
