@@ -10,7 +10,6 @@ import com.cometproject.server.game.rooms.types.components.types.chat.emotions.C
 import com.cometproject.server.network.messages.outgoing.room.avatar.DanceMessageComposer;
 import com.cometproject.server.network.messages.outgoing.room.avatar.TalkMessageComposer;
 import com.cometproject.api.game.utilities.RandomUtil;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;

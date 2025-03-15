@@ -9,6 +9,8 @@ import com.cometproject.api.game.players.data.components.IPlayerInventory;
 import com.cometproject.api.game.quests.IQuest;
 import com.cometproject.api.game.quests.QuestType;
 import com.cometproject.api.networking.sessions.ISession;
+import com.cometproject.api.utilities.observers.IObserver;
+import com.cometproject.api.utilities.observers.PlayerObserver;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.guides.GuideManager;
 import com.cometproject.server.game.guides.types.HelpRequest;
@@ -46,6 +48,7 @@ public class Player implements IPlayer {
 	
 	private final PlayerContext playerContext;
 	private PlayerComponentContext playerComponentContext;
+	private PlayerObserver playerObserver;
 	
 	private PermissionComponent permissions;
 	private InventoryComponent inventory;
@@ -75,18 +78,18 @@ public class Player implements IPlayer {
 	private List<Integer> enteredRooms = new ArrayList<>();
 	private Set<Integer> groups = Sets.newConcurrentHashSet();
 	private List<Integer> ignoredPlayers = new ArrayList<>();
-	private long roomLastMessageTime = 0;
-	private double roomFloodTime = 0;
+	private long roomLastMessageTime = 0L;
 	private int lastForumPost = 0;
-	private long lastRoomRequest = 0;
-	private long lastBadgeUpdate = 0;
+	private long lastRoomRequest = 0L;
+	private long lastBadgeUpdate = 0L;
 	private int lastFigureUpdate = 0;
 	private int roomFloodFlag = 0;
-	private long messengerLastMessageTime = 0;
-	private double messengerFloodTime = 0;
+	private long messengerLastMessageTime = 0L;
+	private double roomFloodTime = 0.0D;
+	private double messengerFloodTime = 0.0D;
 	private int messengerFloodFlag = 0;
 	private boolean usernameConfirmed = false;
-	private long teleportId = 0;
+	private long teleportId = 0L;
 	private int teleportRoomId = 0;
 	private String lastMessage = "";
 	private int lastVoucherRedeemAttempt = 0;
@@ -96,17 +99,17 @@ public class Player implements IPlayer {
 	private int lastGift = 0;
 	private int lastRoomCreated = 0;
 	private boolean isDeletingGroup = false;
-	private long deletingGroupAttempt = 0;
+	private long deletingGroupAttempt = 0L;
 	private boolean bypassRoomAuth;
-	private long lastDiamondReward = 0;
-	private long lastReward = 0;
+	private long lastDiamondReward = 0L;
+	private long lastReward = 0L;
 	private boolean invisible = false;
 	private int lastTradePlayer = 0;
-	private long lastTradeTime = 0;
+	private long lastTradeTime = 0L;
 	private int lastTradeFlag = 0;
-	private long lastTradeFlood = 0;
-	private long lastPhotoTaken = 0;
-	private double itemPlacementHeight = -1;
+	private long lastTradeFlood = 0L;
+	private long lastPhotoTaken = 0L;
+	private double itemPlacementHeight = -1.0D;
 	private int itemPlacementState = -1;
 	private String ssoTicket;
 	private Set<Integer> recentPurchases;
@@ -142,6 +145,14 @@ public class Player implements IPlayer {
 		this.entity = null;
 		this.lastReward = Comet.getTime();
 		this.lastDiamondReward = Comet.getTime();
+
+		this.playerObserver = new PlayerObserver();
+		this.playerObserver.addObserver(this);
+	}
+
+	@Override
+	public void flush(Object... arguments) {
+		this.playerObserver.notifyAll();
 	}
 	
 	private void injectComponentDependencies() {
@@ -187,7 +198,8 @@ public class Player implements IPlayer {
 	@Override
 	public void dispose() {
 		this.setOnline(false);
-		flush();
+		flush(this);
+		getPlayerObserver().notifyObservers(this);
 		
 		if (this.getEntity() != null) {
 			try {
@@ -241,7 +253,12 @@ public class Player implements IPlayer {
 		
 		this.settings = null;
 		this.data = null;
-		
+
+		this.playerObserver.removeObserver(this);
+		this.playerObserver = null;
+
+		this.playerComponentContext = null;
+
 		this.isDisposed = true;
 	}
 	
@@ -329,7 +346,9 @@ public class Player implements IPlayer {
 		if (getSettings().hasPersonalStaff()) {
 			var rankPermissionsList = new ArrayList<>(PermissionsDao.getEffects().entrySet());
 			rankPermissionsList.sort(Collections.reverseOrder(Map.Entry.comparingByValue()));
-			rankPermissionsList.stream().filter(entry -> this.getPermissions().getRank().getId() >= entry.getValue()).findFirst().ifPresent(entry -> this.getEntity().applyEffect(this.getSettings().hasPersonalStaff() ? new PlayerEffect(entry.getKey()) : new PlayerEffect(0)));
+			rankPermissionsList.stream()
+			.filter(entry -> this.getPermissions().getRank().getId() >= entry.getValue())
+			.findFirst().ifPresent(entry -> this.getEntity().applyEffect(this.getSettings().hasPersonalStaff() ? new PlayerEffect(entry.getKey()) : new PlayerEffect(0)));
 		}
 		
 	}
@@ -372,7 +391,8 @@ public class Player implements IPlayer {
 	public void setRooms(List<Integer> rooms) {
 		this.rooms = rooms;
 		
-		flush();
+		flush(this);
+		getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override
@@ -387,7 +407,8 @@ public class Player implements IPlayer {
 	public void setEntity(PlayerEntity avatar) {
 		this.entity = avatar;
 		
-		flush();
+		flush(this);
+		getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override
@@ -407,6 +428,9 @@ public class Player implements IPlayer {
 	
 	public void setData(PlayerData playerData) {
 		this.data = playerData;
+
+		flush(playerData);
+		getPlayerObserver().notifyObservers(playerData);
 	}
 	
 	@Override
@@ -475,6 +499,9 @@ public class Player implements IPlayer {
 	@Override
 	public void setTeleportId(long teleportId) {
 		this.teleportId = teleportId;
+
+		flush(teleportId);
+		getPlayerObserver().notifyObservers(teleportId);
 	}
 	
 	@Override
@@ -485,6 +512,9 @@ public class Player implements IPlayer {
 	@Override
 	public void setRoomLastMessageTime(long roomLastMessageTime) {
 		this.roomLastMessageTime = roomLastMessageTime;
+
+		flush(roomLastMessageTime);
+		getPlayerObserver().notifyObservers(roomLastMessageTime);
 	}
 	
 	@Override
@@ -523,12 +553,12 @@ public class Player implements IPlayer {
 	}
 	
 	@Override
-	public int getNotifCooldown() {
+	public int getNotificationDelay() {
 		return this.notifCooldown;
 	}
 	
 	@Override
-	public void setNotifCooldown(int notifCooldown) {
+	public void setNotificationDelay(int notifCooldown) {
 		this.notifCooldown = notifCooldown;
 	}
 	
@@ -541,7 +571,8 @@ public class Player implements IPlayer {
 	public void setLastRoomId(int lastRoomId) {
 		this.lastRoomId = lastRoomId;
 		
-		flush();
+		flush(lastRoomId);
+		getPlayerObserver().notifyObservers(lastRoomId);
 	}
 	
 	@Override
@@ -552,6 +583,9 @@ public class Player implements IPlayer {
 	@Override
 	public void setLastGift(int lastGift) {
 		this.lastGift = lastGift;
+
+		flush(lastGift);
+		getPlayerObserver().notifyObservers(lastGift);
 	}
 	
 	@Override
@@ -708,7 +742,8 @@ public class Player implements IPlayer {
 	public void setInvisible(boolean invisible) {
 		this.invisible = invisible;
 		
-		flush();
+		flush(this);
+		getPlayerObserver().notifyObservers(this);
 	}
 	
 	public int getLastTradePlayer() {
@@ -875,9 +910,10 @@ public class Player implements IPlayer {
 	public void setListeningPlayers(Set<Integer> listeningPlayers) {
 		this.listeningPlayers = listeningPlayers;
 	}
-	
-	public void flush() {
-		
+
+	@Override
+	public PlayerObserver getPlayerObserver() {
+		return playerObserver;
 	}
 	
 	public String toString() {

@@ -13,12 +13,15 @@ public class WiredTriggerExecutor<T extends WiredTriggerItem> implements ICometT
 		this.roomEntity = entity;
 		this.data = data;
 		this.triggerClass = triggerClass;
-		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
-		WiredTriggerItem.getTriggers(this.roomEntity.getRoom(), this.triggerClass).stream().map(wiredItem -> ((T) wiredItem)).filter(trigger -> trigger.getWiredData().getSelectedIds().contains(((RoomItemFloor) data).getId())).forEachOrdered(trigger -> trigger.evaluate(this.roomEntity, data));
+		WiredTriggerItem.getTriggers(this.roomEntity.getRoom(), this.triggerClass).stream()
+		.map(wiredItem -> ((T) wiredItem))
+		.filter(trigger -> trigger.getWiredData().getSelectedIds().contains(((RoomItemFloor) data).getId()))
+		.forEachOrdered(trigger -> trigger.evaluate(this.roomEntity, data));
 	}
 	
 }

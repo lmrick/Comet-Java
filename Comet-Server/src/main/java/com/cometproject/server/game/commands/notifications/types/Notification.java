@@ -23,7 +23,7 @@ public class Notification {
 	}
 	
 	public void execute(Player player) {
-		if ((player.getNotifCooldown() + coolDown) >= Comet.getTime()) {
+		if ((player.getNotificationDelay() + coolDown) >= Comet.getTime()) {
 			return;
 		}
 		
@@ -32,7 +32,7 @@ public class Notification {
 			case LOCAL -> player.getSession().send(new AdvancedAlertMessageComposer(this.text));
 		}
 		
-		player.setNotifCooldown((int) Comet.getTime());
+		player.setNotificationDelay((int) Comet.getTime());
 	}
 	
 	public String getTrigger() {

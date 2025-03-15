@@ -91,8 +91,8 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntityAccess, Att
 	private String lastMessage = "";
 	
 	private boolean isAway = false;
-	private long lastAwayReminder = 0;
-	private long awayTime = 0;
+	private long lastAwayReminder = 0L;
+	private long awayTime = 0L;
 	
 	public PlayerEntity(Player player, int identifier, Position startPosition, int startBodyRotation, int startHeadRotation, Room roomInstance) {
 		super(identifier, startPosition, startBodyRotation, startHeadRotation, roomInstance);
@@ -127,7 +127,10 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntityAccess, Att
 			isAuthFailed = true;
 		}
 		
-		if (!isSpectating && this.getPlayer().hasQueued(room.getId()) && !isAuthFailed && this.getPlayerId() != this.getRoom().getData().getOwnerId() && this.getRoom().getEntities().playerCount() >= this.getRoom().getData().getMaxUsers() && !this.getPlayer().getPermissions().getRank().roomEnterFull()) {
+		if (!isSpectating && this.getPlayer().hasQueued(room.getId()) && !isAuthFailed 
+		&& this.getPlayerId() != this.getRoom().getData().getOwnerId() 
+		&& this.getRoom().getEntities().playerCount() >= this.getRoom().getData().getMaxUsers() 
+		&& !this.getPlayer().getPermissions().getRank().roomEnterFull()) {
 			
 			if (RoomQueue.getInstance().hasQueue(room.getId())) {
 				RoomQueue.getInstance().addPlayerToQueue(room.getId(), this.playerId);
@@ -151,7 +154,9 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntityAccess, Att
 		boolean isTeleporting = this.getPlayer().isTeleporting() && (this.getPlayer().getTeleportRoomId() == this.getRoom().getId());
 		boolean isDoorbell = false;
 		
-		if (!isAuthFailed && !this.getPlayer().isBypassingRoomAuth() && (!isOwner && !this.getPlayer().getPermissions().getRank().roomEnterLocked() && !this.isDoorbellAnswered()) && !isTeleporting) {
+		if (!isAuthFailed && !this.getPlayer().isBypassingRoomAuth() 
+		&& (!isOwner && !this.getPlayer().getPermissions().getRank().roomEnterLocked() 
+		&& !this.isDoorbellAnswered()) && !isTeleporting) {
 			if (this.getRoom().getData().getAccess() == RoomAccessType.PASSWORD) {
 				boolean matched;
 				

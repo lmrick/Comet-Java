@@ -2,7 +2,7 @@ package com.cometproject.server.game.rooms.objects.entities.pathfinding;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Objects;
 
 public class AffectedTile {
     public int x;
@@ -16,44 +16,12 @@ public class AffectedTile {
     public static List<AffectedTile> getAffectedBothTilesAt(int length, int width, int posX, int posY, int rotation) {
         List<AffectedTile> pointList = new ArrayList<>();
 
-        pointList.add(new AffectedTile(posX, posY));
-
-        if (length > 1) {
-            if (rotation == 0 || rotation == 4) {
-                for (int i = 1; i < length; i++) {
-                    pointList.add(new AffectedTile(posX, posY + i));
-
-                    for (int j = 1; j < width; j++) {
-                        pointList.add(new AffectedTile(posX + j, posY + i));
-                    }
-                }
-            } else if (rotation == 2 || rotation == 6) {
-                for (int i = 1; i < length; i++) {
-                    pointList.add(new AffectedTile(posX + i, posY));
-
-                    for (int j = 1; j < width; j++) {
-                        pointList.add(new AffectedTile(posX + i, posY + j));
-                    }
-                }
-            }
-        }
-
-        if (width > 1) {
-            if (rotation == 0 || rotation == 4) {
-                for (int i = 1; i < width; i++) {
-                    pointList.add(new AffectedTile(posX + i, posY));
-
-                    for (int j = 1; j < length; j++) {
-                        pointList.add(new AffectedTile(posX + i, posY + j));
-                    }
-                }
-            } else if (rotation == 2 || rotation == 6) {
-                for (int i = 1; i < width; i++) {
-                    pointList.add(new AffectedTile(posX, posY + i));
-
-                    for (int j = 1; j < length; j++) {
-                        pointList.add(new AffectedTile(posX + j, posY + i));
-                    }
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < width; j++) {
+                if (rotation == 0 || rotation == 4) {
+                    pointList.add(new AffectedTile(posX + j, posY + i));
+                } else if (rotation == 2 || rotation == 6) {
+                    pointList.add(new AffectedTile(posX + i, posY + j));
                 }
             }
         }
@@ -64,46 +32,30 @@ public class AffectedTile {
     public static List<AffectedTile> getAffectedTilesAt(int length, int width, int posX, int posY, int rotation) {
         List<AffectedTile> pointList = new ArrayList<>();
 
-        if (length > 1) {
-            if (rotation == 0 || rotation == 4) {
-                for (int i = 1; i < length; i++) {
-                    pointList.add(new AffectedTile(posX, posY + i));
-
-                    for (int j = 1; j < width; j++) {
-                        pointList.add(new AffectedTile(posX + j, posY + i));
-                    }
-                }
-            } else if (rotation == 2 || rotation == 6) {
-                for (int i = 1; i < length; i++) {
-                    pointList.add(new AffectedTile(posX + i, posY));
-
-                    for (int j = 1; j < width; j++) {
-                        pointList.add(new AffectedTile(posX + i, posY + j));
-                    }
-                }
-            }
-        }
-
-        if (width > 1) {
-            if (rotation == 0 || rotation == 4) {
-                for (int i = 1; i < width; i++) {
-                    pointList.add(new AffectedTile(posX + i, posY));
-
-                    for (int j = 1; j < length; j++) {
-                        pointList.add(new AffectedTile(posX + i, posY + j));
-                    }
-                }
-            } else if (rotation == 2 || rotation == 6) {
-                for (int i = 1; i < width; i++) {
-                    pointList.add(new AffectedTile(posX, posY + i));
-
-                    for (int j = 1; j < length; j++) {
-                        pointList.add(new AffectedTile(posX + j, posY + i));
-                    }
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < width; j++) {
+                if (rotation == 0 || rotation == 4) {
+                    pointList.add(new AffectedTile(posX + j, posY + i));
+                } else if (rotation == 2 || rotation == 6) {
+                    pointList.add(new AffectedTile(posX + i, posY + j));
                 }
             }
         }
 
         return pointList;
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AffectedTile that = (AffectedTile) o;
+        return x == that.x && y == that.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
+
 }

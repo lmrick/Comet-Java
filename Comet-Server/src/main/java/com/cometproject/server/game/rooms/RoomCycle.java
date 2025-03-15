@@ -2,6 +2,7 @@ package com.cometproject.server.game.rooms;
 
 import com.cometproject.server.game.rooms.types.components.types.promotion.RoomPromotion;
 import com.cometproject.server.tasks.ICometTask;
+import com.cometproject.server.tasks.CometConstants;
 import com.cometproject.server.tasks.CometThreadManager;
 import com.cometproject.server.utilities.TimeSpan;
 import org.apache.log4j.Logger;
@@ -12,9 +13,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class RoomCycle implements ICometTask {
-	
-	private final static int PERIOD = 500;
-	private final static int FLAG = 2000;
+	private final static int PERIOD = CometConstants.ROOM_CYCLE_PERIOD;
+	private final static int FLAG = CometConstants.ROOM_CYCLE_FLAG;
 	private static final Logger log = Logger.getLogger(RoomCycle.class.getName());
 	private ScheduledFuture<?> myFuture;
 	

@@ -17,7 +17,6 @@ import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.network.messages.outgoing.room.items.UpdateFloorItemMessageComposer;
 import com.cometproject.server.utilities.attributes.Collidable;
 import com.google.common.collect.Lists;
-
 import java.util.List;
 
 public abstract class RoomItemFloor extends RoomItem implements Collidable, IFloorItem {

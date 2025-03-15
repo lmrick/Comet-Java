@@ -25,7 +25,7 @@ public interface IPlayerMessenger {
     Map<Integer, IMessengerFriend> getFriends();
     List<Integer> getRequests();
     void removeRequest(Integer request);
-    void setInitialised(boolean initialised);
-    boolean isInitialised();
+    void setInitialized(boolean initialised);
+    boolean isInitialized();
     
 }

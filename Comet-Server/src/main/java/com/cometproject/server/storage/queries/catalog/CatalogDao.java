@@ -18,19 +18,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-
 public class CatalogDao {
+    
     public static void getPages(Map<Integer, ICatalogPage> pages) {
-        Connection sqlConnection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
 
-        try {
-            sqlConnection = SQLUtility.getConnection();
-
-            preparedStatement = SQLUtility.prepare("SELECT * FROM catalog_pages WHERE visible = '1' ORDER BY order_num;", sqlConnection);
-            resultSet = preparedStatement.executeQuery();
-
+        try(Connection sqlConnection = SQLUtility.getConnection();
+            PreparedStatement preparedStatement = SQLUtility.prepare("SELECT * FROM catalog_pages WHERE visible = '1' ORDER BY order_num;", sqlConnection);
+            ResultSet resultSet = preparedStatement.executeQuery()) {
+           
             while (resultSet.next()) {
                 try {
                     int pageId = resultSet.getInt("id");
@@ -42,24 +37,14 @@ public class CatalogDao {
             }
         } catch (SQLException e) {
             SQLUtility.handleSqlException(e);
-        } finally {
-            SQLUtility.closeSilently(resultSet);
-            SQLUtility.closeSilently(preparedStatement);
-            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
     public static void getItems(Map<Integer, ICatalogItem> items) {
-        Connection sqlConnection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            sqlConnection = SQLUtility.getConnection();
-
-            preparedStatement = SQLUtility.prepare("SELECT * FROM catalog_items", sqlConnection);
-            resultSet = preparedStatement.executeQuery();
-
+        try(Connection sqlConnection = SQLUtility.getConnection();
+            PreparedStatement preparedStatement = SQLUtility.prepare("SELECT * FROM catalog_items", sqlConnection);
+            ResultSet resultSet = preparedStatement.executeQuery()) {
+            
             while (resultSet.next()) {
                 try {
                     final ICatalogItem catalogItem = itemFromResultSet(resultSet);
@@ -77,40 +62,20 @@ public class CatalogDao {
             }
         } catch (SQLException e) {
             SQLUtility.handleSqlException(e);
-        } finally {
-            SQLUtility.closeSilently(resultSet);
-            SQLUtility.closeSilently(preparedStatement);
-            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
 
     private static Map<Integer, ICatalogItem> getItemsByPage(int pageId) {
-        Connection sqlConnection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
         Map<Integer, ICatalogItem> data = new HashMap<>();
 
-        try {
-            sqlConnection = SQLUtility.getConnection();
-
-            preparedStatement = SQLUtility.prepare("SELECT * FROM catalog_items WHERE page_id = ?", sqlConnection);
+        try(Connection sqlConnection = SQLUtility.getConnection();
+            PreparedStatement preparedStatement = SQLUtility.prepare("SELECT * FROM catalog_items WHERE page_id = ?", sqlConnection);
+            ResultSet resultSet = preparedStatement.executeQuery()) {
+            
             preparedStatement.setInt(1, pageId);
 
-            resultSet = preparedStatement.executeQuery();
-
             while (resultSet.next()) {
-//                try {
-//                    int itemId = Integer.parseInt(resultSet.getString("item_ids"));
-//
-//                    if (itemId != -1 && !ItemManager.getInstance().getItemDefinitions().containsKey(itemId)) {
-//                        continue;
-//                    }
-//                } catch (Exception e) {
-//                    continue;
-//                }
-
                 try {
                     final ICatalogItem catalogItem = itemFromResultSet(resultSet);
 
@@ -127,45 +92,28 @@ public class CatalogDao {
 
         } catch (SQLException e) {
             SQLUtility.handleSqlException(e);
-        } finally {
-            SQLUtility.closeSilently(resultSet);
-            SQLUtility.closeSilently(preparedStatement);
-            SQLUtility.closeSilently(sqlConnection);
         }
 
         return data;
     }
 
     public static void updateLimitSellsForItem(int itemId, int amount) {
-        Connection sqlConnection = null;
-        PreparedStatement preparedStatement = null;
-
-        try {
-            sqlConnection = SQLUtility.getConnection();
-
-            preparedStatement = SQLUtility.prepare("UPDATE catalog_items SET limited_sells = limited_sells + ? WHERE id = ?", sqlConnection);
+        try(Connection sqlConnection = SQLUtility.getConnection();
+            PreparedStatement preparedStatement = SQLUtility.prepare("UPDATE catalog_items SET limited_sells = limited_sells + ? WHERE id = ?", sqlConnection)) {
+            
             preparedStatement.setInt(1, amount);
             preparedStatement.setInt(2, itemId);
 
             SQLUtility.executeStatementSilently(preparedStatement, false);
         } catch (SQLException e) {
             SQLUtility.handleSqlException(e);
-        } finally {
-            SQLUtility.closeSilently(preparedStatement);
-            SQLUtility.closeSilently(sqlConnection);
-        }
+        } 
     }
 
     public static void loadGiftBoxes(List<Integer> giftBoxesOld, List<Integer> giftBoxesNew) {
-        Connection sqlConnection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            sqlConnection = SQLUtility.getConnection();
-
-            preparedStatement = SQLUtility.prepare("SELECT * FROM catalog_gift_wrapping", sqlConnection);
-            resultSet = preparedStatement.executeQuery();
+        try(Connection sqlConnection = SQLUtility.getConnection();
+            PreparedStatement preparedStatement = SQLUtility.prepare("SELECT * FROM catalog_gift_wrapping", sqlConnection);
+            ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 if (resultSet.getString("type").equals("old")) {
@@ -176,47 +124,31 @@ public class CatalogDao {
             }
         } catch (SQLException e) {
             SQLUtility.handleSqlException(e);
-        } finally {
-            SQLUtility.closeSilently(resultSet);
-            SQLUtility.closeSilently(preparedStatement);
-            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
     public static void getFeaturedPages(List<ICatalogFrontPageEntry> frontPageEntries) {
-        Connection sqlConnection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            sqlConnection = SQLUtility.getConnection();
-
-            preparedStatement = SQLUtility.prepare("SELECT * FROM catalog_featured_pages", sqlConnection);
-            resultSet = preparedStatement.executeQuery();
-
+        try(Connection connection = SQLUtility.getConnection();
+            PreparedStatement preparedStatement = SQLUtility.prepare("SELECT * FROM catalog_featured_pages", connection);
+            ResultSet resultSet = preparedStatement.executeQuery()) {
+            
             while (resultSet.next()) {
-                frontPageEntries.add(new CatalogFrontPageEntry(resultSet.getInt("id"), resultSet.getString("caption"),
-                        resultSet.getString("image"), resultSet.getString("page_link"), resultSet.getInt("page_id")));
+                frontPageEntries.add(
+                    new CatalogFrontPageEntry(resultSet.getInt("id"), 
+                    resultSet.getString("caption"),
+                        resultSet.getString("image"), 
+                        resultSet.getString("page_link"), 
+                        resultSet.getInt("page_id")));
             }
         } catch (SQLException e) {
             SQLUtility.handleSqlException(e);
-        } finally {
-            SQLUtility.closeSilently(resultSet);
-            SQLUtility.closeSilently(preparedStatement);
-            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
     public static void getClothing(Map<String, IClothingItem> clothingItems) {
-        Connection sqlConnection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            sqlConnection = SQLUtility.getConnection();
-
-            preparedStatement = SQLUtility.prepare("SELECT * FROM catalog_clothing", sqlConnection);
-            resultSet = preparedStatement.executeQuery();
+        try(Connection sqlConnection = SQLUtility.getConnection();
+            PreparedStatement preparedStatement = SQLUtility.prepare("SELECT * FROM catalog_clothing", sqlConnection);
+            ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 final String itemsStr = resultSet.getString("clothing_items").replace(" ", "");
@@ -237,22 +169,13 @@ public class CatalogDao {
             }
         } catch (SQLException e) {
             SQLUtility.handleSqlException(e);
-        } finally {
-            SQLUtility.closeSilently(resultSet);
-            SQLUtility.closeSilently(preparedStatement);
-            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
     public static void saveRecentPurchase(final int playerId, final int catalogItem, final int amount, final String data) {
-        Connection sqlConnection = null;
-        PreparedStatement preparedStatement = null;
-
-        try {
-            sqlConnection = SQLUtility.getConnection();
-
-            preparedStatement = SQLUtility.prepare("INSERT into `player_recent_purchases` (player_id, catalog_item, amount, data) VALUES(?, ?, ?, ?);", sqlConnection);
-
+        try(Connection sqlConnection = SQLUtility.getConnection();
+            PreparedStatement preparedStatement = SQLUtility.prepare("INSERT INTO `player_recent_purchases` (player_id, catalog_item, amount, data) VALUES(?, ?, ?, ?);", sqlConnection)) {
+            
             preparedStatement.setInt(1, playerId);
             preparedStatement.setInt(2, catalogItem);
             preparedStatement.setInt(3, amount);
@@ -261,38 +184,24 @@ public class CatalogDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             SQLUtility.handleSqlException(e);
-        } finally {
-            SQLUtility.closeSilently(preparedStatement);
-            SQLUtility.closeSilently(sqlConnection);
         }
     }
 
     public static Set<Integer> findRecentPurchases(final int count, final int playerId) {
-        Connection sqlConnection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
         final Set<Integer> recentPurchases = new HashSet<>();
 
-        try {
-            sqlConnection = SQLUtility.getConnection();
-
-            preparedStatement = SQLUtility.prepare("SELECT DISTINCT `catalog_item` FROM player_recent_purchases WHERE player_id = ? LIMIT " + count, sqlConnection);
+        try(Connection connection = SQLUtility.getConnection();
+            PreparedStatement preparedStatement = SQLUtility.prepare("SELECT DISTINCT `catalog_item` FROM player_recent_purchases WHERE player_id = ? LIMIT " + count, connection)) {
+            
             preparedStatement.setInt(1, playerId);
-
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 final int catalogItemId = resultSet.getInt("catalog_item");
-
                 recentPurchases.add(catalogItemId);
             }
         } catch (SQLException e) {
             SQLUtility.handleSqlException(e);
-        } finally {
-            SQLUtility.closeSilently(resultSet);
-            SQLUtility.closeSilently(preparedStatement);
-            SQLUtility.closeSilently(sqlConnection);
         }
 
         return recentPurchases;
@@ -316,7 +225,8 @@ public class CatalogDao {
         final int pageId = resultSet.getInt("page_id");
 
         return new CatalogItem(id, itemIds, catalogName, costCredits, costPixels,
-                costDiamonds, costSeasonal, amount, vip, limitedStack, limitedSells, offerActive, badgeId,
-                extraData, pageId);
+                costDiamonds, costSeasonal, amount, vip, limitedStack,
+                limitedSells, offerActive, badgeId, extraData, pageId);
     }
+
 }

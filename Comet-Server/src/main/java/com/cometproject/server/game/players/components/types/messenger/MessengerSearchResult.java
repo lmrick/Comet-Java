@@ -4,8 +4,7 @@ import com.cometproject.api.game.players.data.components.messenger.IMessengerSea
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.players.PlayerManager;
 
-public record MessengerSearchResult(int id, String username, String figure, String motto,
-																		String lastOnline) implements IMessengerSearchResult {
+public record MessengerSearchResult(int id, String username, String figure, String motto, String lastOnline) implements IMessengerSearchResult {
 	
 	@Override
 	public void compose(IComposerDataWrapper msg) {

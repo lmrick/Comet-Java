@@ -6,7 +6,6 @@ public class PathfinderNode implements Comparable<PathfinderNode> {
 	
 	private Position position;
 	private PathfinderNode nextNode;
-	
 	private Integer cost = Integer.MAX_VALUE;
 	private boolean inOpen = false;
 	private boolean inClosed = false;

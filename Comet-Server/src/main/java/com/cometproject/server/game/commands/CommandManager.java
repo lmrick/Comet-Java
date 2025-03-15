@@ -41,6 +41,7 @@ import com.cometproject.server.logging.entries.CommandLogEntry;
 import com.cometproject.server.modules.ModuleManager;
 import com.cometproject.server.network.messages.outgoing.messenger.InstantChatMessageComposer;
 import com.cometproject.server.network.sessions.Session;
+import com.cometproject.server.tasks.CometConstants;
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import java.util.HashMap;
@@ -55,7 +56,7 @@ public class CommandManager implements Initializable {
 	private static final Logger log = Logger.getLogger(CommandManager.class.getName());
 	private NotificationManager notifications;
 	private Map<String, ChatCommand> commands;
-	private final ExecutorService executorService = Executors.newFixedThreadPool(2);
+	private final ExecutorService executorService = CometConstants.COMMAND_EXECUTOR;
 	
 	private CommandManager() {
 	

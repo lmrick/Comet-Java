@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ForumComponent implements IForumComponent {
-
     public static final int MAX_MESSAGES_PER_PAGE = 20;
-
     private final IForumSettings forumSettings;
     private final Map<Integer, IForumThread> forumThreads;
     private final List<Integer> pinnedThreads;
@@ -31,7 +29,6 @@ public class ForumComponent implements IForumComponent {
         }
 
         this.forumThreads.clear();
-
         this.pinnedThreads.clear();
     }
 
@@ -44,13 +41,30 @@ public class ForumComponent implements IForumComponent {
 
         msg.writeInt(this.forumThreads.size());//total threads
         msg.writeInt(0);//leaderboard score
-        msg.writeInt(this.forumThreads.size());// TODO: keep a count of all messages (threads+replies)
+        msg.writeInt(this.getForumThreadsAndRepliesSize().size());//count of all messages (threads+replies)
         msg.writeInt(0);//unread messages
 
         msg.writeInt(0);//last message id
         msg.writeInt(0);//last message author id
         msg.writeString("");//last message author name
         msg.writeInt(0);//last message time
+    }
+
+    public List<Integer> getForumThreadsAndRepliesSize() {
+        List<Integer> threadsAndRepliesSize = Lists.newArrayList();
+
+        int totalThreads = 0;
+        int totalReplies = 0;
+
+        for(IForumThread forumThread : this.forumThreads.values()) {
+            totalThreads++;
+            totalReplies += forumThread.getReplies().size();
+        }
+
+        threadsAndRepliesSize.add(totalThreads);
+        threadsAndRepliesSize.add(totalReplies);
+
+        return threadsAndRepliesSize;
     }
 
     @Override

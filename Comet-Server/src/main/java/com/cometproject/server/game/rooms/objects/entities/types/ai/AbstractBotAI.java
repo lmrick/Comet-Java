@@ -15,17 +15,15 @@ import com.cometproject.server.game.rooms.types.mapping.RoomTile;
 import com.cometproject.server.game.rooms.types.components.types.chat.emotions.ChatEmotion;
 import com.cometproject.server.game.utilities.DistanceCalculator;
 import com.cometproject.server.network.messages.outgoing.room.avatar.TalkMessageComposer;
+import com.cometproject.server.tasks.CometConstants;
 import com.cometproject.api.game.utilities.RandomUtil;
-
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public abstract class AbstractBotAI implements IBotAI {
-	
-	private static final ExecutorService botPathCalculator = Executors.newFixedThreadPool(2);
+	private static final ExecutorService botPathCalculator = CometConstants.BOT_PATHFINDER_EXECUTOR;
 	protected PlayerEntity followingPlayer;
 	private final RoomEntity entity;
-	private long ticksUntilComplete = 0;
+	private long ticksUntilComplete = 0L;
 	private boolean walkNow = false;
 	
 	public AbstractBotAI(RoomEntity entity) {
@@ -34,10 +32,10 @@ public abstract class AbstractBotAI implements IBotAI {
 	
 	@Override
 	public void onTick() {
-		if (this.ticksUntilComplete != 0) {
+		if (this.ticksUntilComplete != 0L) {
 			this.ticksUntilComplete--;
 			
-			if (this.ticksUntilComplete == 0) {
+			if (this.ticksUntilComplete == 0L) {
 				this.onTickComplete();
 			}
 		}
@@ -120,12 +118,7 @@ public abstract class AbstractBotAI implements IBotAI {
 	
 	@Override
 	public void setTicksUntilCompleteInSeconds(double seconds) {
-		long realTime = Math.round(seconds * 1000 / 500);
-		
-		if (realTime < 1) {
-			realTime = 1;
-		}
-		
+		long realTime = Math.max(1, Math.round(seconds * 1000 / 500));
 		this.ticksUntilComplete = realTime;
 	}
 	

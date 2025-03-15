@@ -25,19 +25,23 @@ public class SubscriptionComponent extends PlayerComponent implements IPlayerSub
 	@Override
 	public void add(int days) {
 	}
+
 	@Override
 	public void delete() {
 		this.hasSub = false;
 		this.expire = 0;
 	}
+
 	@Override
 	public boolean isValid() {
 		return this.getExpire() > Comet.getTime();
 	}
+
 	@Override
 	public boolean exists() {
 		return this.hasSub;
 	}
+	
 	@Override
 	public int getExpire() {
 		return this.expire;

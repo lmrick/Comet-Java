@@ -4,7 +4,6 @@ import com.cometproject.api.game.players.data.IPlayerData;
 import com.cometproject.server.game.players.types.Player;
 import com.cometproject.server.game.utilities.validator.PlayerFigureValidator;
 import com.cometproject.server.storage.queries.player.PlayerDao;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -73,7 +72,27 @@ public class PlayerData implements IPlayerData {
 	}
 	
 	public PlayerData(ResultSet data, Player player) throws SQLException {
-		this(data.getInt("playerId"), data.getString("playerData_username"), data.getString("playerData_motto"), data.getString("playerData_figure"), data.getString("playerData_gender"), data.getString("playerData_email"), data.getInt("playerData_rank"), data.getInt("playerData_credits"), data.getInt("playerData_vipPoints"), data.getInt("playerData_activityPoints"), data.getInt("playerData_seasonalPoints"), data.getString("playerData_regDate"), data.getInt("playerData_lastOnline"), data.getString("playerData_vip").equals("1"), data.getInt("playerData_achievementPoints"), data.getInt("playerData_regTimestamp"), data.getInt("playerData_favouriteGroup"), data.getString("playerData_lastIp"), data.getInt("playerData_questId"), data.getInt("playerData_timeMuted"), data.getString("playerData_nameColour"), player);
+		this(data.getInt("playerId"), 
+		data.getString("playerData_username"), 
+		data.getString("playerData_motto"), 
+		data.getString("playerData_figure"), 
+		data.getString("playerData_gender"), 
+		data.getString("playerData_email"), 
+		data.getInt("playerData_rank"), 
+		data.getInt("playerData_credits"), 
+		data.getInt("playerData_vipPoints"), 
+		data.getInt("playerData_activityPoints"), 
+		data.getInt("playerData_seasonalPoints"),
+		data.getString("playerData_regDate"), 
+		data.getInt("playerData_lastOnline"), 
+		data.getString("playerData_vip").equals("1"), 
+		data.getInt("playerData_achievementPoints"), 
+		data.getInt("playerData_regTimestamp"), 
+		data.getInt("playerData_favouriteGroup"), 
+		data.getString("playerData_lastIp"), 
+		data.getInt("playerData_questId"), 
+		data.getInt("playerData_timeMuted"), 
+		data.getString("playerData_nameColour"), player);
 	}
 	
 	@Override
@@ -361,8 +380,9 @@ public class PlayerData implements IPlayerData {
 	}
 	
 	public void flush() {
-		if (getPlayer() != null) {
-			getPlayer().flush();
+		if (this.getPlayer() != null) {
+			this.getPlayer().flush(this);
+			this.getPlayer().getPlayerObserver().notifyObservers(this);
 		}
 	}
 	

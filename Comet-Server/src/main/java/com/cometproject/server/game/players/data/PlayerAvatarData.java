@@ -4,7 +4,6 @@ import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.server.game.utilities.validator.PlayerFigureValidator;
 
 public class PlayerAvatarData implements IPlayerAvatar {
-	
 	private final int id;
 	private String username;
 	private String figure;

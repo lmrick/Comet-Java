@@ -15,16 +15,15 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.WiredF
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.components.games.RoomGame;
 import com.cometproject.server.utilities.attributes.Attributable;
-import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
-
+import com.cometproject.server.utilities.collections.ConcurrentHashSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public abstract class RoomItem extends BigRoomFloorObject implements Attributable {
 	
-	private final Set<Long> wiredItems = Sets.newHashSet();
+	private final Set<Long> wiredItems = new ConcurrentHashSet<>();
 	private final IRoomItemData itemData;
 	protected int ticksTimer;
 	private LimitedEditionItemData limitedEditionItemData;

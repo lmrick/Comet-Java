@@ -77,6 +77,8 @@ public class MySQLRoomRepository extends MySQLRepository implements IRoomReposit
                         "owner = ?, " +
                         "category = ?, " +
                         "max_users = ?, " +
+                        "max_bots = ?, " +
+                        "max_pets = ?, " +
                         "access_type = ?, " +
                         "password = ?, " +
                         "score = ?, " +
@@ -110,6 +112,8 @@ public class MySQLRoomRepository extends MySQLRepository implements IRoomReposit
                 data.getOwner(),
                 data.getCategoryId(),
                 data.getMaxUsers(),
+                data.getMaxBots(),
+                data.getMaxPets(),
                 data.getAccess().toString().toLowerCase(),
                 data.getPassword(),
                 data.getScore(),
@@ -148,6 +152,8 @@ public class MySQLRoomRepository extends MySQLRepository implements IRoomReposit
         final String owner = room.readString("owner");
         final int category = room.readInteger("category");
         final int maxUsers = room.readInteger("max_users");
+        final int maxBots = room.readInteger("max_bots");
+        final int maxPets = room.readInteger("max_pets");
         final String thumbnail = room.readString("thumbnail");
 
         String accessTypeString = room.readString("access_type");
@@ -200,11 +206,15 @@ public class MySQLRoomRepository extends MySQLRepository implements IRoomReposit
         final String requiredBadge = room.readString("required_badge");
         final boolean wiredHidden = room.readBoolean("hide_wired");
 
-        return this.roomDataFactory.createRoomData(id, type, name, description, ownerId, owner, category, maxUsers, access, password,
-                originalPassword, tradeState, score, tags, decorations, model, hideWalls, thicknessWall, thicknessFloor,
-                allowWalkthrough, allowPets, heightmap, muteState, kickState, banState, bubbleMode, bubbleType,
-                bubbleScroll, chatDistance, antiFloodSettings, disabledCommands == null ? Lists.newArrayList() : disabledCommands,
-                groupId, requiredBadge, thumbnail, wiredHidden);
+        return this.roomDataFactory.createRoomData(id, type, name, description, ownerId, 
+        owner, category, maxUsers, maxBots, maxPets,
+         access, password, originalPassword, tradeState, score, tags, decorations, model, 
+         hideWalls, thicknessWall, thicknessFloor,
+         allowWalkthrough, allowPets, heightmap, muteState, kickState, 
+         banState, bubbleMode, bubbleType,
+         bubbleScroll, chatDistance, antiFloodSettings, 
+         disabledCommands == null ? Lists.newArrayList() : disabledCommands,
+         groupId, requiredBadge, thumbnail, wiredHidden);
     }
 
 }

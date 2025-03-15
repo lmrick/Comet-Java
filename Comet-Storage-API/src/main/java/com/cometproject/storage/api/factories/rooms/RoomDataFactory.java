@@ -11,7 +11,7 @@ import java.util.Map;
 public class RoomDataFactory {
 
     public IRoomData createRoomData(int id, RoomType type, String name, String description, int ownerId, String owner,
-                                    int category, int maxUsers, RoomAccessType access, String password,
+                                    int category, int maxUsers, int maxBots, int maxPets, RoomAccessType access, String password,
                                     String originalPassword, RoomTradeState tradeState, int score, String[] tags,
                                     Map<String, String> decorations, String model, boolean hideWalls, int thicknessWall,
                                     int thicknessFloor, boolean allowWalkthrough, boolean allowPets, String heightmap,
@@ -20,7 +20,7 @@ public class RoomDataFactory {
                                     int antiFloodSettings, List<String> disabledCommands, int groupId,String requiredBadge,
                                     String thumbnail, boolean wiredHidden) {
 
-        return new RoomData(id, type, name, description, ownerId, owner, category, maxUsers, access, password,
+        return new RoomData(id, type, name, description, ownerId, owner, category, maxUsers, maxBots, maxPets, access, password,
                 originalPassword, tradeState, score, tags, decorations, model, hideWalls, thicknessWall, thicknessFloor,
                 allowWalkthrough, allowPets, heightmap, muteState, kickState, banState, bubbleMode, bubbleType,
                 bubbleScroll, chatDistance, antiFloodSettings, disabledCommands, groupId,

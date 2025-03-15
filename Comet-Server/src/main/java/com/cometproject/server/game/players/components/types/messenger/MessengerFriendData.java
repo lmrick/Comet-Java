@@ -3,7 +3,6 @@ package com.cometproject.server.game.players.components.types.messenger;
 import com.cometproject.api.game.players.data.components.messenger.IMessengerFriendData;
 
 public class MessengerFriendData implements IMessengerFriendData {
-	
 	private String username;
 	private String figure;
 	private String motto;

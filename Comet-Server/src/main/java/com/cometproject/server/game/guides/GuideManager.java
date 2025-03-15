@@ -4,6 +4,7 @@ import com.cometproject.api.utilities.Initializable;
 import com.cometproject.server.game.guides.types.HelpRequest;
 import com.cometproject.server.game.guides.types.HelperSession;
 import com.cometproject.server.network.messages.outgoing.help.guides.GuideSessionAttachedMessageComposer;
+import com.cometproject.server.tasks.CometConstants;
 import com.cometproject.server.tasks.CometThreadManager;
 import com.cometproject.server.utilities.collections.ConcurrentHashSet;
 
@@ -27,7 +28,7 @@ public class GuideManager implements Initializable {
 	
 	@Override
 	public void initialize() {
-		CometThreadManager.getInstance().executePeriodic(this::processRequests, 1000L, 1000L, TimeUnit.MILLISECONDS);
+		CometThreadManager.getInstance().executePeriodic(this::processRequests, CometConstants.GUIDE_HELP_REQUEST_DELAY, CometConstants.GUIDE_HELP_REQUEST_DELAY, TimeUnit.MILLISECONDS);
 	}
 	
 	private void processRequests() {

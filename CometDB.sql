@@ -12981,6 +12981,8 @@ CREATE TABLE `rooms` (
   `password` varchar(64) NOT NULL DEFAULT '',
   `category` int(10) NOT NULL DEFAULT '15',
   `max_users` int(11) NOT NULL DEFAULT '25',
+  `max_bots` int(11) NOT NULL DEFAULT '150',
+  `max_pets` int(11) NOT NULL DEFAULT '50',
   `score` int(11) NOT NULL DEFAULT '0',
   `model` varchar(64) NOT NULL DEFAULT 'model_a',
   `allow_pets` enum('0','1') NOT NULL DEFAULT '1',

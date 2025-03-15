@@ -5,7 +5,6 @@ import com.cometproject.api.game.players.components.PlayerComponentContext;
 import com.cometproject.api.game.players.data.components.IPlayerBots;
 import com.cometproject.server.game.players.components.PlayerComponent;
 import com.cometproject.server.storage.queries.bots.PlayerBotDao;
-
 import java.util.Map;
 
 public class InventoryBotComponent extends PlayerComponent implements IPlayerBots {
@@ -21,7 +20,8 @@ public class InventoryBotComponent extends PlayerComponent implements IPlayerBot
 	public void addBot(IBotData bot) {
 		this.bots.put(bot.getId(), bot);
 		
-		this.getPlayer().flush();
+		this.getPlayer().flush(this);
+		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override
@@ -33,7 +33,8 @@ public class InventoryBotComponent extends PlayerComponent implements IPlayerBot
 	public void remove(int id) {
 		this.bots.remove(id);
 		
-		this.getPlayer().flush();
+		this.getPlayer().flush(this);
+		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override
@@ -50,7 +51,8 @@ public class InventoryBotComponent extends PlayerComponent implements IPlayerBot
 	public void clearBots() {
 		this.bots.clear();
 		
-		this.getPlayer().flush();
+		this.getPlayer().flush(this);
+		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override

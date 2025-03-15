@@ -8,9 +8,6 @@ import com.cometproject.server.game.permissions.types.CommandPermission;
 import com.cometproject.server.game.permissions.types.OverrideCommandPermission;
 import com.cometproject.server.game.permissions.types.Rank;
 import com.cometproject.server.game.players.components.PlayerComponent;
-import com.cometproject.server.game.players.types.Player;
-import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
-import com.cometproject.server.game.rooms.types.Room;
 
 public class PermissionComponent extends PlayerComponent implements IPlayerPermissions {
 	

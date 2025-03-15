@@ -104,7 +104,8 @@ public class AchievementComponent extends PlayerComponent implements IPlayerAchi
 		this.getPlayer().getData().save();
 		PlayerAchievementDao.saveProgress(this.getPlayer().getId(), type, progress);
 		
-		this.getPlayer().flush();
+		this.getPlayer().flush(this);
+		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	private void processUnlock(IAchievement currentAchievement, IAchievement targetAchievement, IAchievementGroup achievementGroup, IAchievementProgress progress, int targetLevel, AchievementType type) {
@@ -127,7 +128,8 @@ public class AchievementComponent extends PlayerComponent implements IPlayerAchi
 		
 		this.getPlayer().getInventory().achievementBadge(type.getGroupName(), currentAchievement.level());
 		
-		this.getPlayer().flush();
+		this.getPlayer().flush(this);
+		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override
@@ -142,6 +144,7 @@ public class AchievementComponent extends PlayerComponent implements IPlayerAchi
 	
 	@Override
 	public void dispose() {
+		super.dispose();
 		this.progression.clear();
 	}
 	

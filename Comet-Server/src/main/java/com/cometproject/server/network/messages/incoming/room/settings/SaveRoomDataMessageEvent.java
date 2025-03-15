@@ -183,7 +183,10 @@ public class SaveRoomDataMessageEvent implements Event {
 			room.getEntities().broadcastMessage(new SettingsUpdatedMessageComposer(data.getId()));
 			room.getEntities().broadcastMessage(new RoomInfoUpdatedMessageComposer(data.getId()));
 			
-			room.getEntities().getPlayerEntities().forEach(playerEntity -> playerEntity.getPlayer().flush());
+			room.getEntities().getPlayerEntities().forEach(playerEntity -> { 
+				playerEntity.getPlayer().flush(playerEntity);
+				playerEntity.getPlayer().getPlayerObserver().notifyObservers(playerEntity);
+			});
 		} catch (Exception e) {
 			RoomManager.log.error("Error while saving room data", e);
 		}

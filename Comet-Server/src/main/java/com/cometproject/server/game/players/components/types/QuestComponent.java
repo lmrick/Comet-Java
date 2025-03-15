@@ -13,13 +13,10 @@ import com.cometproject.server.network.messages.outgoing.quests.QuestStartedMess
 import com.cometproject.server.network.messages.outgoing.user.purse.UpdateActivityPointsMessageComposer;
 import com.cometproject.server.storage.queries.quests.PlayerQuestsDao;
 import org.apache.log4j.Logger;
-
 import java.util.Map;
 
 public class QuestComponent extends PlayerComponent implements IPlayerQuests {
-	
 	private static final Logger log = Logger.getLogger(QuestComponent.class.getName());
-	
 	private Map<Integer, Integer> questProgression;
 	
 	public QuestComponent(PlayerComponentContext componentContext) {
@@ -67,7 +64,8 @@ public class QuestComponent extends PlayerComponent implements IPlayerQuests {
 		this.getPlayer().getData().setQuestId(quest.getId());
 		this.getPlayer().getData().save();
 		
-		this.getPlayer().flush();
+		this.getPlayer().flush(this);
+		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override
@@ -202,8 +200,8 @@ public class QuestComponent extends PlayerComponent implements IPlayerQuests {
 		this.getPlayer().getSession().send(new QuestCompletedMessageComposer(quest, this.getPlayer()));
 		this.getPlayer().getSession().send(new QuestListMessageComposer(QuestManager.getInstance().getQuests(), this.getPlayer(), false));
 		
-		this.getPlayer().flush();
-		
+		this.getPlayer().flush(this);
+		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override

@@ -5,6 +5,7 @@ import com.cometproject.api.game.rooms.components.RoomComponentContext;
 import com.cometproject.api.game.rooms.components.types.IItemsProcessComponent;
 import com.cometproject.api.game.rooms.objects.IRoomItemData;
 import com.cometproject.server.boot.Comet;
+import com.cometproject.server.game.rooms.objects.entities.WiredTriggerExecutor;
 import com.cometproject.server.game.rooms.objects.items.RoomItem;
 import com.cometproject.server.game.rooms.objects.items.types.floor.RollerFloorItem;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.triggers.WiredTriggerPeriodically;
@@ -12,12 +13,15 @@ import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.components.RoomComponent;
 import com.cometproject.server.game.rooms.types.mapping.RoomTile;
 import com.cometproject.server.tasks.ICometTask;
+import com.cometproject.server.tasks.CometConstants;
 import com.cometproject.server.tasks.CometThreadManager;
 import com.cometproject.server.utilities.TimeSpan;
 import com.cometproject.storage.api.StorageContext;
 import com.google.common.collect.Queues;
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
+import org.checkerframework.checker.units.qual.C;
+
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
@@ -25,8 +29,8 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class ItemProcessComponent extends RoomComponent implements ICometTask, IItemsProcessComponent {
-	private static final int INTERVAL = 500;
-	private static final int FLAG = 400;
+	private static final int INTERVAL = CometConstants.ITEM_PROCESS_COMPONENT_INTERVAL;
+	private static final int FLAG = CometConstants.ITEM_PROCESS_COMPONENT_FLAG;
 	private final IRoom room;
 	private final Logger log;
 	private ScheduledFuture<?> future;

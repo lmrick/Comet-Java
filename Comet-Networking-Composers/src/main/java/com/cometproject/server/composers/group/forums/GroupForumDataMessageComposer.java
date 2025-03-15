@@ -1,5 +1,6 @@
 package com.cometproject.server.composers.group.forums;
 
+import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.groups.types.IGroup;
 import com.cometproject.api.game.groups.types.components.forum.ForumPermission;
 import com.cometproject.api.game.groups.types.components.forum.IForumSettings;
@@ -74,7 +75,9 @@ public class GroupForumDataMessageComposer extends MessageComposer {
 		msg.writeString("");//??
 		
 		msg.writeBoolean(this.group.getData().getOwnerId() == this.playerId);
-		msg.writeBoolean(this.group.getData().getOwnerId() == this.playerId); // TODO: Allow staff to control forums too.
+
+		//allows players with rank above or 5 to control forumsof other ppl groups
+		msg.writeBoolean(this.group.getData().getOwnerId() == this.playerId || GameContext.getCurrent().getPlayerService().getDataByPlayerId(playerId).getRank() >= 5);
 	}
 	
 }

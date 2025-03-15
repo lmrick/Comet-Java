@@ -75,7 +75,7 @@ public class ChangeNameMessageEvent implements Event {
 			client.send(new UserNameChangeMessageComposer(-1, client.getPlayer().getData().getId(), newName));
 		}
 		
-		client.getPlayer().getMessenger().setInitialised(true);
+		client.getPlayer().getMessenger().setInitialized(true);
 		client.send(new UpdateUsernameMessageComposer(newName));
 		
 		PlayerDao.updatePlayersUsername(newName, client.getPlayer().getId());

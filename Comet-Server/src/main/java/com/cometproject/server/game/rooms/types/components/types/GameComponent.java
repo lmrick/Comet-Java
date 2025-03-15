@@ -225,7 +225,7 @@ public class GameComponent extends RoomComponent implements IGameComponent {
 	}
 	
 	public Room getRoom() {
-		return this.room;
+		return (Room) this.room;
 	}
 	
 	public Map<GameTeam, Integer> getScores() {

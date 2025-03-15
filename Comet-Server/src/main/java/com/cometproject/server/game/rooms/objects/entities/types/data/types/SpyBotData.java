@@ -1,7 +1,6 @@
 package com.cometproject.server.game.rooms.objects.entities.types.data.types;
 
 import com.cometproject.server.game.rooms.objects.entities.types.data.IBotDataObject;
-
 import java.util.List;
 
 public class SpyBotData implements IBotDataObject {

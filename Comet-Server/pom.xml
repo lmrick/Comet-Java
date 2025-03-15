@@ -3,17 +3,14 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>Comet-Server</artifactId>
     <version>2.12.1-TEST1</version>
     <packaging>jar</packaging>
-
     <parent>
         <groupId>Comet</groupId>
         <artifactId>Comet-Parent</artifactId>
         <version>2.12.1-TEST1</version>
     </parent>
-
     <build>
         <plugins>
             <plugin>
@@ -23,15 +20,20 @@
                 <configuration>
                     <source>21</source>
                     <target>21</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.openjdk.jmh</groupId>
+                            <artifactId>jmh-generator-annprocess</artifactId>
+                            <version>1.37</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.8.1</version>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -50,7 +52,6 @@
                     </archive>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -74,7 +75,6 @@
                 </executions>
             </plugin>
         </plugins>
-
         <resources>
             <resource>
                 <directory>Comet-Server/src/main/resources-internal</directory>
@@ -84,18 +84,15 @@
             </resource>
         </resources>
     </build>
-
     <properties>
         <jetty.version>12.0.11</jetty.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
     <repositories>
         <repository>
             <id>java.net</id>
             <url>https://maven.java.net/content/repositories/snapshots/</url>
         </repository>
-
         <repository>
             <id>sourceforge</id>
             <url>http://oss.sonatype.org/content/groups/sourceforge/</url>
@@ -106,7 +103,6 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-
         <repository>
             <id>sonatype-nexus-snapshots</id>
             <name>Sonatype Nexus Snapshots</name>
@@ -118,13 +114,11 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-
         <repository>
             <id>Codehaus Mojo</id>
             <name>Codehaus Mojo</name>
             <url>http://repo1.maven.org/maven2</url>
         </repository>
-
         <repository>
             <id>central</id>
             <url>http://repo1.maven.org/maven2/</url>
@@ -135,7 +129,6 @@
             <url>https://repo.maven.apache.org/maven2/</url>
         </repository>
     </repositories>
-
     <dependencies>
         <dependency>
             <groupId>xml-apis</groupId>
@@ -313,6 +306,21 @@
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
             <version>5.14.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>1.37</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>1.37</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.16.0</version>
         </dependency>
     </dependencies>
 </project>

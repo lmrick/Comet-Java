@@ -3,61 +3,50 @@ package com.cometproject.storage.api.data.rooms;
 import com.cometproject.api.game.rooms.IRoomData;
 import com.cometproject.api.game.rooms.settings.RoomType;
 import com.cometproject.api.game.rooms.settings.*;
-
 import java.util.List;
 import java.util.Map;
 
 public class RoomData implements IRoomData {
-	
 	private int id;
 	private RoomType type;
-	
 	private String name;
 	private String description;
 	private int ownerId;
 	private String owner;
 	private int category;
 	private int maxUsers;
+	private int maxBots;
+	private int maxPets;
 	private RoomAccessType access;
 	private String password;
 	private String originalPassword;
 	private RoomTradeState tradeState;
-	
 	private int score;
-	
 	private String[] tags;
 	private Map<String, String> decorations;
-	
 	private String model;
-	
 	private boolean hideWalls;
 	private int thicknessWall;
 	private int thicknessFloor;
 	private boolean allowWalkthrough;
 	private boolean allowPets;
 	private String heightmap;
-	
 	private RoomMuteState muteState;
 	private RoomKickState kickState;
 	private RoomBanState banState;
-	
 	private int bubbleMode;
 	private int bubbleType;
 	private int bubbleScroll;
 	private int chatDistance;
-	
 	private int antiFloodSettings;
-	
 	private List<String> disabledCommands;
-	
 	private int groupId;
-	
 	private String requiredBadge;
 	private String thumbnail;
-	
 	private boolean wiredHidden;
 	
-	public RoomData(int id, RoomType type, String name, String description, int ownerId, String owner, int category, int maxUsers, RoomAccessType access, String password, String originalPassword, RoomTradeState tradeState, int score, String[] tags, Map<String, String> decorations, String model, boolean hideWalls, int thicknessWall, int thicknessFloor, boolean allowWalkthrough, boolean allowPets, String heightmap, RoomMuteState muteState, RoomKickState kickState, RoomBanState banState, int bubbleMode, int bubbleType, int bubbleScroll, int chatDistance, int antiFloodSettings, List<String> disabledCommands, int groupId, String requiredBadge, String thumbnail, boolean wiredHidden) {
+	public RoomData(int id, RoomType type, String name, String description, int ownerId, String owner, int category, 
+	int maxUsers, int maxBots, int maxPets, RoomAccessType access, String password, String originalPassword, RoomTradeState tradeState, int score, String[] tags, Map<String, String> decorations, String model, boolean hideWalls, int thicknessWall, int thicknessFloor, boolean allowWalkthrough, boolean allowPets, String heightmap, RoomMuteState muteState, RoomKickState kickState, RoomBanState banState, int bubbleMode, int bubbleType, int bubbleScroll, int chatDistance, int antiFloodSettings, List<String> disabledCommands, int groupId, String requiredBadge, String thumbnail, boolean wiredHidden) {
 		this.id = id;
 		this.type = type;
 		this.name = name;
@@ -66,6 +55,8 @@ public class RoomData implements IRoomData {
 		this.owner = owner;
 		this.category = category;
 		this.maxUsers = maxUsers;
+		this.maxBots = maxBots;
+		this.maxPets = maxPets;
 		this.access = access;
 		this.password = password;
 		this.originalPassword = originalPassword;
@@ -449,5 +440,25 @@ public class RoomData implements IRoomData {
 	public void setIsWiredHidden(boolean hiddenWired) {
 		this.wiredHidden = hiddenWired;
 	}
-	
+
+	@Override
+	public int getMaxBots() {
+		return maxBots;
+	}
+
+	@Override
+	public int getMaxPets() {
+		return maxPets;
+	}
+
+	@Override
+	public void setMaxBots(int maxBots) {
+		this.maxBots = maxBots;
+	}
+
+	@Override
+	public void setMaxPets(int maxPets) {
+		this.maxPets = maxPets;
+	}
+
 }

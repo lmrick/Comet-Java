@@ -24,6 +24,7 @@ import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.storage.cache.CacheManager;
 import com.cometproject.server.storage.cache.objects.RoomDataObject;
 import com.cometproject.server.storage.queries.rooms.RoomDao;
+import com.cometproject.server.tasks.CometConstants;
 import com.cometproject.server.tasks.CometThreadManager;
 import org.apache.log4j.Logger;
 import java.util.*;
@@ -80,7 +81,7 @@ public class RoomManager implements Initializable {
 		
 		this.globalCycle.start();
 		
-		this.executorService = Executors.newFixedThreadPool(2, r -> {
+		this.executorService = Executors.newFixedThreadPool(CometConstants.ROOM_LOAD_EXECUTOR, r -> {
 			final Thread roomThread = new Thread(r, "Room-Load-Worker-" + UUID.randomUUID());
 			
 			roomThread.setUncaughtExceptionHandler((t, e) -> e.printStackTrace());

@@ -54,6 +54,7 @@ import com.cometproject.server.storage.queries.items.LimitedEditionDao;
 import com.cometproject.server.storage.queries.items.TeleporterDao;
 import com.cometproject.server.storage.queries.pets.PetDao;
 import com.cometproject.server.storage.queries.player.PlayerDao;
+import com.cometproject.server.tasks.CometConstants;
 import com.cometproject.storage.api.StorageContext;
 import com.cometproject.storage.api.data.DataWrapper;
 import com.google.common.collect.Lists;
@@ -79,7 +80,7 @@ public class LegacyPurchaseHandler implements ICatalogPurchaseHandler {
 	public void purchaseItem(ISession client, int pageId, int itemId, String data, int amount, GiftData giftData) {
 		if (CometSettings.asyncCatalogPurchase) {
 			if (this.executorService == null) {
-				this.executorService = Executors.newFixedThreadPool(2);
+				this.executorService = CometConstants.CATALOG_PURCHASE_EXECUTOR;
 			}
 
 			this.executorService.submit(() -> this.handle(client, pageId, itemId, data, amount, giftData));

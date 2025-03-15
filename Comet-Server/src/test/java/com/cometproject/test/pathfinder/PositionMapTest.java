@@ -1,9 +1,8 @@
-package com.cometproject.test;
+package com.cometproject.test.pathfinder;
 
 import com.cometproject.api.game.utilities.Position;
 import org.junit.Assert;
 import junit.framework.TestCase;
-
 import java.util.HashMap;
 import java.util.Map;
 

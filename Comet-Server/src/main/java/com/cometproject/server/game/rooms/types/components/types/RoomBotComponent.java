@@ -58,7 +58,7 @@ public class RoomBotComponent extends RoomComponent implements IRoomBotComponent
     public String getAvailableName(String name) {
         int usedCount = (int) this.botNameToId.keySet().stream().filter(name::startsWith).count();
 			
-			if (usedCount == 0) return name;
+        if (usedCount == 0) return name;
 
         return name + usedCount;
     }
@@ -67,7 +67,7 @@ public class RoomBotComponent extends RoomComponent implements IRoomBotComponent
         int virtualId = room.getEntities().getFreeId();
         String name = this.botNameToId.containsKey(bot.getUsername()) ? this.getAvailableName(bot.getUsername()) : bot.getUsername();
 			
-			this.botNameToId.put(bot.getUsername(), bot.getId());
+		this.botNameToId.put(bot.getUsername(), bot.getId());
 
         BotData botData = new PlayerBotData(bot.getId(), name, bot.getMotto(), bot.getFigure(), bot.getGender(), bot.getOwnerName(), bot.getOwnerId(), "[]", true, 7, bot.getBotType(), bot.getMode(), null);
         BotEntity botEntity = new BotEntity(botData, virtualId, new Position(x, y, height), 1, 1, room);

@@ -5,7 +5,6 @@ import com.cometproject.api.game.players.data.components.IPlayerRelationships;
 import com.cometproject.api.game.players.data.components.messenger.RelationshipLevel;
 import com.cometproject.server.game.players.components.PlayerComponent;
 import com.cometproject.server.storage.queries.player.relationships.RelationshipDao;
-
 import java.util.Map;
 
 public class RelationshipComponent extends PlayerComponent implements IPlayerRelationships {
@@ -33,7 +32,8 @@ public class RelationshipComponent extends PlayerComponent implements IPlayerRel
 	public void remove(int playerId) {
 		this.getRelationships().remove(playerId);
 		
-		this.getPlayer().flush();
+		this.getPlayer().flush(this);
+		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override

@@ -24,6 +24,7 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -31,6 +32,8 @@ import java.util.stream.Collectors;
 
 public class EntityComponent extends RoomComponent implements IEntityComponent {
 	private static final Logger log = Logger.getLogger(EntityComponent.class.getName());
+	private static final int MAX_BOTS_IN_ROOM = 150;
+	private static final int MAX_PETS_IN_ROOM = 50;
 	private final Map<Integer, RoomEntity> entities = new ConcurrentHashMap<>();
 	private final Map<Integer, Integer> playerIdToEntity = new ConcurrentHashMap<>();
 	private final Map<Integer, Integer> botIdToEntity = new ConcurrentHashMap<>();
@@ -111,17 +114,16 @@ public class EntityComponent extends RoomComponent implements IEntityComponent {
 	public void addEntity(RoomEntity entity) {
 		if (entity.getEntityType() == RoomEntityType.PLAYER) {
 			PlayerEntity playerEntity = (PlayerEntity) entity;
-			
 			this.nameToPlayerEntity.put(entity.getUsername(), ((PlayerEntity) entity).getPlayerId());
 			this.playerIdToEntity.put(playerEntity.getPlayerId(), playerEntity.getId());
 			this.playerEntities.add(playerEntity);
+
 		} else if (entity.getEntityType() == RoomEntityType.BOT) {
 			BotEntity botEntity = (BotEntity) entity;
-			
 			this.botIdToEntity.put(botEntity.getBotId(), botEntity.getId());
+
 		} else if (entity.getEntityType() == RoomEntityType.PET) {
 			PetEntity petEntity = (PetEntity) entity;
-			
 			this.petIdToEntity.put(petEntity.getData().getId(), petEntity.getId());
 		}
 		
@@ -146,13 +148,13 @@ public class EntityComponent extends RoomComponent implements IEntityComponent {
 			this.playerIdToEntity.remove(playerEntity.getPlayerId());
 			this.nameToPlayerEntity.remove(playerEntity.getUsername());
 			this.playerEntities.remove(playerEntity);
+
 		} else if (entity.getEntityType() == RoomEntityType.BOT) {
 			BotEntity botEntity = (BotEntity) entity;
-			
 			this.botIdToEntity.remove(botEntity.getBotId());
+
 		} else if (entity.getEntityType() == RoomEntityType.PET) {
 			PetEntity petEntity = (PetEntity) entity;
-			
 			this.petIdToEntity.remove(petEntity.getData().getId());
 		}
 		
@@ -215,7 +217,10 @@ public class EntityComponent extends RoomComponent implements IEntityComponent {
 	}
 	
 	public RoomEntity getEntityByName(String name, RoomEntityType type) {
-		return this.getAllEntities().values().stream().filter(entity -> entity.getUsername() != null).filter(entity -> entity.getUsername().equalsIgnoreCase(name) && entity.getEntityType() == type).findFirst().orElse(null);
+		return this.getAllEntities().values().stream()
+		.filter(entity -> entity.getUsername() != null)
+		.filter(entity -> entity.getUsername().equalsIgnoreCase(name) && entity.getEntityType() == type)
+		.findFirst().orElse(null);
 	}
 	
 	public BotEntity getEntityByBotId(int id) {
@@ -249,11 +254,15 @@ public class EntityComponent extends RoomComponent implements IEntityComponent {
 	}
 	
 	public List<BotEntity> getBotEntities() {
-		return this.botIdToEntity.values().stream().map(id -> (BotEntity) this.entities.get(id)).collect(Collectors.toList());
+		return this.botIdToEntity.values().stream()
+		.map(id -> (BotEntity) this.entities.get(id))
+		.collect(Collectors.toList());
 	}
 	
 	public List<PetEntity> getPetEntities() {
-		return this.petIdToEntity.values().stream().map(id -> (PetEntity) this.entities.get(id)).collect(Collectors.toList());
+		return this.petIdToEntity.values().stream()
+		.map(id -> (PetEntity) this.entities.get(id))
+		.collect(Collectors.toList());
 	}
 	
 	public List<PlayerEntity> getPlayerEntities() {
@@ -267,7 +276,10 @@ public class EntityComponent extends RoomComponent implements IEntityComponent {
 			return entities;
 		}
 		
-		entities = this.entities.values().stream().filter(entity -> entity.getEntityType() == RoomEntityType.PLAYER).filter(entity -> ((PlayerEntity) entity).getPlayer().getPermissions().getRank().roomSeeWhispers()).map(PlayerEntity.class::cast).collect(Collectors.toList());
+		entities = this.entities.values().stream()
+		.filter(entity -> entity.getEntityType() == RoomEntityType.PLAYER)
+		.filter(entity -> ((PlayerEntity) entity).getPlayer().getPermissions().getRank().roomSeeWhispers())
+		.map(PlayerEntity.class::cast).collect(Collectors.toList());
 		
 		return entities;
 	}
@@ -281,12 +293,19 @@ public class EntityComponent extends RoomComponent implements IEntityComponent {
 	}
 	
 	public int count() {
-		
 		return (int) this.entities.values().stream().filter(RoomEntity::isVisible).count();
 	}
 	
 	public int playerCount() {
 		return (int) this.playerEntities.stream().filter(RoomEntity::isVisible).count();
+	}
+
+	public int botCount() {
+		return (int) this.botIdToEntity.values().stream().filter(id -> this.entities.get(id).isVisible()).count();
+	}
+
+	public int petCount() {
+		return (int) this.petIdToEntity.values().stream().filter(id -> this.entities.get(id).isVisible()).count();
 	}
 	
 	public int realPlayerCount() {
@@ -302,7 +321,11 @@ public class EntityComponent extends RoomComponent implements IEntityComponent {
 	}
 	
 	public Room getRoom() {
-		return this.room;
+		return (Room) this.room;
+	}
+
+	public RoomEntity getRoomEntity (int entityId) {
+		return this.entities.get(entityId);
 	}
 	
 	@Override

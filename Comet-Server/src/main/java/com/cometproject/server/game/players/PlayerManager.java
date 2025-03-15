@@ -13,8 +13,9 @@ import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.storage.queries.player.PlayerDao;
 import com.cometproject.server.tasks.CometThreadManager;
-import org.apache.log4j.Logger;
+import com.cometproject.server.tasks.CometConstants;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -56,15 +57,13 @@ public class PlayerManager implements IPlayerService {
 		this.ipAddressToPlayerIds = new ConcurrentHashMap<>();
 		this.ssoTicketToPlayerId = new ConcurrentHashMap<>();
 		
-		this.playerLoginService = Executors.newFixedThreadPool(4);// TODO: configure this.
+		this.playerLoginService = CometConstants.PLAYER_LOGIN_EXECUTOR;
 		
-		if ((boolean) Configuration.currentConfig().getOrDefault("comet.cache.players.enabled", true)) {
+		if ((boolean) Configuration.currentConfig().getOrDefault("comet.cache.players", true)) {
 			log.info("Initializing Player cache");
 			
-			this.playerAvatarCache = new LastReferenceCache<>(43200 * 1000, 10000, (key, val) -> {
-			}, CometThreadManager.getInstance().getCoreExecutor());
-			this.playerDataCache = new LastReferenceCache<>(43200 * 1000, 10000, (key, val) -> {
-			}, CometThreadManager.getInstance().getCoreExecutor());
+			this.playerAvatarCache = new LastReferenceCache<>(43200 * 1000, 10000, (key, val) -> {}, CometThreadManager.getInstance().getCoreExecutor());
+			this.playerDataCache = new LastReferenceCache<>(43200 * 1000, 10000, (key, val) -> {}, CometThreadManager.getInstance().getCoreExecutor());
 			
 		} else {
 			log.info("Player data cache is disabled.");

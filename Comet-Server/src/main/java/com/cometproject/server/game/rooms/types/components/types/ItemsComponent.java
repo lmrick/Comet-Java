@@ -26,7 +26,6 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.WiredF
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.highscore.HighScoreFloorItem;
 import com.cometproject.server.game.rooms.objects.items.types.wall.MoodLightWallItem;
 import com.cometproject.server.game.rooms.types.Room;
-import com.cometproject.api.game.rooms.types.IRoom;
 import com.cometproject.server.game.rooms.types.mapping.RoomTile;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.messages.outgoing.notification.NotificationMessageComposer;
@@ -44,14 +43,13 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
-import org.checkerframework.checker.units.qual.s;
-
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class ItemsComponent extends RoomComponent implements IItemsComponent {
-	private static final int MAX_FOOTBALLS = 15;
+	private static final int MAX_FOOTBALLS_IN_ROOM = 15;
+	private static final int MAX_JUKEBOX_IN_ROOM = 1;
 	private final Logger log;
 	private final Map<Long, RoomItemFloor> floorItems = new ConcurrentHashMap<>();
 	private final Map<Long, RoomItemWall> wallItems = new ConcurrentHashMap<>();
@@ -138,7 +136,6 @@ public class ItemsComponent extends RoomComponent implements IItemsComponent {
 	
 	public void onLoaded() {
 		floorItems.values().forEach(RoomItem::onLoad);
-		
 		wallItems.values().forEach(RoomItem::onLoad);
 	}
 	
@@ -274,7 +271,10 @@ public class ItemsComponent extends RoomComponent implements IItemsComponent {
 		List<T> items = new ArrayList<>();
 		
 		if (this.itemClassIndex.containsKey(clazz)) {
-			items = this.itemClassIndex.get(clazz).stream().mapToLong(itemId -> itemId).mapToObj(this::getFloorItem).filter(floorItem -> floorItem != null && floorItem.getDefinition() != null).map(floorItem -> ((T) floorItem)).collect(Collectors.toList());
+			items = this.itemClassIndex.get(clazz).stream()
+			.mapToLong(itemId -> itemId).mapToObj(this::getFloorItem)
+			.filter(floorItem -> floorItem != null && floorItem.getDefinition() != null)
+			.map(clazz::cast).collect(Collectors.toList());
 		}
 		
 		return items;
@@ -495,7 +495,7 @@ public class ItemsComponent extends RoomComponent implements IItemsComponent {
 		if (floorItem instanceof RollableFloorItem && this.itemClassIndex.containsKey(RollableFloorItem.class)) {
 			final int count = this.itemClassIndex.get(RollableFloorItem.class).size();
 			
-			if (count >= MAX_FOOTBALLS) {
+			if (count >= MAX_FOOTBALLS_IN_ROOM) {
 				return false;
 			}
 		}

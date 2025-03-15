@@ -36,12 +36,10 @@ import com.cometproject.server.storage.queries.player.PlayerDao;
 import com.cometproject.server.tasks.ICometTask;
 import com.cometproject.server.tasks.CometThreadManager;
 import org.apache.commons.lang.StringUtils;
-
 import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
 public class PlayerLoginRequest implements ICometTask {
-	
 	private final Session client;
 	private final String ticket;
 	

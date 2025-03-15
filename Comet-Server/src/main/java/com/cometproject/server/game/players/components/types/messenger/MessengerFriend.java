@@ -8,7 +8,6 @@ import com.cometproject.server.game.players.data.PlayerAvatarData;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.sessions.Session;
 import com.google.gson.JsonObject;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -18,7 +17,11 @@ public class MessengerFriend implements IMessengerFriend {
 	
 	public MessengerFriend(ResultSet data) throws SQLException {
 		this.userId = data.getInt("user_two_id");
-		this.playerAvatar = new PlayerAvatarData(this.userId, data.getString("username"), data.getString("figure"), data.getString("gender"), data.getString("motto"), 0);
+		this.playerAvatar = new PlayerAvatarData(this.userId, 
+		data.getString("username"), 
+		data.getString("figure"), 
+		data.getString("gender"), 
+		data.getString("motto"), 0);
 	}
 	
 	public MessengerFriend(int userId, IPlayerAvatar playerAvatar) {

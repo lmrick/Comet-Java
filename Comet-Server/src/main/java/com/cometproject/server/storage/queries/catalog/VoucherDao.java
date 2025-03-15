@@ -4,13 +4,13 @@ import com.cometproject.api.game.catalog.types.vouchers.VoucherStatus;
 import com.cometproject.api.game.catalog.types.vouchers.VoucherType;
 import com.cometproject.server.game.catalog.types.Voucher;
 import com.cometproject.server.storage.SQLUtility;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class VoucherDao {
+
     public static Voucher findVoucherByCode(final String code) {
         Connection sqlConnection = null;
         PreparedStatement preparedStatement = null;
@@ -48,7 +48,7 @@ public class VoucherDao {
     public static void claimVoucher(final int voucherId, final int playerId) {
         Connection sqlConnection = null;
         PreparedStatement preparedStatement = null;
-
+        
         try {
             sqlConnection = SQLUtility.getConnection();
 
@@ -66,4 +66,5 @@ public class VoucherDao {
             SQLUtility.closeSilently(sqlConnection);
         }
     }
+    
 }

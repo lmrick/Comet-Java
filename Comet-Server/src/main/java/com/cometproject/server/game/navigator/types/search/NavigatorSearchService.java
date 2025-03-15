@@ -11,6 +11,7 @@ import com.cometproject.server.game.players.types.Player;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.network.messages.outgoing.navigator.updated.NavigatorSearchResultSetMessageComposer;
+import com.cometproject.server.tasks.CometConstants;
 import com.cometproject.server.tasks.ICometTask;
 import com.google.common.collect.Lists;
 import java.util.LinkedList;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class NavigatorSearchService implements ICometTask {
 	private static NavigatorSearchService searchServiceInstance;
-	private final Executor searchExecutor = Executors.newFixedThreadPool(8);
+	private final Executor searchExecutor = CometConstants.NAVIGATOR_SEARCH_EXECUTOR;
 	
 	public NavigatorSearchService() {
 		//CometThreadManager.getInstance().executePeriodic(this, 0, 3000, TimeUnit.MILLISECONDS);

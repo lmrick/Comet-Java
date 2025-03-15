@@ -115,6 +115,12 @@ public abstract class RoomEntity extends RoomFloorObject implements IAvatarEntit
 		
 		this.joinTime = System.currentTimeMillis();
 	}
+
+	public abstract boolean joinRoom(Room room, String password);
+	protected abstract void finalizeJoinRoom();
+	public abstract void leaveRoom(boolean isOffline, boolean isKick, boolean toHotelView);
+	public abstract boolean onChat(String message);
+	public abstract boolean onRoomDispose();
 	
 	public RoomEntityType getEntityType() {
 		return this.entityType;
@@ -127,7 +133,7 @@ public abstract class RoomEntity extends RoomFloorObject implements IAvatarEntit
 	
 	@Override
 	public void setWalkingGoal(int x, int y) {
-		this.walkingGoal = new Position(x, y, 0.0);
+		this.walkingGoal = new Position(x, y, 0.0D);
 	}
 	
 	public void moveTo(Position position) {
@@ -541,12 +547,6 @@ public abstract class RoomEntity extends RoomFloorObject implements IAvatarEntit
 	public void setOverriden(boolean overriden) {
 		this.overriden = overriden;
 	}
-	
-	public abstract boolean joinRoom(Room room, String password);
-	protected abstract void finalizeJoinRoom();
-	public abstract void leaveRoom(boolean isOffline, boolean isKick, boolean toHotelView);
-	public abstract boolean onChat(String message);
-	public abstract boolean onRoomDispose();
 	
 	public boolean isVisible() {
 		return isVisible;

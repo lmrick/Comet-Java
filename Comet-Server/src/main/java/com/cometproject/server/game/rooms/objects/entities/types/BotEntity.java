@@ -3,8 +3,11 @@ package com.cometproject.server.game.rooms.objects.entities.types;
 import com.cometproject.api.game.bots.IBotData;
 import com.cometproject.api.game.utilities.Position;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
+import com.cometproject.api.networking.sessions.SessionContext;
 import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.server.game.bots.BotData;
+import com.cometproject.server.game.commands.ChatCommand;
+import com.cometproject.server.game.commands.CommandManager;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.entities.types.ai.IBotAI;
 import com.cometproject.server.game.rooms.objects.entities.types.ai.bots.DefaultAI;
@@ -17,6 +20,7 @@ import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.components.types.chat.emotions.ChatEmotion;
 import com.cometproject.server.network.messages.outgoing.room.avatar.LeaveRoomMessageComposer;
 import com.cometproject.server.network.messages.outgoing.room.avatar.TalkMessageComposer;
+import com.cometproject.server.network.sessions.SessionManager;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -51,6 +55,12 @@ public class BotEntity extends RoomEntity {
 	
 	@Override
 	public boolean joinRoom(Room room, String password) {
+
+		if(this.getRoom().getEntities().botCount() >= this.getRoom().getData().getMaxBots()) {
+			ChatCommand.sendAlert("You have reached the maximum amount of bots in your room", this.getRoom().getEntities().getEntityByPlayerId(this.getRoom().getData().getOwnerId()).getPlayer().getSession());
+			return false;
+		}
+
 		return true;
 	}
 	

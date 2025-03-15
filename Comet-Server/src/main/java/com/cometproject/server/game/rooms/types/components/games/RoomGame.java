@@ -58,7 +58,7 @@ public class RoomGame implements ICometTask {
 			
 			try {
 				if (this.getGameComponent().getBlobCounter().get() < 2) {
-					if (RandomUtil.getRandomBool(0.1)) {
+					if (RandomUtil.getRandomBool(0.1D)) {
 						final List<WiredAddonBlob> blobs = room.getItems().getByClass(WiredAddonBlob.class);
 						Collections.shuffle(blobs);
 						

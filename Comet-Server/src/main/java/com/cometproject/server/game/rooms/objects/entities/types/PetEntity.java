@@ -3,16 +3,15 @@ package com.cometproject.server.game.rooms.objects.entities.types;
 import com.cometproject.api.game.pets.IPetData;
 import com.cometproject.api.game.utilities.Position;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
+import com.cometproject.server.game.commands.ChatCommand;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.entities.types.ai.IBotAI;
 import com.cometproject.server.game.rooms.objects.entities.types.ai.pets.PetAI;
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.network.messages.outgoing.room.avatar.LeaveRoomMessageComposer;
 import com.cometproject.server.storage.queries.pets.PetDao;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 
 public class PetEntity extends RoomEntity {
     private final IPetData data;
@@ -29,6 +28,12 @@ public class PetEntity extends RoomEntity {
 
     @Override
     public boolean joinRoom(Room room, String password) {
+
+        if (this.getRoom().getEntities().petCount() >= this.getRoom().getData().getMaxPets()) {
+            ChatCommand.sendAlert("You have reached the maximum amount of pets in your room", this.getRoom().getEntities().getEntityByPlayerId(this.getRoom().getData().getOwnerId()).getPlayer().getSession());
+			return false;
+        }
+
         return true;
     }
 

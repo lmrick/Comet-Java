@@ -356,7 +356,7 @@ public class Room implements Attributable, IRoom {
 	
 	@Override
 	public RoomContext getContext() {
-		return null;
+		return this.roomContext;
 	}
 	
 	public IRoomData getData() {
