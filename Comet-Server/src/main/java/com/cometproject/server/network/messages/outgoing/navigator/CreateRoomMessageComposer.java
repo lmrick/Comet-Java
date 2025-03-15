@@ -14,6 +14,7 @@ public class CreateRoomMessageComposer extends MessageComposer {
         this.roomName = roomName;
     }
 
+    @Override
     public short getId() {
         return Composers.FlatCreatedMessageComposer;
     }

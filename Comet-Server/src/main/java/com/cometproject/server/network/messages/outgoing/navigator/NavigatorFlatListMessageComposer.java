@@ -5,10 +5,8 @@ import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.types.RoomWriter;
 import com.cometproject.server.protocol.messages.MessageComposer;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class NavigatorFlatListMessageComposer extends MessageComposer {

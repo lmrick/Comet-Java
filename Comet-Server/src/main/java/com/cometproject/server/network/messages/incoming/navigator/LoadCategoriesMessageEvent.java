@@ -8,8 +8,11 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 
 
 public class LoadCategoriesMessageEvent implements Event {
+
+    @Override
     public void handle(Session client, MessageEvent msg) {
         client.send(new RoomCategoriesMessageComposer(NavigatorManager.getInstance().getUserCategories(), client.getPlayer().getData().getRank()));
 //        client.send(new EventCategoriesMessageComposer());
     }
+
 }

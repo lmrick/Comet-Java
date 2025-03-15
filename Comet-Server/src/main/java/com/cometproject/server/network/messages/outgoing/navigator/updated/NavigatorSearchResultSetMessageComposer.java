@@ -13,7 +13,6 @@ import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.RoomWriter;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
-
 import java.util.List;
 
 public class NavigatorSearchResultSetMessageComposer extends MessageComposer {

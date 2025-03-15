@@ -10,6 +10,7 @@ import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
 public class InitializeNewNavigatorMessageEvent implements Event {
+
     @Override
     public void handle(Session client, MessageEvent msg) throws Exception {
         client.sendQueue(new NavigatorPreferencesMessageComposer(client.getPlayer().getSettings()))
@@ -20,4 +21,5 @@ public class InitializeNewNavigatorMessageEvent implements Event {
 
         client.flush();
     }
+    
 }

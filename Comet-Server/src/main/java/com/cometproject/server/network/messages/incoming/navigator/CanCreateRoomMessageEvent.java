@@ -7,7 +7,10 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 
 
 public class CanCreateRoomMessageEvent implements Event {
+
+    @Override
     public void handle(Session client, MessageEvent msg) {
         client.send(new CanCreateRoomMessageComposer());
     }
+    
 }

@@ -6,6 +6,7 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 import com.cometproject.server.storage.queries.player.PlayerDao;
 
 public class ResizeNavigatorMessageEvent implements Event {
+
     @Override
     public void handle(Session client, MessageEvent msg) throws Exception {
         final int x = msg.readInt();
@@ -22,4 +23,5 @@ public class ResizeNavigatorMessageEvent implements Event {
 
         PlayerDao.saveNavigatorSettings(x, y, height, width, savedSearchesVisible, client.getPlayer().getId());
     }
+    
 }

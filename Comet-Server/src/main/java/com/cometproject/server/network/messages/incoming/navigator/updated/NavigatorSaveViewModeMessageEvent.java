@@ -6,6 +6,7 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 import com.cometproject.server.storage.queries.player.PlayerDao;
 
 public class NavigatorSaveViewModeMessageEvent implements Event {
+
     @Override
     public void handle(Session client, MessageEvent msg) throws Exception {
         final String category = msg.readString();
@@ -14,4 +15,5 @@ public class NavigatorSaveViewModeMessageEvent implements Event {
         client.getPlayer().getNavigator().getViewModes().put(category, viewMode);
         PlayerDao.saveViewMode(category, viewMode, client.getPlayer().getId());
     }
+    
 }

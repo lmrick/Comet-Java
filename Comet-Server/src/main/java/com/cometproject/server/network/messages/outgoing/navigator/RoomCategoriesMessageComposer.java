@@ -4,7 +4,6 @@ import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.navigator.types.categories.Category;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
-
 import java.util.List;
 
 

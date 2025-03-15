@@ -7,6 +7,7 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 import com.cometproject.server.storage.queries.player.PlayerDao;
 
 public class DeleteNavigatorSavedSearchMessageEvent implements Event {
+
     @Override
     public void handle(Session client, MessageEvent msg) throws Exception {
         final int savedSearch = msg.readInt();
@@ -18,4 +19,5 @@ public class DeleteNavigatorSavedSearchMessageEvent implements Event {
             client.send(new NavigatorSavedSearchesMessageComposer(client.getPlayer().getNavigator().getSavedSearches()));
         }
     }
+    
 }

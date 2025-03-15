@@ -38,7 +38,6 @@ import com.cometproject.server.storage.queries.player.PlayerDao;
 import com.cometproject.server.utilities.collections.ConcurrentHashSet;
 import com.cometproject.storage.api.StorageContext;
 import com.google.common.collect.Sets;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -878,6 +877,7 @@ public class Player implements IPlayer {
 	}
 	
 	public void flush() {
+		
 	}
 	
 	public String toString() {

@@ -12,7 +12,6 @@ import com.cometproject.server.game.players.components.types.settings.WardrobeIt
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -60,12 +59,10 @@ public class PlayerSettings implements IPlayerSettings {
 			this.homeRoom = data.getInt("playerSettings_homeRoom");
 			
 			String wardrobeText = data.getString("playerSettings_wardrobe");
-			wardrobe = wardrobeText == null || wardrobeText.isEmpty() ? new ArrayList<>() : JsonUtil.getInstance().fromJson(wardrobeText, new TypeToken<ArrayList<WardrobeItem>>() {
-			}.getType());
+			wardrobe = wardrobeText == null || wardrobeText.isEmpty() ? new ArrayList<>() : JsonUtil.getInstance().fromJson(wardrobeText, new TypeToken<ArrayList<WardrobeItem>>() {}.getType());
 			
 			String playlistText = data.getString("playerSettings_playlist");
-			playlist = playlistText == null || playlistText.isEmpty() ? new ArrayList<>() : JsonUtil.getInstance().fromJson(playlistText, new TypeToken<ArrayList<PlaylistItem>>() {
-			}.getType());
+			playlist = playlistText == null || playlistText.isEmpty() ? new ArrayList<>() : JsonUtil.getInstance().fromJson(playlistText, new TypeToken<ArrayList<PlaylistItem>>() {}.getType());
 			
 			this.useOldChat = data.getString("playerSettings_useOldChat").equals("1");
 			this.ignoreInvites = data.getString("playerSettings_ignoreInvites").equals("1");
@@ -93,12 +90,10 @@ public class PlayerSettings implements IPlayerSettings {
 			this.homeRoom = data.getInt("home_room");
 			
 			String wardrobeText = data.getString("wardrobe");
-			wardrobe = wardrobeText == null || wardrobeText.isEmpty() ? new ArrayList<>() : JsonUtil.getInstance().fromJson(wardrobeText, new TypeToken<ArrayList<WardrobeItem>>() {
-			}.getType());
+			wardrobe = wardrobeText == null || wardrobeText.isEmpty() ? new ArrayList<>() : JsonUtil.getInstance().fromJson(wardrobeText, new TypeToken<ArrayList<WardrobeItem>>() {}.getType());
 			
 			String playlistText = data.getString("playlist");
-			playlist = playlistText == null || playlistText.isEmpty() ? new ArrayList<>() : JsonUtil.getInstance().fromJson(playlistText, new TypeToken<ArrayList<PlaylistItem>>() {
-			}.getType());
+			playlist = playlistText == null || playlistText.isEmpty() ? new ArrayList<>() : JsonUtil.getInstance().fromJson(playlistText, new TypeToken<ArrayList<PlaylistItem>>() {}.getType());
 			
 			this.useOldChat = data.getString("chat_oldstyle").equals("1");
 			this.ignoreInvites = data.getString("ignore_invites").equals("1");
@@ -130,10 +125,10 @@ public class PlayerSettings implements IPlayerSettings {
 		this.playlist = new ArrayList<>();
 		this.useOldChat = false;
 		
-		this.navigatorX = 68;
-		this.navigatorY = 42;
+		this.navigatorX = 100;
+		this.navigatorY = 100;
 		this.navigatorWidth = 425;
-		this.navigatorHeight = 592;
+		this.navigatorHeight = 535;
 		this.navigatorShowSearches = false;
 		this.disableWhisper = false;
 		this.mentionType = MentionType.ALL;

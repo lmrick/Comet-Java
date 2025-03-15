@@ -12,6 +12,8 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 
 
 public class CreateRoomMessageEvent implements Event {
+
+    @Override
     public void handle(Session client, MessageEvent msg) {
         String name = msg.readString();
         String description = msg.readString();
@@ -41,4 +43,5 @@ public class CreateRoomMessageEvent implements Event {
         client.send(new CreateRoomMessageComposer(roomId, name));
         client.getPlayer().setLastRoomCreated((int) Comet.getTime());
     }
+    
 }

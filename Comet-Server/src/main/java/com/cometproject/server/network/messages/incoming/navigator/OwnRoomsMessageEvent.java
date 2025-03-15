@@ -12,6 +12,8 @@ import java.util.List;
 
 
 public class OwnRoomsMessageEvent implements Event {
+
+    @Override
     public void handle(Session client, MessageEvent msg) {
         List<IRoomData> rooms = new LinkedList<>();
 
@@ -23,4 +25,5 @@ public class OwnRoomsMessageEvent implements Event {
 
         client.send(new NavigatorFlatListMessageComposer(5, "", rooms, false, false));
     }
+    
 }

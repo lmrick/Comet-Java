@@ -4,11 +4,9 @@ import com.cometproject.api.game.players.data.components.navigator.ISavedSearch;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
-
 import java.util.Map;
 
 public class NavigatorSavedSearchesMessageComposer extends MessageComposer {
-	
 	private final Map<Integer, ISavedSearch> savedSearches;
 	
 	public NavigatorSavedSearchesMessageComposer(final Map<Integer, ISavedSearch> savedSearches) {

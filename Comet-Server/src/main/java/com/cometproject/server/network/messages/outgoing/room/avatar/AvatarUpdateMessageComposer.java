@@ -90,7 +90,7 @@ public class AvatarUpdateMessageComposer extends MessageComposer {
 
             for (Map.Entry<RoomEntityStatus, String> status : entity.getStatuses().entrySet()) {
 
-                statusString.append(status.getKey().getStatusCode());
+                statusString.append(status.getKey().toString());
 
                 if (!status.getValue().isEmpty()) {
                     statusString.append(" ");

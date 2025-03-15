@@ -9,11 +9,10 @@ import com.cometproject.server.network.messages.outgoing.navigator.NavigatorFlat
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 import com.google.common.collect.Lists;
-
 import java.util.List;
 
-
 public class PromotedRoomsMessageEvent implements Event {
+
     @Override
     public void handle(Session client, MessageEvent msg) throws Exception {
         List<IRoomData> promotedRooms = Lists.newArrayList();
@@ -31,4 +30,5 @@ public class PromotedRoomsMessageEvent implements Event {
 
         client.send(new NavigatorFlatListMessageComposer(0, "", promotedRooms));
     }
+    
 }

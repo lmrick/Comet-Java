@@ -7,6 +7,7 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 import com.cometproject.server.storage.queries.player.PlayerDao;
 
 public class ToggleFavouriteRoomMessageEvent implements Event {
+
     @Override
     public void handle(Session client, MessageEvent msg) throws Exception {
         final int roomId = msg.readInt();
@@ -25,4 +26,5 @@ public class ToggleFavouriteRoomMessageEvent implements Event {
 
         client.send(new FavouriteRoomsMessageComposer(client.getPlayer().getNavigator().getFavouriteRooms()));
     }
+
 }

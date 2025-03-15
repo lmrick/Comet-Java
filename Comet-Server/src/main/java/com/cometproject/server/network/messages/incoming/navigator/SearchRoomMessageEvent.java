@@ -8,8 +8,11 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 
 
 public class SearchRoomMessageEvent implements Event {
+
+    @Override
     public void handle(Session client, MessageEvent msg) {
         String query = msg.readString();
         client.send(new NavigatorFlatListMessageComposer(8, "", RoomManager.getInstance().getRoomsByQuery(query)));
     }
+    
 }

@@ -11,6 +11,7 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 import com.cometproject.server.storage.queries.navigator.NavigatorDao;
 
 public class AddToStaffPickedRoomsMessageEvent implements Event {
+
     @Override
     public void handle(Session client, MessageEvent msg) throws Exception {
         if (!client.getPlayer().getPermissions().getRank().roomStaffPick()) {
@@ -37,4 +38,5 @@ public class AddToStaffPickedRoomsMessageEvent implements Event {
 
         room.getEntities().broadcastMessage(new RoomDataMessageComposer(room));
     }
+    
 }

@@ -5,11 +5,13 @@ import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class NavigatorMetaDataMessageComposer extends MessageComposer {
+
     @Override
     public short getId() {
         return Composers.NavigatorMetaDataParserMessageComposer;
     }
 
+    @Override
     public void compose(IComposerDataWrapper msg) {
         msg.writeInt(4);
 
@@ -25,4 +27,5 @@ public class NavigatorMetaDataMessageComposer extends MessageComposer {
         msg.writeString("myworld_view");
         msg.writeInt(0);
     }
+    
 }

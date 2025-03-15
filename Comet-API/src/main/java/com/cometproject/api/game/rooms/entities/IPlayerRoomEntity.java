@@ -6,7 +6,6 @@ import com.cometproject.api.game.rooms.IRoom;
 public interface IPlayerRoomEntity extends IRoomEntity {
     
     IPlayer getPlayer();
-
     IRoom getRoom();
     
 }

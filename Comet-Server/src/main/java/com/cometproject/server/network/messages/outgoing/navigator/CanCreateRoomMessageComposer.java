@@ -17,4 +17,5 @@ public class CanCreateRoomMessageComposer extends MessageComposer {
         msg.writeInt(0);
         msg.writeInt(300);
     }
+    
 }

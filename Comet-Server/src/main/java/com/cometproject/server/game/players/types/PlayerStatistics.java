@@ -5,7 +5,6 @@ import com.cometproject.server.storage.queries.player.PlayerDao;
 import com.cometproject.server.storage.queries.player.messenger.MessengerDao;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
