@@ -34,9 +34,9 @@ public class MySQLInventoryRepository extends MySQLRepository implements IInvent
     }
 
     private IPlayerItem buildItem(IResultReader data) throws Exception {
-        final long id = data.readLong("id");
+        final var id = data.readLong("id");
         final int baseId = data.readInteger("base_item");
-        final String extra_data = data.readString("extra_data");
+        final var extraData = data.readString("extra_data");
 
         ILimitedEditionItem limitedEditionItemData = null;
 
@@ -46,6 +46,6 @@ public class MySQLInventoryRepository extends MySQLRepository implements IInvent
             data.readInteger("limited_total"));
         }
 
-        return this.playerItemFactory.createItem(new InventoryItemData(id, baseId, extra_data, limitedEditionItemData));
+        return this.playerItemFactory.createItem(new InventoryItemData(id, baseId, extraData, limitedEditionItemData));
     }
 }

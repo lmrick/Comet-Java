@@ -3,7 +3,6 @@ package com.cometproject.storage.mysql.queues.types.pets;
 import com.cometproject.api.game.pets.IPetStats;
 import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
 import com.cometproject.storage.mysql.queues.types.MySQLStorageQueue;
-
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 

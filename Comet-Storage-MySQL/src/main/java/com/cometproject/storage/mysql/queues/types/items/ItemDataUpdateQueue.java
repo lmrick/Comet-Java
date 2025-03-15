@@ -2,7 +2,6 @@ package com.cometproject.storage.mysql.queues.types.items;
 
 import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
 import com.cometproject.storage.mysql.queues.types.BlockingMySQLStorageQueue;
-
 import java.sql.PreparedStatement;
 
 public class ItemDataUpdateQueue extends BlockingMySQLStorageQueue<Long, String> {

@@ -28,7 +28,6 @@ import com.cometproject.storage.mysql.repositories.types.rooms.MySQLRoomItemRepo
 import com.cometproject.storage.mysql.repositories.types.rooms.MySQLRoomRepository;
 
 public class MySQLStorageInitializer implements IStorageInitializer {
-	
 	private final MySQLConnectionProvider connectionProvider;
 	
 	public MySQLStorageInitializer(MySQLConnectionProvider connectionProvider) {

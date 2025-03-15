@@ -4,7 +4,6 @@ import com.cometproject.server.network.ws.messages.WsMessage;
 import com.cometproject.server.network.ws.messages.WsMessageType;
 
 public class YouTubeVideoMessage extends WsMessage {
-	
 	private final String videoId;
 	private final String description;
 	private final String username;

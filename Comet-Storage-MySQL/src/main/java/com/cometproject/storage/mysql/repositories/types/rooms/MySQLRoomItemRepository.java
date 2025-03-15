@@ -93,8 +93,8 @@ public class MySQLRoomItemRepository extends MySQLRepository implements IRoomIte
         Map<Integer, Set<String>> data = new ConcurrentHashMap<>();
 
         select("SELECT player_id, reward_data FROM items_wired_rewards WHERE item_id = ?;", (resultReader) -> {
-            final int playerId = resultReader.readInteger("player_id");
-            final String rewardData = resultReader.readString("reward_data");
+            final var playerId = resultReader.readInteger("player_id");
+            final var rewardData = resultReader.readString("reward_data");
 
             if (!data.containsKey(playerId)) {
                 data.put(playerId, new HashSet<>());
@@ -187,16 +187,16 @@ public class MySQLRoomItemRepository extends MySQLRepository implements IRoomIte
             data.readInteger("limited_id"), data.readInteger("limited_total"));
         }
 
-        final long id = data.readLong("id");
-        final int itemId = data.readInteger("base_item");
-        final int ownerId = data.readInteger("user_id");
-        final String ownerName = data.readString("user_name");
-        final int x = data.readInteger("x");
-        final int y = data.readInteger("y");
-        final double z = data.readDouble("z");
-        final int rotation = data.readInteger("rot");
-        final String extraData = data.readString("extra_data");
-        final String wallPosition = data.readString("wall_pos");
+        final var id = data.readLong("id");
+        final var itemId = data.readInteger("base_item");
+        final var ownerId = data.readInteger("user_id");
+        final var ownerName = data.readString("user_name");
+        final var x = data.readInteger("x");
+        final var y = data.readInteger("y");
+        final var z = data.readDouble("z");
+        final var rotation = data.readInteger("rot");
+        final var extraData = data.readString("extra_data");
+        final var wallPosition = data.readString("wall_pos");
 
         return new RoomItemData(id, itemId, ownerId, ownerName, new Position(x, y, z), rotation, extraData, wallPosition, limitedEditionItemData);
     }

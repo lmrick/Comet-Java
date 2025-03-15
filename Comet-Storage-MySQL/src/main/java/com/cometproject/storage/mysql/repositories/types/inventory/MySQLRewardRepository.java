@@ -5,7 +5,6 @@ import com.cometproject.storage.api.repositories.IRewardRepository;
 import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
 import com.cometproject.storage.mysql.repositories.MySQLRepository;
 import com.google.common.collect.Maps;
-
 import java.util.Map;
 import java.util.function.Consumer;
 

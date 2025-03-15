@@ -10,6 +10,7 @@ public abstract class MySQLConnectionProvider {
     public abstract void closeConnection(Connection connection);
     public abstract void closeStatement(PreparedStatement statement);
     public abstract void closeResults(ResultSet resultSet);
+    public abstract void shutdown();
 
 }
 

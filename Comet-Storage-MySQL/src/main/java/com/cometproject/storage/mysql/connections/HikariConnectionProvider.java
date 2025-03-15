@@ -4,7 +4,6 @@ import com.cometproject.api.config.Configuration;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,8 +18,12 @@ public class HikariConnectionProvider extends MySQLConnectionProvider {
 		try {
 			HikariConfig config = new HikariConfig();
 			
-			config.setJdbcUrl(MessageFormat.format("jdbc:mysql://{0}/{1}?tcpKeepAlive={2}&autoReconnect={3}", Configuration.currentConfig().get("comet.db.host"), Configuration.currentConfig().get("comet.db.name"), Configuration.currentConfig().get("comet.db.pool.tcpKeepAlive"), Configuration.currentConfig().get("comet.db.pool.autoReconnect")));
-			
+			config.setJdbcUrl(MessageFormat.format("jdbc:mysql://{0}/{1}?tcpKeepAlive={2}&autoReconnect={3}", 
+			Configuration.currentConfig().get("comet.db.host"), 
+			Configuration.currentConfig().get("comet.db.name"), 
+			Configuration.currentConfig().get("comet.db.pool.tcpKeepAlive"), 
+			Configuration.currentConfig().get("comet.db.pool.autoReconnect")));
+
 			config.setUsername(Configuration.currentConfig().get("comet.db.username"));
 			config.setPassword(Configuration.currentConfig().get("comet.db.password"));
 			config.setMaximumPoolSize(Integer.parseInt(Configuration.currentConfig().get("comet.db.pool.max")));
@@ -73,6 +76,7 @@ public class HikariConnectionProvider extends MySQLConnectionProvider {
 		}
 	}
 	
+	@Override
 	public void shutdown() {
 		this.hikariDataSource.close();
 	}

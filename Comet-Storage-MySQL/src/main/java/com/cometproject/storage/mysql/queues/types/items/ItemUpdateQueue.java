@@ -3,7 +3,6 @@ package com.cometproject.storage.mysql.queues.types.items;
 import com.cometproject.api.game.rooms.objects.IFloorItem;
 import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
 import com.cometproject.storage.mysql.queues.types.BlockingMySQLStorageQueue;
-
 import java.sql.PreparedStatement;
 
 public class ItemUpdateQueue extends BlockingMySQLStorageQueue<Long, IFloorItem> {

@@ -8,14 +8,11 @@ import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 public class GroupForumThreadMessageData implements IForumThreadReply {
     private int id;
     private int index;
-
     private String message;
     private int threadId;
     private int authorId;
     private int authorTimestamp;
-
     private int state;
-
     private int adminId;
     private String adminUsername;
 

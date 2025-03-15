@@ -2,7 +2,6 @@ package com.cometproject.storage.mysql.queues.types.players;
 
 import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
 import com.cometproject.storage.mysql.queues.types.MySQLStorageQueue;
-
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 

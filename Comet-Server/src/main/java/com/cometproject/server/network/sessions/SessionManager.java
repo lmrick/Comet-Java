@@ -32,7 +32,7 @@ public final class SessionManager implements ISessionService {
     public boolean add(ChannelHandlerContext channel) {
         Session session = new Session(channel);
 
-        session.initialise();
+        session.initialize();
 
         channel.channel().attr(SessionManager.SESSION_ATTR).set(session);
         this.channelGroup.add(channel.channel());

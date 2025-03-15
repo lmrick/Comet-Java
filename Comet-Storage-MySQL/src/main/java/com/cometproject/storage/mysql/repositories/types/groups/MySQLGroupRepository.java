@@ -10,7 +10,6 @@ import com.cometproject.storage.mysql.data.results.IResultReader;
 import com.cometproject.storage.api.factories.groups.GroupDataFactory;
 import com.cometproject.storage.mysql.repositories.MySQLRepository;
 import com.google.common.collect.Lists;
-
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -43,7 +42,7 @@ public class MySQLGroupRepository extends MySQLRepository implements IGroupRepos
     @Override
     public void create(IGroupData groupData) {
         insert("INSERT INTO groups (`name`, `description`, `badge`, `owner_id`, `room_id`, `created`, `type`, `colour1`, `colour2`, `members_deco`, `has_forum`) " +
-                "VALUES(? ,?, ?, ?, ?, ?, ?, ?, ?, ?, '0');", key -> {
+                "VALUES (? ,?, ?, ?, ?, ?, ?, ?, ?, ?, '0');", key -> {
             final int groupId = key.readInteger(1);
 
             groupData.setId(groupId);
@@ -55,7 +54,7 @@ public class MySQLGroupRepository extends MySQLRepository implements IGroupRepos
     @Override
     public void createForumSettings(IForumComponent forumComponent) {
         insert("INSERT INTO group_forum_settings (`group_id`, `read_permission`, `post_permission`, `thread_permission`, `moderate_permission`) " +
-                "VALUES(?,?,?,?,?);", key -> {
+                "VALUES (?,?,?,?,?);", key -> {
         }, forumComponent.getForumSettings().getGroupId(), forumComponent.getForumSettings().getReadPermission().name(), forumComponent.getForumSettings().getPostPermission().name(), forumComponent.getForumSettings().getStartThreadsPermission().name(), forumComponent.getForumSettings().getModeratePermission().name());
     }
 
@@ -89,24 +88,24 @@ public class MySQLGroupRepository extends MySQLRepository implements IGroupRepos
     }
 
     private IGroupData readGroup(IResultReader data) throws Exception {
-        final int groupId = data.readInteger("id");
-        final String name = data.readString("name");
-        final String description = data.readString("description");
-        final String badge = data.readString("badge");
-        final int ownerId = data.readInteger("owner_id");
-        final int roomId = data.readInteger("room_id");
-        final int created = data.readInteger("created");
-        final GroupType groupType = GroupType.valueOf(data.readString("type").toUpperCase());
-        final int colour1 = data.readInteger("colour1");
-        final int colour2 = data.readInteger("colour2");
-        final boolean membersDeco = data.readBoolean("members_deco");
-        final boolean hasForum = data.readBoolean("has_forum");
-        final String username = data.readString("owner_name");
-        final String ownerFigure = data.readString("owner_figure");
-        final String ownerMotto = data.readString("owner_motto");
-        final int regTimestamp = data.readInteger("owner_reg_timestamp");
+        final var groupId = data.readInteger("id");
+        final var name = data.readString("name");
+        final var description = data.readString("description");
+        final var badge = data.readString("badge");
+        final var ownerId = data.readInteger("owner_id");
+        final var roomId = data.readInteger("room_id");
+        final var created = data.readInteger("created");
+        final var groupType = GroupType.valueOf(data.readString("type").toUpperCase());
+        final var firstColour = data.readInteger("colour1");
+        final var secondColour = data.readInteger("colour2");
+        final var membersDeco = data.readBoolean("members_deco");
+        final var hasForum = data.readBoolean("has_forum");
+        final var username = data.readString("owner_name");
+        final var ownerFigure = data.readString("owner_figure");
+        final var ownerMotto = data.readString("owner_motto");
+        final var regTimestamp = data.readInteger("owner_reg_timestamp");
 
         return this.groupDataFactory.create(groupId, name, description, badge, ownerId, username, roomId, created, groupType,
-                colour1, colour2, membersDeco, hasForum, new PlayerAvatarData(ownerId, username, ownerFigure, ownerMotto, "M", regTimestamp));
+                firstColour, secondColour, membersDeco, hasForum, new PlayerAvatarData(ownerId, username, ownerFigure, ownerMotto, "M", regTimestamp));
     }
 }

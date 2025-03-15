@@ -3,7 +3,6 @@ package com.cometproject.storage.mysql.queues.types;
 import com.cometproject.api.utilities.Pair;
 import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
 import org.apache.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

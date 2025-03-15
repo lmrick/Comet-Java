@@ -46,7 +46,7 @@ public class Session implements ISession, INetSession<Session> {
 		this.channel = channel;
 	}
 	
-	public void initialise() {
+	public void initialize() {
 		this.eventHandler = new SessionEventHandler(this);
 	}
 	

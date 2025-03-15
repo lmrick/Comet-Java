@@ -9,7 +9,6 @@ import com.cometproject.storage.api.factories.groups.GroupForumSettingsFactory;
 import com.cometproject.storage.mysql.repositories.MySQLRepository;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -54,17 +53,16 @@ public class MySQLGroupForumRepository extends MySQLRepository implements IGroup
             final ForumMessageType messageType = ForumMessageType.valueOf(data.readString("type"));
 
             switch (messageType) {
-                case THREAD:
-                    final IForumThread forumThread = this.buildThread(data);
+                case THREAD -> {
+                    final var forumThread = this.buildThread(data);
 
                     if (forumThread.isPinned()) {
                         pinnedThreads.add(forumThread.getId());
                     }
 
                     forumThreads.put(forumThread.getId(), forumThread);
-                    break;
-
-                case REPLY:
+                }
+                case REPLY -> {
                     final int threadId = data.readInteger("thread_id");
 
                     if (!forumThreads.containsKey(threadId)) {
@@ -75,7 +73,7 @@ public class MySQLGroupForumRepository extends MySQLRepository implements IGroup
 
                     forumThreads.get(threadId).addReply(threadReply);
                     threadReply.setIndex(forumThreads.get(threadReply.getThreadId()).getReplies().indexOf(threadReply));
-                    break;
+                }
             }
         }, groupId);
 
@@ -124,30 +122,30 @@ public class MySQLGroupForumRepository extends MySQLRepository implements IGroup
     }
 
     private IForumThread buildThread(IResultReader resultReader) throws Exception {
-        final int id = resultReader.readInteger("id");
-        final String title = resultReader.readString("title");
-        final String message = resultReader.readString("message");
-        final int authorId = resultReader.readInteger("author_id");
-        final int authorTimestamp = resultReader.readInteger("author_timestamp");
-        final int state = resultReader.readInteger("state");
-        final boolean locked = resultReader.readBoolean("locked");
-        final boolean pinned = resultReader.readBoolean("pinned");
-        final int moderatorId = resultReader.readInteger("moderator_id");
-        final String moderatorUsername = resultReader.readString("moderator_username");
+        final var id = resultReader.readInteger("id");
+        final var title = resultReader.readString("title");
+        final var message = resultReader.readString("message");
+        final var authorId = resultReader.readInteger("author_id");
+        final var authorTimestamp = resultReader.readInteger("author_timestamp");
+        final var state = resultReader.readInteger("state");
+        final var locked = resultReader.readBoolean("locked");
+        final var pinned = resultReader.readBoolean("pinned");
+        final var moderatorId = resultReader.readInteger("moderator_id");
+        final var moderatorUsername = resultReader.readString("moderator_username");
 
         return this.forumMessageFactory.createThread(id, title, message, authorId, authorTimestamp, state, locked,
                 pinned, moderatorId, moderatorUsername);
     }
 
     public IForumThreadReply buildThreadReply(IResultReader resultReader) throws Exception {
-        final int id = resultReader.readInteger("id");
-        final int threadId = resultReader.readInteger("thread_id");
-        final String message = resultReader.readString("message");
-        final int authorId = resultReader.readInteger("author_id");
-        final int authorTimestamp = resultReader.readInteger("author_timestamp");
-        final int state = resultReader.readInteger("state");
-        final int moderatorId = resultReader.readInteger("moderator_id");
-        final String moderatorUsername = resultReader.readString("moderator_username");
+        final var id = resultReader.readInteger("id");
+        final var threadId = resultReader.readInteger("thread_id");
+        final var message = resultReader.readString("message");
+        final var authorId = resultReader.readInteger("author_id");
+        final var authorTimestamp = resultReader.readInteger("author_timestamp");
+        final var state = resultReader.readInteger("state");
+        final var moderatorId = resultReader.readInteger("moderator_id");
+        final var moderatorUsername = resultReader.readString("moderator_username");
 
         return this.forumMessageFactory.createThreadReply(id, -1, message, threadId, authorId, authorTimestamp, state, moderatorId, moderatorUsername);
     }

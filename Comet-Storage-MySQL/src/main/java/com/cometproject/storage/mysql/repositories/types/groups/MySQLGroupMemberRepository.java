@@ -7,7 +7,6 @@ import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
 import com.cometproject.storage.mysql.data.results.IResultReader;
 import com.cometproject.storage.api.factories.groups.GroupMemberFactory;
 import com.cometproject.storage.mysql.repositories.MySQLRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -81,10 +80,10 @@ public class MySQLGroupMemberRepository extends MySQLRepository implements IGrou
     }
 
     private IGroupMember readMember(int groupId, IResultReader data) throws Exception {
-        final int membershipId = data.readInteger("id");
-        final int playerId = data.readInteger("player_id");
-        final int dateJoined = data.readInteger("date_joined");
-        final String accessLevel = data.readString("access_level");
+        final var membershipId = data.readInteger("id");
+        final var playerId = data.readInteger("player_id");
+        final var dateJoined = data.readInteger("date_joined");
+        final var accessLevel = data.readString("access_level");
 
         return this.groupMemberFactory.create(membershipId, playerId, groupId, GroupAccessLevel.valueOf(accessLevel.toUpperCase()), dateJoined);
     }

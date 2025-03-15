@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.Map;
 
 public class ValueComparator implements Comparator<String> {
-	
 	private final Map<String, Integer> base;
 	
 	public ValueComparator(Map<String, Integer> base) {
