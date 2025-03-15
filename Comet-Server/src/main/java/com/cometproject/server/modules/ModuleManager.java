@@ -60,7 +60,7 @@ public class ModuleManager implements Initializable {
 	public void setupModules() {
 		this.modules.values().forEach(baseModule -> {
 			baseModule.setup();
-			baseModule.initialiseServices(GameContext.getCurrent());
+			baseModule.initializeServices(GameContext.getCurrent());
 		});
 	}
 	

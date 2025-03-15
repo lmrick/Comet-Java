@@ -1,7 +1,6 @@
 package com.cometproject.api.game.rooms;
 
 import com.cometproject.api.game.rooms.settings.*;
-
 import java.util.List;
 import java.util.Map;
 

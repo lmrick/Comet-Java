@@ -2,7 +2,6 @@ package com.cometproject.server.game.rooms.objects.items.types.floor.wired;
 
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 
-
 public class WiredItemSnapshot {
     private long itemId;
     private int x;

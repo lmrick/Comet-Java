@@ -4,7 +4,7 @@ public class SessionContext {
     private static SessionContext instance;
     private ISessionService sessionService;
 
-    public ISessionService getSessionManager() {
+    public ISessionService getSessionService() {
         return sessionService;
     }
 

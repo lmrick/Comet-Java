@@ -6,7 +6,6 @@ import com.cometproject.api.game.GameContext;
 import com.cometproject.api.networking.messages.IMessageEventHandler;
 import com.cometproject.api.networking.sessions.ISession;
 import com.cometproject.api.server.IGameService;
-
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
@@ -37,13 +36,13 @@ public abstract class BaseModule implements IEventListenerContainer {
 
     }
 
-    public void initialiseServices(GameContext gameContext) {
+    public void initializeServices(GameContext gameContext) {
 
     }
 
     public void loadModule() {
         if(this.getConfig() != null && this.getConfig().commands() != null) {
-					this.getConfig().commands().forEach((key, value) -> this.getGameService().eventHandler().registerCommandInfo(key, value));
+	       this.getConfig().commands().forEach((key, value) -> this.getGameService().eventHandler().registerCommandInfo(key, value));
         }
     }
 

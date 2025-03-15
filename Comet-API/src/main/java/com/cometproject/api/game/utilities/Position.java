@@ -2,7 +2,6 @@ package com.cometproject.api.game.utilities;
 
 import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.google.common.base.Objects;
-
 import java.text.MessageFormat;
 
 public class Position {

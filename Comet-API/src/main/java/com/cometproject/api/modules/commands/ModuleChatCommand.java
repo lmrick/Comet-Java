@@ -3,10 +3,9 @@ package com.cometproject.api.modules.commands;
 import com.cometproject.api.networking.sessions.ISession;
 
 public abstract class ModuleChatCommand {
+
     public abstract void execute(ISession client, String[] args);
-
     public abstract String getDescription();
-
     public abstract String getPermission();
 
     public boolean isHidden() {

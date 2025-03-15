@@ -1,11 +1,9 @@
 package com.cometproject.server.game.rooms.objects.items.types.state;
 
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
-
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class FloorItemEvent {
-	
 	private final AtomicInteger ticks;
 	private int totalTicks;
 	

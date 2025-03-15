@@ -1,8 +1,6 @@
 package com.cometproject.api.networking.sessions;
 
 import com.cometproject.api.networking.messages.IMessageComposer;
-
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 

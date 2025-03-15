@@ -16,7 +16,6 @@ import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.protocol.messages.MessageComposer;
 import com.cometproject.server.utilities.attributes.Stateable;
 import com.google.common.collect.Lists;
-
 import java.util.List;
 
 

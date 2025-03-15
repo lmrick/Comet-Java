@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class WiredUtil {
-	
 	public static final int MAX_FURNI_SELECTION = 10;
 	
 	public static <T> T getRandomElement(List<T> elements) {

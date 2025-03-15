@@ -6,10 +6,8 @@ import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.google.common.collect.Lists;
 import com.google.common.collect.MinMaxPriorityQueue;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 
 public abstract class Pathfinder {
     public static final byte DISABLE_DIAGONAL = 0;

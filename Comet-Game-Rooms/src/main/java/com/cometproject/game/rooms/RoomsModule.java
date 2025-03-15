@@ -34,7 +34,7 @@ public class RoomsModule extends BaseModule {
 	}
 	
 	@Override
-	public void initialiseServices(GameContext gameContext) {
+	public void initializeServices(GameContext gameContext) {
 		this.roomModelService.loadModels();
 		
 		gameContext.setRoomService(this.roomService);
