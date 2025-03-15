@@ -25,7 +25,7 @@ public class RoomWriter {
 		msg.writeString(publicRoom != null ? publicRoom.caption() : room.getName());
 		msg.writeInt(room.getOwnerId());
 		msg.writeString(room.getOwner());
-		msg.writeInt(skipAuth ? 0 : RoomWriter.roomAccessToNumber(room.getAccess()));
+		msg.writeInt(skipAuth ? 0 : RoomAccessType.roomAccessToNumber(room.getAccess()));
 		msg.writeInt(!isActive ? 0 : RoomManager.getInstance().get(room.getId()).getEntities().playerCount());
 		msg.writeInt(room.getMaxUsers());
 		msg.writeString(publicRoom != null ? publicRoom.description() : room.getDescription());
@@ -115,32 +115,6 @@ public class RoomWriter {
 		msg.writeInt(group.getId());
 		msg.writeString(group.getTitle());
 		msg.writeString(group.getBadge());
-	}
-	
-	public static int roomAccessToNumber(RoomAccessType access) {
-		if (access == RoomAccessType.DOORBELL) {
-			return 1;
-		} else if (access == RoomAccessType.PASSWORD) {
-			return 2;
-		} else if (access == RoomAccessType.INVISIBLE) {
-			// return 3; - TODO: this
-			return 1;
-		}
-		
-		return 0;
-	}
-	
-	public static RoomAccessType roomAccessToString(int access) {
-		if (access == 1) {
-			return RoomAccessType.DOORBELL;
-		} else if (access == 2) {
-			return RoomAccessType.PASSWORD;
-		} else if (access == 3) {
-			// TODO: this (invisible)
-			return RoomAccessType.OPEN;
-		}
-		
-		return RoomAccessType.OPEN;
 	}
 	
 }

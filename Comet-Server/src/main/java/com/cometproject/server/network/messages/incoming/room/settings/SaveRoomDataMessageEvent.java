@@ -2,6 +2,7 @@ package com.cometproject.server.network.messages.incoming.room.settings;
 
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.rooms.IRoomData;
+import com.cometproject.api.game.rooms.settings.RoomAccessType;
 import com.cometproject.api.game.rooms.settings.RoomBanState;
 import com.cometproject.api.game.rooms.settings.RoomKickState;
 import com.cometproject.api.game.rooms.settings.RoomMuteState;
@@ -150,7 +151,7 @@ public class SaveRoomDataMessageEvent implements Event {
 			filteredDescription = filterResultDesc.getMessage();
 		}
 		
-		data.setAccess(RoomWriter.roomAccessToString(state));
+		data.setAccess(RoomAccessType.roomAccessToString(state));
 		data.setCategoryId(categoryId);
 		data.setName(filteredName);
 		data.setDescription(filteredDescription);
