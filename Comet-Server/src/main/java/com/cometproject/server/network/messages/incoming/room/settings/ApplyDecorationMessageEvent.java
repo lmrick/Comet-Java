@@ -12,7 +12,6 @@ import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 import com.cometproject.storage.api.StorageContext;
 import org.apache.log4j.Logger;
-
 import java.util.Map;
 
 public class ApplyDecorationMessageEvent implements Event {

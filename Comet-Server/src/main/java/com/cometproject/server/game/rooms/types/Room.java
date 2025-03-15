@@ -37,7 +37,6 @@ import com.cometproject.server.utilities.attributes.Attributable;
 import com.cometproject.storage.api.factories.rooms.RoomModelDataFactory;
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
-
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;

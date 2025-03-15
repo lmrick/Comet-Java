@@ -189,14 +189,16 @@ public class RoomDao {
 		return rooms;
 	}
 	
-	public static int createRoom(String name, CustomFloorMapData model, String description, int category, int maxVisitors, RoomTradeState tradeState, int userId, String username, int wallThickness, int floorThickness, String decorations, boolean hideWalls) {
+	public static int createRoom(String name, CustomFloorMapData model, String description, int category, int maxVisitors, int maxBots, int maxPets,
+	 RoomTradeState tradeState, int userId, String username, int wallThickness, 
+	 int floorThickness, String decorations, boolean hideWalls) {
 		Connection sqlConnection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		
 		try {
 			sqlConnection = SQLUtility.getConnection();
-			preparedStatement = SQLUtility.prepare("INSERT into rooms (`owner_id`, `owner`, `name`, `heightmap`, `description`, `category`, `max_users`, `trade_state`, `thickness_wall`, `thickness_floor`, `decorations`, `hide_walls`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", sqlConnection, true);
+			preparedStatement = SQLUtility.prepare("INSERT INTO rooms (`owner_id`, `owner`, `name`, `heightmap`, `description`, `category`, `max_users`, `max_bots`, `max_pets`, `trade_state`, `thickness_wall`, `thickness_floor`, `decorations`, `hide_walls`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", sqlConnection, true);
 			
 			preparedStatement.setInt(1, userId);
 			preparedStatement.setString(2, username);
@@ -205,11 +207,13 @@ public class RoomDao {
 			preparedStatement.setString(5, description);
 			preparedStatement.setInt(6, category);
 			preparedStatement.setInt(7, maxVisitors);
-			preparedStatement.setString(8, tradeState.toString());
-			preparedStatement.setInt(9, wallThickness);
-			preparedStatement.setInt(10, floorThickness);
-			preparedStatement.setString(11, decorations == null ? "" : decorations);
-			preparedStatement.setString(12, hideWalls ? "1" : "0");
+			preparedStatement.setInt(8, maxBots);
+			preparedStatement.setInt(9, maxPets);
+			preparedStatement.setString(10, tradeState.toString());
+			preparedStatement.setInt(11, wallThickness);
+			preparedStatement.setInt(12, floorThickness);
+			preparedStatement.setString(13, decorations == null ? "" : decorations);
+			preparedStatement.setString(14, hideWalls ? "1" : "0");
 			
 			preparedStatement.execute();
 			
@@ -229,14 +233,16 @@ public class RoomDao {
 		return 0;
 	}
 	
-	public static int createRoom(String name, String model, String description, int category, int maxVisitors, RoomTradeState tradeState, int userId, String username) {
+	public static int createRoom(String name, String model, String description, int category, 
+	int maxVisitors, int maxBots, int maxPets,
+	RoomTradeState tradeState, int userId, String username) {
 		Connection sqlConnection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		
 		try {
 			sqlConnection = SQLUtility.getConnection();
-			preparedStatement = SQLUtility.prepare("INSERT into rooms (`owner_id`, `owner`, `name`, `model`, `description`, `category`, `max_users`, `trade_state`, `thickness_floor`, `thickness_wall`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", sqlConnection, true);
+			preparedStatement = SQLUtility.prepare("INSERT INTO rooms (`owner_id`, `owner`, `name`, `model`, `description`, `category`, `max_users`, `max_bots`, `max_pets`, `trade_state`, `thickness_floor`, `thickness_wall`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", sqlConnection, true);
 			
 			preparedStatement.setInt(1, userId);
 			preparedStatement.setString(2, username);
@@ -245,9 +251,11 @@ public class RoomDao {
 			preparedStatement.setString(5, description);
 			preparedStatement.setInt(6, category);
 			preparedStatement.setInt(7, maxVisitors);
-			preparedStatement.setString(8, tradeState.toString());
-			preparedStatement.setInt(9, 0);
-			preparedStatement.setInt(10, 0);
+			preparedStatement.setInt(8, maxBots);
+			preparedStatement.setInt(9, maxPets);
+			preparedStatement.setString(10, tradeState.toString());
+			preparedStatement.setInt(11, 0);
+			preparedStatement.setInt(12, 0);
 			
 			preparedStatement.execute();
 			

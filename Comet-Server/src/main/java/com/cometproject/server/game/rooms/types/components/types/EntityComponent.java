@@ -32,8 +32,8 @@ import java.util.stream.Collectors;
 
 public class EntityComponent extends RoomComponent implements IEntityComponent {
 	private static final Logger log = Logger.getLogger(EntityComponent.class.getName());
-	private static final int MAX_BOTS_IN_ROOM = 150;
-	private static final int MAX_PETS_IN_ROOM = 50;
+	public static final int MAX_BOTS_IN_ROOM = 150;
+	public static final int MAX_PETS_IN_ROOM = 50;
 	private final Map<Integer, RoomEntity> entities = new ConcurrentHashMap<>();
 	private final Map<Integer, Integer> playerIdToEntity = new ConcurrentHashMap<>();
 	private final Map<Integer, Integer> botIdToEntity = new ConcurrentHashMap<>();

@@ -17,6 +17,7 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.WiredU
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.components.types.promotion.RoomPromotion;
 import com.cometproject.server.game.rooms.types.components.types.listeners.RoomReloadListener;
+import com.cometproject.server.game.rooms.types.components.types.EntityComponent;
 import com.cometproject.server.game.rooms.types.components.types.chat.emotions.ChatEmotionsManager;
 import com.cometproject.server.game.rooms.types.components.types.vote.RoomVote;
 import com.cometproject.server.network.messages.outgoing.room.events.RoomPromotionMessageComposer;
@@ -262,13 +263,13 @@ public class RoomManager implements Initializable {
 	}
 	
 	public int createRoom(String name, String description, CustomFloorMapData model, int category, int maxVisitors, int tradeState, ISession client, int wallTickness, int floorThickness, String decorations, boolean hideWalls) {
-		int roomId = RoomDao.createRoom(name, model, description, category, maxVisitors, RoomTradeState.valueOf(tradeState), client.getPlayer().getId(), client.getPlayer().getData().getUsername(), wallTickness, floorThickness, decorations, hideWalls);
+		int roomId = RoomDao.createRoom(name, model, description, category, maxVisitors, EntityComponent.MAX_BOTS_IN_ROOM, EntityComponent.MAX_PETS_IN_ROOM, RoomTradeState.valueOf(tradeState), client.getPlayer().getId(), client.getPlayer().getData().getUsername(), wallTickness, floorThickness, decorations, hideWalls);
 		this.loadRoomsForUser(client.getPlayer());
 		return roomId;
 	}
 	
 	public int createRoom(String name, String description, String model, int category, int maxVisitors, int tradeState, Session client) {
-		int roomId = RoomDao.createRoom(name, model, description, category, maxVisitors, RoomTradeState.valueOf(tradeState), client.getPlayer().getId(), client.getPlayer().getData().getUsername());
+		int roomId = RoomDao.createRoom(name, model, description, category, maxVisitors, EntityComponent.MAX_BOTS_IN_ROOM, EntityComponent.MAX_PETS_IN_ROOM, RoomTradeState.valueOf(tradeState), client.getPlayer().getId(), client.getPlayer().getData().getUsername());
 		this.loadRoomsForUser(client.getPlayer());
 		return roomId;
 	}

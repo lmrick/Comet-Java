@@ -13,7 +13,6 @@ import com.cometproject.server.game.rooms.types.components.types.ban.RoomBan;
 import com.cometproject.server.game.rooms.types.components.types.chat.mute.RoomMute;
 import com.cometproject.server.network.ws.messages.alerts.MutedMessage;
 import com.cometproject.server.storage.queries.rooms.RightsDao;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -179,7 +178,6 @@ public class RightsComponent extends RoomComponent implements IRightsComponent {
 		
 		
 		bansToRemove.forEach(ban -> this.bannedPlayers.remove(ban.getPlayerId()));
-		
 		mutesToRemove.forEach(mute -> this.mutedPlayers.remove(mute.getPlayerId()));
 		
 		bansToRemove.clear();
