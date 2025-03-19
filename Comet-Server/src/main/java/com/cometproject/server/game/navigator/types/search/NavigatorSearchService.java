@@ -18,7 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class NavigatorSearchService implements ICometTask {
@@ -184,10 +183,16 @@ public class NavigatorSearchService implements ICometTask {
 		List<IRoomData> rooms = Lists.newCopyOnWriteArrayList();
 		
 		switch (category.getCategoryType()) {
-			case RECOMMENDED -> {
-			}
-			case QUERY -> {
-			}
+			case RECOMMENDED -> { }
+			
+			case QUERY -> {}
+
+			case MY_HISTORY -> {}
+
+			case MY_HISTORY_FREQ -> {}
+			
+			case PROMOTION_CATEGORY -> {}
+
 			case MY_ROOMS -> {
 				if (player.getRooms() == null) {
 					break;
@@ -195,6 +200,7 @@ public class NavigatorSearchService implements ICometTask {
 				
 				rooms = new LinkedList<>(player.getRooms()).stream().filter(roomId -> GameContext.getCurrent().getRoomService().getRoomData(roomId) != null).map(roomId -> GameContext.getCurrent().getRoomService().getRoomData(roomId)).collect(Collectors.toCollection(Lists::newCopyOnWriteArrayList));
 			}
+
 			case MY_FAVORITES -> {
 				List<IRoomData> favouriteRooms = Lists.newArrayList();
 				
@@ -207,37 +213,38 @@ public class NavigatorSearchService implements ICometTask {
 				rooms.addAll(order(favouriteRooms, expanded ? category.getRoomCountExpanded() : category.getRoomCount()));
 				favouriteRooms.clear();
 			}
-			case POPULAR ->
-							rooms.addAll(order(RoomManager.getInstance().getRoomsByCategory(-1, 1, player), expanded ? category.getRoomCountExpanded() : category.getRoomCount()));
-			case CATEGORY ->
-							rooms.addAll(order(RoomManager.getInstance().getRoomsByCategory(category.getId(), player), expanded ? category.getRoomCountExpanded() : category.getRoomCount()));
+
+			case POPULAR -> rooms.addAll(order(RoomManager.getInstance().getRoomsByCategory(-1, 1, player), expanded ? category.getRoomCountExpanded() : category.getRoomCount()));
+			case CATEGORY -> rooms.addAll(order(RoomManager.getInstance().getRoomsByCategory(category.getId(), player), expanded ? category.getRoomCountExpanded() : category.getRoomCount()));
+			
 			case TOP_PROMOTIONS -> {
 				List<IRoomData> promotedRooms = RoomManager.getInstance().getRoomPromotions().values().stream().filter(Objects::nonNull).map(roomPromotion -> GameContext.getCurrent().getRoomService().getRoomData(roomPromotion.getRoomId())).filter(Objects::nonNull).collect(Collectors.toList());
 				
 				rooms.addAll(order(promotedRooms, expanded ? category.getRoomCountExpanded() : category.getRoomCount()));
 				promotedRooms.clear();
 			}
+
 			case PUBLIC -> {
-				
 				List<IRoomData> publicRooms = NavigatorManager.getInstance().getPublicRooms(category.getCategoryId()).values().stream().map(publicRoom -> GameContext.getCurrent().getRoomService().getRoomData(publicRoom.roomId())).filter(Objects::nonNull).collect(Collectors.toList());
 				
 				rooms.addAll(order(publicRooms, expanded ? category.getRoomCountExpanded() : category.getRoomCount()));
 				publicRooms.clear();
 			}
+
 			case STAFF_PICKS -> {
 				List<IRoomData> staffPicks = NavigatorManager.getInstance().getStaffPicks().stream().mapToInt(roomId -> roomId).mapToObj(roomId -> GameContext.getCurrent().getRoomService().getRoomData(roomId)).filter(Objects::nonNull).collect(Collectors.toList());
 				
 				rooms.addAll(order(staffPicks, expanded ? category.getRoomCountExpanded() : category.getRoomCount()));
 				staffPicks.clear();
 			}
+
 			case MY_GROUPS -> {
 				List<IRoomData> groupHomeRooms = player.getGroups().stream().mapToInt(groupId -> groupId).mapToObj(groupId -> GameContext.getCurrent().getGroupService().getData(groupId)).filter(Objects::nonNull).map(groupData -> GameContext.getCurrent().getRoomService().getRoomData(groupData.getRoomId())).filter(Objects::nonNull).collect(Collectors.toList());
 				
 				rooms.addAll(order(groupHomeRooms, expanded ? category.getRoomCountExpanded() : category.getRoomCount()));
 				groupHomeRooms.clear();
 			}
-			case MY_HISTORY -> {
-			}
+			
 			case MY_FRIENDS_ROOMS -> {
 				List<IRoomData> friendsRooms = Lists.newArrayList();
 				
@@ -261,6 +268,7 @@ public class NavigatorSearchService implements ICometTask {
 				rooms.addAll(order(friendsRooms, expanded ? category.getRoomCountExpanded() : category.getRoomCount()));
 				friendsRooms.clear();
 			}
+
 			case WITH_FRIENDS -> {
 				List<IRoomData> withFriendsRooms = Lists.newArrayList();
 				
@@ -286,6 +294,7 @@ public class NavigatorSearchService implements ICometTask {
 				rooms.addAll(order(withFriendsRooms, expanded ? category.getRoomCountExpanded() : category.getRoomCount()));
 				withFriendsRooms.clear();
 			}
+			
 			case WITH_RIGHTS -> {
 				if (player.getRoomsWithRights() == null) {
 					break;
@@ -296,10 +305,6 @@ public class NavigatorSearchService implements ICometTask {
 					
 					rooms.add(GameContext.getCurrent().getRoomService().getRoomData(roomId));
 				}
-			}
-			case MY_HISTORY_FREQ -> {
-			}
-			case PROMOTION_CATEGORY -> {
 			}
 		}
 		

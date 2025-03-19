@@ -471,6 +471,8 @@ public class RoomDao {
 		final String owner = room.getString("owner");
 		final int category = room.getInt("category");
 		final int maxUsers = room.getInt("max_users");
+		final int maxBots = room.getInt("max_bots");
+		final int maxPets = room.getInt("max_pets");
 		final String thumbnail = room.getString("thumbnail");
 		
 		String accessTypeString = room.getString("access_type");
@@ -518,11 +520,14 @@ public class RoomDao {
 		final String requiredBadge = room.getString("required_badge");
 		final boolean wiredHidden = room.getBoolean("hide_wired");
 		
-		return new RoomData(id, type, name, description, ownerId, owner, category, maxUsers, access, password, originalPassword, tradeState, score, tags, decorations, model, hideWalls, thicknessWall, thicknessFloor, allowWalkthrough, allowPets, heightmap, muteState, kickState, banState, bubbleMode, bubbleType, bubbleScroll, chatDistance, antiFloodSettings, disabledCommands, groupId, requiredBadge, thumbnail, wiredHidden);
+		return new RoomData(id, type, name, description, ownerId, owner, category, maxUsers, maxBots, maxPets, access, password, originalPassword, tradeState, score, tags, decorations, model, hideWalls, thicknessWall, thicknessFloor, allowWalkthrough, allowPets, heightmap, muteState, kickState, banState, bubbleMode, bubbleType, bubbleScroll, chatDistance, antiFloodSettings, disabledCommands, groupId, requiredBadge, thumbnail, wiredHidden);
 	}
 	
 	private static void fillDecorations(Map<String, String> decorations, String[] decorationsArray) {
-		Arrays.stream(decorationsArray).map(s -> s.split("=")).filter(decoration -> decoration.length == 2).forEachOrdered(decoration -> decorations.put(decoration[0], decoration[1]));
+		Arrays.stream(decorationsArray)
+		.map(s -> s.split("="))
+		.filter(decoration -> decoration.length == 2)
+		.forEachOrdered(decoration -> decorations.put(decoration[0], decoration[1]));
 	}
 	
 }

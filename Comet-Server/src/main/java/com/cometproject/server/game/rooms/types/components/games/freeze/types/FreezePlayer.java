@@ -20,6 +20,22 @@ public class FreezePlayer {
 
     public void powerUp(FreezePowerUp powerUp) {
         switch (powerUp) {
+            case None: {
+
+            }
+
+            case ExtraRange: {
+
+            }
+
+            case DiagonalExplosion: {
+
+            }
+
+            case MegaExplosion: {
+
+            }
+
             case Life: {
                 this.lives++;
 

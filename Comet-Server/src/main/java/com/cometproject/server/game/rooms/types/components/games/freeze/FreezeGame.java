@@ -228,6 +228,12 @@ public class FreezeGame extends RoomGameLogic {
 
                 case MegaExplosion:
                     range = 999;
+
+                case ExtraBall:
+
+                case Shield:
+                case Life:
+                case None:
             }
 
             freezePlayer.powerUp(FreezePowerUp.None);

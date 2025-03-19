@@ -586,8 +586,6 @@ public abstract class RoomEntity extends RoomFloorObject implements IAvatarEntit
 		}
 		
 		this.applyEffect(new PlayerEffect(4, 5));
-		
-		
 		position.setZ(tile.getWalkHeight());
 		
 		// TODO: we should be able to chain these ;)
