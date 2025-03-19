@@ -24,4 +24,5 @@ public class WiredItemEvent extends FloorItemEvent {
             ((WiredFloorItem) floor).flash();
         }
     }
+    
 }

@@ -17,7 +17,6 @@ import com.cometproject.server.network.messages.outgoing.notification.AdvancedAl
 import com.cometproject.server.network.messages.outgoing.room.items.wired.SaveWiredMessageComposer;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
-
 import java.util.stream.IntStream;
 
 public class SaveWiredDataMessageEvent implements Event {
@@ -25,24 +24,19 @@ public class SaveWiredDataMessageEvent implements Event {
 	@Override
 	public void handle(Session client, MessageEvent msg) throws Exception {
 		int virtualId = msg.readInt();
-		
 		if (ItemManager.getInstance().getItemIdByVirtualId(virtualId) == null) return;
 		
 		long itemId = ItemManager.getInstance().getItemIdByVirtualId(virtualId);
-		
 		if (client.getPlayer().getEntity() == null || client.getPlayer().getEntity().getRoom() == null) return;
 		
 		Room room = client.getPlayer().getEntity().getRoom();
-		
 		boolean isOwner = client.getPlayer().getId() == room.getData().getOwnerId();
 		boolean hasRights = room.getRights().hasRights(client.getPlayer().getId());
-		
 		if ((!isOwner && !hasRights) && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
 			return;
 		}
 		
 		WiredFloorItem wiredItem = ((WiredFloorItem) room.getItems().getFloorItem(itemId));
-		
 		if (wiredItem == null) return;
 		
 		if (wiredItem instanceof WiredActionGiveReward && CometSettings.roomWiredRewardMinimumRank > client.getPlayer().getData().getRank()) {
@@ -51,11 +45,8 @@ public class SaveWiredDataMessageEvent implements Event {
 		}
 		
 		int paramCount = msg.readInt();
-		
 		IntStream.range(0, paramCount).forEachOrdered(param -> wiredItem.getWiredData().getParams().put(param, msg.readInt()));
-		
 		String filteredMessage = msg.readString();
-		
 		if (!client.getPlayer().getPermissions().getRank().roomFilterBypass()) {
 			FilterResult filterResult = RoomManager.getInstance().getFilter().filter(filteredMessage);
 			
@@ -69,12 +60,12 @@ public class SaveWiredDataMessageEvent implements Event {
 		}
 		
 		wiredItem.getWiredData().setText(filteredMessage);
-		
 		wiredItem.getWiredData().getSelectedIds().clear();
 		
 		int selectedItemCount = msg.readInt();
-		
-		IntStream.range(0, selectedItemCount).mapToLong(i -> ItemManager.getInstance().getItemIdByVirtualId(msg.readInt())).forEachOrdered(selectedItem -> {
+		IntStream.range(0, selectedItemCount)
+		.mapToLong(i -> ItemManager.getInstance().getItemIdByVirtualId(msg.readInt()))
+		.forEachOrdered(selectedItem -> {
 			final RoomItemFloor floor = room.getItems().getFloorItem(selectedItem);
 			if (floor == null) {
 				return;

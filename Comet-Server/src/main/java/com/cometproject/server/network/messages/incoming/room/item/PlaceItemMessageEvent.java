@@ -11,7 +11,6 @@ import com.cometproject.server.network.messages.outgoing.notification.Notificati
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 import com.google.common.collect.Maps;
-
 import java.util.Map;
 
 public class PlaceItemMessageEvent implements Event {
@@ -31,9 +30,7 @@ public class PlaceItemMessageEvent implements Event {
 		
 		if (!client.getPlayer().getEntity().getRoom().getRights().canPlaceFurniture(client.getPlayer().getId()) && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
 			Map<String, String> notificationParams = Maps.newHashMap();
-			
 			notificationParams.put("message", "${room.error.cant_set_not_owner}");
-			
 			client.send(new NotificationMessageComposer("furni_placement_error", notificationParams));
 			return;
 		}
@@ -65,31 +62,26 @@ public class PlaceItemMessageEvent implements Event {
 				int rot = Integer.parseInt(parts[3]);
 				
 				Long itemId = ItemManager.getInstance().getItemIdByVirtualId(id);
-				
 				if (itemId == null) {
 					return;
 				}
 				
 				IPlayerItem item = client.getPlayer().getInventory().getItem(itemId);
-				
 				if (item == null) {
 					return;
 				}
 				
 				client.getPlayer().getEntity().getRoom().getItems().placeFloorItem(item, x, y, rot, client.getPlayer());
-				
 				if (client.getPlayer().getEntity().getRoom().getItems() == null) {
 					return;
 				}
 				
 				RoomItemFloor floorItem = client.getPlayer().getEntity().getRoom().getItems().getFloorItem(item.getId());
-				
 				if (floorItem != null) {
 					final int stateCount = floorItem.getDefinition().getInteractionCycleCount();
 					final int placementState = client.getPlayer().getItemPlacementState();
 					if (placementState != -1 && stateCount > 0 && client.getPlayer().getItemPlacementState() <= stateCount) {
 						floorItem.getItemData().setData(placementState);
-						
 						floorItem.getTile().reload();
 						floorItem.sendUpdate();
 						floorItem.save();

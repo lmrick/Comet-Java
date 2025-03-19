@@ -7,7 +7,6 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.boutique.Man
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.base.WiredActionItem;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.events.WiredItemEvent;
 import com.cometproject.server.game.rooms.types.Room;
-
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -47,10 +46,11 @@ public class WiredCustomChangeClothes extends WiredActionItem {
 			
 			if (!(floorItem instanceof MannequinFloorItem mannequinFloorItem)) return;
 			
-			String newFigure = Arrays.stream(playerEntity.getFigure().split("\\.")).filter(playerFigurePart -> !playerFigurePart.startsWith("ch") && !playerFigurePart.startsWith("lg")).map(playerFigurePart -> playerFigurePart + ".").collect(Collectors.joining());
+			String newFigure = Arrays.stream(playerEntity.getFigure().split("\\."))
+			.filter(playerFigurePart -> !playerFigurePart.startsWith("ch") && !playerFigurePart.startsWith("lg"))
+			.map(playerFigurePart -> playerFigurePart + ".").collect(Collectors.joining());
 			
 			String newFigureParts = "";
-			
 			switch (playerEntity.getGender().toUpperCase()) {
 				case "M" -> newFigureParts = mannequinFloorItem.getFigure();
 				case "F" -> newFigureParts = mannequinFloorItem.getFigure();

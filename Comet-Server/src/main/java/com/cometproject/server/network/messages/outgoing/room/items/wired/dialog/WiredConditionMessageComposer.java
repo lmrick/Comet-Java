@@ -8,7 +8,6 @@ import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class WiredConditionMessageComposer extends MessageComposer {
-	
 	private final WiredConditionItem wiredConditionItem;
 	
 	public WiredConditionMessageComposer(final WiredConditionItem wiredConditionItem) {
@@ -27,7 +26,9 @@ public class WiredConditionMessageComposer extends MessageComposer {
 		
 		msg.writeInt(wiredConditionItem.getWiredData().getSelectedIds().size());
 		
-		wiredConditionItem.getWiredData().getSelectedIds().stream().mapToInt(itemId -> ItemManager.getInstance().getItemVirtualId(itemId)).forEach(msg::writeInt);
+		wiredConditionItem.getWiredData().getSelectedIds().stream()
+		.mapToInt(itemId -> ItemManager.getInstance().getItemVirtualId(itemId))
+		.forEach(msg::writeInt);
 		
 		msg.writeInt(wiredConditionItem.getDefinition().getSpriteId());
 		msg.writeInt(wiredConditionItem.getVirtualId());

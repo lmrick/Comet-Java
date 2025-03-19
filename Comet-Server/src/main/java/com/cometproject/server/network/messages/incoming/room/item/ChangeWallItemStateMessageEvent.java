@@ -10,7 +10,6 @@ public class ChangeWallItemStateMessageEvent implements Event {
 	@Override
 	public void handle(Session client, MessageEvent msg) throws Exception {
 		int itemId = msg.readInt();
-		
 		RoomItemWall item = client.getPlayer().getEntity().getRoom().getItems().getWallItem(itemId);
 		
 		if (item == null) {

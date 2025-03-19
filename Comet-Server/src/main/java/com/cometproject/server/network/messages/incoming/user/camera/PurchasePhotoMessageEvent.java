@@ -16,7 +16,6 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 import com.cometproject.storage.api.StorageContext;
 import com.cometproject.storage.api.data.DataWrapper;
 import com.google.common.collect.Sets;
-
 import java.text.MessageFormat;
 
 public class PurchasePhotoMessageEvent implements Event {

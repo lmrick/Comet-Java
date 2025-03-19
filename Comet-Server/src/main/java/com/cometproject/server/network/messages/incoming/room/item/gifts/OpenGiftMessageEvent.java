@@ -18,11 +18,10 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 import com.cometproject.storage.api.StorageContext;
 import com.google.common.collect.Sets;
 
-
 public class OpenGiftMessageEvent implements Event {
+
     @Override
     public void handle(Session client, MessageEvent msg) throws Exception {
-
         final long floorItemId = ItemManager.getInstance().getItemIdByVirtualId(msg.readInt());
 
         if (client.getPlayer().getEntity() == null || client.getPlayer().getEntity().getRoom() == null) return;
@@ -37,11 +36,9 @@ public class OpenGiftMessageEvent implements Event {
         }
 
         final GiftData giftData = ((GiftFloorItem) floorItem).getGiftData();
-
         final IFurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(giftData.getDefinitionId());
 
         floorItem.onInteract(client.getPlayer().getEntity(), 0, false);
-
         room.getItems().removeItem(floorItem, client, false);
 
         if (itemDefinition.getItemType() == ItemType.WALL) {
@@ -62,4 +59,5 @@ public class OpenGiftMessageEvent implements Event {
         // Save the base item.
         StorageContext.getCurrentContext().getRoomItemRepository().setBaseItem(floorItemId, itemDefinition.getId());
     }
+
 }

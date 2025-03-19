@@ -35,7 +35,6 @@ public class WiredCustomForceCollision extends WiredActionItem {
 			if (floorItem == null) continue;
 			
 			PlayerEntity nearestEntity = floorItem.nearestPlayerEntity();
-			
 			if (floorItem.getCollision() != null && this.isCollided(floorItem.getCollision(), floorItem)) {
 				WiredTriggerCollision.executeTriggers(nearestEntity, floorItem);
 				continue;
@@ -61,7 +60,6 @@ public class WiredCustomForceCollision extends WiredActionItem {
 		if (tilesTouching) {
 			final boolean xMatches = entity.getPosition().getX() == floorItem.getPosition().getX();
 			final boolean yMatches = entity.getPosition().getY() == floorItem.getPosition().getY();
-			
 			return xMatches || yMatches;
 		}
 		

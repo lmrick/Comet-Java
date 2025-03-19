@@ -9,7 +9,6 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.events
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.network.messages.outgoing.room.avatar.WhisperMessageComposer;
 import com.cometproject.server.tasks.CometThreadManager;
-
 import java.util.concurrent.TimeUnit;
 
 public class WiredCustomFreeze extends WiredActionItem {
@@ -54,11 +53,9 @@ public class WiredCustomFreeze extends WiredActionItem {
 		
 		if (!playerEntity.canWalk()) {
 			playerEntity.getPlayer().getSession().send(new WhisperMessageComposer(playerEntity.getId(), Locale.getOrDefault("command.massfreeze.frozen", "You've been frozen!"), 0));
-			
 			playerEntity.applyEffect(new PlayerEffect(12));
 		} else {
 			playerEntity.getPlayer().getSession().send(new WhisperMessageComposer(playerEntity.getId(), Locale.getOrDefault("command.massfreeze.unfrozen", "You've been unfrozen!"), 0));
-			
 			playerEntity.applyEffect(playerEntity.getLastEffect());
 		}
 	}

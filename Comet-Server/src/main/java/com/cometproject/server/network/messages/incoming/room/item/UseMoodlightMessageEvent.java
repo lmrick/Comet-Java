@@ -9,18 +9,17 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 
 public class UseMoodlightMessageEvent implements Event {
 	
+	@Override
 	public void handle(Session client, MessageEvent msg) {
 		if (client.getPlayer() == null || client.getPlayer().getEntity() == null) return;
 		if (client.getPlayer().getEntity().getRoom() == null) return;
 		
 		Room room = client.getPlayer().getEntity().getRoom();
-		
 		if (!room.getRights().hasRights(client.getPlayer().getEntity().getPlayerId()) && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
 			return;
 		}
 		
 		MoodLightWallItem moodlight = room.getItems().getMoodLight();
-		
 		if (moodlight == null) {
 			return;
 		}

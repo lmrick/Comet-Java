@@ -15,15 +15,14 @@ import com.cometproject.server.network.messages.outgoing.room.items.SlideObjectB
 import com.cometproject.server.utilities.collections.ConcurrentHashSet;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
 public class RollerFloorItem extends AdvancedFloorItem<RollerFloorItemEvent> {
-	
 	private final RollerFloorItemEvent event;
+
 	private boolean hasRollScheduled = false;
 	private long lastTick = 0;
 	private boolean cycleCancelled = false;
@@ -104,9 +103,9 @@ public class RollerFloorItem extends AdvancedFloorItem<RollerFloorItemEvent> {
 	}
 	
 	private void handleEntities() {
-		Position sqInfront = this.getPosition().squareInFront(this.getRotation());
+		Position squareInfront = this.getPosition().squareInFront(this.getRotation());
 		
-		if (this.getRoom().getMapping().isValidPosition(sqInfront)) {
+		if (this.getRoom().getMapping().isValidPosition(squareInfront)) {
 			return;
 		}
 		
@@ -132,23 +131,23 @@ public class RollerFloorItem extends AdvancedFloorItem<RollerFloorItemEvent> {
 				entity.setWalkingPath(null);
 			}
 			
-			if (!this.getRoom().getMapping().isValidStep(entity.getId(), entity.getPosition(), sqInfront, true, false, false, true, false) || this.getRoom().getEntities().positionHasEntity(sqInfront)) {
+			if (!this.getRoom().getMapping().isValidStep(entity.getId(), entity.getPosition(), squareInfront, true, false, false, true, false) || this.getRoom().getEntities().positionHasEntity(squareInfront)) {
 				retry = true;
 				break;
 			}
 			
-			if (sqInfront.getX() == this.getRoom().getModel().getDoorX() && sqInfront.getY() == this.getRoom().getModel().getDoorY()) {
+			if (squareInfront.getX() == this.getRoom().getModel().getDoorX() && squareInfront.getY() == this.getRoom().getModel().getDoorY()) {
 				entity.leaveRoom(false, false, true);
 				continue;
 			}
 			
 			WiredTriggerWalksOffFurni.executeTriggers(entity, this);
 			
-			final double toHeight = this.getRoom().getMapping().getTile(sqInfront.getX(), sqInfront.getY()).getWalkHeight();
+			final double toHeight = this.getRoom().getMapping().getTile(squareInfront.getX(), squareInfront.getY()).getWalkHeight();
 			
-			this.getRoom().getEntities().broadcastMessage(new SlideObjectBundleMessageComposer(entity.getPosition().copy(), new Position(sqInfront.getX(), sqInfront.getY(), toHeight), this.getVirtualId(), entity.getId(), 0));
+			this.getRoom().getEntities().broadcastMessage(new SlideObjectBundleMessageComposer(entity.getPosition().copy(), new Position(squareInfront.getX(), squareInfront.getY(), toHeight), this.getVirtualId(), entity.getId(), 0));
 			
-			entity.updateAndSetPosition(new Position(sqInfront.getX(), sqInfront.getY(), toHeight));
+			entity.updateAndSetPosition(new Position(squareInfront.getX(), squareInfront.getY(), toHeight));
 			entity.markNeedsUpdate(true);
 			
 			this.onEntityStepOff(entity);
@@ -169,7 +168,6 @@ public class RollerFloorItem extends AdvancedFloorItem<RollerFloorItemEvent> {
 		
 		// quick check illegal use of rollers
 		int rollerCount = (int) floorItems.stream().filter(RollerFloorItem.class::isInstance).count();
-		
 		if (rollerCount > 1) {
 			return true;
 		}
@@ -225,7 +223,7 @@ public class RollerFloorItem extends AdvancedFloorItem<RollerFloorItemEvent> {
 				noItemsOnNext = true;
 			}
 			
-			if (nextRoller != null) {// && rollerIsFacing) {
+			if (nextRoller != null) {
 				boolean itemsAboveRoller = false;
 				
 				for (RoomItemFloor iq : itemsNextSquare) {
@@ -246,7 +244,6 @@ public class RollerFloorItem extends AdvancedFloorItem<RollerFloorItemEvent> {
 			
 			slidingItems.put(floor.getVirtualId(), height);
 			
-			
 			this.movedEntities.forEach(roomEntity -> {
 				WiredTriggerWalksOnFurni.executeTriggers(roomEntity, floor);
 				floor.onEntityStepOn(roomEntity);
@@ -265,7 +262,9 @@ public class RollerFloorItem extends AdvancedFloorItem<RollerFloorItemEvent> {
 		this.getRoom().getMapping().updateTile(this.getPosition().getX(), this.getPosition().getY());
 		this.getRoom().getMapping().updateTile(sqInfront.getX(), sqInfront.getY());
 		
-		this.getRoom().getItems().getItemsOnSquare(sqInfront.getX(), sqInfront.getY()).stream().<Consumer<? super RoomItemFloor>> map(nextItem -> nextItem::onItemAddedToStack).forEach(floorItems::forEach);
+		this.getRoom().getItems().getItemsOnSquare(sqInfront.getX(), sqInfront.getY()).stream()
+		.<Consumer<? super RoomItemFloor>> map(nextItem -> nextItem::onItemAddedToStack)
+		.forEach(floorItems::forEach);
 		
 		return true;
 	}

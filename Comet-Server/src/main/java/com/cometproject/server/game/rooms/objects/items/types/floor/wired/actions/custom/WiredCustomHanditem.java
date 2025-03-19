@@ -42,7 +42,6 @@ public class WiredCustomHanditem extends WiredActionItem {
 		}
 		
 		int handitemId = Integer.parseInt(this.getWiredData().getText());
-		
 		playerEntity.carryItem(playerEntity.getHandItem() == handitemId ? 0 : handitemId, false);
 	}
 	

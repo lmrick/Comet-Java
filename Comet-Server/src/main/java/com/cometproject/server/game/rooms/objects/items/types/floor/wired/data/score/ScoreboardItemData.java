@@ -1,9 +1,8 @@
-package com.cometproject.server.game.rooms.objects.items.types.floor.wired.data;
+package com.cometproject.server.game.rooms.objects.items.types.floor.wired.data.score;
 
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.utilities.comporators.HighscoreComparator;
 import com.google.common.collect.Lists;
-
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ScoreboardItemData {
 	
 	private final static HighscoreComparator comparator = new HighscoreComparator();
-	
 	private final Map<String, List<HighScoreEntry>> entries;
 	private long lastClearTimestamp;
 	private List<HighScoreEntry> currentSortedScores;
@@ -44,7 +42,6 @@ public class ScoreboardItemData {
 		}
 		
 		final List<HighScoreEntry> allEntries = this.entries.values().stream().collect(ArrayList::new, List::addAll, List::addAll);
-		
 		allEntries.sort(comparator);
 		
 		final int lastEntryIndex = Math.min(allEntries.size(), 50);

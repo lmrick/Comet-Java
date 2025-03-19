@@ -6,11 +6,9 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.base.W
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.base.WiredTriggerItem;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
-
 import java.util.List;
 
 public class WiredActionMessageComposer extends MessageComposer {
-	
 	private final List<WiredTriggerItem> incompatibleTriggers;
 	private final WiredActionItem wiredAction;
 	
@@ -31,7 +29,9 @@ public class WiredActionMessageComposer extends MessageComposer {
 		
 		msg.writeInt(wiredAction.getWiredData().getSelectedIds().size());
 		
-		wiredAction.getWiredData().getSelectedIds().stream().mapToInt(itemId -> ItemManager.getInstance().getItemVirtualId(itemId)).forEach(msg::writeInt);
+		wiredAction.getWiredData().getSelectedIds().stream()
+		.mapToInt(itemId -> ItemManager.getInstance().getItemVirtualId(itemId))
+		.forEach(msg::writeInt);
 		
 		msg.writeInt(wiredAction.getDefinition().getSpriteId());
 		msg.writeInt(wiredAction.getVirtualId());
@@ -39,7 +39,6 @@ public class WiredActionMessageComposer extends MessageComposer {
 		msg.writeString(wiredAction.getWiredData().getText());
 		
 		msg.writeInt(wiredAction.getWiredData().getParams().size());
-		
 		wiredAction.getWiredData().getParams().values().forEach(msg::writeInt);
 		
 		msg.writeInt(wiredAction.getWiredData().getSelectionType());
@@ -48,7 +47,9 @@ public class WiredActionMessageComposer extends MessageComposer {
 		
 		msg.writeInt(incompatibleTriggers.size());
 		
-		incompatibleTriggers.stream().mapToInt(incompatibleTrigger -> incompatibleTrigger.getDefinition().getSpriteId()).forEach(msg::writeInt);
+		incompatibleTriggers.stream()
+		.mapToInt(incompatibleTrigger -> incompatibleTrigger.getDefinition().getSpriteId())
+		.forEach(msg::writeInt);
 		
 		//        msg.writeString(""); //no idea
 	}

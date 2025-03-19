@@ -10,14 +10,13 @@ import com.cometproject.server.game.rooms.types.components.games.GameTeam;
 import com.cometproject.server.game.rooms.types.components.games.GameType;
 
 public class WiredActionJoinTeam extends WiredActionItem {
-	
 	private static final int PARAM_TEAM_ID = 0;
 	
 	public WiredActionJoinTeam(RoomItemData itemData, Room room) {
 		super(itemData, room);
 		
 		if (this.getWiredData().getParams().size() != 1) {
-			this.getWiredData().getParams().put(PARAM_TEAM_ID, 1); // team red
+			this.getWiredData().getParams().put(PARAM_TEAM_ID, 1); 
 		}
 	}
 	

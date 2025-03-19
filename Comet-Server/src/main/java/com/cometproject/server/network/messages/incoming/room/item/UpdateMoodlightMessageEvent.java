@@ -11,18 +11,16 @@ public class UpdateMoodlightMessageEvent implements Event {
 	
 	@Override
 	public void handle(Session client, MessageEvent msg) throws Exception {
-		Room r = client.getPlayer().getEntity() != null && client.getPlayer().getEntity().getRoom() != null ? client.getPlayer().getEntity().getRoom() : null;
-		
-		if (r == null) {
+		Room room = client.getPlayer().getEntity() != null && client.getPlayer().getEntity().getRoom() != null ? client.getPlayer().getEntity().getRoom() : null;
+		if (room == null) {
 			return;
 		}
 		
-		if (!r.getRights().hasRights(client.getPlayer().getEntity().getPlayerId())) {
+		if (!room.getRights().hasRights(client.getPlayer().getEntity().getPlayerId())) {
 			return;
 		}
 		
-		MoodLightWallItem moodlight = r.getItems().getMoodLight();
-		
+		MoodLightWallItem moodlight = room.getItems().getMoodLight();
 		if (moodlight == null) {
 			return;
 		}
@@ -31,7 +29,6 @@ public class UpdateMoodlightMessageEvent implements Event {
 		boolean bgOnly = msg.readInt() >= 2;
 		String color = msg.readString();
 		int intensity = msg.readInt();
-		
 		if (!MoodLightWallItem.isValidColour(color)) {
 			color = "#000000";
 		}

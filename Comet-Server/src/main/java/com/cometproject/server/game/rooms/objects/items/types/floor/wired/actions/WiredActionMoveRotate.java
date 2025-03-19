@@ -13,7 +13,6 @@ import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.mapping.RoomTile;
 import com.cometproject.server.network.messages.outgoing.room.items.SlideObjectBundleMessageComposer;
 import com.cometproject.server.network.messages.outgoing.room.items.UpdateFloorItemMessageComposer;
-
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
@@ -22,7 +21,6 @@ public class WiredActionMoveRotate extends WiredActionItem {
 	
 	private static final int PARAM_MOVEMENT = 0;
 	private static final int PARAM_ROTATION = 1;
-	
 	private final Random random = new Random();
 	
 	public WiredActionMoveRotate(RoomItemData itemData, Room room) {
@@ -49,12 +47,19 @@ public class WiredActionMoveRotate extends WiredActionItem {
 		final int rotation = this.getWiredData().getParams().get(PARAM_ROTATION);
 		
 		synchronized (this.getWiredData().getSelectedIds()) {
-			this.getWiredData().getSelectedIds().stream().mapToLong(itemId -> itemId).mapToObj(itemId -> this.getRoom().getItems().getFloorItem(itemId)).filter(floorItem -> floorItem != null && !(floorItem instanceof DiceFloorItem)).forEachOrdered(floorItem -> {
+			this.getWiredData().getSelectedIds().stream()
+			.mapToLong(itemId -> itemId)
+			.mapToObj(itemId -> this.getRoom().getItems().getFloorItem(itemId))
+			.filter(floorItem -> floorItem != null && !(floorItem instanceof DiceFloorItem)).forEachOrdered(floorItem -> {
 				final Position currentPosition = floorItem.getPosition().copy();
 				final Position newPosition = this.handleMovement(currentPosition.copy(), movement);
 				final int newRotation = this.handleRotation(floorItem.getRotation(), rotation);
 				final boolean rotationChanged = newRotation != floorItem.getRotation();
-				Arrays.stream(Position.COLLIDE_TILES).mapToObj(collisionDirection -> floorItem.getPosition().squareInFront(collisionDirection)).map(collisionPosition -> this.getRoom().getMapping().getTile(collisionPosition)).filter(Objects::nonNull).map(RoomTile::getEntity).filter(Objects::nonNull).forEachOrdered(entity -> WiredTriggerCollision.executeTriggers(entity, floorItem));
+				Arrays.stream(Position.COLLIDE_TILES)
+				.mapToObj(collisionDirection -> floorItem.getPosition().squareInFront(collisionDirection))
+				.map(collisionPosition -> this.getRoom().getMapping().getTile(collisionPosition))
+				.filter(Objects::nonNull).map(RoomTile::getEntity)
+				.filter(Objects::nonNull).forEachOrdered(entity -> WiredTriggerCollision.executeTriggers(entity, floorItem));
 				if (this.getRoom().getItems().moveFloorItem(floorItem.getId(), newPosition, newRotation, true)) {
 					this.getRoom().getEntities().broadcastMessage(!rotationChanged ? new SlideObjectBundleMessageComposer(currentPosition, newPosition, 0, 0, floorItem.getVirtualId()) : new UpdateFloorItemMessageComposer(floorItem));
 				}

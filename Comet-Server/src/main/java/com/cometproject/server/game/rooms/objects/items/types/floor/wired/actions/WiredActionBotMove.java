@@ -22,23 +22,18 @@ public class WiredActionBotMove extends WiredActionItem {
 		}
 		
 		Long itemId = WiredUtil.getRandomElement(this.getWiredData().getSelectedIds());
-		
 		if (itemId == null) {
 			return;
 		}
 		
 		RoomItemFloor item = this.getRoom().getItems().getFloorItem(itemId);
-		
 		if (item == null || item.isAtDoor() || item.getPosition() == null || item.getTile() == null) {
 			return;
 		}
 		
 		Position position = new Position(item.getPosition().getX(), item.getPosition().getY());
-		
 		final String entityName = this.getWiredData().getText();
-		
 		final BotEntity botEntity = this.getRoom().getBots().getBotByName(entityName);
-		
 		if (botEntity == null) {
 			return;
 		}

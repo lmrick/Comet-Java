@@ -4,13 +4,11 @@ import com.cometproject.server.game.rooms.objects.entities.pathfinding.AffectedT
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.objects.items.types.floor.MagicStackFloorItem;
 import com.cometproject.server.game.rooms.types.Room;
-import com.cometproject.server.game.rooms.types.mapping.RoomTile;
 import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.messages.outgoing.room.engine.UpdateStackMapMessageComposer;
 import com.cometproject.server.network.messages.outgoing.room.items.UpdateFloorItemMessageComposer;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
-
 import java.util.Objects;
 
 public class SaveStackToolMessageEvent implements Event {
@@ -22,6 +20,7 @@ public class SaveStackToolMessageEvent implements Event {
 		if (room == null) {
 			return;
 		}
+
 		if (!room.getRights().hasRights(client.getPlayer().getEntity().getPlayerId()) && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
 			client.disconnect();
 			return;
@@ -39,18 +38,18 @@ public class SaveStackToolMessageEvent implements Event {
 		}
 		
 		RoomItemFloor floorItem = room.getItems().getFloorItem(itemId);
-		
 		if (!(floorItem instanceof MagicStackFloorItem magicStackFloorItem)) return;
 		
 		if (height == -100) {
 			magicStackFloorItem.setOverrideHeight(magicStackFloorItem.getRoom().getMapping().getTile(magicStackFloorItem.getPosition().getX(), magicStackFloorItem.getPosition().getY()).getOriginalHeight());
 		} else {
-			double heightFloat = height / 100.0d;
-			
+			double heightFloat = height / 100.0D;
 			magicStackFloorItem.setOverrideHeight(heightFloat);
 		}
 		
-		AffectedTile.getAffectedBothTilesAt(magicStackFloorItem.getDefinition().getLength(), magicStackFloorItem.getDefinition().getWidth(), magicStackFloorItem.getPosition().getX(), magicStackFloorItem.getPosition().getY(), magicStackFloorItem.getRotation()).stream().map(affectedTile -> magicStackFloorItem.getRoom().getMapping().getTile(affectedTile.x, affectedTile.y)).filter(Objects::nonNull).forEachOrdered(tile -> {
+		AffectedTile.getAffectedBothTilesAt(magicStackFloorItem.getDefinition().getLength(), magicStackFloorItem.getDefinition().getWidth(), magicStackFloorItem.getPosition().getX(), magicStackFloorItem.getPosition().getY(), magicStackFloorItem.getRotation()).stream()
+		.map(affectedTile -> magicStackFloorItem.getRoom().getMapping().getTile(affectedTile.x, affectedTile.y))
+		.filter(Objects::nonNull).forEachOrdered(tile -> {
 			tile.reload();
 			client.getPlayer().getEntity().getRoom().getEntities().broadcastMessage(new UpdateStackMapMessageComposer(tile));
 		});

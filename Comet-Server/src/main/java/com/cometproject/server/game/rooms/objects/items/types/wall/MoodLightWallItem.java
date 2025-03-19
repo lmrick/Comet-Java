@@ -9,8 +9,7 @@ import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.storage.queries.items.MoodlightDao;
 
 public class MoodLightWallItem extends RoomItemWall {
-	
-	private MoodLightData moodlightData = null;
+	private MoodLightData moodlightData;
 	
 	public MoodLightWallItem(RoomItemData roomItemData, Room room) {
 		super(roomItemData, room);

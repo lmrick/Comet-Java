@@ -90,33 +90,13 @@ public abstract class RoomItemFloor extends RoomItem implements Collidable, IFlo
 		return false;
 	}
 	
-	public void onItemAddedToStack(RoomItemFloor floorItem) {
-		// override me
-	}
-	
-	public void onItemAddedToStack(RoomItemFloor floorItem, RoomEntity trigger) {
-	
-	}
-	
-	public void onEntityPreStepOn(RoomEntity entity) {
-		// override me
-	}
-	
-	public void onEntityStepOn(RoomEntity entity) {
-		// override me
-	}
-	
-	public void onEntityPostStepOn(RoomEntity entity) {
-		// override me
-	}
-	
-	public void onEntityStepOff(RoomEntity entity) {
-		// override me
-	}
-	
-	public void onPositionChanged(Position newPosition) {
-		// override me
-	}
+	public void onItemAddedToStack(RoomItemFloor floorItem) { }
+	public void onItemAddedToStack(RoomItemFloor floorItem, RoomEntity trigger) { }
+	public void onEntityPreStepOn(RoomEntity entity) { }
+	public void onEntityStepOn(RoomEntity entity) { }
+	public void onEntityPostStepOn(RoomEntity entity) { }
+	public void onEntityStepOff(RoomEntity entity) { }
+	public void onPositionChanged(Position newPosition) { }
 	
 	public boolean isMovementCancelled(RoomEntity entity) {
 		return false;
@@ -134,7 +114,6 @@ public abstract class RoomItemFloor extends RoomItem implements Collidable, IFlo
 	
 	@Override
 	public void saveData() {
-		
 		this.save();
 	}
 	
@@ -169,19 +148,23 @@ public abstract class RoomItemFloor extends RoomItem implements Collidable, IFlo
 		List<RoomItemFloor> floorItems = Lists.newArrayList();
 		List<AffectedTile> affectedTiles = AffectedTile.getAffectedTilesAt(this.getDefinition().getLength(), this.getDefinition().getWidth(), this.getPosition().getX(), this.getPosition().getY(), this.getRotation());
 		floorItems.addAll(this.getRoom().getItems().getItemsOnSquare(this.getPosition().getX(), this.getPosition().getY()));
-		affectedTiles.forEach(tile -> this.getRoom().getItems().getItemsOnSquare(tile.x, tile.y).stream().filter(floorItem -> !floorItems.contains(floorItem)).forEachOrdered(floorItems::add));
+		affectedTiles.forEach(tile -> this.getRoom().getItems().getItemsOnSquare(tile.x, tile.y).stream()
+		.filter(floorItem -> !floorItems.contains(floorItem)).forEachOrdered(floorItems::add));
 		return floorItems;
 	}
 	
 	public List<RoomEntity> getEntitiesOnItem() {
 		List<RoomEntity> entities = Lists.newArrayList();
 		entities.addAll(this.getRoom().getEntities().getEntitiesAt(this.getPosition()));
-		AffectedTile.getAffectedTilesAt(this.getDefinition().getLength(), this.getDefinition().getWidth(), this.getPosition().getX(), this.getPosition().getY(), this.getRotation()).stream().map(affectedTile -> this.getRoom().getEntities().getEntitiesAt(new Position(affectedTile.x, affectedTile.y))).forEachOrdered(entities::addAll);
+		AffectedTile.getAffectedTilesAt(this.getDefinition().getLength(), this.getDefinition().getWidth(), this.getPosition().getX(), this.getPosition().getY(), this.getRotation()).stream()
+		.map(affectedTile -> this.getRoom().getEntities().getEntitiesAt(new Position(affectedTile.x, affectedTile.y))).forEachOrdered(entities::addAll);
 		return entities;
 	}
 	
 	public Position getPartnerTile() {
-		return this.getDefinition().getLength() != 2 ? null : AffectedTile.getAffectedBothTilesAt(this.getDefinition().getLength(), this.getDefinition().getWidth(), this.getPosition().getX(), this.getPosition().getY(), this.getRotation()).stream().filter(affTile -> affTile.x != this.getPosition().getX() || affTile.y != this.getPosition().getY()).findFirst().map(affTile -> new Position(affTile.x, affTile.y)).orElse(null);
+		return this.getDefinition().getLength() != 2 ? null : AffectedTile.getAffectedBothTilesAt(this.getDefinition().getLength(), this.getDefinition().getWidth(), this.getPosition().getX(), this.getPosition().getY(), this.getRotation()).stream()
+		.filter(affTile -> affTile.x != this.getPosition().getX() || affTile.y != this.getPosition().getY())
+		.findFirst().map(affTile -> new Position(affTile.x, affTile.y)).orElse(null);
 	}
 	
 	public RoomEntity getCollision() {

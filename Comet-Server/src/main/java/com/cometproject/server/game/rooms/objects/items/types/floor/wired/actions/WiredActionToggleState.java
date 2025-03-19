@@ -11,7 +11,6 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.base.W
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.events.WiredItemEvent;
 import com.cometproject.server.game.rooms.types.Room;
 import com.google.common.collect.Lists;
-
 import java.util.List;
 
 public class WiredActionToggleState extends WiredActionItem {
@@ -44,7 +43,6 @@ public class WiredActionToggleState extends WiredActionItem {
 		});
 		
 		tilesToUpdate.forEach(tileToUpdate -> this.getRoom().getMapping().updateTile(tileToUpdate.getX(), tileToUpdate.getY()));
-		
 		tilesToUpdate.clear();
 	}
 	

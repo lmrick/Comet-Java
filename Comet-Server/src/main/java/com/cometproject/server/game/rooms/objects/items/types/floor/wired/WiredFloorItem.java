@@ -18,8 +18,8 @@ import com.cometproject.server.utilities.attributes.Stateable;
 import com.google.common.collect.Lists;
 import java.util.List;
 
-
 public abstract class WiredFloorItem extends AdvancedFloorItem<WiredItemEvent> implements WiredItemSnapshot.Refreshable, Stateable {
+
     private WiredItemData wiredItemData = null;
     private boolean state;
     private boolean hasTicked = false;

@@ -12,16 +12,14 @@ import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.messages.outgoing.room.engine.UpdateStackMapMessageComposer;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChangeFloorItemStateMessageEvent implements Event {
 	
+	@Override
 	public void handle(Session client, MessageEvent msg) {
-		
 		int virtualId = msg.readInt();
-		
 		Long itemId = ItemManager.getInstance().getItemIdByVirtualId(virtualId);
 		
 		if (itemId == null) {
@@ -37,9 +35,7 @@ public class ChangeFloorItemStateMessageEvent implements Event {
 		}
 		
 		Room room = client.getPlayer().getEntity().getRoom();
-		
 		RoomItemFloor item = room.getItems().getFloorItem(itemId);
-		
 		if (item == null) {
 			return;
 		}
@@ -50,11 +46,12 @@ public class ChangeFloorItemStateMessageEvent implements Event {
 		
 		if (item.onInteract(client.getPlayer().getEntity(), msg.readInt(), false)) {
 			List<Position> tilesToUpdate = new ArrayList<>();
-			tilesToUpdate.add(new Position(item.getPosition().getX(), item.getPosition().getY(), 0d));
+			tilesToUpdate.add(new Position(item.getPosition().getX(), item.getPosition().getY(), 0.0D));
 			
 			for (AffectedTile tile : AffectedTile.getAffectedTilesAt(item.getDefinition().getLength(), item.getDefinition().getWidth(), item.getPosition().getX(), item.getPosition().getY(), item.getRotation())) {
-				if (room.getEntities().getEntitiesAt(new Position(tile.x, tile.y)).size() >= 0)
-					tilesToUpdate.add(new Position(tile.x, tile.y, 0d));
+				if (room.getEntities().getEntitiesAt(new Position(tile.x, tile.y)).size() >= 0) {
+					tilesToUpdate.add(new Position(tile.x, tile.y, 0.0D));
+				}
 			}
 			
 			for (Position tileToUpdate : tilesToUpdate) {
@@ -62,7 +59,6 @@ public class ChangeFloorItemStateMessageEvent implements Event {
 				
 				if (tile != null) {
 					tile.reload();
-					
 					room.getEntities().broadcastMessage(new UpdateStackMapMessageComposer(tile));
 				}
 			}

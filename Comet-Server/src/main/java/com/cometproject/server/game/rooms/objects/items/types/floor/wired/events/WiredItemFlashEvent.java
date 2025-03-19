@@ -7,7 +7,6 @@ public class WiredItemFlashEvent extends WiredItemEvent {
 
     public WiredItemFlashEvent() {
         super(null, null);
-
         this.setTotalTicks(2);
     }
 
@@ -22,4 +21,5 @@ public class WiredItemFlashEvent extends WiredItemEvent {
     public boolean isInteractiveEvent() {
         return false;
     }
+
 }

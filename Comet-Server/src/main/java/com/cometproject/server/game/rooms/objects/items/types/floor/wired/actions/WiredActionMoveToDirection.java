@@ -10,7 +10,6 @@ import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.mapping.RoomTile;
 import com.cometproject.server.network.messages.outgoing.room.items.SlideObjectBundleMessageComposer;
 import com.cometproject.api.game.utilities.Direction;
-
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -18,7 +17,6 @@ public class WiredActionMoveToDirection extends WiredActionItem {
 	
 	private static final int PARAM_START_DIR = 0;
 	private static final int PARAM_ACTION_WHEN_BLOCKED = 1;
-	
 	private static final int ACTION_WAIT = 0;
 	private static final int ACTION_TURN_RIGHT_45 = 1;
 	private static final int ACTION_TURN_RIGHT_90 = 2;
@@ -50,7 +48,10 @@ public class WiredActionMoveToDirection extends WiredActionItem {
 		final int startDir = this.getWiredData().getParams().get(PARAM_START_DIR);
 		
 		synchronized (this.getWiredData().getSelectedIds()) {
-			this.getWiredData().getSelectedIds().stream().mapToLong(itemId -> itemId).mapToObj(itemId -> this.getRoom().getItems().getFloorItem(itemId)).filter(Objects::nonNull).forEachOrdered(floorItem -> {
+			this.getWiredData().getSelectedIds().stream()
+			.mapToLong(itemId -> itemId)
+			.mapToObj(itemId -> this.getRoom().getItems().getFloorItem(itemId))
+			.filter(Objects::nonNull).forEachOrdered(floorItem -> {
 				if (floorItem.getMoveDirection() == -1) {
 					floorItem.setMoveDirection(startDir);
 				}
@@ -88,7 +89,6 @@ public class WiredActionMoveToDirection extends WiredActionItem {
 		
 		if (roomTile != null) {
 			if (roomTile.getEntity() != null) {
-				
 				WiredTriggerCollision.executeTriggers(roomTile.getEntity(), floorItem);
 				return;
 			}

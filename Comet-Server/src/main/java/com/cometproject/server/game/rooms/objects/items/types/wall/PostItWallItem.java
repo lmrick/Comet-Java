@@ -7,7 +7,6 @@ import org.apache.commons.lang.StringUtils;
 import java.util.Arrays;
 
 public class PostItWallItem extends RoomItemWall {
-	
 	private String colour;
 	private String message;
 	

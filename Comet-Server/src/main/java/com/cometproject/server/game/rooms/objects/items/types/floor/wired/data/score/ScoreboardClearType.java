@@ -1,4 +1,4 @@
-package com.cometproject.server.game.rooms.objects.items.types.floor.wired.data;
+package com.cometproject.server.game.rooms.objects.items.types.floor.wired.data.score;
 
 public enum ScoreboardClearType {
 	ALL_TIME(0), DAILY(1), WEEKLY(2), MONTHLY(3);

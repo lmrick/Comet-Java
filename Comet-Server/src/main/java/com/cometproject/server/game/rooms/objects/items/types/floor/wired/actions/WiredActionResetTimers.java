@@ -6,7 +6,6 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.events
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.triggers.WiredTriggerAtGivenTime;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.triggers.WiredTriggerAtGivenTimeLong;
 import com.cometproject.server.game.rooms.types.Room;
-
 import java.util.List;
 
 public class WiredActionResetTimers extends WiredActionItem {
@@ -30,9 +29,7 @@ public class WiredActionResetTimers extends WiredActionItem {
 		final List<WiredTriggerAtGivenTime> items = this.getRoom().getItems().getByClass(WiredTriggerAtGivenTime.class);
 		
 		items.addAll(this.getRoom().getItems().getByClass(WiredTriggerAtGivenTimeLong.class));
-		
 		items.forEach(floorItem -> floorItem.setNeedsReset(false));
-		
 		this.getRoom().resetWiredTimer();
 	}
 	

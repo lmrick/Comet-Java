@@ -12,9 +12,9 @@ import com.cometproject.storage.api.StorageContext;
 
 public class ChangeWallItemPositionMessageEvent implements Event {
 	
+	@Override
 	public void handle(Session client, MessageEvent msg) {
 		int virtualId = msg.readInt();
-		
 		Long itemId = ItemManager.getInstance().getItemIdByVirtualId(virtualId);
 		
 		if (itemId == null) {
@@ -22,9 +22,7 @@ public class ChangeWallItemPositionMessageEvent implements Event {
 		}
 		
 		String position = Position.validateWallPosition(msg.readString());
-		
 		Room room = client.getPlayer().getEntity().getRoom();
-		
 		if (room == null || position == null) {
 			return;
 		}

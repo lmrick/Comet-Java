@@ -1,8 +1,17 @@
 package com.cometproject.server.game.rooms.objects.items.types.floor.wired.actions.types;
 
 public enum RewardError {
-	NONE(-1), OUT_OF_STOCK(0), ALREADY_GIVEN(1), ONE_DAY(2), ONE_HOUR(3), UNLUCKY(4), ONE_MINUTE(8);
-	
+	NONE(-1), 
+	OUT_OF_STOCK(0), 
+	ALREADY_GIVEN(1), 
+	ONE_DAY(2), 
+	ONE_HOUR(3), 
+	UNLUCKY(4), 
+	ONE_MINUTE(8),
+	ALL_COLLECTED(5),
+	RECEIVED_ITEM(6),
+	RECEIVED_BADGE(7);
+
 	private final int type;
 	
 	RewardError(int type) {

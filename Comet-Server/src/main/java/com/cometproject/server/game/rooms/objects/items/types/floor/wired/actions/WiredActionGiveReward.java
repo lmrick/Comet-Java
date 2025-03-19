@@ -69,13 +69,10 @@ public class WiredActionGiveReward extends WiredActionItem {
 		}
 		
 		final PlayerData playerData = PlayerManager.getInstance().getDataByPlayerId(this.getItemData().getOwnerId());
-		
 		this.ownerRank = playerData != null ? playerData.getRank() : 1;
 		
 		final DataWrapper<Map<Integer, Set<String>>> rewardData = DataWrapper.createEmpty();
-		
 		StorageContext.getCurrentContext().getRoomItemRepository().getGivenRewards(this.getId(), rewardData::set);
-		
 		this.givenRewards = rewardData.has() ? rewardData.get() : Maps.newConcurrentMap();
 	}
 	
@@ -111,7 +108,6 @@ public class WiredActionGiveReward extends WiredActionItem {
 		final int totalRewardLimit = this.getWiredData().getParams().get(PARAM_TOTAL_REWARD_LIMIT);
 		
 		boolean canReceiveReward = true;
-		
 		if (totalRewardLimit > 0) if (this.totalRewardCounter >= totalRewardLimit) {
 			error = RewardError.OUT_OF_STOCK;
 			canReceiveReward = false;
@@ -120,12 +116,13 @@ public class WiredActionGiveReward extends WiredActionItem {
 		this.totalRewardCounter++;
 		
 		boolean receivedReward = false;
-		
 		if (canReceiveReward) {
 			for (Reward reward : this.rewards) {
 				switch (howOften) {
+					
 					case ONCE -> {
-						if (this.givenRewards.containsKey(playerEntity.getPlayerId()) && this.givenRewards.get(playerEntity.getPlayerId()).contains(reward.productCode)) {
+						if (this.givenRewards.containsKey(playerEntity.getPlayerId()) && 
+							this.givenRewards.get(playerEntity.getPlayerId()).contains(reward.productCode)) {
 							error = RewardError.ALREADY_GIVEN;
 						} else {
 							if (!this.givenRewards.containsKey(playerEntity.getPlayerId())) {
@@ -136,9 +133,11 @@ public class WiredActionGiveReward extends WiredActionItem {
 							StorageContext.getCurrentContext().getRoomItemRepository().saveReward(this.getId(), ((PlayerEntity) event.entity).getPlayerId(), reward.productCode);
 						}
 						
-						if (rewardTimings.get(this.getId()).containsKey(playerEntity.getPlayerId()))
+						if (rewardTimings.get(this.getId()).containsKey(playerEntity.getPlayerId())) {
 							error = RewardError.ALREADY_GIVEN;
+						}
 					}
+
 					case MINUTES -> {
 						if (rewardTimings.get(this.getId()).containsKey(playerEntity.getPlayerId())) {
 							long lastUserReward = rewardTimings.get(this.getId()).get(playerEntity.getPlayerId());
@@ -148,6 +147,7 @@ public class WiredActionGiveReward extends WiredActionItem {
 							}
 						}
 					}
+
 					case DAYS -> {
 						if (rewardTimings.get(this.getId()).containsKey(playerEntity.getPlayerId())) {
 							long lastUserReward = rewardTimings.get(this.getId()).get(playerEntity.getPlayerId());
@@ -157,6 +157,7 @@ public class WiredActionGiveReward extends WiredActionItem {
 							}
 						}
 					}
+
 					case HOURS -> {
 						if (rewardTimings.get(this.getId()).containsKey(playerEntity.getPlayerId())) {
 							long lastReward = rewardTimings.get(this.getId()).get(playerEntity.getPlayerId());
@@ -168,11 +169,14 @@ public class WiredActionGiveReward extends WiredActionItem {
 					}
 				}
 				
-				if (error == RewardError.ONE_DAY || error == RewardError.ONE_HOUR || error == RewardError.UNLUCKY || error == RewardError.ALREADY_GIVEN) {
+				if (error == RewardError.ONE_DAY || 
+					error == RewardError.ONE_HOUR || 
+					error == RewardError.UNLUCKY || 
+					error == RewardError.ALREADY_GIVEN) {
 					continue;
 				}
+
 				boolean probabilityBool;
-				
 				if (unique) {
 					probabilityBool = true;
 				} else {
@@ -191,39 +195,42 @@ public class WiredActionGiveReward extends WiredActionItem {
 						
 						if (isCurrencyReward(itemData[0])) {
 							RewardType amount = getCurrencyTypeByKey(itemData[0]);
-							
 							int value = 0;
-							
 							try {
 								if (amount != ALERT) {
 									value = Integer.parseInt(itemData[1]);
 								}
-							} catch (Exception ignored) {
+							} catch (Exception e) {
 								return;
 							}
-							
 							
 							switch (amount) {
 								case CREDITS -> {
 									playerEntity.getPlayer().getData().increaseCredits(value);
 									playerEntity.getPlayer().getSession().send(new AlertMessageComposer(Locale.getOrDefault("wired.reward.coins", "You received %s coin(s)!").replace("%s", value + "")));
 								}
+
 								case ACTIVITY_POINTS -> {
 									playerEntity.getPlayer().getData().increaseActivityPoints(value);
 									playerEntity.getPlayer().getSession().send(new AlertMessageComposer(Locale.getOrDefault("wired.reward.duckets", "You received %s ducket(s)!").replace("%s", value + "")));
 								}
+
 								case VIP_POINTS -> {
 									playerEntity.getPlayer().getData().increaseVipPoints(value);
 									playerEntity.getPlayer().getSession().send(new AlertMessageComposer(Locale.getOrDefault("wired.reward.diamonds", "You received %s diamond(s)!").replace("%s", value + "")));
 								}
+
 								case SEASONAL_POINTS -> {
 									playerEntity.getPlayer().getData().increaseSeasonalPoints(value);
 									playerEntity.getPlayer().getSession().send(new AlertMessageComposer(Locale.getOrDefault("wired.reward.seasonal", "You received %s seasonal(s)!").replace("%s", value + "")));
 								}
+
 								case GO_TO_ROOM -> playerEntity.getPlayer().getSession().send(new RoomForwardMessageComposer(value));
+								
 								case ALERT -> {
 									isAlert = true;
-									String message = IntStream.range(0, itemData.length).filter(i -> i >= 1).mapToObj(i -> itemData[i] + " ").collect(Collectors.joining());
+									String message = IntStream.range(0, itemData.length)
+									.filter(i -> i >= 1).mapToObj(i -> itemData[i] + " ").collect(Collectors.joining());
 									playerEntity.getPlayer().getSession().send(new AlertMessageComposer(message));
 								}
 							}
@@ -233,7 +240,6 @@ public class WiredActionGiveReward extends WiredActionItem {
 						} else {
 							
 							String extraData = "0";
-							
 							if (itemData.length == 2) {
 								extraData = itemData[1];
 							}
@@ -241,17 +247,13 @@ public class WiredActionGiveReward extends WiredActionItem {
 							if (!StringUtils.isNumeric(itemData[0])) continue;
 							
 							int itemId = Integer.parseInt(itemData[0]);
-							
 							IFurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(itemId);
-							
 							if (itemDefinition != null) {
 								final DataWrapper<Long> newItem = DataWrapper.createEmpty();
 								StorageContext.getCurrentContext().getRoomItemRepository().createItem(playerEntity.getPlayerId(), itemId, extraData, newItem::set);
-								
 								IPlayerItem playerItem = new InventoryItem(newItem.get(), itemId, extraData);
 								
 								playerEntity.getPlayer().getInventory().addItem(playerItem);
-								
 								playerEntity.getPlayer().getSession().send(new UpdateInventoryMessageComposer());
 								playerEntity.getPlayer().getSession().send(new UnseenItemsMessageComposer(Sets.newHashSet(playerItem), ItemManager.getInstance()));
 							}
@@ -264,10 +266,12 @@ public class WiredActionGiveReward extends WiredActionItem {
 			}
 		}
 		
-		receivedReward = true;
-		
-		
-		if (error == RewardError.ONE_DAY || error == RewardError.ONE_HOUR || error == RewardError.UNLUCKY || error == RewardError.ALREADY_GIVEN || error == RewardError.OUT_OF_STOCK) {
+		receivedReward = true;		
+		if (error == RewardError.ONE_DAY || 
+			error == RewardError.ONE_HOUR ||
+			error == RewardError.UNLUCKY || 
+			error == RewardError.ALREADY_GIVEN || 
+			error == RewardError.OUT_OF_STOCK) {
 			playerEntity.getPlayer().getSession().send(new WiredRewardMessageComposer(error.getInteger()));
 			return;
 		}
@@ -298,8 +302,9 @@ public class WiredActionGiveReward extends WiredActionItem {
 		else this.rewards.clear();
 		
 		final String[] data = this.getWiredData().getText().split(";");
-		
-		Arrays.stream(data).map(reward -> reward.split(",")).filter(rewardData -> rewardData.length == 3 && StringUtils.isNumeric(rewardData[2])).forEachOrdered(rewardData -> this.rewards.add(new Reward(rewardData[0].equals("0"), rewardData[1], Integer.parseInt(rewardData[2]))));
+		Arrays.stream(data).map(reward -> reward.split(","))
+		.filter(rewardData -> rewardData.length == 3 && StringUtils.isNumeric(rewardData[2]))
+		.forEachOrdered(rewardData -> this.rewards.add(new Reward(rewardData[0].equals("0"), rewardData[1], Integer.parseInt(rewardData[2]))));
 	}
 	
 	@Override

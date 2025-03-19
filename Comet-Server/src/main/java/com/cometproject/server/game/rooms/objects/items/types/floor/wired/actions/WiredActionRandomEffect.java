@@ -8,7 +8,6 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.base.W
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.events.WiredItemEvent;
 import com.cometproject.server.game.rooms.types.Room;
 import com.google.common.collect.Lists;
-
 import java.util.List;
 
 public class WiredActionRandomEffect extends WiredActionItem {

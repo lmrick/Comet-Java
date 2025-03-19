@@ -6,13 +6,11 @@ import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.types.Room;
-
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class MannequinFloorItem extends RoomItemFloor {
-	
 	private String name = "New Mannequin";
 	private String figure = "ch-210-62.lg-270-62";
 	private String gender = "m";
@@ -31,7 +29,9 @@ public class MannequinFloorItem extends RoomItemFloor {
 			String[] figureParts = this.figure.split("\\.");
 			StringBuilder finalFigure = new StringBuilder();
 			
-			Arrays.stream(figureParts).filter(figurePart -> !figurePart.contains("hr") && !figurePart.contains("hd") && !figurePart.contains("he") && !figurePart.contains("ha")).forEachOrdered(figurePart -> finalFigure.append(figurePart).append("."));
+			Arrays.stream(figureParts)
+			.filter(figurePart -> !figurePart.contains("hr") && !figurePart.contains("hd") && !figurePart.contains("he") && !figurePart.contains("ha"))
+			.forEachOrdered(figurePart -> finalFigure.append(figurePart).append("."));
 			
 			this.figure = finalFigure.substring(0, finalFigure.length() - 1);
 		}
@@ -58,7 +58,10 @@ public class MannequinFloorItem extends RoomItemFloor {
 		
 		if (!this.gender.equals(playerEntity.getGender())) return false;
 		
-		String newFigure = Arrays.stream(playerEntity.getFigure().split("\\.")).filter(playerFigurePart -> !playerFigurePart.startsWith("ch") && !playerFigurePart.startsWith("lg")).map(playerFigurePart -> playerFigurePart + ".").collect(Collectors.joining());
+		String newFigure = Arrays.stream(playerEntity.getFigure().split("\\."))
+		.filter(playerFigurePart -> !playerFigurePart.startsWith("ch") && !playerFigurePart.startsWith("lg"))
+		.map(playerFigurePart -> playerFigurePart + ".")
+		.collect(Collectors.joining());
 		String newFigureParts = "";
 		
 		switch (playerEntity.getGender().toUpperCase()) {

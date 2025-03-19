@@ -48,7 +48,8 @@ public class DefaultFloorItem extends RoomItemFloor {
 		if (entity instanceof PlayerEntity) {
 			try {
 				((PlayerEntity) entity).getPlayer().getQuests().progressQuest(QuestType.EXPLORE_FIND_ITEM, this.getDefinition().getSpriteId());
-			} catch (Exception ignored) {
+			} catch (Exception e) {
+				
 			}
 		}
 	}

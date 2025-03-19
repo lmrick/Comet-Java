@@ -1,8 +1,8 @@
 package com.cometproject.server.game.rooms.objects.items.types.floor.wired.highscore;
 
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
+import com.cometproject.server.game.rooms.objects.items.types.floor.wired.data.score.ScoreboardScoreType;
 import com.cometproject.server.game.rooms.types.Room;
-
 import java.util.List;
 
 public class HighScoreMostWinsFloorItem extends HighScoreFloorItem {
@@ -17,6 +17,6 @@ public class HighScoreMostWinsFloorItem extends HighScoreFloorItem {
 
     @Override
     public int getScoreType() {
-        return 1;
+        return ScoreboardScoreType.MOSTWIN.getType();
     }
 }

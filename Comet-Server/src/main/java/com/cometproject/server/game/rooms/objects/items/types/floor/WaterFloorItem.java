@@ -33,7 +33,6 @@ public class WaterFloorItem extends RoomItemFloor {
 		
 		entity.removeStatus(RoomEntityStatus.SWIM);
 		entity.markNeedsUpdate();
-		
 	}
 	
 }

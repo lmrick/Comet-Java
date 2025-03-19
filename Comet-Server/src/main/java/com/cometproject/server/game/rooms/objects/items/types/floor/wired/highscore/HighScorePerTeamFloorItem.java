@@ -1,12 +1,13 @@
 package com.cometproject.server.game.rooms.objects.items.types.floor.wired.highscore;
 
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
-import com.cometproject.server.game.rooms.objects.items.types.floor.wired.data.ScoreboardItemData;
+import com.cometproject.server.game.rooms.objects.items.types.floor.wired.data.score.ScoreboardItemData;
+import com.cometproject.server.game.rooms.objects.items.types.floor.wired.data.score.ScoreboardScoreType;
 import com.cometproject.server.game.rooms.types.Room;
-
 import java.util.List;
 
 public class HighScorePerTeamFloorItem extends HighScoreFloorItem {
+    
     public HighScorePerTeamFloorItem(RoomItemData roomItemData, Room room) {
         super(roomItemData, room);
     }
@@ -32,6 +33,6 @@ public class HighScorePerTeamFloorItem extends HighScoreFloorItem {
 
     @Override
     public int getScoreType() {
-        return 0;
+        return ScoreboardScoreType.PERTEAM.getType();
     }
 }

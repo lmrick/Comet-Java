@@ -7,7 +7,6 @@ import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.types.Room;
 
 public class HaloTileFloorItem extends RoomItemFloor {
-	
 	private int phase = 0;
 	
 	public HaloTileFloorItem(RoomItemData roomItemData, Room room) {

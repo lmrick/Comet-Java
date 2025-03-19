@@ -8,12 +8,10 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.wired.events
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.network.messages.outgoing.room.avatar.WhisperMessageComposer;
 
-
 public class WiredActionKickUser extends WiredActionShowMessage {
 
     public WiredActionKickUser(RoomItemData roomItemData, Room room) {
         super(roomItemData, room);
-
         this.isWhisperBubble = true;
     }
 
@@ -28,8 +26,7 @@ public class WiredActionKickUser extends WiredActionShowMessage {
             return;
         }
 			
-			String kickException = "";
-
+		String kickException = "";
         if (this.getRoom().getData().getOwnerId() == playerEntity.getPlayerId()) {
             kickException = "Room owner";
         }
@@ -46,4 +43,5 @@ public class WiredActionKickUser extends WiredActionShowMessage {
             playerEntity.getPlayer().getSession().send(new WhisperMessageComposer(playerEntity.getId(), "Wired kick exception: " + kickException));
         }
     }
+    
 }

@@ -11,7 +11,6 @@ import com.cometproject.server.network.messages.outgoing.room.items.lovelock.Lov
 import com.cometproject.server.network.messages.outgoing.room.items.lovelock.LoveLockConfirmedMessageComposer;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,7 +20,6 @@ public class ConfirmLoveLockMessageEvent implements Event {
 	@Override
 	public void handle(Session client, MessageEvent msg) throws Exception {
 		Room room = client.getPlayer().getEntity().getRoom();
-		
 		if (room == null) {
 			return;
 		}
@@ -29,7 +27,6 @@ public class ConfirmLoveLockMessageEvent implements Event {
 		int virtualId = msg.readInt();
 		long itemId = ItemManager.getInstance().getItemIdByVirtualId(virtualId);
 		final boolean confirmed = msg.readBoolean();
-		
 		RoomItemFloor floorItem = room.getItems().getFloorItem(itemId);
 		
 		if (!(floorItem instanceof LoveLockFloorItem)) return;
@@ -69,7 +66,6 @@ public class ConfirmLoveLockMessageEvent implements Event {
 				
 				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 				final String date = dateFormat.format(Calendar.getInstance().getTime());
-				
 				final String itemData = "1" + (char) 5 + leftPlayer.getUsername() + (char) 5 + rightPlayer.getUsername() + (char) 5 + leftPlayer.getFigure() + (char) 5 + rightPlayer.getFigure() + (char) 5 + date;
 				
 				floorItem.getItemData().setData(itemData);

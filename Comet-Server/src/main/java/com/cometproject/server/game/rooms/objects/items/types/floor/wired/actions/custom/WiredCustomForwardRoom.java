@@ -43,7 +43,6 @@ public class WiredCustomForwardRoom extends WiredActionItem {
 		}
 		
 		int roomId = Integer.parseInt(this.getWiredData().getText());
-		
 		playerEntity.getPlayer().getSession().send(new RoomForwardMessageComposer(roomId));
 	}
 	

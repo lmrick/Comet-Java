@@ -66,7 +66,7 @@ public abstract class RoomItem extends BigRoomFloorObject implements Attributabl
 	}
 	
 	protected final boolean hasTicks() {
-		return (this.ticksTimer > 0);
+		return this.ticksTimer > 0;
 	}
 	
 	protected final void setTicks(int time) {
@@ -94,46 +94,21 @@ public abstract class RoomItem extends BigRoomFloorObject implements Attributabl
 		}
 	}
 	
-	protected void onTick() {
-		// Override this
-	}
-	
-	protected void onTickComplete() {
-		// Override this
-	}
-	
-	public void onPlaced() {
-		// Override this
-	}
-	
-	public void onPickup() {
-		// Override this
-	}
+	protected void onTick() {}
+	protected void onTickComplete() {}
+	public void onPlaced() {}
+	public void onPickup() {}
 	
 	public boolean onInteract(RoomEntity entity, int requestData, boolean isWiredTrigger) {
 		// Override this
 		return true;
 	}
 	
-	public void onLoad() {
-		// Override this
-	}
-	
-	public void onUnload() {
-		// Override this
-	}
-	
-	public void onEntityLeaveRoom(RoomEntity entity) {
-		// Override this
-	}
-	
-	public void onGameStarts(RoomGame roomGame) {
-	
-	}
-	
-	public void onGameEnds(RoomGame roomGame) {
-	
-	}
+	public void onLoad() {}
+	public void onUnload() {}
+	public void onEntityLeaveRoom(RoomEntity entity) {}
+	public void onGameStarts(RoomGame roomGame) {}
+	public void onGameEnds(RoomGame roomGame) {}
 	
 	public void composeItemData(IComposerDataWrapper msg) {
 		msg.writeInt(1);

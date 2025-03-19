@@ -7,11 +7,10 @@ import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
-import com.cometproject.server.game.rooms.objects.items.types.floor.wired.data.ScoreboardClearType;
-import com.cometproject.server.game.rooms.objects.items.types.floor.wired.data.ScoreboardItemData;
+import com.cometproject.server.game.rooms.objects.items.types.floor.wired.data.score.ScoreboardClearType;
+import com.cometproject.server.game.rooms.objects.items.types.floor.wired.data.score.ScoreboardItemData;
 import com.cometproject.server.game.rooms.types.Room;
 import com.google.common.collect.Lists;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +25,6 @@ public abstract class HighScoreFloorItem extends RoomItemFloor {
 		super(roomItemData, room);
 		
 		final String data = roomItemData.getData();
-		
 		this.clearType = ScoreboardClearType.getByFurniType(Integer.parseInt(this.getDefinition().getItemName().split("\\*")[1]));
 		
 		ScoreboardItemData scoreboardItemData = null;
@@ -46,6 +44,9 @@ public abstract class HighScoreFloorItem extends RoomItemFloor {
 		this.itemData = scoreboardItemData;
 		this.clear(false);
 	}
+
+	public abstract void onTeamWins(List<String> users, int score);
+	public abstract int getScoreType();
 	
 	public void clear(boolean sendUpdate) {
 		boolean cleared = false;
@@ -124,15 +125,12 @@ public abstract class HighScoreFloorItem extends RoomItemFloor {
 		return (this.state ? "1" : "0") + JsonUtil.getInstance().toJson(this.itemData);
 	}
 	
-	public abstract void onTeamWins(List<String> users, int score);
-	
 	void addEntry(List<String> users, int score) {
 		addEntry(users, score, false, false);
 	}
 	
 	void addEntry(List<String> users, int score, boolean updateExisting, boolean increaseExisting) {
 		this.itemData.addEntry(new ScoreboardItemData.HighScoreEntry(users, score), updateExisting, increaseExisting);
-		
 		this.update();
 	}
 	
@@ -144,8 +142,6 @@ public abstract class HighScoreFloorItem extends RoomItemFloor {
 	ScoreboardItemData getScoreData() {
 		return itemData;
 	}
-	
-	public abstract int getScoreType();
 	
 	private ScoreboardClearType getClearType() {
 		return this.clearType;

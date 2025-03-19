@@ -7,7 +7,7 @@ import com.cometproject.server.tasks.CometThreadManager;
 import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractItemEvent implements ICometTask {
-	private static final long DELAY_MILLISECONDS = 1500; // 1.5 seconds
+	private static final long DELAY_MILLISECONDS = 1500;
 	private final RoomItemFloor floorItem;
 	private final RoomEntity entity;
 	

@@ -9,14 +9,12 @@ import com.cometproject.server.network.messages.outgoing.room.items.UpdateFloorI
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
-
 public class SaveMannequinMessageEvent implements Event {
+
     @Override
     public void handle(Session client, MessageEvent msg) throws Exception {
         int id = msg.readInt();
-
         final long itemId = ItemManager.getInstance().getItemIdByVirtualId(id);
-
         Room room = client.getPlayer().getEntity().getRoom();
 
         if (room == null || !room.getRights().hasRights(client.getPlayer().getId()) && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
@@ -24,7 +22,6 @@ public class SaveMannequinMessageEvent implements Event {
         }
 
         RoomItemFloor item = room.getItems().getFloorItem(itemId);
-
         if (item == null) {
             return;
         }
@@ -35,4 +32,5 @@ public class SaveMannequinMessageEvent implements Event {
         room.getEntities().broadcastMessage(new UpdateFloorItemMessageComposer(item));
         item.saveData();
     }
+    
 }

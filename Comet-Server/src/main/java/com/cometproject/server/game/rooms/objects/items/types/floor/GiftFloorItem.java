@@ -12,11 +12,9 @@ import com.cometproject.server.game.players.PlayerManager;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.types.Room;
-
 import java.util.HashMap;
 
 public class GiftFloorItem extends RoomItemFloor {
-	
 	private final IPlayerAvatar playerAvatar;
 	private final GiftData giftData;
 	private boolean isOpened = false;

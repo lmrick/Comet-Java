@@ -15,7 +15,6 @@ import com.cometproject.server.game.rooms.types.mapping.RoomTile;
 import com.cometproject.server.network.messages.outgoing.room.items.SlideObjectBundleMessageComposer;
 import com.cometproject.api.game.utilities.RandomUtil;
 import com.google.common.collect.Maps;
-
 import java.util.*;
 
 public class WiredActionFlee extends WiredActionItem {
@@ -72,9 +71,7 @@ public class WiredActionFlee extends WiredActionItem {
 		if (tilesTouching) {
 			boolean xMatches = entity.getPosition().getX() == floorItem.getPosition().getX();
 			boolean yMatches = entity.getPosition().getY() == floorItem.getPosition().getY();
-			
 			return !((!xMatches) && (!yMatches));
-			
 		}
 		
 		return false;
@@ -97,18 +94,18 @@ public class WiredActionFlee extends WiredActionItem {
 		
 		if (getRoom().getItems().moveFloorItem(floorItem.getId(), to, floorItem.getRotation(), true)) {
 			final Map<Integer, Double> items = Maps.newHashMap();
-			
 			items.put(floorItem.getVirtualId(), floorItem.getPosition().getZ());
-			
 			getRoom().getEntities().broadcastMessage(new SlideObjectBundleMessageComposer(from, to, 0, 0, items));
 		}
 		
 		
-		Arrays.stream(Position.COLLIDE_TILES).mapToObj(collisionDirection -> floorItem.getPosition().squareInFront(collisionDirection)).map(collisionPosition -> this.getRoom().getMapping().getTile(collisionPosition)).filter(Objects::nonNull).map(RoomTile::getEntity).filter(Objects::nonNull).forEachOrdered(entity -> {
+		Arrays.stream(Position.COLLIDE_TILES)
+		.mapToObj(collisionDirection -> floorItem.getPosition().squareInFront(collisionDirection))
+		.map(collisionPosition -> this.getRoom().getMapping().getTile(collisionPosition))
+		.filter(Objects::nonNull).map(RoomTile::getEntity).filter(Objects::nonNull).forEachOrdered(entity -> {
 			floorItem.setCollision(entity);
 			WiredTriggerCollision.executeTriggers(entity, floorItem);
 		});
-		
 		
 		floorItem.nullifyCollision();
 	}

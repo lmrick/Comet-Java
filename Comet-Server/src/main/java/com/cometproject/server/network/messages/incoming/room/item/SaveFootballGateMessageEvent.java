@@ -6,7 +6,6 @@ import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
-
 public class SaveFootballGateMessageEvent implements Event {
 
     @Override
@@ -22,19 +21,16 @@ public class SaveFootballGateMessageEvent implements Event {
         }
 
         int itemId = msg.readInt();
-
         if (room.getItems().getFloorItem(itemId) == null || !(room.getItems().getFloorItem(itemId) instanceof FootballGateFloorItem))
             return;
 
         FootballGateFloorItem floorItem = ((FootballGateFloorItem) room.getItems().getFloorItem(itemId));
-
         String gender = msg.readString().toUpperCase();
         String figure = msg.readString();
 
-        floorItem.setFigure(gender.toUpperCase(), figure.contains(";") ?
-                figure.split(";")[gender.equals("M") ? 0 : 1] : figure);
+        floorItem.setFigure(gender.toUpperCase(), figure.contains(";") ? figure.split(";")[gender.equals("M") ? 0 : 1] : figure);
         floorItem.saveData();
-
         floorItem.sendUpdate();
     }
+
 }

@@ -37,15 +37,13 @@ public class RoomManager implements Initializable {
 	
 	public static final Logger log = Logger.getLogger(RoomManager.class.getName());
 	private static RoomManager roomManagerInstance;
+
 	private Cache<Integer, IRoomData> roomDataInstances;
-	
 	private Map<Integer, Room> loadedRoomInstances;
 	private Map<Integer, Room> unloadingRoomInstances;
 	private final Set<Integer> deletedRooms = new HashSet<>();
 	
 	private Map<Integer, RoomPromotion> roomPromotions;
-	
-	//private Map<String, StaticRoomModel> models;
 	private WordFilter filterManager;
 	
 	private RoomCycle globalCycle;
@@ -307,7 +305,9 @@ public class RoomManager implements Initializable {
 	public List<IRoomData> getRoomsByCategory(int category, int minimumPlayers, Player player) {
 		List<IRoomData> rooms = new ArrayList<>();
 		
-		this.getRoomInstances().values().stream().filter(room -> category == -1 || (room.getCategory() != null && room.getCategory().getId() == category)).filter(room -> room.getEntities() == null || room.getEntities().playerCount() >= minimumPlayers).forEachOrdered(room -> {
+		this.getRoomInstances().values().stream()
+		.filter(room -> category == -1 || (room.getCategory() != null && room.getCategory().getId() == category))
+		.filter(room -> room.getEntities() == null || room.getEntities().playerCount() >= minimumPlayers).forEachOrdered(room -> {
 			if (room.getData().getAccess() == RoomAccessType.INVISIBLE && player.getData().getRank() < 3) {
 				if (room.getGroup() != null) {
 					if (!player.getGroups().contains(room.getGroup().getId())) {

@@ -17,7 +17,6 @@ public class RemoveRightsMessageEvent implements Event {
 	@Override
 	public void handle(Session client, MessageEvent msg) throws Exception {
 		int count = msg.readInt();
-		
 		Room room = client.getPlayer().getEntity().getRoom();
 		
 		if (room == null || (room.getData().getOwnerId() != client.getPlayer().getId() && !client.getPlayer().getPermissions().getRank().roomFullControl())) {

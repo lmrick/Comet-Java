@@ -14,13 +14,10 @@ public class SaveTonerMessageEvent implements Event {
 	@Override
 	public void handle(Session client, MessageEvent msg) throws Exception {
 		int virtualId = msg.readInt();
-		
 		long itemId = ItemManager.getInstance().getItemIdByVirtualId(virtualId);
-		
 		int hue = msg.readInt();
 		int saturation = msg.readInt();
 		int lightness = msg.readInt();
-		
 		RoomItemFloor item = client.getPlayer().getEntity().getRoom().getItems().getFloorItem(itemId);
 		
 		if (item == null || !client.getPlayer().getEntity().getRoom().getRights().hasRights(client.getPlayer().getId()) && !client.getPlayer().getPermissions().getRank().roomFullControl() || !(item instanceof BackgroundTonerFloorItem)) {
@@ -31,7 +28,6 @@ public class SaveTonerMessageEvent implements Event {
 		String stringData = BackgroundTonerData.get(data);
 		
 		item.getItemData().setData(stringData);
-		
 		item.getRoom().getEntities().broadcastMessage(new UpdateFloorItemMessageComposer(item));
 		item.saveData();
 	}

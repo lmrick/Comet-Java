@@ -15,7 +15,6 @@ import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.mapping.RoomTile;
 import com.cometproject.server.network.messages.outgoing.room.items.SlideObjectBundleMessageComposer;
 import com.cometproject.api.game.utilities.RandomUtil;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

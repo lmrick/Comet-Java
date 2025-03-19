@@ -14,7 +14,6 @@ import com.cometproject.server.game.rooms.types.mapping.RoomTile;
 import com.cometproject.server.game.utilities.DistanceCalculator;
 import com.cometproject.server.network.messages.outgoing.room.items.SlideObjectBundleMessageComposer;
 import com.cometproject.api.game.utilities.Direction;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,12 +31,10 @@ public abstract class RollableFloorItem extends RoomItemFloor {
 	}
 	
 	private static void roll(RoomItemFloor item, Position from, Position to, Room room) {
-		
 		final Map<Integer, Double> items = new HashMap<>();
 		
 		items.put(item.getVirtualId(), item.getPosition().getZ());
 		room.getEntities().broadcastMessage(new SlideObjectBundleMessageComposer(from.copy(), to.copy(), item.getVirtualId(), 0, items));
-		
 	}
 	
 	private static Position calculatePosition(int x, int y, int playerRotation) {
@@ -55,7 +52,6 @@ public abstract class RollableFloorItem extends RoomItemFloor {
 		boolean isKickingMove = (this.getPosition().getY() == entity.getWalkingGoal().getY() && this.getPosition().getX() == entity.getWalkingGoal().getX()) && entity.getPreviousSteps() == 1;
 		
 		KICK_POWER = isKickingMove ? 6 : 1;
-		
 		if (entity instanceof PlayerEntity && this instanceof BanzaiPuckFloorItem) {
 			this.getItemData().setData((((PlayerEntity) entity).getGameTeam().getTeamId() + 1) + "");
 			this.sendUpdate();
@@ -70,7 +66,6 @@ public abstract class RollableFloorItem extends RoomItemFloor {
 		this.rollStage = 0;
 		
 		this.rollBall(entity.getPosition(), entity.getBodyRotation());
-		
 	}
 	
 	@Override
@@ -165,10 +160,6 @@ public abstract class RollableFloorItem extends RoomItemFloor {
 			this.moveTo(newPosition, newPosition.getFlag());
 			this.setTicks(RoomItemFactory.getProcessTime(this.getDelay(this.rollStage)));
 		}
-	}
-	
-	private boolean isValidRoll(int x, int y) {
-		return false;
 	}
 	
 	private boolean isValidRoll(Position position) {
@@ -324,12 +315,11 @@ public abstract class RollableFloorItem extends RoomItemFloor {
 	
 	private double getDelay(int i) {
 		if (i == 5) {
-			return 0.5;
+			return 0.5D;
 		} else if (i == 6) {
-			return 1.0;
+			return 1.0D;
 		}
 		
-		//        System.out.println(i);
 		return 0.5;
 	}
 	

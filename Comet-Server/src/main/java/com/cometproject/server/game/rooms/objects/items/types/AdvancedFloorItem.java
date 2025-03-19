@@ -9,11 +9,14 @@ import com.cometproject.server.utilities.collections.ConcurrentHashSet;
 import java.util.Set;
 
 public abstract class AdvancedFloorItem<T extends FloorItemEvent> extends RoomItemFloor {
+	private static final int MAX_ITEM_EVENTS = 5000;
 	private final Set<T> itemEvents = new ConcurrentHashSet<T>();
 	
 	public AdvancedFloorItem(RoomItemData itemData, Room room) {
 		super(itemData, room);
 	}
+
+	public abstract void onEventComplete(T event);
 	
 	@Override
 	public void onTick() {
@@ -58,10 +61,8 @@ public abstract class AdvancedFloorItem<T extends FloorItemEvent> extends RoomIt
 		this.itemEvents.add(floorItemEvent);
 	}
 	
-	public abstract void onEventComplete(T event);
-	
 	public int getMaxEvents() {
-		return 5000;
+		return MAX_ITEM_EVENTS;
 	}
 	
 }

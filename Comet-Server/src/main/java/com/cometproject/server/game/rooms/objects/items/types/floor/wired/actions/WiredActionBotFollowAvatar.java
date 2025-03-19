@@ -28,10 +28,8 @@ public class WiredActionBotFollowAvatar extends WiredActionItem {
         if (!(event.entity instanceof PlayerEntity)) return;
 
         int param = this.getWiredData().getParams().get(PARAM_FOLLOW);
-
         final String botName = this.getWiredData().getText();
         final BotEntity botEntity = this.getRoom().getBots().getBotByName(botName);
-
         if (botEntity != null) {
             if (param == 1) {
                 botEntity.getData().setMode(BotMode.RELAXED);

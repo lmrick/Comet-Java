@@ -1,10 +1,9 @@
 package com.cometproject.server.game.rooms.objects;
 
 import com.cometproject.api.game.utilities.Position;
-import com.cometproject.api.game.utilities.IPositionable;
 import com.cometproject.server.game.rooms.types.Room;
 
-public abstract class RoomFloorObject extends RoomObject implements IPositionable {
+public abstract class RoomFloorObject extends RoomObject {
 	
 	private final int id;
 	

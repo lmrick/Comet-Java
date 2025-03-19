@@ -39,10 +39,9 @@ public class WiredCustomFurniUp extends WiredActionItem {
 		}
 		
 		int newZ = 0;
-		
 		try {
 			newZ = Integer.parseInt(this.getWiredData().getText());
-		} catch (NumberFormatException ignored) {
+		} catch (NumberFormatException e) {
 		}
 		
 		for (long itemId : this.getWiredData().getSelectedIds()) {

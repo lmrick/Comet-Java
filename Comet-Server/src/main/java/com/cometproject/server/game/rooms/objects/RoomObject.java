@@ -42,8 +42,9 @@ public abstract class RoomObject implements IRoomObject, IPositionable {
 		
 		nearestEntities.sort(positionComparator);
 		
-		return nearestEntities.stream().filter(playerEntity -> excludingEntities == null || !excludingEntities.contains(playerEntity.getId())).findFirst().orElse(null);
-		
+		return nearestEntities.stream()
+		.filter(playerEntity -> excludingEntities == null || !excludingEntities.contains(playerEntity.getId()))
+		.findFirst().orElse(null);
 	}
 	
 	public BotEntity nearestBotEntity(BotType type) {
@@ -56,7 +57,8 @@ public abstract class RoomObject implements IRoomObject, IPositionable {
 			return null;
 		}
 		
-		bots = type == null ? new ArrayList<>(nearestEntities) : nearestEntities.stream().filter(botEntity -> botEntity.getData().getBotType() == type).collect(Collectors.toList());
+		bots = type == null ? new ArrayList<>(nearestEntities) : nearestEntities.stream()
+		.filter(botEntity -> botEntity.getData().getBotType() == type).collect(Collectors.toList());
 		
 		bots.sort(positionComparator);
 		

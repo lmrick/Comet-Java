@@ -9,7 +9,6 @@ import com.cometproject.server.game.rooms.types.Room;
 import java.util.Random;
 
 public class WheelWallItem extends RoomItemWall {
-	
 	private final Random r = new Random();
 	private boolean isInUse = false;
 	

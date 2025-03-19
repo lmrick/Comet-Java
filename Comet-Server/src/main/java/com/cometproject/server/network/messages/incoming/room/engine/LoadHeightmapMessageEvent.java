@@ -8,6 +8,7 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 
 public class LoadHeightmapMessageEvent implements Event {
 	
+	@Override
 	public void handle(Session client, MessageEvent msg) {
 		if (client.getPlayer().getEntity() == null || client.getPlayer().getEntity().getRoom().getModel() == null) {
 			return;

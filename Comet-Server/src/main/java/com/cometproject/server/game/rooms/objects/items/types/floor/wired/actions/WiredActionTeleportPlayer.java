@@ -24,14 +24,12 @@ public class WiredActionTeleportPlayer extends WiredActionItem {
 		}
 		
 		Long itemId = WiredUtil.getRandomElement(this.getWiredData().getSelectedIds());
-		
 		if (itemId == null) {
 			event.entity = null;
 			return;
 		}
 		
 		RoomItemFloor item = this.getRoom().getItems().getFloorItem(itemId);
-		
 		if (item == null || item.isAtDoor() || item.getPosition() == null || item.getTile() == null) {
 			event.entity = null;
 			return;

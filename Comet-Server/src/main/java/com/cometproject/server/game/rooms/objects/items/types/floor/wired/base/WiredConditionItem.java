@@ -7,12 +7,10 @@ import com.cometproject.server.network.messages.outgoing.room.items.wired.dialog
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 public abstract class WiredConditionItem extends WiredFloorItem {
-	
 	protected boolean isNegative;
 	
 	public WiredConditionItem(RoomItemData roomItemData, Room room) {
 		super(roomItemData, room);
-		
 		this.isNegative = this.getClass().getSimpleName().startsWith("WiredNegativeCondition");
 	}
 	

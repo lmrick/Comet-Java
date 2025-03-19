@@ -9,14 +9,12 @@ import com.cometproject.server.network.messages.outgoing.room.items.UpdateFloorI
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
-
 public class SaveMannequinFigureMessageEvent implements Event {
+
     @Override
     public void handle(Session client, MessageEvent msg) throws Exception {
         int virtualId = msg.readInt();
-
         long id = ItemManager.getInstance().getItemIdByVirtualId(virtualId);
-
         Room room = client.getPlayer().getEntity().getRoom();
 
         if (room == null || !room.getRights().hasRights(client.getPlayer().getId()) && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
@@ -24,16 +22,15 @@ public class SaveMannequinFigureMessageEvent implements Event {
         }
 
         RoomItemFloor item = room.getItems().getFloorItem(id);
-
         if (item == null) {
             return;
         }
 
         String[] figureParts = client.getPlayer().getData().getFigure().split("\\.");
         String finalFigure = "";
-
         for (String figurePart : figureParts) {
-            if (!figurePart.contains("hr") && !figurePart.contains("hd") && !figurePart.contains("he") && !figurePart.contains("ha")) {
+            if (!figurePart.contains("hr") && !figurePart.contains("hd") 
+            && !figurePart.contains("he") && !figurePart.contains("ha")) {
                 finalFigure += figurePart + ".";
             }
         }
@@ -44,4 +41,5 @@ public class SaveMannequinFigureMessageEvent implements Event {
         room.getEntities().broadcastMessage(new UpdateFloorItemMessageComposer(item));
         item.saveData();
     }
+    
 }

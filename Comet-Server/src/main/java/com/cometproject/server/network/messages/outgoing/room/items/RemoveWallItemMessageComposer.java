@@ -4,7 +4,6 @@ import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
-
 public class RemoveWallItemMessageComposer extends MessageComposer {
     private final int itemId;
     private final int playerId;

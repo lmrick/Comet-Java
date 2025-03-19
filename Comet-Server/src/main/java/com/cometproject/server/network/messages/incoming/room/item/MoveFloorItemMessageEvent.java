@@ -12,13 +12,12 @@ import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 import com.google.common.collect.Maps;
 import org.apache.log4j.Logger;
-
 import java.util.Map;
-
 
 public class MoveFloorItemMessageEvent implements Event {
     private static Logger log = Logger.getLogger(MoveFloorItemMessageEvent.class);
 
+    @Override
     public void handle(Session client, MessageEvent msg) {
         Long id = ItemManager.getInstance().getItemIdByVirtualId(msg.readInt());
 
@@ -37,12 +36,11 @@ public class MoveFloorItemMessageEvent implements Event {
         if (room == null) return;
 
         if (!client.getPlayer().getEntity().getRoom().getRights().hasRights(client.getPlayer().getId())
-                && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
+            && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
             return;
         }
 
         RoomItemFloor floorItem = room.getItems().getFloorItem(id);
-
         if (floorItem != null) {
             if (rot != floorItem.getRotation()) {
                 client.getPlayer().getQuests().progressQuest(QuestType.FURNI_ROTATE);
@@ -58,9 +56,7 @@ public class MoveFloorItemMessageEvent implements Event {
                 }
             } else {
                 Map<String, String> notificationParams = Maps.newHashMap();
-
                 notificationParams.put("message", "${room.error.cant_set_item}");
-
                 client.send(new NotificationMessageComposer("furni_placement_error", notificationParams));
             }
 
@@ -71,4 +67,5 @@ public class MoveFloorItemMessageEvent implements Event {
             log.error("Error whilst changing floor item position!", e);
         }
     }
+    
 }

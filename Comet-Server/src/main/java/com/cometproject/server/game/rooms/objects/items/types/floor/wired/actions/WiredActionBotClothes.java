@@ -35,20 +35,16 @@ public class WiredActionBotClothes extends WiredActionItem {
         }
 
         final String[] data = this.getWiredData().getText().split("\t");
-
         if (data.length != 2) {
             return;
         }
 
         final String botName = data[0];
         String figure = data[1];
-
         final BotEntity botEntity = this.getRoom().getBots().getBotByName(botName);
-
         if (botEntity != null) {
             botEntity.getData().setFigure(figure);
             this.getRoom().getEntities().broadcastMessage(new UpdateInfoMessageComposer(botEntity));
-
             botEntity.getData().save();
         }
     }

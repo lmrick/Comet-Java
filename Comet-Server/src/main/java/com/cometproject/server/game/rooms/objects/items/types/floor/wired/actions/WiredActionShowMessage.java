@@ -9,7 +9,6 @@ import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.network.messages.outgoing.room.avatar.WhisperMessageComposer;
 
 public class WiredActionShowMessage extends WiredActionItem {
-	
 	protected boolean isWhisperBubble = false;
 	
 	public WiredActionShowMessage(RoomItemData itemData, Room room) {

@@ -14,13 +14,13 @@ import com.cometproject.server.protocol.messages.MessageEvent;
 
 public class PickUpItemMessageEvent implements Event {
 	
+	@Override
 	public void handle(Session client, MessageEvent msg) {
 		if (client == null || client.getPlayer() == null || client.getPlayer().getEntity() == null) {
 			return;
 		}
 		
 		boolean isFloorItem = msg.readInt() == 2;
-		
 		Long id = ItemManager.getInstance().getItemIdByVirtualId(msg.readInt());
 		
 		if (id == null) {
@@ -28,13 +28,11 @@ public class PickUpItemMessageEvent implements Event {
 		}
 		
 		Room room = client.getPlayer().getEntity().getRoom();
-		
 		if (room == null) {
 			return;
 		}
 		
 		boolean eject = false;
-		
 		RoomItemFloor item = room.getItems().getFloorItem(id);
 		
 		if (!room.getRights().hasRights(client.getPlayer().getId()) && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
@@ -67,8 +65,9 @@ public class PickUpItemMessageEvent implements Event {
 		}
 		
 		if (item.getItemData().getOwnerId() != client.getPlayer().getId() && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
-			if (item.getRoom().getData().getOwnerId() != client.getPlayer().getId() && !client.getPlayer().getPermissions().getRank().roomFullControl())
+			if (item.getRoom().getData().getOwnerId() != client.getPlayer().getId() && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
 				return;
+			}
 			
 			eject = true;
 		}

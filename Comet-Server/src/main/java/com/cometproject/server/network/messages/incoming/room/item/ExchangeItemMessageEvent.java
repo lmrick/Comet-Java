@@ -12,7 +12,6 @@ public class ExchangeItemMessageEvent implements Event {
 	@Override
 	public void handle(Session client, MessageEvent msg) {
 		int virtualId = msg.readInt();
-		
 		long itemId = ItemManager.getInstance().getItemIdByVirtualId(virtualId);
 		
 		if (client.getPlayer().getEntity() == null) {
@@ -20,14 +19,12 @@ public class ExchangeItemMessageEvent implements Event {
 		}
 		
 		Room room = client.getPlayer().getEntity().getRoom();
-		
 		if (room == null || (!room.getRights().hasRights(client.getPlayer().getId()) && !client.getPlayer().getPermissions().getRank().roomFullControl())) {
 			return;
 		}
 		
 		
 		RoomItemFloor item = room.getItems().getFloorItem(itemId);
-		
 		if (item == null) {
 			return;
 		}

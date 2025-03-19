@@ -14,6 +14,9 @@ public abstract class AbstractGameGateFloorItem extends DefaultFloorItem {
 	public AbstractGameGateFloorItem(RoomItemData itemData, Room room) {
 		super(itemData, room);
 	}
+
+	public abstract GameType gameType();
+	public abstract GameTeam getTeam();
 	
 	@Override
 	public void onLoad() {
@@ -94,8 +97,5 @@ public abstract class AbstractGameGateFloorItem extends DefaultFloorItem {
 		
 		return false;
 	}
-	
-	public abstract GameType gameType();
-	public abstract GameTeam getTeam();
 	
 }

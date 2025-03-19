@@ -12,10 +12,10 @@ public class ToggleMoodlightMessageEvent implements Event {
 	@Override
 	public void handle(Session client, MessageEvent msg) throws Exception {
 		Room room = client.getPlayer().getEntity().getRoom();
-		
 		if (room == null) {
 			return;
 		}
+		
 		if (!room.getRights().hasRights(client.getPlayer().getEntity().getPlayerId()) && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
 			client.disconnect();
 			return;

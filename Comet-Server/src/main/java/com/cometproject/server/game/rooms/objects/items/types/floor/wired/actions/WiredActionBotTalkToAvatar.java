@@ -38,28 +38,23 @@ public class WiredActionBotTalkToAvatar extends WiredActionItem {
         }
 
         final String[] talkData = this.getWiredData().getText().split("\t");
-
         if (talkData.length != 2) {
             return;
         }
 
         final String botName = talkData[0];
         String message = talkData[1];
-
         if (botName.isEmpty() || message.isEmpty()) {
             return;
         }
 
         message = message.replace("%username%", event.entity.getUsername());
-
         message = message.replace("<", "").replace(">", "");
 
         final BotEntity botEntity = this.getRoom().getBots().getBotByName(botName);
-
         if (botEntity != null) {
             boolean isWhisper = (this.getWiredData().getParams().size() == 1 && (this.getWiredData().getParams().get(PARAM_MESSAGE_TYPE) == 1));
-					
-					((PlayerEntity) event.entity).getPlayer().getSession().send(isWhisper ? new WhisperMessageComposer(botEntity.getId(), message, 2) : new TalkMessageComposer(botEntity.getId(), message, ChatEmotion.NONE, 2));
+			((PlayerEntity) event.entity).getPlayer().getSession().send(isWhisper ? new WhisperMessageComposer(botEntity.getId(), message, 2) : new TalkMessageComposer(botEntity.getId(), message, ChatEmotion.NONE, 2));
         }
     }
 }
