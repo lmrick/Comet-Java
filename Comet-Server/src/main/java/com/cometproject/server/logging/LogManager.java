@@ -1,7 +1,8 @@
 package com.cometproject.server.logging;
 
 import com.cometproject.api.config.Configuration;
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
+
 import org.apache.log4j.Logger;
 
 

@@ -1,7 +1,7 @@
 package com.cometproject.server.game.commands;
 
 import com.cometproject.api.modules.commands.CommandInfo;
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.commands.staff.mass.MassEffectCommand;
 import com.cometproject.server.game.commands.staff.mass.MassFreezeCommand;

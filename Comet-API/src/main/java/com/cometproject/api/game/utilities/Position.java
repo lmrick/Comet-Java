@@ -75,7 +75,7 @@ public class Position {
 				int lengthY = Integer.parseInt(length[1]);
 				return MessageFormat.format(":w={0},{1} l={2},{3} {4}", widthX, widthY, lengthX, lengthY, data[2]);
 			}
-		} catch (Exception ignored) {
+		} catch (Exception e) {
 		
 		}
 		

@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 import java.util.Map;
 
 public class QuestComponent extends PlayerComponent implements IPlayerQuests {
-	private static final Logger log = Logger.getLogger(QuestComponent.class.getName());
+	private final Logger LOG = super.getLogger(QuestComponent.class);
 	private Map<Integer, Integer> questProgression;
 	
 	public QuestComponent(PlayerComponentContext componentContext) {
@@ -65,7 +65,6 @@ public class QuestComponent extends PlayerComponent implements IPlayerQuests {
 		this.getPlayer().getData().save();
 		
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override
@@ -178,7 +177,7 @@ public class QuestComponent extends PlayerComponent implements IPlayerQuests {
 					this.getPlayer().getInventory().addBadge(quest.getBadgeId(), true);
 				}
 			} catch (Exception e) {
-				log.error("Failed to deliver reward to player: " + this.getPlayer().getData().getUsername());
+				LOG.error("Failed to deliver reward to player: " + this.getPlayer().getData().getUsername());
 			}
 			
 			if (refreshCreditBalance) {
@@ -201,7 +200,6 @@ public class QuestComponent extends PlayerComponent implements IPlayerQuests {
 		this.getPlayer().getSession().send(new QuestListMessageComposer(QuestManager.getInstance().getQuests(), this.getPlayer(), false));
 		
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override

@@ -2,7 +2,7 @@ package com.cometproject.server.game.quests;
 
 import com.cometproject.api.game.quests.IQuest;
 import com.cometproject.api.game.quests.IQuestService;
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.storage.queries.quests.QuestsDao;
 import org.apache.log4j.Logger;
 

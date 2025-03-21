@@ -3,7 +3,7 @@ package com.cometproject.api.game.players;
 import com.cometproject.api.game.players.data.IPlayerData;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.networking.sessions.ISession;
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
 
 import java.util.List;
 import java.util.Map;

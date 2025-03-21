@@ -1,10 +1,10 @@
 package com.cometproject.server.modules.events;
 
 import com.cometproject.api.modules.commands.CommandInfo;
-import com.cometproject.api.events.Event;
-import com.cometproject.api.events.EventArgs;
-import com.cometproject.api.events.IEventHandler;
 import com.cometproject.api.networking.sessions.ISession;
+import com.cometproject.api.utilities.events.Event;
+import com.cometproject.api.utilities.events.EventArgs;
+import com.cometproject.api.utilities.events.IEventHandler;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.log4j.Logger;

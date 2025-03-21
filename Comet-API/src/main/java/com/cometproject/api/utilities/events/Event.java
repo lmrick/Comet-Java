@@ -1,17 +1,16 @@
-package com.cometproject.api.events;
+package com.cometproject.api.utilities.events;
 
 import java.util.function.Consumer;
 
 public abstract class Event<T extends EventArgs> {
+    private final Consumer<T> consumer;
     
-    private final Consumer<T> callback;
-    
-    public Event(Consumer<T> callback) {
-        this.callback = callback;
+    public Event(Consumer<T> consumer) {
+        this.consumer = consumer;
     }
 
     public void consume(T args) {
-        this.callback.accept(args);
+        this.consumer.accept(args);
     }
 
     public boolean isAsync() {

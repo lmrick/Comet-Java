@@ -9,8 +9,10 @@ import com.cometproject.server.storage.queries.player.PlayerDao;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 public class NavigatorComponent extends PlayerComponent implements IPlayerNavigator {
-	
+	private final Logger LOG = super.getLogger(NavigatorComponent.class);
 	private final Map<Integer, ISavedSearch> savedSearches;
 	private final Map<String, Integer> viewModes;
 	private final Set<Integer> favouriteRooms;

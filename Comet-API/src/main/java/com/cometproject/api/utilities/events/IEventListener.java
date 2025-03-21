@@ -1,4 +1,4 @@
-package com.cometproject.api.events;
+package com.cometproject.api.utilities.events;
 
 import java.lang.annotation.*;
 

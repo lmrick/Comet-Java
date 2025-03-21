@@ -1,6 +1,6 @@
 package com.cometproject.server.storage;
 
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.storage.cache.CacheManager;
 import com.cometproject.storage.api.StorageContext;
 import com.cometproject.storage.mysql.MySQLStorageInitializer;

@@ -6,10 +6,10 @@ import com.cometproject.api.game.players.data.components.IPlayerPets;
 import com.cometproject.server.game.players.components.PlayerComponent;
 import com.cometproject.server.storage.queries.pets.PetDao;
 import java.util.Map;
-
-import org.checkerframework.checker.units.qual.s;
+import org.apache.log4j.Logger;
 
 public class PetComponent extends PlayerComponent implements IPlayerPets {
+	private final Logger LOG = super.getLogger(PetComponent.class);
 	private Map<Integer, IPetData> pets;
 	
 	public PetComponent(PlayerComponentContext componentContext) {
@@ -32,7 +32,6 @@ public class PetComponent extends PlayerComponent implements IPlayerPets {
 		this.pets.clear();
 		
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override
@@ -40,7 +39,6 @@ public class PetComponent extends PlayerComponent implements IPlayerPets {
 		this.pets.put(petData.getId(), petData);
 		
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override
@@ -48,7 +46,6 @@ public class PetComponent extends PlayerComponent implements IPlayerPets {
 		this.pets.remove(id);
 		
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override

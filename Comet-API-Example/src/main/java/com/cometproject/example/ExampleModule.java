@@ -1,11 +1,12 @@
 package com.cometproject.example;
 
 import com.cometproject.api.modules.ModuleConfig;
-import com.cometproject.api.events.players.OnPlayerLoginEvent;
-import com.cometproject.api.events.players.args.OnPlayerLoginEventArgs;
 import com.cometproject.api.modules.BaseModule;
 import com.cometproject.api.networking.sessions.ISession;
 import com.cometproject.api.server.IGameService;
+import com.cometproject.api.utilities.events.players.OnPlayerLoginEvent;
+import com.cometproject.api.utilities.events.players.args.OnPlayerLoginEventArgs;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;

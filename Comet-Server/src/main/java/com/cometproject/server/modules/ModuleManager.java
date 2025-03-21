@@ -1,11 +1,11 @@
 package com.cometproject.server.modules;
 
 import com.cometproject.api.modules.ModuleConfig;
-import com.cometproject.api.events.IEventHandler;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.modules.BaseModule;
 import com.cometproject.api.server.IGameService;
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.events.IEventHandler;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.game.groups.GroupsModule;
 import com.cometproject.game.rooms.RoomsModule;
 import com.cometproject.server.modules.events.EventHandlerService;

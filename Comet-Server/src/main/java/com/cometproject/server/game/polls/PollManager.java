@@ -1,6 +1,6 @@
 package com.cometproject.server.game.polls;
 
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.game.polls.types.Poll;
 import com.cometproject.server.game.polls.types.PollQuestion;
 import com.cometproject.server.game.polls.types.questions.MultipleChoiceQuestion;

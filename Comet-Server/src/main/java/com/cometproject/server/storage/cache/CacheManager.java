@@ -1,8 +1,8 @@
 package com.cometproject.server.storage.cache;
 
 import com.cometproject.api.config.Configuration;
-import com.cometproject.api.utilities.Initializable;
 import com.cometproject.api.utilities.JsonUtil;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.storage.cache.subscribers.GoToRoomSubscriber;
 import com.cometproject.server.storage.cache.subscribers.ISubscriber;
 import com.cometproject.server.storage.cache.subscribers.RefreshDataSubscriber;

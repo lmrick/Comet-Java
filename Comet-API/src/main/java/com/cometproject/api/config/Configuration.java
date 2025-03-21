@@ -1,7 +1,6 @@
 package com.cometproject.api.config;
 
 import org.apache.log4j.Logger;
-
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;

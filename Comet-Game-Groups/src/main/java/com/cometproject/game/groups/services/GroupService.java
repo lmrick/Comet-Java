@@ -1,6 +1,5 @@
 package com.cometproject.game.groups.services;
 
-import com.cometproject.api.caching.Cache;
 import com.cometproject.api.game.groups.IGroupItemService;
 import com.cometproject.api.game.groups.IGroupService;
 import com.cometproject.api.game.groups.types.IGroup;
@@ -10,6 +9,7 @@ import com.cometproject.api.game.groups.types.components.forum.IForumSettings;
 import com.cometproject.api.game.groups.types.components.forum.IForumThread;
 import com.cometproject.api.game.groups.types.components.membership.GroupAccessLevel;
 import com.cometproject.api.game.groups.types.components.membership.IGroupMember;
+import com.cometproject.api.utilities.caching.Cache;
 import com.cometproject.game.groups.factories.GroupFactory;
 import com.cometproject.game.groups.types.components.ForumComponent;
 import com.cometproject.storage.api.data.DataWrapper;

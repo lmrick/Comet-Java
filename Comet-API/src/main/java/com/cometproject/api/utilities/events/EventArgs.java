@@ -1,4 +1,4 @@
-package com.cometproject.api.events;
+package com.cometproject.api.utilities.events;
 
 public abstract class EventArgs {
 	private boolean cancelled = false;

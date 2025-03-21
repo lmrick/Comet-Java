@@ -1,7 +1,7 @@
-package com.cometproject.api.events.players.args;
+package com.cometproject.api.utilities.events.players.args;
 
-import com.cometproject.api.events.EventArgs;
 import com.cometproject.api.game.players.IPlayer;
+import com.cometproject.api.utilities.events.EventArgs;
 
 public class OnPlayerLoginEventArgs extends EventArgs {
     private final IPlayer player;

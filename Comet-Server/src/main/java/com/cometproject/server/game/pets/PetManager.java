@@ -2,7 +2,7 @@ package com.cometproject.server.game.pets;
 
 import com.cometproject.api.game.pets.IPetData;
 import com.cometproject.api.game.pets.IPetRace;
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.game.pets.data.PetSpeech;
 import com.cometproject.server.game.pets.races.PetBreedLevel;
 import com.cometproject.server.game.pets.races.PetRace;

@@ -1,7 +1,7 @@
 package com.cometproject.server.api;
 
 import com.cometproject.api.config.Configuration;
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.api.routes.*;
 import com.cometproject.server.api.transformers.JsonTransformer;
 import org.apache.log4j.Logger;

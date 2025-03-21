@@ -1,6 +1,6 @@
 package com.cometproject.server.game.navigator;
 
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.game.navigator.types.categories.Category;
 import com.cometproject.server.game.navigator.types.categories.NavigatorCategoryType;
 import com.cometproject.server.game.navigator.types.publics.PublicRoom;

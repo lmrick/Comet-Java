@@ -204,7 +204,6 @@ public class PlayerStatistics implements IPlayerStatistics {
 	public void flush() {
 		if (player != null) {
 			this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 		}
 	}
 	

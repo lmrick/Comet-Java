@@ -14,6 +14,8 @@ public class InventoryBotComponent extends PlayerComponent implements IPlayerBot
 		super(componentContext);
 		
 		this.bots = PlayerBotDao.getBotsByPlayerId(componentContext.getPlayer().getId());
+
+		this.getPlayer().flush(this);
 	}
 	
 	@Override
@@ -21,12 +23,11 @@ public class InventoryBotComponent extends PlayerComponent implements IPlayerBot
 		this.bots.put(bot.getId(), bot);
 		
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override
 	public IBotData getBot(int id) {
-		return this.bots.getOrDefault(id, null);
+		return this.bots.get(id);
 	}
 	
 	@Override
@@ -34,7 +35,6 @@ public class InventoryBotComponent extends PlayerComponent implements IPlayerBot
 		this.bots.remove(id);
 		
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override
@@ -52,15 +52,16 @@ public class InventoryBotComponent extends PlayerComponent implements IPlayerBot
 		this.bots.clear();
 		
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override
 	public void dispose() {
 		super.dispose();
 		
-		this.bots.clear();
-		this.bots = null;
+		if (this.bots != null) {
+			this.bots.clear();
+			this.bots = null;
+		}
 	}
 	
 }

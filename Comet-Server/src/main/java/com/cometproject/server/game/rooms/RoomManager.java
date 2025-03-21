@@ -1,6 +1,5 @@
 package com.cometproject.server.game.rooms;
 
-import com.cometproject.api.caching.Cache;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.players.IPlayer;
 import com.cometproject.api.game.rooms.IRoomData;
@@ -8,7 +7,8 @@ import com.cometproject.api.game.rooms.models.CustomFloorMapData;
 import com.cometproject.api.game.rooms.settings.RoomAccessType;
 import com.cometproject.api.game.rooms.settings.RoomTradeState;
 import com.cometproject.api.networking.sessions.ISession;
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.caching.Cache;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.common.caching.LastReferenceCache;
 import com.cometproject.server.game.players.types.Player;
 import com.cometproject.server.game.rooms.filter.WordFilter;

@@ -1,6 +1,6 @@
 package com.cometproject.server.game.permissions;
 
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.game.permissions.types.CommandPermission;
 import com.cometproject.server.game.permissions.types.OverrideCommandPermission;
 import com.cometproject.server.game.permissions.types.Perk;

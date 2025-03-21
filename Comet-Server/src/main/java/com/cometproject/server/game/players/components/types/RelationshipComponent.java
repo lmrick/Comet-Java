@@ -7,8 +7,10 @@ import com.cometproject.server.game.players.components.PlayerComponent;
 import com.cometproject.server.storage.queries.player.relationships.RelationshipDao;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 public class RelationshipComponent extends PlayerComponent implements IPlayerRelationships {
-	
+	private final Logger LOG = super.getLogger(RelationshipComponent.class);
 	private Map<Integer, RelationshipLevel> relationships;
 	
 	public RelationshipComponent(PlayerComponentContext componentContext) {
@@ -33,7 +35,6 @@ public class RelationshipComponent extends PlayerComponent implements IPlayerRel
 		this.getRelationships().remove(playerId);
 		
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override

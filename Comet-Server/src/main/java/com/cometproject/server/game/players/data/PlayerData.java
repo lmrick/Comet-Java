@@ -382,7 +382,6 @@ public class PlayerData implements IPlayerData {
 	public void flush() {
 		if (this.getPlayer() != null) {
 			this.getPlayer().flush(this);
-			this.getPlayer().getPlayerObserver().notifyObservers(this);
 		}
 	}
 	

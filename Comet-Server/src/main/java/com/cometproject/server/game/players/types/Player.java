@@ -10,7 +10,7 @@ import com.cometproject.api.game.quests.IQuest;
 import com.cometproject.api.game.quests.QuestType;
 import com.cometproject.api.networking.sessions.ISession;
 import com.cometproject.api.utilities.observers.IObserver;
-import com.cometproject.api.utilities.observers.PlayerObserver;
+import com.cometproject.api.utilities.observers.types.players.PlayerObserver;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.guides.GuideManager;
 import com.cometproject.server.game.guides.types.HelpRequest;
@@ -48,6 +48,7 @@ public class Player implements IPlayer {
 	
 	private final PlayerContext playerContext;
 	private PlayerComponentContext playerComponentContext;
+
 	private PlayerObserver playerObserver;
 	
 	private PermissionComponent permissions;
@@ -148,11 +149,14 @@ public class Player implements IPlayer {
 
 		this.playerObserver = new PlayerObserver();
 		this.playerObserver.addObserver(this);
+		this.playerObserver.addObserver(messenger);
 	}
 
 	@Override
 	public void flush(Object... arguments) {
-		this.playerObserver.notifyAll();
+		if (playerObserver != null) {
+			playerObserver.notifyObservers(arguments);
+		}
 	}
 	
 	private void injectComponentDependencies() {
@@ -199,7 +203,6 @@ public class Player implements IPlayer {
 	public void dispose() {
 		this.setOnline(false);
 		flush(this);
-		getPlayerObserver().notifyObservers(this);
 		
 		if (this.getEntity() != null) {
 			try {
@@ -255,7 +258,8 @@ public class Player implements IPlayer {
 		this.data = null;
 
 		this.playerObserver.removeObserver(this);
-		this.playerObserver = null;
+		this.playerObserver.removeObserver(messenger);
+		this.playerObserver = null; // Avoid clearing all observers globally
 
 		this.playerComponentContext = null;
 

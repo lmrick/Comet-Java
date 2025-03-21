@@ -1,12 +1,12 @@
 package com.cometproject.game.groups;
 
-import com.cometproject.api.caching.Cache;
 import com.cometproject.api.modules.ModuleConfig;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.groups.types.IGroup;
 import com.cometproject.api.game.groups.types.IGroupData;
 import com.cometproject.api.modules.BaseModule;
 import com.cometproject.api.server.IGameService;
+import com.cometproject.api.utilities.caching.Cache;
 import com.cometproject.common.caching.LastReferenceCache;
 import com.cometproject.game.groups.services.GroupService;
 import com.cometproject.storage.api.StorageContext;

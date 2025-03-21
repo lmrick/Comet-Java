@@ -1,10 +1,12 @@
-package com.cometproject.api.utilities.observers;
+package com.cometproject.api.utilities.observers.types.players;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import com.cometproject.api.utilities.observers.IObserver;
+import com.cometproject.api.utilities.observers.IObserverService;
 
 public class PlayerObserver implements IObserverService {
-    private List<IObserver> observers = new ArrayList<>();
+    private List<IObserver> observers = new CopyOnWriteArrayList<>();
 
     @Override
     public void notifyObservers(Object... arguments) {

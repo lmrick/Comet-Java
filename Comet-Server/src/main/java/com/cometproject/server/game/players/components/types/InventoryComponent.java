@@ -35,7 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class InventoryComponent extends PlayerComponent implements IPlayerInventory {
-
+	private final Logger LOG = super.getLogger(InventoryComponent.class);
 	private Map<Long, IPlayerItem> inventoryItems;
 
 	private Map<String, Integer> badges;
@@ -47,8 +47,6 @@ public class InventoryComponent extends PlayerComponent implements IPlayerInvent
 
 	private int equippedEffect = -1;
 	private Set<Integer> effects;
-
-	private static final Logger log = Logger.getLogger(InventoryComponent.class.getName());
 
 	public InventoryComponent(PlayerComponentContext componentContext) {
 		super(componentContext);
@@ -74,23 +72,21 @@ public class InventoryComponent extends PlayerComponent implements IPlayerInvent
 	@Override
 	public void loadItems(int userId) {
 		this.itemsLoaded = true;
-
-		if (!this.inventoryItems.isEmpty()) {
-			this.inventoryItems.clear();
-		}
+		this.inventoryItems.clear();
 
 		this.isViewingInventory = userId != 0;
 		this.viewingInventoryUser = userId;
 
 		try {
-			Map<Long, IPlayerItem> inventoryItems = InventoryDao
-					.getInventoryByPlayerId(userId == 0 ? this.getPlayer().getId() : userId);
-			this.inventoryItems.putAll(inventoryItems);
-
+			Map<Long, IPlayerItem> inventoryItems = InventoryDao.getInventoryByPlayerId(userId == 0 ? this.getPlayer().getId() : userId);
+			
+			if (inventoryItems != null) {
+				this.inventoryItems.putAll(inventoryItems);
+			}
+	
 			this.getPlayer().flush(this);
-			this.getPlayer().getPlayerObserver().notifyObservers(this);
 		} catch (Exception e) {
-			log.error("Error while loading user inventory", e);
+			LOG.error("Error while loading user inventory", e);
 		}
 	}
 
@@ -99,7 +95,7 @@ public class InventoryComponent extends PlayerComponent implements IPlayerInvent
 		try {
 			this.badges = InventoryDao.getBadgesByPlayerId(this.getPlayer().getId());
 		} catch (Exception e) {
-			log.error("Error while loading user badges");
+			LOG.error("Error while loading user badges");
 		}
 	}
 
@@ -139,7 +135,6 @@ public class InventoryComponent extends PlayerComponent implements IPlayerInvent
 			}
 
 			this.getPlayer().flush(this);
-			this.getPlayer().getPlayerObserver().notifyObservers(this);
 		}
 	}
 
@@ -150,26 +145,19 @@ public class InventoryComponent extends PlayerComponent implements IPlayerInvent
 			return;
 		}
 
-		double totalPages = (double) this.inventoryItems.size() / InventoryMessageComposer.ITEMS_PER_PAGE;
-
-		int totalSent = 0;
+		List<Map.Entry<Long, IPlayerItem>> entries = List.copyOf(this.inventoryItems.entrySet());
+		int totalPages = (int) Math.ceil((double) entries.size() / InventoryMessageComposer.ITEMS_PER_PAGE);
 		int currentPage = 0;
-		Map<Long, IPlayerItem> inventoryItems = new HashMap<>();
 
-		for (var item : this.getInventoryItems().entrySet()) {
-			totalSent++;
-			inventoryItems.put(item.getKey(), item.getValue());
+		for (int i = 0; i < entries.size(); i += InventoryMessageComposer.ITEMS_PER_PAGE) {
+			Map<Long, IPlayerItem> inventoryPage = entries.subList(i, (int) Math.min(i + InventoryMessageComposer.ITEMS_PER_PAGE, entries.size()))
+					.stream()
+					.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-			if (inventoryItems.size() >= InventoryMessageComposer.ITEMS_PER_PAGE
-					|| totalSent == this.inventoryItems.size()) {
-				this.getPlayer().getSession()
-						.send(new InventoryMessageComposer((int) (totalPages + 1), currentPage, inventoryItems));
-
-				inventoryItems = new HashMap<>();
-				currentPage++;
-			}
+			this.getPlayer().getSession().send(new InventoryMessageComposer(totalPages, currentPage++, inventoryPage));
 		}
 	}
+
 
 	@Override
 	public boolean hasBadge(String code) {
@@ -197,7 +185,6 @@ public class InventoryComponent extends PlayerComponent implements IPlayerInvent
 			this.getPlayer().getSession().send(new BadgeInventoryMessageComposer(this.badges));
 
 			this.getPlayer().flush(this);
-			this.getPlayer().getPlayerObserver().notifyObservers(this);
 		}
 	}
 
@@ -226,30 +213,29 @@ public class InventoryComponent extends PlayerComponent implements IPlayerInvent
 		});
 
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 
 	@Override
-	public String[] equippedBadges() {
+	public String[] equippedBadges() {	
 		final String[] badges = new String[6];
 
 		this.getBadges().forEach((key, value) -> {
-			if (value > 0)
+			if (value > 0 && value < badges.length) { 
 				badges[value] = key;
+			}
 		});
 
 		return badges;
 	}
 
+
 	@Override
-	public IPlayerItem add(long id, int itemId, String extraData, GiftData giftData,
-			ILimitedEditionItem limitedEditionItem) {
+	public IPlayerItem add(long id, int itemId, String extraData, GiftData giftData, ILimitedEditionItem limitedEditionItem) {
 		IPlayerItem item = new InventoryItem(id, itemId, extraData, giftData, limitedEditionItem);
 
 		this.inventoryItems.put(id, item);
 
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 
 		return item;
 	}
@@ -257,8 +243,7 @@ public class InventoryComponent extends PlayerComponent implements IPlayerInvent
 	@Override
 	public List<ISongItem> getSongs() {
 		return this.inventoryItems.values().stream().filter(inventoryItem -> inventoryItem.getDefinition().isSong())
-				.map(inventoryItem -> new SongItemData((InventoryItemSnapshot) inventoryItem.createSnapshot(),
-						inventoryItem.getDefinition().getSongId()))
+				.map(inventoryItem -> new SongItemData((InventoryItemSnapshot) inventoryItem.createSnapshot(), inventoryItem.getDefinition().getSongId()))
 				.collect(Collectors.toList());
 	}
 
@@ -272,7 +257,6 @@ public class InventoryComponent extends PlayerComponent implements IPlayerInvent
 		this.inventoryItems.put(item.getId(), item);
 
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 
 	@Override
@@ -286,7 +270,6 @@ public class InventoryComponent extends PlayerComponent implements IPlayerInvent
 		this.getPlayer().getSession().send(new RemoveObjectFromInventoryMessageComposer(ItemManager.getInstance().getItemVirtualId(itemId)));
 
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 
 	@Override
@@ -301,17 +284,21 @@ public class InventoryComponent extends PlayerComponent implements IPlayerInvent
 
 	@Override
 	public void dispose() {
-		this.inventoryItems.values()
-				.forEach(inventoryItem -> ItemManager.getInstance().disposeItemVirtualId(inventoryItem.getId()));
+		if (this.inventoryItems != null) {
+			this.inventoryItems.values().forEach(inventoryItem -> ItemManager.getInstance().disposeItemVirtualId(inventoryItem.getId()));
+			this.inventoryItems.clear();
+			this.inventoryItems = null;
+		}
 
-		this.inventoryItems.clear();
-		this.inventoryItems = null;
+		if (this.effects != null) {
+			this.effects.clear();
+			this.effects = null;
+		}
 
-		this.effects.clear();
-		this.effects = null;
-
-		this.badges.clear();
-		this.badges = null;
+		if (this.badges != null) {
+			this.badges.clear();
+			this.badges = null;
+		}
 	}
 
 	@Override

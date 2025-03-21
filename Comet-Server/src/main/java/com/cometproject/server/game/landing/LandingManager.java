@@ -2,7 +2,7 @@ package com.cometproject.server.game.landing;
 
 import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.game.landing.types.PromoArticle;
 import com.cometproject.server.storage.queries.landing.LandingDao;
 import com.cometproject.server.tasks.CometThreadManager;

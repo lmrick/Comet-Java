@@ -8,7 +8,8 @@ import com.cometproject.api.game.rooms.entities.IPlayerRoomEntity;
 import com.cometproject.api.networking.messages.IMessageComposer;
 import com.cometproject.api.networking.sessions.ISession;
 import com.cometproject.api.utilities.observers.IObserver;
-import com.cometproject.api.utilities.observers.PlayerObserver;
+import com.cometproject.api.utilities.observers.types.players.PlayerObserver;
+
 import java.util.List;
 import java.util.Set;
 

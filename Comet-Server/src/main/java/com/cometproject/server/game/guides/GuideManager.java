@@ -1,6 +1,6 @@
 package com.cometproject.server.game.guides;
 
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.game.guides.types.HelpRequest;
 import com.cometproject.server.game.guides.types.HelperSession;
 import com.cometproject.server.network.messages.outgoing.help.guides.GuideSessionAttachedMessageComposer;

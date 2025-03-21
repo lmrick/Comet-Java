@@ -2,7 +2,7 @@ package com.cometproject.api.game.achievements;
 
 import com.cometproject.api.game.achievements.types.AchievementType;
 import com.cometproject.api.game.achievements.types.IAchievementGroup;
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
 
 import java.util.Map;
 

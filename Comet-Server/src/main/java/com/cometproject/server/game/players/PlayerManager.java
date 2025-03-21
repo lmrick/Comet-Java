@@ -1,11 +1,11 @@
 package com.cometproject.server.game.players;
 
-import com.cometproject.api.caching.Cache;
 import com.cometproject.api.config.Configuration;
 import com.cometproject.api.game.players.IPlayerService;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.game.players.data.IPlayerData;
 import com.cometproject.api.networking.sessions.ISession;
+import com.cometproject.api.utilities.caching.Cache;
 import com.cometproject.common.caching.LastReferenceCache;
 import com.cometproject.server.game.players.data.PlayerData;
 import com.cometproject.server.game.players.login.PlayerLoginRequest;
@@ -112,7 +112,6 @@ public class PlayerManager implements IPlayerService {
 		}
 		
 		IPlayerAvatar playerAvatar = PlayerDao.getAvatarById(playerId, mode);
-		
 		if (playerAvatar != null && this.playerAvatarCache != null) {
 			this.playerAvatarCache.add(playerId, playerAvatar);
 		}

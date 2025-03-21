@@ -6,6 +6,8 @@ import com.cometproject.api.game.achievements.types.IAchievementGroup;
 import com.cometproject.api.game.players.components.PlayerComponentContext;
 import com.cometproject.api.game.players.data.components.IPlayerAchievements;
 import com.cometproject.api.game.players.data.components.achievements.IAchievementProgress;
+import com.cometproject.api.utilities.observers.IObserver;
+import com.cometproject.api.utilities.observers.types.players.PlayerObserver;
 import com.cometproject.server.game.achievements.AchievementManager;
 import com.cometproject.server.game.players.components.PlayerComponent;
 import com.cometproject.server.game.players.components.types.achievements.AchievementProgress;
@@ -16,10 +18,11 @@ import com.cometproject.server.network.messages.outgoing.user.purse.UpdateActivi
 import com.cometproject.server.storage.queries.achievements.PlayerAchievementDao;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 public class AchievementComponent extends PlayerComponent implements IPlayerAchievements {
+	private final Logger LOG = super.getLogger(AchievementComponent.class);
 	private Map<AchievementType, IAchievementProgress> progression;
 	
 	public AchievementComponent(PlayerComponentContext componentContext) {
@@ -35,6 +38,9 @@ public class AchievementComponent extends PlayerComponent implements IPlayerAchi
 		}
 		
 		this.progression = PlayerAchievementDao.getAchievementProgress(this.getPlayer().getId());
+
+		// Notify player that achievements are updated
+		this.getPlayer().flush(this);
 	}
 	
 	@Override
@@ -105,7 +111,6 @@ public class AchievementComponent extends PlayerComponent implements IPlayerAchi
 		PlayerAchievementDao.saveProgress(this.getPlayer().getId(), type, progress);
 		
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	private void processUnlock(IAchievement currentAchievement, IAchievement targetAchievement, IAchievementGroup achievementGroup, IAchievementProgress progress, int targetLevel, AchievementType type) {
@@ -129,12 +134,11 @@ public class AchievementComponent extends PlayerComponent implements IPlayerAchi
 		this.getPlayer().getInventory().achievementBadge(type.getGroupName(), currentAchievement.level());
 		
 		this.getPlayer().flush(this);
-		this.getPlayer().getPlayerObserver().notifyObservers(this);
 	}
 	
 	@Override
 	public boolean hasStartedAchievement(AchievementType achievementType) {
-		return !this.progression.containsKey(achievementType);
+		return this.progression.containsKey(achievementType);
 	}
 	
 	@Override
@@ -145,7 +149,11 @@ public class AchievementComponent extends PlayerComponent implements IPlayerAchi
 	@Override
 	public void dispose() {
 		super.dispose();
-		this.progression.clear();
+		
+		if (this.progression != null) {
+			this.progression.clear();
+			this.progression = null;
+		}
 	}
 	
 	

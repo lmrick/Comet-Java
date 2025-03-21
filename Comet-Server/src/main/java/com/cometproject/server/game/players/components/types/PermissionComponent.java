@@ -1,5 +1,7 @@
 package com.cometproject.server.game.players.components.types;
 
+import org.apache.log4j.Logger;
+
 import com.cometproject.api.game.players.components.PlayerComponentContext;
 import com.cometproject.api.game.players.data.components.IPlayerPermissions;
 import com.cometproject.server.boot.Comet;
@@ -10,7 +12,8 @@ import com.cometproject.server.game.permissions.types.Rank;
 import com.cometproject.server.game.players.components.PlayerComponent;
 
 public class PermissionComponent extends PlayerComponent implements IPlayerPermissions {
-	
+	private final Logger LOG = super.getLogger(PermissionComponent.class);
+
 	public PermissionComponent(PlayerComponentContext componentContext) {
 		super(componentContext);
 	}

@@ -1,12 +1,14 @@
 package com.cometproject.common.caching;
 
-import com.cometproject.api.caching.Cache;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
+
+import com.cometproject.api.utilities.caching.Cache;
 
 public class LastReferenceCache<TKey, TObj> implements Cache<TKey, TObj> {
 	private final Map<TKey, CacheEntry<TObj>> cache;
@@ -47,6 +49,16 @@ public class LastReferenceCache<TKey, TObj> implements Cache<TKey, TObj> {
 		}
 		
 		return obj.getObject();
+	}
+
+	public Optional<TObj> getIfPresent(TKey tKey) {
+		CacheEntry<TObj> obj = this.cache.get(tKey);
+
+		if(obj == null) {
+			return Optional.empty();
+		}
+
+		return Optional.of(obj.getObject());
 	}
 	
 	@Override

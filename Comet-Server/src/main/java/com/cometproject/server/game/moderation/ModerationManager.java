@@ -1,6 +1,6 @@
 package com.cometproject.server.game.moderation;
 
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.game.moderation.types.actions.ActionCategory;
 import com.cometproject.server.game.moderation.types.tickets.HelpTicket;
 import com.cometproject.server.game.moderation.types.tickets.HelpTicketState;

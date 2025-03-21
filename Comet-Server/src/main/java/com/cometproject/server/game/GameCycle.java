@@ -2,7 +2,7 @@ package com.cometproject.server.game;
 
 import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.game.achievements.types.AchievementType;
-import com.cometproject.api.utilities.Initializable;
+import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.moderation.BanManager;
 import com.cometproject.server.game.rooms.RoomManager;

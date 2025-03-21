@@ -1,6 +1,5 @@
 package com.cometproject.game.rooms;
 
-import com.cometproject.api.caching.Cache;
 import com.cometproject.api.modules.ModuleConfig;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.rooms.IRoomData;
@@ -9,6 +8,7 @@ import com.cometproject.api.game.rooms.models.IRoomModelFactory;
 import com.cometproject.api.game.rooms.models.IRoomModelService;
 import com.cometproject.api.modules.BaseModule;
 import com.cometproject.api.server.IGameService;
+import com.cometproject.api.utilities.caching.Cache;
 import com.cometproject.common.caching.LastReferenceCache;
 import com.cometproject.game.rooms.factories.RoomModelFactory;
 import com.cometproject.game.rooms.services.RoomModelService;
