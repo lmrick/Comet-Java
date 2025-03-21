@@ -18,7 +18,6 @@
     <module>Comet-API</module>
     <module>Comet-API-Example</module>      
     <module>Comet-Server-Protocol</module>    
-    <module>Comet-Modules-Events</module> 
     <module>Comet-Server</module>
     <module>Comet-Website</module>
     <module>Comet-Common</module>
