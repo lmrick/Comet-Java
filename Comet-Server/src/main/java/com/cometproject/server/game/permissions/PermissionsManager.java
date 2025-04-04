@@ -7,7 +7,6 @@ import com.cometproject.server.game.permissions.types.Perk;
 import com.cometproject.server.game.permissions.types.Rank;
 import com.cometproject.server.storage.queries.permissions.PermissionsDao;
 import org.apache.log4j.Logger;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

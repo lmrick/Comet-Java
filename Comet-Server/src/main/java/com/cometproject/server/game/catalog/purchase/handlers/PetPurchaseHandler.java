@@ -11,9 +11,7 @@ import com.cometproject.server.network.messages.outgoing.user.inventory.PetInven
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.storage.queries.pets.PetDao;
 import com.google.common.collect.Lists;
-
 import java.util.HashMap;
-import java.util.List;
 
 public class PetPurchaseHandler implements IPurchaseHandler {
 	

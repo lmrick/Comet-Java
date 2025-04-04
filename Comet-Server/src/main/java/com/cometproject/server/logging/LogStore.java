@@ -23,4 +23,5 @@ public class LogStore {
     public LogEntryContainer getLogEntryContainer() {
         return logEntryContainer;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.cometproject.server.network.messages.incoming.moderation;
 
 import com.cometproject.server.game.rooms.types.Room;
+import com.cometproject.server.logging.LogManager;
 import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.messages.outgoing.notification.AlertMessageComposer;
 import com.cometproject.server.network.sessions.Session;
@@ -11,7 +12,6 @@ public class ModToolRoomAlertMessageEvent implements Event {
 	@Override
 	public void handle(Session client, MessageEvent msg) throws Exception {
 		int action = msg.readInt();
-		
 		String alert = msg.readString();
 		String reason = msg.readString();
 		
@@ -25,7 +25,7 @@ public class ModToolRoomAlertMessageEvent implements Event {
 		Room room = client.getPlayer().getEntity().getRoom();
 		
 		room.getEntities().broadcastMessage(new AlertMessageComposer(alert));
-		// TODO: Log these
+		//TODO LOG THIS
 	}
 	
 }

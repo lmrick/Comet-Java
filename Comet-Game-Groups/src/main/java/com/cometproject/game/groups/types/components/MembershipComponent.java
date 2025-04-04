@@ -14,9 +14,7 @@ import java.util.*;
 public class MembershipComponent implements IMembershipComponent {
 
     private final int groupId;
-
     private final IGroupService groupService;
-
     private final Map<Integer, IGroupMember> groupMembers;
     private final Set<Integer> membershipRequests;
     private final Set<Integer> administrators;

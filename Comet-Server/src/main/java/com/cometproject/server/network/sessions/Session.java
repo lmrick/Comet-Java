@@ -1,5 +1,6 @@
 package com.cometproject.server.network.sessions;
 
+import com.cometproject.server.network.sessions.security.SessionEventHandler;
 import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.game.players.PlayerContext;
 import com.cometproject.api.networking.messages.IMessageComposer;

@@ -3,7 +3,7 @@ package com.cometproject.server.network;
 import com.cometproject.api.config.CometSettings;
 import com.cometproject.networking.api.sessions.INetSessionFactory;
 import com.cometproject.server.network.clients.ClientHandler;
-import com.cometproject.server.network.sessions.SessionAccessLog;
+import com.cometproject.server.network.sessions.security.SessionAccessLog;
 import com.cometproject.server.protocol.codec.MessageDecoder;
 import com.cometproject.server.protocol.codec.MessageEncoder;
 import com.cometproject.server.protocol.codec.XMLPolicyDecoder;

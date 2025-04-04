@@ -5,14 +5,12 @@ import com.cometproject.server.game.permissions.types.OverrideCommandPermission;
 import com.cometproject.server.game.permissions.types.Perk;
 import com.cometproject.server.game.permissions.types.Rank;
 import com.cometproject.server.storage.SQLUtility;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 
 public class PermissionsDao {
 
@@ -88,7 +86,9 @@ public class PermissionsDao {
                         resultSet.getString("about_detailed").equals("1"),
                         resultSet.getString("about_stats").equals("1"),
                         resultSet.getString("login_notif").equals("1"),
-                        resultSet.getString("name_prefix")));
+                        resultSet.getString("name_prefix"),
+                        resultSet.getString("room_mpu").equals("1")
+                ));
             }
 
         } catch (SQLException e) {
@@ -123,8 +123,8 @@ public class PermissionsDao {
 
                     data.putIfAbsent(resultSet.getString("command_id"),
                             new CommandPermission(commandId, minimumRank, vipOnly, rightsOnly));
-                } catch (Exception ignored) {
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -157,8 +157,8 @@ public class PermissionsDao {
                     final int playerId = resultSet.getInt("player_id");
                     final boolean enabled = resultSet.getString("enabled").equals("1");
                     data.putIfAbsent(resultSet.getString("command_id"), new OverrideCommandPermission(commandId, playerId, enabled));
-                } catch (Exception ignored) {
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -215,11 +215,10 @@ public class PermissionsDao {
             while (resultSet.next()) {
                 try {
                     data.put(resultSet.getInt("bubble_id"), resultSet.getInt("minimum_rank"));
-                } catch (Exception ignored) {
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-
         } catch (SQLException e) {
             SQLUtility.handleSqlException(e);
         } finally {

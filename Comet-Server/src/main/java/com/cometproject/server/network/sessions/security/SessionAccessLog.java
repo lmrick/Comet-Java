@@ -1,4 +1,4 @@
-package com.cometproject.server.network.sessions;
+package com.cometproject.server.network.sessions.security;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

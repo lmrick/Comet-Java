@@ -26,8 +26,14 @@ public class Rank implements IPlayerRank {
 	private final boolean aboutStats;
 	private final boolean loginNotif;
 	private final String namePrefix;
+	private final boolean roomMPU;
 	
-	public Rank(int id, String name, boolean floodBypass, int floodTime, boolean disconnectable, boolean modTool, boolean bannable, boolean roomKickable, boolean roomFullControl, boolean roomMuteBypass, boolean roomFilterBypass, boolean roomIgnorable, boolean roomEnterFull, boolean roomEnterLocked, boolean roomStaffPick, boolean roomSeeWhispers, boolean messengerStaffChat, boolean messengerLogChat, int messengerMaxFriends, boolean aboutDetailed, boolean aboutStats, boolean loginNotif, String namePrefix) {
+	public Rank(int id, String name, boolean floodBypass, int floodTime, boolean disconnectable, boolean modTool, 
+	boolean bannable, boolean roomKickable, boolean roomFullControl, boolean roomMuteBypass, 
+	boolean roomFilterBypass, boolean roomIgnorable, boolean roomEnterFull, boolean roomEnterLocked, 
+	boolean roomStaffPick, boolean roomSeeWhispers, boolean messengerStaffChat, boolean messengerLogChat, 
+	int messengerMaxFriends, boolean aboutDetailed, boolean aboutStats, boolean loginNotif, String namePrefix,
+	boolean roomMPU) {
 		this.id = id;
 		this.namePrefix = namePrefix;
 		this.name = name;
@@ -51,6 +57,7 @@ public class Rank implements IPlayerRank {
 		this.aboutDetailed = aboutDetailed;
 		this.aboutStats = aboutStats;
 		this.loginNotif = loginNotif;
+		this.roomMPU = roomMPU;
 	}
 	
 	@Override
@@ -166,6 +173,11 @@ public class Rank implements IPlayerRank {
 	@Override
 	public String namePrefix() {
 		return namePrefix;
+	}
+
+	@Override
+	public boolean roomMPU() {
+		return roomMPU;
 	}
 	
 }

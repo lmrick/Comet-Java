@@ -1,5 +1,6 @@
 package com.cometproject.server.network.sessions;
 
+import com.cometproject.server.network.sessions.security.SessionAccessLog;
 import com.cometproject.api.networking.messages.IMessageComposer;
 import com.cometproject.api.networking.sessions.ISession;
 import com.cometproject.api.networking.sessions.ISessionService;

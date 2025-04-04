@@ -236,7 +236,7 @@ public class LogQueries {
 		
 		return chatLogs;
 	}
-	
+
 	public static List<RoomVisitLogEntry> getLastRoomVisits(int playerId, int count) {
 		Connection sqlConnection = null;
 		PreparedStatement preparedStatement = null;

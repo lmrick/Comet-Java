@@ -8,7 +8,7 @@ import com.ning.http.client.Response;
 import java.util.concurrent.Future;
 
 public class FbApiClient {
-    private static final FbApiClient client = new FbApiClient();
+    private static FbApiClient client;
     private final Gson gson = new Gson();
     public static final String FB_API_VERSION = "v2.8";
     public static final String FB_APP_ID = "1260936063961905";
@@ -72,7 +72,7 @@ public class FbApiClient {
     }
 
     public static FbApiClient getClient() {
-        if (client == null) client = new ApiClient();
+        if (client == null) client = new FbApiClient();
         return client;
     }
 }

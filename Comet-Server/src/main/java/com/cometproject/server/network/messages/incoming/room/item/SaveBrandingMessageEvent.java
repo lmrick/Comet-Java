@@ -3,6 +3,7 @@ package com.cometproject.server.network.messages.incoming.room.item;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.network.messages.incoming.Event;
+import com.cometproject.server.network.messages.outgoing.notification.AlertMessageComposer;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.protocol.messages.MessageEvent;
 
@@ -13,9 +14,10 @@ public class SaveBrandingMessageEvent implements Event {
         int brandingId = msg.readInt();
         Room room = client.getPlayer().getEntity().getRoom();
 
-        //TODO ADD MPU PERMISSION
         if (room == null || (!room.getRights().hasRights(client.getPlayer().getId()) 
-        && !client.getPlayer().getPermissions().getRank().roomFullControl())) {
+        && !client.getPlayer().getPermissions().getRank().roomFullControl() || 
+        !client.getPlayer().getPermissions().getRank().roomMPU())) {
+            client.getGameSession().send(new AlertMessageComposer("You do not have permission to edit ROOM MPU."));
             return;
         }
 

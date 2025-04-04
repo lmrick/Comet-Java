@@ -38,4 +38,5 @@ public class ModToolRoomInfoMessageComposer extends MessageComposer {
             msg.writeString(room.getData().getTags()[i]);
         }
     }
+    
 }

@@ -1,5 +1,6 @@
-package com.cometproject.server.network.sessions;
+package com.cometproject.server.network.sessions.security;
 
+import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.protocol.headers.Events;
 import com.cometproject.server.protocol.messages.MessageEvent;
