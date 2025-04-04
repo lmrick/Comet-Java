@@ -14,7 +14,6 @@ import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.EventExecutorGroup;
 import org.apache.log4j.Logger;
-
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -23,13 +22,11 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
 
     private final EventExecutorGroup executor;
     private final INetSessionFactory sessionFactory;
-
     private final ClientHandler clientHandler;
 
     public NetworkChannelInitializer(EventExecutorGroup executorGroup, INetSessionFactory sessionFactory) {
         this.executor = executorGroup;
         this.sessionFactory = sessionFactory;
-
         this.clientHandler = new ClientHandler(sessionFactory);
     }
 

@@ -319,7 +319,8 @@ public class Events {
 	static {
 		try {
 			for (Field field : Events.class.getDeclaredFields()) {
-				if (!Modifier.isPrivate(field.getModifiers())) eventPacketNames.put(field.getShort(field.getName()), field.getName());
+				if (!Modifier.isPrivate(field.getModifiers())) 
+				eventPacketNames.put(field.getShort(field.getName()), field.getName());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

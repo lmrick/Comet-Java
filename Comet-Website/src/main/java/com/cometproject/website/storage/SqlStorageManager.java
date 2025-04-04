@@ -15,7 +15,6 @@ public class SqlStorageManager {
 
         try {
             String[] connectionDetails = Configuration.getInstance().getDbHost().split(":");
-
             HikariConfig config = new HikariConfig();
 
             config.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");

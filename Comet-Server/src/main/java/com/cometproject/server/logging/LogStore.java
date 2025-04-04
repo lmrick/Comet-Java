@@ -2,9 +2,7 @@ package com.cometproject.server.logging;
 
 import com.cometproject.server.logging.containers.LogEntryContainer;
 import com.cometproject.server.logging.containers.RoomVisitContainer;
-
 import java.util.concurrent.TimeUnit;
-
 
 public class LogStore {
     private static final TimeUnit QUEUE_FLUSH_UNIT = TimeUnit.MINUTES;
@@ -13,10 +11,7 @@ public class LogStore {
     private LogEntryContainer logEntryContainer;
 
     public LogStore() {
-        if (!LogManager.ENABLED) {
-					return;
-				}
-        
+        if (!LogManager.ENABLED) return;
         roomVisitContainer = new RoomVisitContainer();
         logEntryContainer = new LogEntryContainer();
     }

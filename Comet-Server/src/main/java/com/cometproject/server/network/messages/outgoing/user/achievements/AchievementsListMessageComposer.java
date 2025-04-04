@@ -1,19 +1,15 @@
 package com.cometproject.server.network.messages.outgoing.user.achievements;
 
-import com.cometproject.api.game.achievements.types.AchievementType;
+import com.cometproject.api.game.GameContext;
+import com.cometproject.api.game.achievements.IAchievementsService;
 import com.cometproject.api.game.achievements.types.IAchievement;
-import com.cometproject.api.game.achievements.types.IAchievementGroup;
 import com.cometproject.api.game.players.data.components.achievements.IAchievementProgress;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
-import com.cometproject.server.game.achievements.AchievementManager;
 import com.cometproject.server.game.players.components.types.AchievementComponent;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
-import java.util.Map;
-
 public class AchievementsListMessageComposer extends MessageComposer {
-
     private final AchievementComponent achievementComponent;
 
     public AchievementsListMessageComposer(final AchievementComponent achievementComponent) {
@@ -27,11 +23,14 @@ public class AchievementsListMessageComposer extends MessageComposer {
 
     @Override
     public void compose(IComposerDataWrapper msg) {
-        msg.writeInt(AchievementManager.getInstance().getAchievementGroups().size());
+        final var achievementsGroupsSize = GameContext.getCurrent().getService(IAchievementsService.class).getAchievementGroups().size();
+        final var achievementsGroupsEntrySet = GameContext.getCurrent().getService(IAchievementsService.class).getAchievementGroups().entrySet();
+        
+        msg.writeInt(achievementsGroupsSize);
 
-        for (Map.Entry<AchievementType, IAchievementGroup> entry : AchievementManager.getInstance().getAchievementGroups().entrySet()) {
-            IAchievementProgress achievementProgress = this.achievementComponent.getProgress(entry.getKey());
-            IAchievement achievement = achievementProgress == null ? entry.getValue().getAchievement(1) : entry.getValue().getAchievement(achievementProgress.getLevel());
+        for (var entry : achievementsGroupsEntrySet) {
+            final IAchievementProgress achievementProgress = this.achievementComponent.getProgress(entry.getKey());
+            final IAchievement achievement = achievementProgress == null ? entry.getValue().getAchievement(1) : entry.getValue().getAchievement(achievementProgress.getLevel());
 
             msg.writeInt(entry.getValue().id());
             msg.writeInt(achievement == null ? 0 : achievement.level());
@@ -58,4 +57,5 @@ public class AchievementsListMessageComposer extends MessageComposer {
 
         msg.writeString("");
     }
+
 }

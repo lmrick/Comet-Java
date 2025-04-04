@@ -10,7 +10,6 @@ import com.google.gson.JsonObject;
 import org.apache.commons.validator.routines.EmailValidator;
 import spark.Request;
 import spark.Response;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -89,4 +88,5 @@ public class RegistrationRoute {
 
         return gsonInstance.toJson(jsonObject);
     }
+    
 }

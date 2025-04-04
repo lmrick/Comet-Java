@@ -6,6 +6,11 @@ import com.cometproject.api.game.groups.IGroupService;
 import com.cometproject.api.game.players.IPlayerService;
 import com.cometproject.api.game.rooms.IRoomService;
 import com.cometproject.api.game.rooms.models.IRoomModelService;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.log4j.Logger;
 
 public class GameContext {
@@ -18,8 +23,18 @@ public class GameContext {
 	private IPlayerService playerService;
 	private IRoomService roomService;
 	private IRoomModelService roomModelService;
-	
+
+	private final Map<Class<?>, Object> services = new ConcurrentHashMap<>();
 	private final Logger logger = Logger.getLogger(GameContext.class);
+
+	public <T> void setService(Class<T> serviceClass, T service) {
+		services.put(serviceClass, service);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T getService(Class<T> serviceClass) {
+		return (T) services.get(serviceClass);
+	}
 	
 	public ICatalogService getCatalogService() {
 		return catalogService;

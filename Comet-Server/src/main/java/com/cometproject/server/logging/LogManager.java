@@ -2,9 +2,7 @@ package com.cometproject.server.logging;
 
 import com.cometproject.api.config.Configuration;
 import com.cometproject.api.utilities.process.Initializable;
-
 import org.apache.log4j.Logger;
-
 
 public class LogManager implements Initializable {
     public static final boolean ENABLED = Configuration.currentConfig().get("comet.game.logging.enabled").equals("true");

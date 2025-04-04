@@ -11815,7 +11815,7 @@ CREATE TABLE `groups` (
 DROP TABLE IF EXISTS `items`;
 CREATE TABLE `items` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) NOT NULL,
+  `player_id` int(10) NOT NULL,
   `room_id` int(10) unsigned NOT NULL DEFAULT '0',
   `base_item` int(10) unsigned NOT NULL,
   `extra_data` text NOT NULL,
@@ -11826,7 +11826,7 @@ CREATE TABLE `items` (
   `wall_pos` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`) USING BTREE,
-  KEY `userid` (`user_id`) USING BTREE,
+  KEY `playerid` (`player_id`) USING BTREE,
   KEY `roomid` (`room_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -11908,11 +11908,21 @@ CREATE TABLE `logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` enum('ROOM_VISIT','FURNI_PURCHASE','ROOM_CHATLOG','MESSENGER_CHATLOG','COMMAND') DEFAULT 'ROOM_CHATLOG',
   `room_id` int(11) DEFAULT '-1',
-  `user_id` int(11) DEFAULT '-1',
+  `player_id` int(11) DEFAULT '-1',
   `data` text CHARACTER SET utf8,
   `timestamp` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `logs_username`;
+CREATE TABLE `logs_username` (
+  `player_id` int(11) NOT NULL AUTO_INCREMENT,
+  `new_name` text CHARACTER SET utf8,
+  `old_name` text CHARACTER SET utf8,
+  `timestamp` int(11) DEFAULT '0',
+  PRIMARY KEY (`player_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
 
 -- ----------------------------
 -- Records of logs
@@ -12692,7 +12702,7 @@ CREATE TABLE `player_subscriptions` (
   `type` varchar(50) DEFAULT 'habbo_vip',
   `start` int(255) DEFAULT '0',
   `expire` int(255) DEFAULT '0',
-  `user_id` int(11) DEFAULT '0',
+  `player_id` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -13004,6 +13014,7 @@ CREATE TABLE `rooms` (
   `flood_level` tinyint(3) NOT NULL DEFAULT '0',
   `disabled_commands` varchar(255) NOT NULL DEFAULT '',
   `required_badge` varchar(50) DEFAULT NULL,
+  `hide_wired` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `owner_id` (`id`,`owner_id`),
   KEY `name` (`name`),

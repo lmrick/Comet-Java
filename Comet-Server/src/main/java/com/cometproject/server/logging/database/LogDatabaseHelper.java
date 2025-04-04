@@ -3,7 +3,6 @@ package com.cometproject.server.logging.database;
 import com.cometproject.server.logging.database.queries.LogQueries;
 import com.cometproject.server.storage.SQLUtility;
 import org.apache.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

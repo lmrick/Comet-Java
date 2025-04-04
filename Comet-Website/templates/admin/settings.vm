@@ -5,19 +5,13 @@
     input[type='text'] {
         width: 60%;
     }
-
-
-
 </style>
 
 <script>
-$('#myTab a').click(function (e) {
-e.preventDefault();
-$(this).tab('show')
-})
-
-
-
+    $('#myTab a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show')
+    })
 </script>
 
 <div class="container-fluid">
@@ -27,7 +21,7 @@ $(this).tab('show')
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="padding: 20px;">
             #if($success)
-            <div class="alert alert-success">Your request was successful</div>
+                <div class="alert alert-success">Your request was successful</div>
             #end
 
             <form role="form" method="post" action="/admin/settings/save">
@@ -57,21 +51,32 @@ $(this).tab('show')
                                 <h2>Website Settings</h2>
                                 <div class="form-group">
                                     <label for="hotelName">Hotel Name</label>
-                                    <input type="text" class="form-control" id="hotelName" name="hotelName"
-                                           value="$siteSettings.hotelName">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="hotelName"
+                                        name="hotelName"
+                                        value="$siteSettings.hotelName">
                                 </div>
                                 <div class="form-group">
                                     <label for="hotelSlogan">Hotel Slogan</label>
-                                    <input type="text" class="form-control" id="hotelSlogan" name="hotelSlogan"
-                                           value="$siteSettings.hotelSlogan">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="hotelSlogan"
+                                        name="hotelSlogan"
+                                        value="$siteSettings.hotelSlogan">
                                 </div>
                                 <div class="form-group">
                                     <label for="hotelDescription">Hotel Description</label>
-                                    <input type="text" class="form-control" id="hotelDescription"
-                                           name="hotelDescription" value="$siteSettings.hotelDescription">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="hotelDescription"
+                                        name="hotelDescription"
+                                        value="$siteSettings.hotelDescription">
                                 </div>
                             </div>
-
 
                             <div role="tabpanel" class="tab-pane" id="social">
 
@@ -81,18 +86,30 @@ $(this).tab('show')
                                 </p>
                                 <div class="form-group">
                                     <label for="twitterUsername">Twitter Username</label>
-                                    <input type="text" class="form-control" id="twitterUsername"
-                                           name="twitterUsername" value="$siteSettings.twitterUsername">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="twitterUsername"
+                                        name="twitterUsername"
+                                        value="$siteSettings.twitterUsername">
                                 </div>
                                 <div class="form-group">
                                     <label for="twitterWidget">Twitter Widget ID</label>
-                                    <input type="text" class="form-control" id="twitterWidget" name="twitterWidget"
-                                           value="$siteSettings.twitterWidgetId">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="twitterWidget"
+                                        name="twitterWidget"
+                                        value="$siteSettings.twitterWidgetId">
                                 </div>
                                 <div class="form-group">
                                     <label for="facebookUsername">Facebook Username</label>
-                                    <input type="text" class="form-control" id="facebookUsername"
-                                           name="facebookUsername" value="$siteSettings.facebookUsername">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="facebookUsername"
+                                        name="facebookUsername"
+                                        value="$siteSettings.facebookUsername">
                                 </div>
 
                             </div>
@@ -101,78 +118,128 @@ $(this).tab('show')
                                 <p>This is the data that will be used when creating a new player.</p>
                                 <div class="form-group">
                                     <label for="credits">Credits</label>
-                                    <input type="text" class="form-control" id="credits" name="credits"
-                                           value="$siteSettings.playerDefaultCredits">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="credits"
+                                        name="credits"
+                                        value="$siteSettings.playerDefaultCredits">
                                 </div>
                                 <div class="form-group">
                                     <label for="activityPoints">Activity Points</label>
-                                    <input type="text" class="form-control" id="activityPoints"
-                                           name="activityPoints" value="$siteSettings.playerDefaultActivityPoints">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="activityPoints"
+                                        name="activityPoints"
+                                        value="$siteSettings.playerDefaultActivityPoints">
                                 </div>
                                 <div class="form-group">
                                     <label for="vipPoints">VIP Points</label>
-                                    <input type="text" class="form-control" id="vipPoints" name="vipPoints"
-                                           value="$siteSettings.playerDefaultVipPoints">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="vipPoints"
+                                        name="vipPoints"
+                                        value="$siteSettings.playerDefaultVipPoints">
                                 </div>
                                 <div class="form-group">
                                     <label for="figure">Figure</label>
-                                    <input type="text" class="form-control" id="figure" name="figure"
-                                           value="$siteSettings.playerDefaultFigure">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="figure"
+                                        name="figure"
+                                        value="$siteSettings.playerDefaultFigure">
                                 </div>
                                 <div class="form-group">
                                     <label for="motto">Motto</label>
-                                    <input type="text" class="form-control" id="motto" name="motto"
-                                           value="$siteSettings.playerDefaultMotto">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="motto"
+                                        name="motto"
+                                        value="$siteSettings.playerDefaultMotto">
                                 </div>
                                 <div class="form-group">
                                     <label for="homeRoom">Home room (Room ID)</label>
-                                    <input type="text" class="form-control" id="homeRoom" name="homeRoom"
-                                           value="$siteSettings.playerDefaultHomeRoom">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="homeRoom"
+                                        name="homeRoom"
+                                        value="$siteSettings.playerDefaultHomeRoom">
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="client">
                                 <h2>Client Settings</h2>
                                 <div class="form-group">
                                     <label for="gameIp">Game IP</label>
-                                    <input type="text" class="form-control" id="gameIp" name="gameIp"
-                                           value="$siteSettings.gameHost">
+                                    <input type="text" class="form-control" id="gameIp" name="gameIp" value="$siteSettings.gameHost">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Game Port</label>
-                                    <input type="text" class="form-control" id="gamePort" name="gamePort"
-                                           value="$siteSettings.gamePort">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="gamePort"
+                                        name="gamePort"
+                                        value="$siteSettings.gamePort">
                                 </div>
                                 <div class="form-group">
                                     <label for="gameClientBase">Client Base URL</label>
-                                    <input type="text" class="form-control" id="gameClientBase"
-                                           name="gameClientBase" value="$siteSettings.gameClientBase">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="gameClientBase"
+                                        name="gameClientBase"
+                                        value="$siteSettings.gameClientBase">
                                 </div>
                                 <div class="form-group">
-                                    <label for="gameClientSwf">SWF URL
-                                        (<i>http://example.com/swfs/Habbo.swf</i>)</label>
-                                    <input type="text" class="form-control" id="gameClientSwf" name="gameClientSwf"
-                                           value="$siteSettings.gameClientSwf">
+                                    <label for="gameClientSwf">SWF URL (<i>http://example.com/swfs/Habbo.swf</i>)</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="gameClientSwf"
+                                        name="gameClientSwf"
+                                        value="$siteSettings.gameClientSwf">
                                 </div>
                                 <div class="form-group">
                                     <label for="externalVariables">External Variables URL</label>
-                                    <input type="text" class="form-control" id="externalVariables"
-                                           name="externalVariables" value="$siteSettings.gameClientVariables">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="externalVariables"
+                                        name="externalVariables"
+                                        value="$siteSettings.gameClientVariables">
                                 </div>
                                 <div class="form-group">
                                     <label for="externalTexts">External Texts URL</label>
-                                    <input type="text" class="form-control" id="externalTexts" name="externalTexts"
-                                           value="$siteSettings.gameClientTexts">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="externalTexts"
+                                        name="externalTexts"
+                                        value="$siteSettings.gameClientTexts">
                                 </div>
                                 <div class="form-group">
                                     <label for="furniData">Furniture Data URL</label>
-                                    <input type="text" class="form-control" id="furniData" name="furniData"
-                                           value="$siteSettings.gameClientFurniData">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="furniData"
+                                        name="furniData"
+                                        value="$siteSettings.gameClientFurniData">
                                 </div>
                                 <div class="form-group">
                                     <label for="productData">Product Data URL</label>
-                                    <input type="text" class="form-control" id="productData" name="productData"
-                                           value="$siteSettings.gameClientProductData">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="productData"
+                                        name="productData"
+                                        value="$siteSettings.gameClientProductData">
                                 </div>
                             </div>
                         </div>

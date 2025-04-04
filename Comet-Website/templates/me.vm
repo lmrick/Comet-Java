@@ -3,8 +3,9 @@
 <div id="wide-personal-info">
     <div id="habbo-plate">
         <a href="#">
-            <img alt="$player.username"
-                 src="http://www.habbo.nl/habbo-imaging/avatarimage?figure=$player.figure"/>
+            <img
+                alt="$player.username"
+                src="http://www.habbo.nl/habbo-imaging/avatarimage?figure=$player.figure"/>
         </a>
     </div>
     <div id="name-box" class="info-box">
@@ -21,9 +22,11 @@
     </div>
     <div class="enter-hotel-btn">
         <div class="open enter-btn">
-            <a href="$config.siteUrl/client" target="26530fff566f9e67da99560b7fe8da6d71d46391"
-               onclick="HabboClient.openOrFocus(this); return false;">Enter $siteSettings.hotelName
-                Hotel<i></i></a>
+            <a
+                href="$config.siteUrl/client"
+                target="26530fff566f9e67da99560b7fe8da6d71d46391"
+                onclick="HabboClient.openOrFocus(this); return false;">Enter $siteSettings.hotelName Hotel<i></i>
+            </a>
             <b></b>
         </div>
     </div>
@@ -32,10 +35,13 @@
 #parse('/templates/widgets/article-promos.vm')
 
 #if($siteSettings.useTwitter())
-<div id="column1" class="column">
-    <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/$siteSettings.twitterUsername"
-       data-widget-id="$siteSettings.twitterWidgetId">Tweets by @$siteSettings.twitterUsername</a>
-    <script>!function (d, s, id) {
+    <div id="column1" class="column">
+        <a
+            class="twitter-timeline"
+            data-dnt="true"
+            href="https://twitter.com/$siteSettings.twitterUsername"
+            data-widget-id="$siteSettings.twitterWidgetId">Tweets by @$siteSettings.twitterUsername</a>
+        <script>!function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
         if (!d.getElementById(id)) {
             js = d.createElement(s);

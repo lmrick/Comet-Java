@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SessionEventHandler {
-	
 	private final Session session;
 	private final Map<Short, Boolean> loginEvents;
 	

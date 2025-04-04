@@ -9,7 +9,10 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPubSub;
 
 public class GoToRoomSubscriber implements ISubscriber {
+    private static final String CHANNEL = "comet.goto.room";
     private Jedis jedis = null;
+
+    private record GoToRoomSubscriberData(String username, Integer roomId) { }
 
     @Override
     public void setJedis(JedisPool jedis) {
@@ -43,8 +46,7 @@ public class GoToRoomSubscriber implements ISubscriber {
 
     @Override
     public String getChannel() {
-        return "comet.goto.room";
+        return CHANNEL;
     }
     
-    private record GoToRoomSubscriberData(String username, Integer roomId) { }
 }

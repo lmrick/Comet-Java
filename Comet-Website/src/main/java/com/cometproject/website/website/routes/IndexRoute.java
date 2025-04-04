@@ -8,13 +8,12 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import static spark.Spark.halt;
 
 public class IndexRoute {
+
     public static ModelAndView index(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();
 
@@ -62,4 +61,5 @@ public class IndexRoute {
 
         return new ModelAndView(WebsiteManager.applyGlobals(model), "./templates/logout.vm");
     }
+    
 }

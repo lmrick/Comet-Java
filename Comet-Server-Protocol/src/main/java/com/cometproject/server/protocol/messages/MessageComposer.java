@@ -8,8 +8,7 @@ import org.apache.log4j.Logger;
 public abstract class MessageComposer implements IMessageComposer {
 	private static final Logger log = Logger.getLogger(MessageComposer.class);
 	
-	public MessageComposer() {
-	}
+	public MessageComposer() { }
 	
 	public final IComposerDataWrapper writeMessage(ByteBuf buf) {
 		return this.writeMessageImpl(buf);

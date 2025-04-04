@@ -1,4 +1,4 @@
-package com.cometproject.server.game.achievements;
+package com.cometproject.storage.api.data.achievements;
 
 import com.cometproject.api.game.achievements.types.AchievementCategory;
 import com.cometproject.api.game.achievements.types.IAchievement;
@@ -16,6 +16,5 @@ public record AchievementGroup(int id, Map<Integer, IAchievement> achievements, 
     public IAchievement getAchievement(int level) {
         return this.achievements.get(level);
     }
-    
     
 }

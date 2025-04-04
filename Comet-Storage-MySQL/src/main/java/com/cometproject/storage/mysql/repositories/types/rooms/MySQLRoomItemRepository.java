@@ -30,7 +30,7 @@ public class MySQLRoomItemRepository extends MySQLRepository implements IRoomIte
 
         select("SELECT i.*, player.username AS user_name, ltd.limited_id, ltd.limited_total FROM items i " +
                "LEFT JOIN items_limited_edition ltd ON ltd.item_id = i.id " +
-               "RIGHT JOIN players player ON player.id = i.user_id WHERE i.room_id = ?;",
+               "RIGHT JOIN players player ON player.id = i.player_id WHERE i.room_id = ?;",
                 data -> itemData.add(buildItem(data)), roomId);
 
         itemConsumer.accept(itemData);
@@ -38,7 +38,7 @@ public class MySQLRoomItemRepository extends MySQLRepository implements IRoomIte
 
     @Override
     public void removeItemFromRoom(long itemId, int playerId, String finalState) {
-        update("UPDATE items SET room_id = 0, user_id = ?, x = 0, " +
+        update("UPDATE items SET room_id = 0, player_id = ?, x = 0, " +
                "y = 0, z = 0, wall_pos = '', extra_data = ? WHERE id = ?", 
                 playerId, finalState, itemId);
     }
@@ -116,7 +116,7 @@ public class MySQLRoomItemRepository extends MySQLRepository implements IRoomIte
 
     @Override
     public void createItem(int playerId, int itemId, String data, Consumer<Long> idConsumer) {
-        insert("INSERT INTO items (`user_id`, `room_id`, `base_item`, `extra_data`, `x`, `y`, `z`, `rot`, `wall_pos`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", key -> {
+        insert("INSERT INTO items (`player_id`, `room_id`, `base_item`, `extra_data`, `x`, `y`, `z`, `rot`, `wall_pos`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", key -> {
             idConsumer.accept(key.readLong(1));
         }, playerId, 0, itemId, data, 0, 0, 0, 0, "");
     }
@@ -125,7 +125,7 @@ public class MySQLRoomItemRepository extends MySQLRepository implements IRoomIte
     public void createItems(List<CatalogPurchase> purchases, Consumer<List<Long>> idConsumer, int viewingUserId) {
         final List<Long> itemIds = Lists.newArrayList();
 
-        insertBatch("INSERT INTO items (`user_id`, `room_id`, `base_item`, `extra_data`, `x`, `y`, `z`, `rot`, `wall_pos`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", stmt -> {
+        insertBatch("INSERT INTO items (`player_id`, `room_id`, `base_item`, `extra_data`, `x`, `y`, `z`, `rot`, `wall_pos`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", stmt -> {
             for(CatalogPurchase catalogPurchase : purchases) {
                 stmt.setInt(1, viewingUserId != 0 ? viewingUserId : catalogPurchase.getPlayerId());
                 stmt.setInt(2, 0);
@@ -162,7 +162,7 @@ public class MySQLRoomItemRepository extends MySQLRepository implements IRoomIte
 
     @Override
     public void placeBundle(int roomId, Set<IRoomItemData> bundle) {
-        updateBatch("INSERT INTO items (`user_id`, `room_id`, `base_item`, `extra_data`, `x`, `y`, `z`, `rot`, `wall_pos`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", stmt -> {
+        updateBatch("INSERT INTO items (`player_id`, `room_id`, `base_item`, `extra_data`, `x`, `y`, `z`, `rot`, `wall_pos`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", stmt -> {
             for (IRoomItemData item : bundle) {
                 stmt.setInt(1, item.getOwnerId());
                 stmt.setInt(2, roomId);
@@ -189,7 +189,7 @@ public class MySQLRoomItemRepository extends MySQLRepository implements IRoomIte
 
         final var id = data.readLong("id");
         final var itemId = data.readInteger("base_item");
-        final var ownerId = data.readInteger("user_id");
+        final var ownerId = data.readInteger("player_id");
         final var ownerName = data.readString("user_name");
         final var x = data.readInteger("x");
         final var y = data.readInteger("y");

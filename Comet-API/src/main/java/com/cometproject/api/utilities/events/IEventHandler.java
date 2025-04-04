@@ -11,7 +11,6 @@ public interface IEventHandler extends Initializable {
    
    <T extends EventArgs> boolean handleEvent(Class<? extends Event<T>> eventClass, T args);
    void registerEvent(Event<?> consumer);
-   void deRegisterEvent(Event<?> consumer);
 
    void registerChatCommand(String commandExecutor, BiConsumer<ISession, String[]> consumer);
    void registerCommandInfo(String commandName, CommandInfo info);

@@ -6,7 +6,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPubSub;
 
 public class RefreshDataSubscriber implements ISubscriber {
-	
+	private static final String CHANNEL = "comet.refresh.data";
 	private Jedis jedis = null;
 	
 	@Override
@@ -36,7 +36,7 @@ public class RefreshDataSubscriber implements ISubscriber {
 	
 	@Override
 	public String getChannel() {
-		return "comet.refresh.data";
+		return CHANNEL;
 	}
 	
 }

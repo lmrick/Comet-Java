@@ -1,12 +1,10 @@
 package com.cometproject.server.storage.queries.items;
 
 import com.cometproject.server.storage.SQLUtility;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Map;
-
 
 public class TradeDao {
 
@@ -17,7 +15,7 @@ public class TradeDao {
         try {
             sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SQLUtility.prepare("UPDATE items SET user_id = ? WHERE id = ?", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE items SET player_id = ? WHERE id = ?", sqlConnection);
 
             preparedStatement.setInt(1, userId);
             preparedStatement.setLong(2, itemId);
@@ -38,7 +36,7 @@ public class TradeDao {
         try {
             sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SQLUtility.prepare("UPDATE items SET user_id = ? WHERE id = ?;", sqlConnection);
+            preparedStatement = SQLUtility.prepare("UPDATE items SET player_id = ? WHERE id = ?;", sqlConnection);
 
             for (Map.Entry<Long, Integer> item : itemsToUpdate.entrySet()) {
                 preparedStatement.setInt(1, item.getValue());

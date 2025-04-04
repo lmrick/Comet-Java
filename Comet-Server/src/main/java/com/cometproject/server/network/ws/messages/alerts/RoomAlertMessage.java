@@ -15,5 +15,17 @@ public class RoomAlertMessage extends WsMessage {
 		this.username = username;
 		this.figure = figure;
 	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getFigure() {
+		return figure;
+	}
 	
 }

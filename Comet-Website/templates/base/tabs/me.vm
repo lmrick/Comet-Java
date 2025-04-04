@@ -1,5 +1,5 @@
 ##TODO: make this dynamic...
-<li class="#if($page.id == "me") selected #end">
+<li class="#if($page.id == " me") selected #end"="me") selected #end"">
     #set($pageName = "Home")
 
     #if($page.id != "me")
@@ -19,7 +19,7 @@
 ##    #end
 ##</li>
 
-<li class="#if($page.id == "account") selected #end">
+<li class="#if($page.id == " account") selected #end"="account") selected #end"">
     #set($pageName = "Account Settings")
 
     #if($page.id != "account")
@@ -29,7 +29,7 @@
     #end
 </li>
 
-<li class="#if($page.id == "playlist") selected #end">
+<li class="#if($page.id == " playlist") selected #end"="playlist") selected #end"">
     #set($pageName = "Playlist Editor")
 
     #if($page.id != "playlist")

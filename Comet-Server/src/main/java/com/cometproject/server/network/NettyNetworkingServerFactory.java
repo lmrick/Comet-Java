@@ -42,10 +42,10 @@ public class NettyNetworkingServerFactory implements INetworkingServerFactory {
         this.configuration = configuration;
         this.epollEnabled = Epoll.isAvailable() && epoll;
 
-        this.initialiseLoopGroups(Epoll.isAvailable() && epoll, ioGroupCount, channelGroupCount, acceptGroupCount);
+        this.initializeLoopGroups(Epoll.isAvailable() && epoll, ioGroupCount, channelGroupCount, acceptGroupCount);
     }
 
-    private void initialiseLoopGroups(final boolean epoll, final int ioLoopCount, final int channelLoopCount, final int acceptGroupCount) {
+    private void initializeLoopGroups(final boolean epoll, final int ioLoopCount, final int channelLoopCount, final int acceptGroupCount) {
         this.ioLoopGroup = epoll ? new EpollEventLoopGroup(ioLoopCount) : new NioEventLoopGroup(ioLoopCount);
         this.channelLoopGroup = epoll ? new EpollEventLoopGroup(channelLoopCount) : new NioEventLoopGroup(channelLoopCount);
         this.acceptLoopGroup = epoll ? new EpollEventLoopGroup(acceptGroupCount) : new NioEventLoopGroup(acceptGroupCount);

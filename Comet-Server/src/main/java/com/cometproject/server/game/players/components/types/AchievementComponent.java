@@ -1,14 +1,13 @@
 package com.cometproject.server.game.players.components.types;
 
+import com.cometproject.api.game.GameContext;
+import com.cometproject.api.game.achievements.IAchievementsService;
 import com.cometproject.api.game.achievements.types.AchievementType;
 import com.cometproject.api.game.achievements.types.IAchievement;
 import com.cometproject.api.game.achievements.types.IAchievementGroup;
 import com.cometproject.api.game.players.components.PlayerComponentContext;
 import com.cometproject.api.game.players.data.components.IPlayerAchievements;
 import com.cometproject.api.game.players.data.components.achievements.IAchievementProgress;
-import com.cometproject.api.utilities.observers.IObserver;
-import com.cometproject.api.utilities.observers.types.players.PlayerObserver;
-import com.cometproject.server.game.achievements.AchievementManager;
 import com.cometproject.server.game.players.components.PlayerComponent;
 import com.cometproject.server.game.players.components.types.achievements.AchievementProgress;
 import com.cometproject.server.network.messages.outgoing.user.achievements.AchievementPointsMessageComposer;
@@ -45,7 +44,7 @@ public class AchievementComponent extends PlayerComponent implements IPlayerAchi
 	
 	@Override
 	public void progressAchievement(AchievementType type, int data) {
-		IAchievementGroup achievementGroup = AchievementManager.getInstance().getAchievementGroup(type);
+		IAchievementGroup achievementGroup = GameContext.getCurrent().getService(IAchievementsService.class).getAchievementGroup(type);
 		
 		if (achievementGroup == null) {
 			return;

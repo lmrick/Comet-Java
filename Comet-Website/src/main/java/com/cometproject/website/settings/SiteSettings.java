@@ -266,9 +266,7 @@ public class SiteSettings {
     private static SiteSettings siteSettingsInstance;
 
     public static SiteSettings getInstance() {
-        if(siteSettingsInstance == null)
-            siteSettingsInstance = SiteSettingsDao.get();
-
+        if(siteSettingsInstance == null) siteSettingsInstance = SiteSettingsDao.get();
         return siteSettingsInstance;
     }
 

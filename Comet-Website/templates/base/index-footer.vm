@@ -9,9 +9,6 @@
 
 </footer>
 <script src="$config.assetsUrl/web-gallery/static/js/v3_landing_bottom.js" type="text/javascript"></script>
-<!--[if IE]>
-<script src="$config.assetsUrl/web-gallery/static/js/v3_ie_fixes.js" type="text/javascript"></script>
-<![endif]-->
 </body>
 
 </html>

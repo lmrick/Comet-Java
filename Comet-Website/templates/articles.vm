@@ -15,19 +15,22 @@
                         #if($articles.get($selectedArticle).getId() == $article.getId())
                             <li>$article.title</li>
                         #else
-                            <li><a href="/articles/$article.slug" class="article-$article.id">$article.title
-                                &nbsp;&raquo;</a></li>
+                            <li>
+                                <a href="/articles/$article.slug" class="article-$article.id">$article.title
+                                    &nbsp;&raquo;</a>
+                            </li>
                         #end
                     #end
                 </ul>
             </div>
 
-
         </div>
     </div>
-    <script type="text/javascript">if (!$(document.body).hasClassName('process-template')) {
-        Rounder.init();
-    }</script>
+    <script type="text/javascript">
+        if (!$(document.body).hasClassName('process-template')) {
+            Rounder.init();
+        }
+    </script>
 </div>
 <div id="column2" class="column">
 
@@ -43,51 +46,49 @@
 
                 $article.formattedBody
 
-                <div class="article-images clearfix">
+                <div class="article-images clearfix"></div>
+
+                <div class="article-body">
+                    <p>
+                        <font face="Verdana" size="1">
+                            <b>- $article.authorName</b>
+                        </p>
+                    </div>
                 </div>
 
-                <div class="article-body"><p><font face="Verdana" size="1"><b>- $article.authorName</b></p>
-                </div>
             </div>
+        </div>
+        <script type="text/javascript">
+            if (!$(document.body).hasClassName('process-template')) {
+                Rounder.init();
+            }
+        </script>
+
+    </div>
+    <script type="text/javascript">
+        HabboView.run();
+    </script>
+    <div id="column3" class="column">
+
+        <div class="habblet-container "></div>
+        <script type="text/javascript">
+            if (!$(document.body).hasClassName('process-template')) {
+                Rounder.init();
+            }
+        </script>
+
+        <div class="habblet-container ">
+
+            ad here
 
         </div>
-    </div>
-    <script type="text/javascript">if (!$(document.body).hasClassName('process-template')) {
-        Rounder.init();
-    }</script>
-
-
-</div>
-<script type="text/javascript">
-    HabboView.run();
-</script>
-<div id="column3" class="column">
-
-    <div class="habblet-container ">
-
+        <script type="text/javascript">
+            if (!$(document.body).hasClassName('process-template')) {
+                Rounder.init();
+            }
+        </script>
 
     </div>
-    <script type="text/javascript">if (!$(document.body).hasClassName('process-template')) {
-        Rounder.init();
-    }</script>
+    <!--[if lt IE 7]> <script type="text/javascript"> Pngfix.doPngImageFix(); </script> <![endif]-->
 
-
-    <div class="habblet-container ">
-
-        ad here
-
-
-    </div>
-    <script type="text/javascript">if (!$(document.body).hasClassName('process-template')) {
-        Rounder.init();
-    }</script>
-
-
-</div>
-<!--[if lt IE 7]>
-<script type="text/javascript">
-    Pngfix.doPngImageFix();
-</script>
-<![endif]-->
-
-#parse('/templates/base/page-footer.vm')
+    #parse('/templates/base/page-footer.vm')

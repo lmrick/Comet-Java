@@ -2,7 +2,6 @@ package com.cometproject.website.storage.dao;
 
 import com.cometproject.website.storage.SqlStorageManager;
 import org.apache.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +37,6 @@ public class DaoHelper {
             handleException(e);
         }
     }
-
 
     public static void handleException(Exception e) {
         log.error("Exception thrown from DAO", e);

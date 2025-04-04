@@ -4,12 +4,12 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import spark.Request;
 import spark.Response;
-
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class CameraRoute {
+
     public static String upload(final Request request, final Response response) {
         try {
             final byte[] imageData = IOUtils.toByteArray(request.raw().getInputStream());

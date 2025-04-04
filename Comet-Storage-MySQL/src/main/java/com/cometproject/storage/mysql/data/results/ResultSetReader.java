@@ -3,7 +3,6 @@ package com.cometproject.storage.mysql.data.results;
 import java.sql.ResultSet;
 
 public class ResultSetReader implements IResultReader {
-
     private final ResultSet resultSet;
 
     public ResultSetReader(final ResultSet resultSet) {
@@ -58,5 +57,10 @@ public class ResultSetReader implements IResultReader {
     @Override
     public double readDouble(int index) throws Exception {
         return this.resultSet.getDouble(index);
+    }
+
+    @Override
+    public boolean hasNext() throws Exception {
+        return this.resultSet.next();
     }
 }

@@ -21,20 +21,15 @@ public class Player {
     private int id;
     private String username;
     private String email;
-
     private String figure;
     private String gender;
     private String motto;
-
     private int credits;
     private int activityPoints;
     private int vipPoints;
-
     private int rank;
     private int lastVisit;
-
     private String password;
-
     private PlayerPreferences playerPreferences;
     private List<PlaylistItem> youtubePlaylist;
 
@@ -42,16 +37,12 @@ public class Player {
         this.id = data.getInt("id");
         this.username = data.getString("username");
         this.email = data.getString("email");
-
         this.figure = data.getString("figure");
         this.gender = data.getString("gender");
         this.motto = data.getString("motto");
-
         this.credits = data.getInt("credits");
         this.activityPoints = data.getInt("activity_points");
-
         this.lastVisit = data.getInt("last_online");
-
         this.rank = data.getInt("rank");
         this.password = data.getString("password");
     }
@@ -82,9 +73,7 @@ public class Player {
     }
 
     public PlayerPreferences getPreferences() {
-        if(this.playerPreferences == null)
-            this.playerPreferences = PlayerDao.getPreferences(this.id);
-
+        if(this.playerPreferences == null) this.playerPreferences = PlayerDao.getPreferences(this.id);
         return this.playerPreferences;
     }
 

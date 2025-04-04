@@ -305,7 +305,7 @@ public class PlayerDao {
 				// close old statement
 				SQLUtility.closeSilently(preparedStatement);
 				
-				preparedStatement = SQLUtility.prepare("INSERT into player_settings (`player_id`) VALUES (?)", sqlConnection);
+				preparedStatement = SQLUtility.prepare("INSERT INTO `player_settings` (`player_id`) VALUES (?);", sqlConnection);
 				preparedStatement.setInt(1, id);
 				
 				SQLUtility.executeStatementSilently(preparedStatement, false);
@@ -958,7 +958,7 @@ public class PlayerDao {
 		
 		try {
 			sqlConnection = SQLUtility.getConnection();
-			preparedStatement = SQLUtility.prepare("INSERT INTO logs_namechange (`user_id`, `new_name`, `old_name`, `timestamp`) VALUES(?, ?, ?, ?)", sqlConnection);
+			preparedStatement = SQLUtility.prepare("INSERT INTO `logs_username` (`player_id`, `new_name`, `old_name`, `timestamp`) VALUES (?, ?, ?, ?);", sqlConnection);
 			
 			preparedStatement.setInt(1, playerId);
 			preparedStatement.setString(2, newName);
@@ -1035,7 +1035,7 @@ public class PlayerDao {
 		try {
 			sqlConnection = SQLUtility.getConnection();
 			
-			preparedStatement = SQLUtility.prepare("INSERT into player_favourite_rooms (player_id, room_id) VALUES(?, ?);", sqlConnection);
+			preparedStatement = SQLUtility.prepare("INSERT INTO `player_favourite_rooms` (player_id, room_id) VALUES (?, ?);", sqlConnection);
 			
 			preparedStatement.setInt(1, playerId);
 			preparedStatement.setInt(2, roomId);
@@ -1135,7 +1135,7 @@ public class PlayerDao {
 		try {
 			sqlConnection = SQLUtility.getConnection();
 			
-			preparedStatement = SQLUtility.prepare("REPLACE into player_navigator_view_modes (player_id, category, view_mode) VALUES(?, ?, ?);", sqlConnection);
+			preparedStatement = SQLUtility.prepare("REPLACE INTO `player_navigator_view_modes` (player_id, category, view_mode) VALUES (?, ?, ?);", sqlConnection);
 			preparedStatement.setInt(1, playerId);
 			preparedStatement.setString(2, category);
 			preparedStatement.setInt(3, viewMode);
@@ -1157,7 +1157,7 @@ public class PlayerDao {
 		try {
 			sqlConnection = SQLUtility.getConnection();
 			
-			preparedStatement = SQLUtility.prepare("INSERT into player_saved_searches (player_id, view, search_query) VALUES(?, ?, ?);", sqlConnection, true);
+			preparedStatement = SQLUtility.prepare("INSERT INTO `player_saved_searches` (player_id, view, search_query) VALUES (?, ?, ?);", sqlConnection, true);
 			
 			preparedStatement.setInt(1, playerId);
 			preparedStatement.setString(2, savedSearch.view());
@@ -1235,7 +1235,7 @@ public class PlayerDao {
 		try {
 			sqlConnection = SQLUtility.getConnection();
 			
-			preparedStatement = SQLUtility.prepare("INSERT into player_effects (player_id, effect_id) VALUES(?,?);", sqlConnection);
+			preparedStatement = SQLUtility.prepare("INSERT INTO `player_effects` (player_id, effect_id) VALUES (?,?);", sqlConnection);
 			preparedStatement.setInt(1, playerId);
 			preparedStatement.setInt(2, effectId);
 			

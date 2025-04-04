@@ -1,7 +1,6 @@
 package com.cometproject.website.players;
 
 import com.cometproject.website.storage.dao.players.PlayerDao;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

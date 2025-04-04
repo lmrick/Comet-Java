@@ -4,7 +4,6 @@ import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.server.game.players.components.types.inventory.InventoryItem;
 import com.cometproject.server.storage.SQLUtility;
 import org.apache.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,8 +29,8 @@ public class InventoryDao {
             sqlConnection = SQLUtility.getConnection();
 
             preparedStatement = ITEMS_USERID_INDEX.equals("") ?
-																SQLUtility.prepare("SELECT i.*, ltd.limited_id, ltd.limited_total FROM items i LEFT JOIN items_limited_edition ltd ON ltd.item_id = i.id WHERE room_id = 0 AND user_id = ? ORDER by id DESC;", sqlConnection)
-                    : SQLUtility.prepare("SELECT i.*, ltd.limited_id, ltd.limited_total FROM items i LEFT JOIN items_limited_edition ltd ON ltd.item_id = i.id USE INDEX (" + ITEMS_USERID_INDEX + ") WHERE room_id = 0 AND user_id = ? ORDER by id DESC;", sqlConnection);
+																SQLUtility.prepare("SELECT i.*, ltd.limited_id, ltd.limited_total FROM items i LEFT JOIN items_limited_edition ltd ON ltd.item_id = i.id WHERE room_id = 0 AND player_id = ? ORDER by id DESC;", sqlConnection)
+                    : SQLUtility.prepare("SELECT i.*, ltd.limited_id, ltd.limited_total FROM items i LEFT JOIN items_limited_edition ltd ON ltd.item_id = i.id USE INDEX (" + ITEMS_USERID_INDEX + ") WHERE room_id = 0 AND player_id = ? ORDER by id DESC;", sqlConnection);
 
             preparedStatement.setInt(1, playerId);
 
@@ -212,7 +211,7 @@ public class InventoryDao {
         try {
             sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SQLUtility.prepare("DELETE FROM items WHERE user_id = ? AND room_id = 0", sqlConnection);
+            preparedStatement = SQLUtility.prepare("DELETE FROM items WHERE player_id = ? AND room_id = 0", sqlConnection);
             preparedStatement.setInt(1, userId);
 
             SQLUtility.executeStatementSilently(preparedStatement, false);

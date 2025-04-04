@@ -1,0 +1,6 @@
+{
+    "name": "Comet-Achievements",
+    "version": "1.0.0",
+    "serverVersion": "2.x",
+    "entryPoint": "com.cometproject.game.achievements.AchievementsModule"
+  }

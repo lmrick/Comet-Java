@@ -2,15 +2,18 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
     <modelVersion>4.0.0</modelVersion>
     <artifactId>Comet-Server</artifactId>
     <version>2.12.1-TEST1</version>
     <packaging>jar</packaging>
+
     <parent>
         <groupId>Comet</groupId>
         <artifactId>Comet-Parent</artifactId>
         <version>2.12.1-TEST1</version>
     </parent>
+
     <build>
         <plugins>
             <plugin>
@@ -84,10 +87,12 @@
             </resource>
         </resources>
     </build>
+
     <properties>
         <jetty.version>12.0.11</jetty.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <repositories>
         <repository>
             <id>java.net</id>
@@ -129,6 +134,7 @@
             <url>https://repo.maven.apache.org/maven2/</url>
         </repository>
     </repositories>
+
     <dependencies>
         <dependency>
             <groupId>xml-apis</groupId>
@@ -287,6 +293,11 @@
             <artifactId>Comet-Game-Rooms</artifactId>
             <version>2.12.1-TEST1</version>
         </dependency>
+         <dependency>
+            <groupId>Comet</groupId>
+            <artifactId>Comet-Game-Achievements</artifactId>
+            <version>2.12.1-TEST1</version>
+        </dependency>
         <dependency>
             <groupId>Comet</groupId>
             <artifactId>Comet-API</artifactId>
@@ -323,4 +334,5 @@
             <version>5.16.0</version>
         </dependency>
     </dependencies>
+    
 </project>

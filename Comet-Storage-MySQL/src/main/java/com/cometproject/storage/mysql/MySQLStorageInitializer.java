@@ -4,12 +4,14 @@ import com.cometproject.game.items.inventory.InventoryItemFactory;
 import com.cometproject.storage.api.IStorageInitializer;
 import com.cometproject.storage.api.StorageContext;
 import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
+import com.cometproject.storage.api.factories.achievements.AchievementFactory;
 import com.cometproject.storage.api.factories.groups.GroupDataFactory;
 import com.cometproject.storage.api.factories.groups.GroupForumMessageFactory;
 import com.cometproject.storage.api.factories.groups.GroupForumSettingsFactory;
 import com.cometproject.storage.api.factories.groups.GroupMemberFactory;
 import com.cometproject.storage.api.factories.rooms.RoomDataFactory;
 import com.cometproject.storage.api.factories.rooms.RoomModelDataFactory;
+import com.cometproject.storage.api.repositories.IAchievementRepository;
 import com.cometproject.storage.api.repositories.IGroupForumRepository;
 import com.cometproject.storage.api.repositories.IGroupMemberRepository;
 import com.cometproject.storage.api.repositories.IGroupRepository;
@@ -26,6 +28,7 @@ import com.cometproject.storage.mysql.repositories.types.inventory.MySQLPhotoRep
 import com.cometproject.storage.mysql.repositories.types.inventory.MySQLRewardRepository;
 import com.cometproject.storage.mysql.repositories.types.rooms.MySQLRoomItemRepository;
 import com.cometproject.storage.mysql.repositories.types.rooms.MySQLRoomRepository;
+import com.cometproject.storage.mysql.repositories.types.achievements.MySQLAchievementRepository;
 
 public class MySQLStorageInitializer implements IStorageInitializer {
 	private final MySQLConnectionProvider connectionProvider;
@@ -45,6 +48,7 @@ public class MySQLStorageInitializer implements IStorageInitializer {
 		storageContext.setRepository(IRoomRepository.class, new MySQLRoomRepository(new RoomDataFactory(), new RoomModelDataFactory(), connectionProvider));
 		storageContext.setRepository(IRewardRepository.class, new MySQLRewardRepository(connectionProvider));
 		storageContext.setRepository(IPhotoRepository.class, new MySQLPhotoRepository(connectionProvider));
+		storageContext.setRepository(IAchievementRepository.class, new MySQLAchievementRepository(new AchievementFactory(), connectionProvider));
 	}
 	
 }

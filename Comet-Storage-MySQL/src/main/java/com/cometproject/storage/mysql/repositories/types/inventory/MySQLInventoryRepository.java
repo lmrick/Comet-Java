@@ -26,7 +26,7 @@ public class MySQLInventoryRepository extends MySQLRepository implements IInvent
     public void getInventoryByPlayerId(int playerId, Consumer<List<IPlayerItem>> itemConsumer) {
         final List<IPlayerItem> items = Lists.newArrayList();
 
-        select("SELECT i.*, ltd.limited_id, ltd.limited_total FROM items i LEFT JOIN items_limited_edition ltd ON ltd.item_id = i.id WHERE room_id = 0 AND user_id = ? ORDER by id DESC;", data -> {
+        select("SELECT i.*, ltd.limited_id, ltd.limited_total FROM items i LEFT JOIN items_limited_edition ltd ON ltd.item_id = i.id WHERE room_id = 0 AND player_id = ? ORDER by id DESC;", data -> {
             items.add(this.buildItem(data));
         }, playerId);
 
@@ -48,4 +48,5 @@ public class MySQLInventoryRepository extends MySQLRepository implements IInvent
 
         return this.playerItemFactory.createItem(new InventoryItemData(id, baseId, extraData, limitedEditionItemData));
     }
+    
 }

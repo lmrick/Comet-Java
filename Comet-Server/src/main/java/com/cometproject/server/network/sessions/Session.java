@@ -22,7 +22,6 @@ import com.cometproject.server.storage.queries.player.PlayerDao;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.apache.log4j.Logger;
-
 import java.net.InetSocketAddress;
 import java.text.MessageFormat;
 import java.util.UUID;
@@ -142,14 +141,16 @@ public class Session implements ISession, INetSession<Session> {
 			logger.debug(MessageFormat.format("Unknown header ID for message: {0}", msg.getClass().getSimpleName()));
 		}
 		
-		if (!(msg instanceof AvatarUpdateMessageComposer) && !(msg instanceof UpdateFloorItemMessageComposer))
+		if (!(msg instanceof AvatarUpdateMessageComposer) && !(msg instanceof UpdateFloorItemMessageComposer)) {
 			logger.info(MessageFormat.format("Sent message: {0} / {1}", msg.getClass().getSimpleName(), msg.getId()));
+		}
 		
 		if (!queue) {
 			this.channel.writeAndFlush(msg, channel.voidPromise());
 		} else {
 			this.channel.write(msg);
 		}
+
 		return this;
 	}
 	

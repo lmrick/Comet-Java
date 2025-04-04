@@ -2,7 +2,6 @@ package com.cometproject.server.logging.containers;
 
 import com.cometproject.server.logging.database.queries.LogQueries;
 import com.cometproject.server.logging.entries.RoomVisitLogEntry;
-
 import java.util.List;
 
 public class RoomVisitContainer {

@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -48,7 +47,6 @@ public class CacheManager extends CachableObject implements Initializable {
 		
 		if (this.host.isEmpty()) {
 			log.error("Invalid redis connection string");
-			
 			this.enabled = false;
 			return;
 		}
@@ -125,7 +123,7 @@ public class CacheManager extends CachableObject implements Initializable {
 				
 				jedis.set(this.getKey(key), objectData);
 				
-				log.info(MessageFormat.format("DataWrapper put to redis: {0} in {1}ms", object.getClass().getSimpleName(), new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds()));
+				log.info(MessageFormat.format("Data put to redis: {0} in {1}MS", object.getClass().getSimpleName(), new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds()));
 			} catch (Exception e) {
 				throw e;
 			}
@@ -147,7 +145,7 @@ public class CacheManager extends CachableObject implements Initializable {
 				
 				if (setter && setterKey != null) jedis.set(this.getKey(setterKey), value);
 				
-				log.info(MessageFormat.format("DataWrapper published to redis channel: {0} in {1}ms", key, new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds()));
+				log.info(MessageFormat.format("Data STRING published to redis channel: {0} in {1}MS", key, new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds()));
 			} catch (Exception e) {
 				throw e;
 			}
@@ -167,7 +165,7 @@ public class CacheManager extends CachableObject implements Initializable {
 				
 				jedis.set(this.getKey(key), value);
 				
-				log.info(MessageFormat.format("DataWrapper put to redis with key: {0} in {1}ms", key, new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds()));
+				log.info(MessageFormat.format("Data STRING put to redis with key: {0} in {1}MS", key, new TimeSpan(startTime, System.currentTimeMillis()).toMilliseconds()));
 			} catch (Exception e) {
 				throw e;
 			}

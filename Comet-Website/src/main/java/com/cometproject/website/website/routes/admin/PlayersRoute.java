@@ -10,7 +10,6 @@ import org.apache.commons.lang.StringUtils;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +17,7 @@ import java.util.Map;
 
 public class PlayersRoute {
     private static final Gson gson = new Gson();
+
     public static ModelAndView index(Request req, Response res) {
         Map<String, Object> model = new HashMap<>();
 

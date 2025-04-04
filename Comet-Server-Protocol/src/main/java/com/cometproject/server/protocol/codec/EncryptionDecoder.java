@@ -4,11 +4,9 @@ import com.cometproject.server.protocol.security.RC4;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-
 import java.util.List;
 
 public class EncryptionDecoder extends ByteToMessageDecoder {
-	
 	private final RC4 rc4;
 	
 	public EncryptionDecoder(byte[] key) {

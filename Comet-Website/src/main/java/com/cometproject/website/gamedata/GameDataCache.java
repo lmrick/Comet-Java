@@ -1,14 +1,13 @@
 package com.cometproject.website.gamedata;
 
 import com.cometproject.website.storage.dao.gamedata.GameDataDao;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class GameDataCache {
+    private static GameDataCache gameDataCache;
     private final Map<String, String> externalVariables = new ConcurrentHashMap<>();
     private final Map<String, String> externalTexts = new ConcurrentHashMap<>();
-
     private String cachedVariables;
     private String cachedTexts;
 
@@ -55,13 +54,9 @@ public class GameDataCache {
         return cachedTexts;
     }
 
-    private static GameDataCache gameDataCache;
-
     public static GameDataCache getInstance() {
-        if(gameDataCache == null) {
-            gameDataCache = new GameDataCache();
-        }
-
+        if(gameDataCache == null) gameDataCache = new GameDataCache();
         return gameDataCache;
     }
+
 }

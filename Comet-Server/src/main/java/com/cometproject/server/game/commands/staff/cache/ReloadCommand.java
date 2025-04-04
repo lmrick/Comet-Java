@@ -1,9 +1,9 @@
 package com.cometproject.server.game.commands.staff.cache;
 
 import com.cometproject.api.game.GameContext;
+import com.cometproject.api.game.achievements.IAchievementsService;
 import com.cometproject.server.composers.catalog.CatalogPublishMessageComposer;
 import com.cometproject.server.locale.Locale;
-import com.cometproject.server.game.achievements.AchievementManager;
 import com.cometproject.server.game.catalog.CatalogManager;
 import com.cometproject.server.game.commands.ChatCommand;
 import com.cometproject.server.game.commands.CommandManager;
@@ -117,8 +117,7 @@ public class ReloadCommand extends ChatCommand {
 					sendNotification(Locale.get("command.reload.quests"), client);
 				}
 				case "achievements" -> {
-					AchievementManager.getInstance().loadAchievements();
-					
+					GameContext.getCurrent().getService(IAchievementsService.class).loadAchievements();					
 					sendNotification(Locale.get("command.reload.achievements"), client);
 				}
 				case "pets" -> {

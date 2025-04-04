@@ -5,7 +5,6 @@ import com.cometproject.server.logging.AbstractLogEntry;
 import com.cometproject.server.logging.database.LogDatabaseHelper;
 import com.cometproject.server.logging.entries.RoomChatLogEntry;
 import com.cometproject.server.logging.entries.RoomVisitLogEntry;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +20,7 @@ public class LogQueries {
 		
 		try {
 			sqlConnection = LogDatabaseHelper.getConnection();
-			preparedStatement = LogDatabaseHelper.prepare("INSERT INTO logs (`type`, `room_id`, `user_id`, `data`, `timestamp`) VALUES (?, ?, ?, ?, ?);", sqlConnection);
+			preparedStatement = LogDatabaseHelper.prepare("INSERT INTO logs (`type`, `room_id`, `player_id`, `data`, `timestamp`) VALUES (?, ?, ?, ?, ?);", sqlConnection);
 			
 			preparedStatement.setString(1, entry.getType().toString());
 			preparedStatement.setInt(2, entry.getRoomId());
@@ -44,7 +43,7 @@ public class LogQueries {
 		
 		try {
 			sqlConnection = LogDatabaseHelper.getConnection();
-			preparedStatement = LogDatabaseHelper.prepare("INSERT INTO logs (`type`, `room_id`, `user_id`, `data`, `timestamp`) VALUES (?, ?, ?, ?, ?);", sqlConnection);
+			preparedStatement = LogDatabaseHelper.prepare("INSERT INTO logs (`type`, `room_id`, `player_id`, `data`, `timestamp`) VALUES (?, ?, ?, ?, ?);", sqlConnection);
 			
 			for (AbstractLogEntry entry : entries) {
 				preparedStatement.setString(1, entry.getType().toString());
@@ -147,7 +146,7 @@ public class LogQueries {
 		try {
 			sqlConnection = LogDatabaseHelper.getConnection();
 			
-			preparedStatement = LogDatabaseHelper.prepare("SELECT `data`,`timestamp` FROM `logs` WHERE `timestamp` > ? AND `timestamp` < ? AND `type` = 'ROOM_CHATLOG' AND `user_id` = ? AND `room_id` = ? ORDER BY `timestamp` DESC LIMIT = ?", sqlConnection);
+			preparedStatement = LogDatabaseHelper.prepare("SELECT `data`,`timestamp` FROM `logs` WHERE `timestamp` > ? AND `timestamp` < ? AND `type` = 'ROOM_CHATLOG' AND `player_id` = ? AND `room_id` = ? ORDER BY `timestamp` DESC LIMIT = ?", sqlConnection);
 			
 			preparedStatement.setInt(1, entryTime);
 			preparedStatement.setInt(2, exitTime == 0 ? (int) Comet.getTime() : exitTime);
@@ -183,7 +182,7 @@ public class LogQueries {
 		try {
 			sqlConnection = LogDatabaseHelper.getConnection();
 			
-			preparedStatement = LogDatabaseHelper.prepare("SELECT `user_id`,`data`,`timestamp` FROM `logs` WHERE `type` = 'ROOM_CHATLOG' AND `room_id` = ? AND `timestamp` > ? AND `timestamp` < ? ORDER BY `timestamp` DESC LIMIT = ?", sqlConnection);
+			preparedStatement = LogDatabaseHelper.prepare("SELECT `player_id`,`data`,`timestamp` FROM `logs` WHERE `type` = 'ROOM_CHATLOG' AND `room_id` = ? AND `timestamp` > ? AND `timestamp` < ? ORDER BY `timestamp` DESC LIMIT = ?", sqlConnection);
 			
 			preparedStatement.setInt(1, roomId);
 			preparedStatement.setInt(2, startTimestamp);
@@ -193,7 +192,7 @@ public class LogQueries {
 			resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				chatLogs.add(new RoomChatLogEntry(roomId, resultSet.getInt("user_id"), resultSet.getString("data"), resultSet.getInt("timestamp")));
+				chatLogs.add(new RoomChatLogEntry(roomId, resultSet.getInt("player_id"), resultSet.getString("data"), resultSet.getInt("timestamp")));
 			}
 		} catch (SQLException e) {
 			LogDatabaseHelper.handleSqlException(e);
@@ -218,14 +217,14 @@ public class LogQueries {
 		try {
 			sqlConnection = LogDatabaseHelper.getConnection();
 			
-			preparedStatement = LogDatabaseHelper.prepare("SELECT `user_id`,`data`,`timestamp` FROM `logs` WHERE `type` = 'ROOM_CHATLOG' AND `room_id` = ? ORDER BY `timestamp` DESC LIMIT = ?", sqlConnection);
+			preparedStatement = LogDatabaseHelper.prepare("SELECT `player_id`,`data`,`timestamp` FROM `logs` WHERE `type` = 'ROOM_CHATLOG' AND `room_id` = ? ORDER BY `timestamp` DESC LIMIT = ?", sqlConnection);
 			preparedStatement.setInt(1, roomId);
 			preparedStatement.setInt(2, limit);
 			
 			resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				chatLogs.add(new RoomChatLogEntry(roomId, resultSet.getInt("user_id"), resultSet.getString("data"), resultSet.getInt("timestamp")));
+				chatLogs.add(new RoomChatLogEntry(roomId, resultSet.getInt("player_id"), resultSet.getString("data"), resultSet.getInt("timestamp")));
 			}
 		} catch (SQLException e) {
 			LogDatabaseHelper.handleSqlException(e);

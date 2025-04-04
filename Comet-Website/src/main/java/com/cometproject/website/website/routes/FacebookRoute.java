@@ -5,11 +5,11 @@ import com.cometproject.website.config.Configuration;
 import com.google.gson.JsonObject;
 import spark.Request;
 import spark.Response;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class FacebookRoute {
+    
     public static String facebookLogin(Request req, Response res) {
 
         if (req.queryParams("code") != null) {

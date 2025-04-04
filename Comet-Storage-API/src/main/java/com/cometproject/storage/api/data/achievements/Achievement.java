@@ -1,4 +1,4 @@
-package com.cometproject.server.game.achievements.types;
+package com.cometproject.storage.api.data.achievements;
 
 import com.cometproject.api.game.achievements.types.IAchievement;
 

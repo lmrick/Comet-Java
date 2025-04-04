@@ -5,7 +5,6 @@ import com.cometproject.networking.api.config.NetworkingServerConfig;
 import com.cometproject.networking.api.sessions.INetSessionFactory;
 import io.netty.bootstrap.ServerBootstrap;
 import org.apache.log4j.Logger;
-
 import java.net.InetSocketAddress;
 import java.text.MessageFormat;
 

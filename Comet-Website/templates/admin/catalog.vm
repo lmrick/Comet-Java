@@ -10,14 +10,21 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">Catalog</h1>
 
-
             <div class="panel with-nav-tabs panel-default">
                 <div class="panel-heading">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab1default" data-toggle="tab">Frontpage</a></li>
-                        <li><a href="#tab2default" data-toggle="tab">Furniture</a></li>
-                        <li><a href="#tab3default" data-toggle="tab">Clothing</a></li>
-                        <li class="pull-right"><button class="btn btn-success">+</button></li>
+                        <li class="active">
+                            <a href="#tab1default" data-toggle="tab">Frontpage</a>
+                        </li>
+                        <li>
+                            <a href="#tab2default" data-toggle="tab">Furniture</a>
+                        </li>
+                        <li>
+                            <a href="#tab3default" data-toggle="tab">Clothing</a>
+                        </li>
+                        <li class="pull-right">
+                            <button class="btn btn-success">+</button>
+                        </li>
                     </ul>
                 </div>
                 <div class="panel-body">

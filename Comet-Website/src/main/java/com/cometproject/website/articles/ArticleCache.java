@@ -1,13 +1,13 @@
 package com.cometproject.website.articles;
 
 import com.cometproject.website.storage.dao.articles.ArticleDao;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ArticleCache {
+    private static ArticleCache articleCache;
     private Map<Integer, Article> articles;
     private Map<String, Integer> articleSlugToId;
 
@@ -15,7 +15,7 @@ public class ArticleCache {
         articles = new ConcurrentHashMap<>();
         articleSlugToId = new ConcurrentHashMap<>();
 
-       this.refresh();
+        this.refresh();
     }
 
     public void refresh() {
@@ -25,9 +25,8 @@ public class ArticleCache {
     public List<Article> getLatestArticles(int count) {
         List<Article> articles = new ArrayList<>();
 
-        for(Article article : this.articles.values()) {
-            if(articles.size() == count) break;
-
+        for (Article article : this.articles.values()) {
+            if (articles.size() == count) break;
             articles.add(article);
         }
 
@@ -42,12 +41,8 @@ public class ArticleCache {
         return articleSlugToId;
     }
 
-    private static ArticleCache articleCache;
-
     public static ArticleCache getInstance() {
-        if(articleCache == null)
-            articleCache = new ArticleCache();
-
+        if (articleCache == null) articleCache = new ArticleCache();
         return articleCache;
     }
 }

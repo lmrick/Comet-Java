@@ -6,11 +6,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import org.apache.log4j.Logger;
-
 import java.text.MessageFormat;
 
 public class MessageEncoder extends MessageToByteEncoder<IMessageComposer> {
-	
 	private static final Logger log = Logger.getLogger(MessageEncoder.class);
 	
 	@Override

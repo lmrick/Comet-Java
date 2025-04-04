@@ -159,7 +159,8 @@ public class MySQLRoomRepository extends MySQLRepository implements IRoomReposit
 
         if (!accessTypeString.equals("open") 
         && !accessTypeString.equals("doorbell") 
-        && !accessTypeString.equals("password")) {
+        && !accessTypeString.equals("password")
+        && !accessTypeString.equals("invisible")) {
             accessTypeString = "open";
         }
 

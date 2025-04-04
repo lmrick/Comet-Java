@@ -1,11 +1,9 @@
 package com.cometproject.server.protocol.headers;
 
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class Composers {
     public static final short OpenLinkMessageComposer = 2669;
@@ -284,7 +282,8 @@ public class Composers {
     static {
         try {
             for (Field field : Composers.class.getDeclaredFields()) {
-                if (!Modifier.isPrivate(field.getModifiers())) composerPacketNames.put(field.getShort(field.getName()), field.getName());
+                if (!Modifier.isPrivate(field.getModifiers())) 
+                composerPacketNames.put(field.getShort(field.getName()), field.getName());
             }
         } catch (Exception ignored) {
 

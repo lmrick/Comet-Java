@@ -1,9 +1,17 @@
 <ul id="navi">
     #if($authenticated)
-        <li class="metab #if($page.tab == "me") selected #end">
-            #if($page.tab != "me") <a href="$config.siteUrl/me"> #else <strong> #end
-            $player.username
-            #if($page.tab != "me") </a> #else </strong> #end
+        <li class="metab #if($page.tab == " me") selected #end"="me") selected #end"">
+            #if($page.tab != "me")
+                <a href="$config.siteUrl/me">
+                #else
+                    <strong>
+                    #end
+                    $player.username
+                    #if($page.tab != "me")
+                    </a>
+                #else
+                </strong>
+            #end
             <span></span>
         </li>
     #else
@@ -13,10 +21,17 @@
         </li>
     #end
 
-    <li class="#if($page.tab == "community") selected #end">
-        #if($page.tab != "community") <a href="$config.siteUrl/community"> #else <strong> #end
-        Community
-        #if($page.tab != "community") </a> #else </strong> #end
-        <span></span>
-    </li>
+    <li class="#if($page.tab == " community") selected #end"="community") selected #end"">
+        #if($page.tab != "community")
+            <a href="$config.siteUrl/community">
+            #else
+                <strong>
+                #end
+                Community #if($page.tab != "community")
+            </a>
+        #else
+        </strong>
+    #end
+    <span></span>
+</li>
 </ul>

@@ -12,7 +12,10 @@ public class BadgeUtil {
 	
 	public static String generate(int guildBase, int guildBaseColor, List<Integer> guildStates) {
 		return IntStream.iterate(0, i -> i < 3 * 4, i -> i + 3)
-		.mapToObj(i -> i >= guildStates.size() ? "s" : "s" + format(guildStates.get(i)) + format(guildStates.get(i + 1)) + guildStates.get(i + 2))
+		.mapToObj(index -> index >= guildStates.size() ? "s" : "s" + 
+		format(guildStates.get(index)) +
+		 format(guildStates.get(index + 1)) + 
+		 guildStates.get(indexi + 2))
 		.collect(Collectors.joining("", "b" + format(guildBase) + format(guildBaseColor), ""));
 	}
 	

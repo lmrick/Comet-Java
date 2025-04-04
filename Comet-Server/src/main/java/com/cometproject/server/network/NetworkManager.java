@@ -26,7 +26,6 @@ import io.netty.util.ResourceLeakDetector;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 import io.netty.util.internal.logging.Log4JLoggerFactory;
 import org.apache.log4j.Logger;
-
 import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.Set;

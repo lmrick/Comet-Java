@@ -17,7 +17,7 @@ public class PlayerAccessDao {
         try {
             sqlConnection = SQLUtility.getConnection();
 
-            preparedStatement = SQLUtility.prepare("INSERT into player_access (player_id, hardware_id, ip_address, timestamp) VALUES(?, ?, ?, ?);", sqlConnection);
+            preparedStatement = SQLUtility.prepare("INSERT INTO `player_access` (player_id, hardware_id, ip_address, timestamp) VALUES (?, ?, ?, ?);", sqlConnection);
 
             preparedStatement.setInt(1, playerId);
             preparedStatement.setString(2, hardwareId);

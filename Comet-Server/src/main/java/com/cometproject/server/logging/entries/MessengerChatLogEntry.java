@@ -3,7 +3,6 @@ package com.cometproject.server.logging.entries;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.logging.AbstractLogEntry;
 import com.cometproject.server.logging.LogEntryType;
-
 import java.text.MessageFormat;
 
 public class MessengerChatLogEntry extends AbstractLogEntry {

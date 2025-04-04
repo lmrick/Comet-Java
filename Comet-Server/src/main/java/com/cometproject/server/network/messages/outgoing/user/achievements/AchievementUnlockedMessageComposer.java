@@ -8,7 +8,6 @@ import com.cometproject.server.protocol.messages.MessageComposer;
 public class AchievementUnlockedMessageComposer extends MessageComposer {
     private final String achievementCategory;
     private final String achievementName;
-
     private final int currentAchievementId;
     private final IAchievement newAchievement;
 

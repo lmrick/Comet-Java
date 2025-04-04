@@ -8,6 +8,7 @@ import com.cometproject.api.utilities.events.IEventHandler;
 import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.game.groups.GroupsModule;
 import com.cometproject.game.rooms.RoomsModule;
+import com.cometproject.game.achievements.AchievementsModule;
 import com.cometproject.server.modules.events.EventHandlerService;
 import org.apache.log4j.Logger;
 import java.util.List;
@@ -31,6 +32,8 @@ public class ModuleManager implements Initializable {
 		if (moduleManagerInstance == null) moduleManagerInstance = new ModuleManager();
 		return moduleManagerInstance;
 	}
+
+	private record ModulesConfig(List<CometModule> modules) { }
 	
 	@Override
 	public void initialize() {
@@ -44,6 +47,7 @@ public class ModuleManager implements Initializable {
 		
 		this.loadCoreModule(GroupsModule.class);
 		this.loadCoreModule(RoomsModule.class);
+		this.loadCoreModule(AchievementsModule.class);
 	}
 	
 	private void loadCoreModule(Class<? extends BaseModule> moduleClass) {
@@ -66,10 +70,6 @@ public class ModuleManager implements Initializable {
 	
 	public IEventHandler getEventHandler() {
 		return eventHandler;
-	}
-	
-	private record ModulesConfig(List<CometModule> modules) {
-	
 	}
 	
 }

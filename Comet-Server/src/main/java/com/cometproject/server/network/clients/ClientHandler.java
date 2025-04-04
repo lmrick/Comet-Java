@@ -12,9 +12,7 @@ import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.AttributeKey;
 import org.apache.log4j.Logger;
-
 import java.io.IOException;
-
 import static io.netty.channel.ChannelHandler.*;
 
 @Sharable

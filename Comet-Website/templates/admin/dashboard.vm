@@ -14,7 +14,8 @@
                     <div class="card">
                         <div class="card-block">
                             <h4 class="card-title">Server Statistics</h4>
-                            <p class="card-text">                    Active Players: $serverStatistics.activePlayers<br/>
+                            <p class="card-text">
+                                Active Players: $serverStatistics.activePlayers<br/>
                                 Active Rooms: $serverStatistics.activeRooms<br/>
                                 Version: $serverStatistics.serverVersion<br/></p>
                         </div>
@@ -27,7 +28,7 @@
                             <a href="http://cometproject.nl" class="card-link">Comet Project</a>
                         </div>
                     </div>
-                    </div>
+                </div>
             </div>
         </div>
     </div>

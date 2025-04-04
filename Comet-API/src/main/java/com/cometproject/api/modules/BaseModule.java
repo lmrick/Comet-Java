@@ -6,7 +6,6 @@ import com.cometproject.api.networking.sessions.ISession;
 import com.cometproject.api.server.IGameService;
 import com.cometproject.api.utilities.events.Event;
 import com.cometproject.api.utilities.events.IEventListenerContainer;
-
 import java.util.UUID;
 import java.util.function.BiConsumer;
 

@@ -3,7 +3,6 @@ package com.cometproject.server.boot;
 import com.cometproject.api.config.Configuration;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.server.game.GameCycle;
-import com.cometproject.server.game.achievements.AchievementManager;
 import com.cometproject.server.game.catalog.CatalogManager;
 import com.cometproject.server.game.commands.CommandManager;
 import com.cometproject.server.game.groups.items.GroupItemManager;
@@ -69,7 +68,6 @@ public class CometServer {
 		LandingManager.getInstance().initialize();
 		PlayerManager.getInstance().initialize();
 		QuestManager.getInstance().initialize();
-		AchievementManager.getInstance().initialize();
 		PollManager.getInstance().initialize();
 		GuideManager.getInstance().initialize();
 		

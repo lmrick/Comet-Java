@@ -7,7 +7,6 @@ import com.cometproject.website.website.WebsiteManager;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-
 import java.util.HashMap;
 import java.util.Map;
 

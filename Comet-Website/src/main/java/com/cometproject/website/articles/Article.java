@@ -3,7 +3,6 @@ package com.cometproject.website.articles;
 import com.cometproject.website.storage.dao.articles.ArticleDao;
 import com.cometproject.website.storage.dao.players.PlayerDao;
 import com.cometproject.website.utilities.DateUtil;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

@@ -9,7 +9,6 @@ import org.apache.commons.lang.StringUtils;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

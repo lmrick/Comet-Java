@@ -1,13 +1,13 @@
 package com.cometproject.website.storage.dao;
 
 import com.cometproject.website.statistics.ServerStatistics;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class StatisticsDao {
+
     public static ServerStatistics get() {
         Connection sqlConnection = null;
         PreparedStatement preparedStatement = null;

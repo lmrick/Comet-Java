@@ -5,11 +5,9 @@ import com.cometproject.api.game.achievements.types.IAchievementGroup;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
-
 import java.util.Collection;
 
 public class AchievementRequirementsMessageComposer extends MessageComposer {
-
     private final Collection<IAchievementGroup> achievementGroups;
 
     public AchievementRequirementsMessageComposer(Collection<IAchievementGroup> achievementGroups) {
@@ -36,4 +34,5 @@ public class AchievementRequirementsMessageComposer extends MessageComposer {
             }
         }
     }
+    
 }

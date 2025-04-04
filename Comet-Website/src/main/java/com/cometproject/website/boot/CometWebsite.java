@@ -4,13 +4,13 @@ import com.cometproject.website.storage.SqlStorageManager;
 import com.cometproject.website.website.WebsiteManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-
 import java.io.FileInputStream;
 
 public class CometWebsite {
+    private static String[] arguments;
+    private static CometWebsite cometManager;
     private final SqlStorageManager sqlStorageManager;
     private final WebsiteManager websiteManager;
-
     private final Logger log = Logger.getLogger(CometWebsite.class.getName());
 
     public CometWebsite() {
@@ -30,9 +30,6 @@ public class CometWebsite {
 
         return true;
     }
-
-    private static String[] arguments;
-    private static CometWebsite cometManager;
 
     public static void main(String[] args) {
         arguments = args;

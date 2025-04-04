@@ -18,7 +18,7 @@ public abstract class CachableObject implements Serializable {
 	}
 	
 	public JsonObject toJson() {
-		return null;
+		return JsonUtil.getInstance().toJson(this);
 	}
 	
 }

@@ -2,11 +2,13 @@ package com.cometproject.storage.api;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import com.cometproject.storage.api.repositories.*;
 
 public final class StorageContext {
 	private static StorageContext storageContext;
-	private final Map<Class<?>, Object> repositories = new HashMap<>();
+	private final Map<Class<?>, Object> repositories = new ConcurrentHashMap<>();
 
 	public StorageContext() {
 		

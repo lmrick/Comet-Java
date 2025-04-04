@@ -2,11 +2,11 @@ package com.cometproject.website.storage.dao.articles;
 
 import com.cometproject.website.articles.Article;
 import com.cometproject.website.storage.dao.DaoHelper;
-
 import java.sql.*;
 import java.util.Map;
 
 public class ArticleDao {
+
     public static void getAll(Map<Integer, Article> articles, Map<String, Integer> slugMap) {
         Connection sqlConnection = null;
         PreparedStatement preparedStatement = null;
@@ -16,7 +16,6 @@ public class ArticleDao {
             sqlConnection = DaoHelper.getConnection();
 
             preparedStatement = sqlConnection.prepareStatement("SELECT * FROM website_articles WHERE article_hidden = 'false' ORDER BY article_time_created DESC");
-
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {

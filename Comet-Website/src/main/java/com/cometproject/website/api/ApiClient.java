@@ -5,18 +5,15 @@ import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.Response;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
-
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class ApiClient {
+    private static ApiClient apiClient;
     private AsyncHttpClient asyncHttpClient;
     private static final Logger log = Logger.getLogger(ApiClient.class.getName());
-
-    // oh hahah
     private static final String RECAPTCHA_SECRET = "6LfDiv8SAAAAAKtNon-NPLdyRf4Rgro6FtT-dNGS";
-
     private boolean isOffline = false;
 
     public ApiClient() {
@@ -28,12 +25,16 @@ public class ApiClient {
     }
 
     public JSONObject execute(String command, Map<String, String> headers) {
-        if(this.isOffline) return new JSONObject();
+        if (this.isOffline)
+            return new JSONObject();
 
         try {
-            final AsyncHttpClient.BoundRequestBuilder builder = asyncHttpClient.prepareGet("http://" + Configuration.getInstance().getApiHost() + ":" + Configuration.getInstance().getApiPort() + command);
+            final AsyncHttpClient.BoundRequestBuilder builder = asyncHttpClient
+                    .prepareGet("http://" + 
+                    Configuration.getInstance().getApiHost() + ":" + 
+                    Configuration.getInstance().getApiPort() + command);
 
-            if(headers != null) {
+            if (headers != null) {
                 for (Map.Entry<String, String> header : headers.entrySet()) {
                     builder.addHeader(header.getKey(), header.getValue());
                 }
@@ -45,11 +46,9 @@ public class ApiClient {
             System.out.println(response.getResponseBody());
             return new JSONObject(response.getResponseBody());
         } catch (Exception e) {
-            if(e instanceof ExecutionException) {
-                // API is offline...
+            if (e instanceof ExecutionException) {
                 this.isOffline = true;
             } else {
-                // probably failed to connect or received invalid JSON data.
                 log.error("Error while executing API request", e);
             }
         }
@@ -58,12 +57,13 @@ public class ApiClient {
     }
 
     public boolean verifyCaptcha(String response, String ipAddress) {
-        if(ipAddress.equals("0:0:0:0:0:0:0:1")) {
+        if (ipAddress.equals("0:0:0:0:0:0:0:1")) {
             ipAddress = "127.0.0.1";
         }
 
         try {
-            Future<Response> responseFuture = asyncHttpClient.prepareGet("https://www.google.com/recaptcha/api/siteverify")
+            Future<Response> responseFuture = asyncHttpClient
+                    .prepareGet("https://www.google.com/recaptcha/api/siteverify")
                     .addQueryParam("secret", RECAPTCHA_SECRET)
                     .addQueryParam("response", response)
                     .addQueryParam("remoteip", ipAddress)
@@ -71,20 +71,14 @@ public class ApiClient {
 
             Response res = responseFuture.get();
 
-            return res.getResponseBody().equals("{\n" +
-                    "  \"success\": true\n" +
-                    "}");
-        } catch(Exception e) {
+            return res.getResponseBody().equals("{\n \"success\": true\n }");
+        } catch (Exception e) {
             return false;
         }
     }
 
-    private static ApiClient apiClient;
-
     public static ApiClient getInstance() {
-        if (apiClient == null)
-            apiClient = new ApiClient();
-
+        if (apiClient == null)apiClient = new ApiClient();
         return apiClient;
     }
 }

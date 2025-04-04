@@ -2,7 +2,6 @@ package com.cometproject.storage.mysql.queues;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import com.cometproject.storage.mysql.MySQLStorageContext;
 import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
 import com.cometproject.storage.mysql.queues.types.BlockingMySQLStorageQueue;
@@ -21,10 +20,7 @@ public class MySQLQueueManager {
     }
 
     private static MySQLQueueManager getInstance(MySQLConnectionProvider connectionProvider) {
-        if(instance == null) {
-           return new MySQLQueueManager(connectionProvider);
-        }
-
+        if(instance == null) return new MySQLQueueManager(connectionProvider);
         return instance;
     }
 

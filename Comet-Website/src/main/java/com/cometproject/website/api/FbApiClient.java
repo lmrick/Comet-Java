@@ -5,10 +5,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.Response;
-
 import java.util.concurrent.Future;
 
 public class FbApiClient {
+    private static final FbApiClient client = new FbApiClient();
     private final Gson gson = new Gson();
     public static final String FB_API_VERSION = "v2.8";
     public static final String FB_APP_ID = "1260936063961905";
@@ -23,7 +23,8 @@ public class FbApiClient {
         String accessToken = "";
 
         try {
-            Future<Response> responseFuture = this.httpClient.prepareGet("https://graph.facebook.com/" + FB_API_VERSION + "/oauth/access_token")
+            Future<Response> responseFuture = this.httpClient
+                    .prepareGet("https://graph.facebook.com/" + FB_API_VERSION + "/oauth/access_token")
                     .addQueryParam("client_id", FB_APP_ID)
                     .addQueryParam("client_secret", FB_APP_SECRET)
                     .addQueryParam("code", code)
@@ -34,9 +35,7 @@ public class FbApiClient {
             Response res = responseFuture.get();
 
             if (res.getResponseBody().startsWith("{")) {
-                // the response is json
                 final JsonObject object = this.gson.fromJson(res.getResponseBody(), JsonObject.class);
-
                 return object.get("access_token").getAsString();
             } else {
                 accessToken = res.getResponseBody();
@@ -53,11 +52,11 @@ public class FbApiClient {
         return accessToken.split("&")[0];
     }
 
-
     public JsonObject getAccountData(final String accessToken) {
 
         try {
-            Future<Response> responseFuture = this.httpClient.prepareGet("https://graph.facebook.com/" + FB_API_VERSION + "/me")
+            Future<Response> responseFuture = this.httpClient
+                    .prepareGet("https://graph.facebook.com/" + FB_API_VERSION + "/me")
                     .addQueryParam("access_token", accessToken)
                     .addQueryParam("fields", "id,email,name")
                     .execute();
@@ -72,9 +71,8 @@ public class FbApiClient {
         return null;
     }
 
-    private static final FbApiClient client = new FbApiClient();
-
     public static FbApiClient getClient() {
+        if (client == null) client = new ApiClient();
         return client;
     }
 }
