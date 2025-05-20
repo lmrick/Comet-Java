@@ -1,5 +1,6 @@
 package com.cometproject.game.groups.types.components;
 
+import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.game.groups.types.IGroupData;
 import com.cometproject.api.game.groups.types.components.IForumComponent;
 import com.cometproject.api.game.groups.types.components.forum.IForumSettings;
@@ -10,12 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 public class ForumComponent implements IForumComponent {
-    public static final int MAX_MESSAGES_PER_PAGE = 20;
     private final IForumSettings forumSettings;
     private final Map<Integer, IForumThread> forumThreads;
     private final List<Integer> pinnedThreads;
 
-    public ForumComponent(IForumSettings forumSettings, List<Integer> pinnedThreads,
+    public ForumComponent(IForumSettings forumSettings, 
+                          List<Integer> pinnedThreads,
                           Map<Integer, IForumThread> forumThreads) {
         this.forumSettings = forumSettings;
         this.pinnedThreads = pinnedThreads;
@@ -75,14 +76,13 @@ public class ForumComponent implements IForumComponent {
             for(int pinnedThread : this.pinnedThreads) {
                 IForumThread forumThread = this.getForumThreads().get(pinnedThread);
 
-                if(forumThread != null && threads.size() < MAX_MESSAGES_PER_PAGE) {
+                if(forumThread != null && threads.size() < CometSettings.GROUP_LIMIT_MSG_PAGE) {
                     threads.add(forumThread);
                 }
             }
 
             for (IForumThread forumThread : this.getForumThreads().values()) {
-                if (forumThread.isPinned() || threads.size() >= MAX_MESSAGES_PER_PAGE) continue;
-
+                if (forumThread.isPinned() || threads.size() >= CometSettings.GROUP_LIMIT_MSG_PAGE) continue;
                 threads.add(forumThread);
             }
 
@@ -92,7 +92,7 @@ public class ForumComponent implements IForumComponent {
         int currentThreadIndex = 0;
 
         for(IForumThread forumThread : this.forumThreads.values()) {
-            if(currentThreadIndex >= start && threads.size() < MAX_MESSAGES_PER_PAGE) {
+            if(currentThreadIndex >= start && threads.size() < GROUP_LIMIT_MSG_PAGE) {
                 threads.add(forumThread);
             }
 

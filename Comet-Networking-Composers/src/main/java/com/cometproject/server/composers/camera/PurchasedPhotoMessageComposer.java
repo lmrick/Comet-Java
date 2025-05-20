@@ -5,6 +5,7 @@ import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class PurchasedPhotoMessageComposer extends MessageComposer {
+    
     @Override
     public short getId() {
         return Composers.PurchasedPhotoMessageComposer;
@@ -14,4 +15,5 @@ public class PurchasedPhotoMessageComposer extends MessageComposer {
     public void compose(IComposerDataWrapper msg) {
 
     }
+    
 }

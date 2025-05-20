@@ -109,13 +109,11 @@ public class GroupService implements IGroupService {
 	
 	@Override
 	public void saveGroupData(IGroupData groupData) {
-		// Queue to save?
 		this.groupRepository.saveGroupData(groupData);
 	}
 	
 	@Override
 	public void createForumSettings(IForumComponent forumComponent) {
-		// Queue to save?
 		this.groupRepository.createForumSettings(forumComponent);
 	}
 	

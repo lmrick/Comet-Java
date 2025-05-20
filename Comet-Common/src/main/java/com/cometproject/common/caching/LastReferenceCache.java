@@ -7,7 +7,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
-
 import com.cometproject.api.utilities.caching.Cache;
 
 public class LastReferenceCache<TKey, TObj> implements Cache<TKey, TObj> {
@@ -16,11 +15,16 @@ public class LastReferenceCache<TKey, TObj> implements Cache<TKey, TObj> {
 	private final BiConsumer<TKey, TObj> expireConsumer;
 	private final Future<?> processFuture;
 	
-	public LastReferenceCache(long objectLifetimeMillis, long lifetimeCheckDelayMillis, BiConsumer<TKey, TObj> expireConsumer, ScheduledExecutorService executorService) {
+	public LastReferenceCache(long objectLifetimeMillis, 
+							  long lifetimeCheckDelayMillis, 
+							  BiConsumer<TKey, TObj> expireConsumer, 
+							  ScheduledExecutorService executorService) {
 		this.cache = new ConcurrentHashMap<>();
 		this.expireConsumer = expireConsumer;
 		this.objectLifetimeMillis = objectLifetimeMillis;
-		this.processFuture = executorService.schedule(this::processExpiredObjects, lifetimeCheckDelayMillis, TimeUnit.MILLISECONDS);
+		this.processFuture = executorService.schedule(this::processExpiredObjects, 
+													  lifetimeCheckDelayMillis, 
+													  TimeUnit.MILLISECONDS);
 	}
 	
 	@Override
@@ -31,10 +35,7 @@ public class LastReferenceCache<TKey, TObj> implements Cache<TKey, TObj> {
 	private void processExpiredObjects() {
 		cache.forEach((key, value) -> {
 			if (value.hasExpired(this.objectLifetimeMillis)) {
-				if (this.expireConsumer != null) {
-					this.expireConsumer.accept(key, value.getObject());
-				}
-				
+				if (this.expireConsumer != null) this.expireConsumer.accept(key, value.getObject());
 				this.cache.remove(key);
 			}
 		});
@@ -43,21 +44,13 @@ public class LastReferenceCache<TKey, TObj> implements Cache<TKey, TObj> {
 	@Override
 	public TObj get(TKey tKey) {
 		CacheEntry<TObj> obj = this.cache.get(tKey);
-		
-		if (obj == null) {
-			return null;
-		}
-		
+		if (obj == null) return null;
 		return obj.getObject();
 	}
 
 	public Optional<TObj> getIfPresent(TKey tKey) {
 		CacheEntry<TObj> obj = this.cache.get(tKey);
-
-		if(obj == null) {
-			return Optional.empty();
-		}
-
+		if(obj == null) return Optional.empty();
 		return Optional.of(obj.getObject());
 	}
 	

@@ -2,7 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>Comet</groupId>
@@ -10,11 +9,18 @@
         <version>2.12.1-TEST1</version>
     </parent>
 
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>Comet-Website</artifactId>
     <version>2.12.1-TEST1</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.version>3.14.0</maven.compiler.version>
+        <maven.dependency.version>3.8.1</maven.dependency.version>
+        <maven.jar.version>3.4.2</maven.jar.version>
+        <maven.resources.version>3.3.1</maven.resources.version>
+        <hikaricp.version>5.1.0</hikaricp.version>
+        <mysql.connector.version>8.0.33</mysql.connector.version>
     </properties>
 
     <build>
@@ -22,13 +28,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.14.0</version>
+                <version>${maven.compiler.version}</version>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven.dependency.version}3.8.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -45,7 +51,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.2</version>
+                <version>${maven.jar.version}</version>
                 <configuration>
                     <outputDirectory>${project.build.directory}/bin</outputDirectory>
                     <archive>
@@ -64,7 +70,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>${maven.resources.version}</version>
                 <executions>
                     <execution>
                         <id>copy-resources</id>
@@ -95,6 +101,14 @@
         </resources>
     </build>
 
+    <repositories>
+        <repository>
+            <id>maven_central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -119,14 +133,12 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>5.1.0</version>
-            <scope>compile</scope>
+            <version>${hikaricp.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.10</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
@@ -136,7 +148,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
+            <version>${mysql.connector.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -179,13 +191,5 @@
             <version>20240303</version>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>maven_central</id>
-            <name>Maven Central</name>
-            <url>https://repo.maven.apache.org/maven2/</url>
-        </repository>
-    </repositories>
 
 </project>

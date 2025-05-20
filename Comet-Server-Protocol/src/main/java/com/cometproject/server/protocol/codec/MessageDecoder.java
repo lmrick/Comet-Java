@@ -17,7 +17,6 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			
 			in.markReaderIndex();
 			int length = in.readInt();
-			
 			if (!(in.readableBytes() >= length)) {
 				in.resetReaderIndex();
 				return;

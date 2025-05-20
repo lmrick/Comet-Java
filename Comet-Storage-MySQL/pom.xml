@@ -2,7 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>Comet</groupId>
@@ -10,12 +9,22 @@
         <version>2.12.1-TEST1</version>
     </parent>
 
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>Comet-Storage-MySQL</artifactId>
     <version>2.12.1-TEST1</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <hikaricp.version>5.1.0</hikaricp.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>maven_central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -31,7 +40,7 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>5.1.0</version>
+            <version>${hikaricp.version}</version>
         </dependency>
         <dependency>
             <groupId>Comet</groupId>
@@ -44,13 +53,5 @@
             <version>2.12.1-TEST1</version>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>maven_central</id>
-            <name>Maven Central</name>
-            <url>https://repo.maven.apache.org/maven2/</url>
-        </repository>
-    </repositories>
     
 </project>

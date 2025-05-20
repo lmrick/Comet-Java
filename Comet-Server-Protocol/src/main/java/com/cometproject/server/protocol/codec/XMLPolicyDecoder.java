@@ -18,20 +18,18 @@ public class XMLPolicyDecoder extends ByteToMessageDecoder {
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-
 		in.markReaderIndex();
-		if (in.readableBytes() < 1)
+		if (in.readableBytes() < 1) {
 			return;
+		}
 
 		byte delimiter = in.readByte();
-
 		in.resetReaderIndex();
 
 		if (delimiter == 0x3C) {
 			ctx.channel().writeAndFlush(POLICY).addListener(ChannelFutureListener.CLOSE);
 		} else {
 			ctx.channel().pipeline().remove(this);
-
 			MessageDecoder decoder = ctx.pipeline().get(MessageDecoder.class);
 			decoder.decode(ctx, in, out);
 		}

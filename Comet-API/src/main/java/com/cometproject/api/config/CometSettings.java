@@ -14,6 +14,12 @@ import java.util.Set;
 
 public class CometSettings {
     
+    public static final int GROUP_LIMIT_MSG_PAGE = 20;
+
+    /* One minute of lifetime, delay checks 1 by day */
+    public static final int CACHE_OBJECT_LIFETIME = Time.getMinutesMillis(1);
+    public static final int CACHE_CHECK_DELAY = Time.getDayMillis(1);
+
     public static final int fastFoodGameThreads = 2;
     public static final String fastFoodGameHost = "0.0.0.0";
     public static final short fastFoodGamePort = 30010;
@@ -77,7 +83,7 @@ public class CometSettings {
     public static boolean messengerLogMessages = false;
 
     public static int CAMERA_COINS_PRICE = 0;
-    public static int CAMERA_DUCKETS_PROCEI = 0;
+    public static int CAMERA_DUCKETS_PRICE = 0;
     public static int CAMERA_PHOTO_ITEM_ID = 50001;
     public static String CAMERA_PHOTO_URL = "http://localhost:8080/camera/photos/%photoId%";
     public static String CAMERA_UPLOAD_URL = "http://dev-comet.test/camera/thumbnails/%photoId%";

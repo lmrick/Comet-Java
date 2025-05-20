@@ -5,6 +5,7 @@ import com.cometproject.api.game.groups.IGroupService;
 import com.cometproject.api.game.groups.types.GroupMemberAvatar;
 import com.cometproject.api.game.groups.types.components.IMembershipComponent;
 import com.cometproject.api.game.groups.types.components.membership.IGroupMember;
+import com.cometproject.api.game.players.IPlayerService;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.networking.messages.IMessageComposer;
 import com.cometproject.api.networking.sessions.ISessionService;
@@ -12,18 +13,19 @@ import com.google.common.collect.Lists;
 import java.util.*;
 
 public class MembershipComponent implements IMembershipComponent {
-
     private final int groupId;
     private final IGroupService groupService;
     private final Map<Integer, IGroupMember> groupMembers;
     private final Set<Integer> membershipRequests;
     private final Set<Integer> administrators;
 
-    public MembershipComponent(final int groupId, IGroupService groupService, Map<Integer, IGroupMember> groupMembers,
-                               Set<Integer> membershipRequests, Set<Integer> administrators) {
+    public MembershipComponent(final int groupId, 
+                               IGroupService groupService, 
+                               Map<Integer, IGroupMember> groupMembers,
+                               Set<Integer> membershipRequests, 
+                               Set<Integer> administrators) {
         this.groupId = groupId;
         this.groupService = groupService;
-
         this.groupMembers = groupMembers;
         this.membershipRequests = membershipRequests;
         this.administrators = administrators;
@@ -109,7 +111,7 @@ public class MembershipComponent implements IMembershipComponent {
         final List<GroupMemberAvatar> avatars = Lists.newArrayList();
 
         for(Integer requestPlayerId : this.getMembershipRequests()) {
-            final IPlayerAvatar playerAvatar = GameContext.getCurrent().getPlayerService().getAvatarByPlayerId(requestPlayerId, IPlayerAvatar.USERNAME_FIGURE);
+            final IPlayerAvatar playerAvatar = GameContext.getCurrent().getService(IPlayerService.class).getAvatarByPlayerId(requestPlayerId, IPlayerAvatar.USERNAME_FIGURE);
             if (playerAvatar != null) {
                 avatars.add(new GroupMemberAvatar(playerAvatar, true, null));
             }
@@ -119,9 +121,10 @@ public class MembershipComponent implements IMembershipComponent {
     }
 
     private void addPlayerAvatar(final int playerId, final List<GroupMemberAvatar> playerAvatars, boolean isRequest, IGroupMember member) {
-        final IPlayerAvatar playerAvatar = GameContext.getCurrent().getPlayerService().getAvatarByPlayerId(playerId, IPlayerAvatar.USERNAME_FIGURE);
+        final IPlayerAvatar playerAvatar = GameContext.getCurrent().getService(IPlayerService.class).getAvatarByPlayerId(playerId, IPlayerAvatar.USERNAME_FIGURE);
         if (playerAvatar != null) {
             playerAvatars.add(new GroupMemberAvatar(playerAvatar, isRequest, member));
         }
     }
+
 }

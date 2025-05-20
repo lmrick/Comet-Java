@@ -10,7 +10,7 @@ public class PhotoPricingMessageEvent implements Event {
 	
 	@Override
 	public void handle(Session client, MessageEvent msg) throws Exception {
-		client.send(new PhotoPricingMessageComposer(CometSettings.CAMERA_COINS_PRICE, CometSettings.CAMERA_DUCKETS_PROCEI));
+		client.send(new PhotoPricingMessageComposer(CometSettings.CAMERA_COINS_PRICE, CometSettings.CAMERA_DUCKETS_PRICE));
 	}
 	
 }

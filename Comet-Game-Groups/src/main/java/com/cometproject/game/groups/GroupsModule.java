@@ -1,11 +1,13 @@
 package com.cometproject.game.groups;
 
 import com.cometproject.api.modules.ModuleConfig;
+import com.cometproject.api.config.CometSettings;
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.groups.types.IGroup;
 import com.cometproject.api.game.groups.types.IGroupData;
 import com.cometproject.api.modules.BaseModule;
 import com.cometproject.api.server.IGameService;
+import com.cometproject.api.utilities.Time;
 import com.cometproject.api.utilities.caching.Cache;
 import com.cometproject.common.caching.LastReferenceCache;
 import com.cometproject.game.groups.services.GroupService;
@@ -20,11 +22,11 @@ public class GroupsModule extends BaseModule {
 
     @Override
     public void setup() {
-        final Cache<Integer, IGroupData> groupDataCache = new LastReferenceCache<>(
-                60000, (86400 * 1000), null, this.getGameService().getExecutorService());
+        final Cache<Integer, IGroupData> groupDataCache = new LastReferenceCache<>
+        (CometSettings.CACHE_OBJECT_LIFETIME, CometSettings.CACHE_CHECK_DELAY, null, this.getGameService().getExecutorService());
 
-        final Cache<Integer, IGroup> groupCache = new LastReferenceCache<>(
-                60000, (86400 * 1000),
+        final Cache<Integer, IGroup> groupCache = new LastReferenceCache<>
+        (CometSettings.CACHE_OBJECT_LIFETIME, CometSettings.CACHE_CHECK_DELAY,
                 (id, group) -> {
                     group.dispose();
                 }, this.getGameService().getExecutorService());
@@ -37,7 +39,8 @@ public class GroupsModule extends BaseModule {
 
     @Override
     public void initializeServices(GameContext gameContext) {
-        gameContext.setGroupService(this.groupService);
+        gameContext.setService(IGroupService.class, this.groupService);
     }
+
 }
 

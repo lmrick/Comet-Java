@@ -5,7 +5,6 @@ import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class PhotoPreviewMessageComposer extends MessageComposer {
-
     private final String fileName;
 
     public PhotoPreviewMessageComposer(final String fileName) {

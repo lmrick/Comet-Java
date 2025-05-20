@@ -14,6 +14,6 @@ public abstract class MessageParser {
     }
 
     public abstract void parse(IEventDataWrapper event);
-    public void flush() {  }
+    public void flush() { }
     
 }

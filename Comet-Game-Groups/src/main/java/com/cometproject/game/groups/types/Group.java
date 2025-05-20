@@ -8,10 +8,11 @@ import com.cometproject.api.game.groups.types.components.IMembershipComponent;
 public class Group implements IGroup {
     private final IGroupData groupData;
     private final IMembershipComponent membershipComponent;
-
     private IForumComponent forumComponent;
 
-    public Group(IGroupData groupData, IMembershipComponent membershipComponent, IForumComponent forumComponent) {
+    public Group(IGroupData groupData, 
+                 IMembershipComponent membershipComponent, 
+                 IForumComponent forumComponent) {
         this.groupData = groupData;
 
         this.membershipComponent = membershipComponent;

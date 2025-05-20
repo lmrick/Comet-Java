@@ -3,7 +3,6 @@ package com.cometproject.networking.api.messages;
 import com.cometproject.api.networking.messages.wrappers.IEventDataWrapper;
 import com.cometproject.api.networking.messages.IMessageEventHandler;
 import org.apache.log4j.Logger;
-
 import java.text.MessageFormat;
 import java.util.function.Consumer;
 

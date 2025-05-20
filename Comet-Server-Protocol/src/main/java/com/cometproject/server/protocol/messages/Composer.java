@@ -118,7 +118,6 @@ public class Composer implements ByteBufHolder, IComposerDataWrapper {
 		
 		try {
 			String string = "";
-			
 			if (obj != null) {
 				string = String.valueOf(obj);
 			}

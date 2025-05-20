@@ -25,9 +25,8 @@ public class PurchasePhotoMessageEvent implements Event {
 		final String code = client.getPlayer().getLastPhoto();
 		final long time = System.currentTimeMillis();
 		final String photoUrl = CometSettings.CAMERA_PHOTO_URL.replace("%photoId%", code);
-		
-		final String itemExtraData = MessageFormat.format("'{'\"t\":{0},\"u\":\"{1}\",\"n\":\"{2}\",\"m\":\"\",\"s\":{3},\"w\":\"{4}\"'}'", time, code, client.getPlayer().getData().getUsername(), client.getPlayer().getId(), photoUrl);
-		
+		final String itemExtraData = getExtraData(time, code, photoUrl);
+
 		final DataWrapper<Long> itemIdData = DataWrapper.createEmpty();
 		StorageContext.getCurrentContext().getRoomItemRepository().createItem(client.getPlayer().getId(), CometSettings.CAMERA_PHOTO_ITEM_ID, itemExtraData, itemIdData::set);
 		
@@ -45,4 +44,8 @@ public class PurchasePhotoMessageEvent implements Event {
 		StorageContext.getCurrentContext().getPhotoRepository().savePhoto(client.getPlayer().getId(), client.getPlayer().getEntity().getRoom().getId(), photoUrl, (int) time / 1000);
 	}
 	
+	private static String getExtraData(long time, String code, String photoUrl) {
+		return MessageFormat.format("'{'\"t\":{0},\"u\":\"{1}\",\"n\":\"{2}\",\"m\":\"\",\"s\":{3},\"w\":\"{4}\"'}'", time, code, client.getPlayer().getData().getUsername(), client.getPlayer().getId(), photoUrl);
+	}
+
 }

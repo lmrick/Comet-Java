@@ -41,4 +41,5 @@ public class InventoryItemFactory implements IPlayerItemFactory {
 
         return new InventoryItem(itemData, itemDefinition);
     }
+    
 }

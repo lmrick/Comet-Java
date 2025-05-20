@@ -11,7 +11,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.Unpooled;
 import org.joda.time.DateTime;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -23,9 +22,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 public class RenderRoomMessageEvent implements Event {
-	
-	private static final byte[] SIGNATURE = new byte[] { -119, 80, 78, 71, 13, 10, 26, 10 };
-	
+
 	@Override
 	public void handle(Session client, MessageEvent msg) throws Exception {
 		final int length = msg.readInt();
@@ -37,7 +34,7 @@ public class RenderRoomMessageEvent implements Event {
 		final String base = CometSettings.CAMERA_PHOTO_URL.replace("%photoId%", "");
 		client.getPlayer().setLastPhoto(URL);
 		
-		if (RenderRoomMessageEvent.isPngFile(payload)) {
+		if (CameraSignatureChecker.isPngFile(payload)) {
 			try {
 				ByteBuf buf = Unpooled.copiedBuffer(payload);
 				BufferedImage image = ImageIO.read(new ByteBufInputStream(buf));
@@ -53,10 +50,6 @@ public class RenderRoomMessageEvent implements Event {
 			client.send(new PhotoPreviewMessageComposer(URL));
 		}
 		
-	}
-	
-	private static boolean isPngFile(byte[] file) {
-		return Arrays.equals(Arrays.copyOfRange(file, 0, 8), SIGNATURE);
 	}
 	
 }
