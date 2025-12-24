@@ -38,7 +38,7 @@ public class IpBanCommand extends ChatCommand {
 			return;
 		}
 		
-		long expire = Comet.getTime() + (length * 3600);
+		long expire = Comet.getTime() + (length * 3600L);
 		
 		String ipAddress = user.getIpAddress();
 		

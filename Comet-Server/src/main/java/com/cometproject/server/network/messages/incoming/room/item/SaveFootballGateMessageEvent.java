@@ -21,11 +21,10 @@ public class SaveFootballGateMessageEvent implements Event {
         }
 
         int itemId = msg.readInt();
-        if (room.getItems().getFloorItem(itemId) == null || !(room.getItems().getFloorItem(itemId) instanceof FootballGateFloorItem))
+        if (room.getItems().getFloorItem(itemId) == null || !(room.getItems().getFloorItem(itemId) instanceof FootballGateFloorItem floorItem))
             return;
-
-        FootballGateFloorItem floorItem = ((FootballGateFloorItem) room.getItems().getFloorItem(itemId));
-        String gender = msg.readString().toUpperCase();
+			
+			String gender = msg.readString().toUpperCase();
         String figure = msg.readString();
 
         floorItem.setFigure(gender.toUpperCase(), figure.contains(";") ? figure.split(";")[gender.equals("M") ? 0 : 1] : figure);

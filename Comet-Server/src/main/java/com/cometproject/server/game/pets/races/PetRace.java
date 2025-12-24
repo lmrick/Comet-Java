@@ -7,12 +7,12 @@ import java.sql.SQLException;
 
 
 public class PetRace implements IPetRace {
-    private int raceId;
-    private int colour1;
-    private int colour2;
+    private final int raceId;
+    private final int colour1;
+    private final int colour2;
 
-    private boolean hasColour1;
-    private boolean hasColour2;
+    private final boolean hasColour1;
+    private final boolean hasColour2;
 
     public PetRace(ResultSet data) throws SQLException {
         this.raceId = data.getInt("race_id");

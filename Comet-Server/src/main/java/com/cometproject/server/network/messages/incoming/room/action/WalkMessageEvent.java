@@ -52,7 +52,7 @@ public class WalkMessageEvent implements Event {
 				entity.moveTo(goalX, goalY);
 			}
 		} catch (Exception e) {
-			client.getLogger().error("Error while finding path", e);
+			client.getLog().error("Error while finding path", e);
 		}
 	}
 	

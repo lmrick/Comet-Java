@@ -22,7 +22,7 @@ public class CometThread extends Thread {
 	}
 	
 	@Override
-	public synchronized void start() {
+	public void start() {
 		if (this.isRunning()) {
 			return;
 		}

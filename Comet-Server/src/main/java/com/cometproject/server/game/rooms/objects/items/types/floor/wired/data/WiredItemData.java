@@ -10,7 +10,7 @@ import java.util.Map;
 public class WiredItemData {
 	
 	private int selectionType = 0;
-	private List<Long> selectedIds;
+	private final List<Long> selectedIds;
 	private String text;
 	private Map<Integer, Integer> params;
 	private Map<Long, WiredItemSnapshot> snapshots;

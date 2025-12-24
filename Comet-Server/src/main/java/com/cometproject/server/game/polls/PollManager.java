@@ -5,14 +5,14 @@ import com.cometproject.server.game.polls.types.Poll;
 import com.cometproject.server.game.polls.types.PollQuestion;
 import com.cometproject.server.game.polls.types.questions.MultipleChoiceQuestion;
 import com.cometproject.server.storage.queries.polls.PollDao;
-import org.apache.log4j.Logger;
-
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class PollManager implements Initializable {
     private static PollManager pollManagerInstance;
-    private static Logger log = Logger.getLogger(PollManager.class.getName());
+    private static final Logger log = LogManager.getLogger(PollManager.class.getName());
     private final Map<Integer, Integer> roomIdToPollId;
     private Map<Integer, Poll> polls;
 

@@ -12,7 +12,6 @@ import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.common.caching.LastReferenceCache;
 import com.cometproject.server.game.players.types.Player;
 import com.cometproject.server.game.rooms.filter.WordFilter;
-import com.cometproject.server.game.rooms.models.types.StaticRoomModel;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.WiredUtil;
 import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.components.types.promotion.RoomPromotion;
@@ -27,7 +26,8 @@ import com.cometproject.server.storage.cache.objects.RoomDataObject;
 import com.cometproject.server.storage.queries.rooms.RoomDao;
 import com.cometproject.server.tasks.CometConstants;
 import com.cometproject.server.tasks.CometThreadManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -35,7 +35,7 @@ import java.util.concurrent.Executors;
 
 public class RoomManager implements Initializable {
 	
-	public static final Logger log = Logger.getLogger(RoomManager.class.getName());
+	public static final Logger log = LogManager.getLogger(RoomManager.class.getName());
 	private static RoomManager roomManagerInstance;
 
 	private Cache<Integer, IRoomData> roomDataInstances;
@@ -83,7 +83,7 @@ public class RoomManager implements Initializable {
 		this.executorService = Executors.newFixedThreadPool(CometConstants.ROOM_LOAD_EXECUTOR, r -> {
 			final Thread roomThread = new Thread(r, "Room-Load-Worker-" + UUID.randomUUID());
 			
-			roomThread.setUncaughtExceptionHandler((t, e) -> e.printStackTrace());
+			roomThread.setUncaughtExceptionHandler((t, e) -> log.error(e));
 			
 			return roomThread;
 		});
@@ -97,7 +97,7 @@ public class RoomManager implements Initializable {
 		RoomDao.deleteExpiredRoomPromotions();
 		RoomDao.getActivePromotions(this.roomPromotions);
 		
-		log.info("Loaded " + this.getRoomPromotions().size() + " room promotions");
+		log.info("Loaded {} room promotions", this.getRoomPromotions().size());
 	}
 	
 	public void initializeRoom(Session initializer, int roomId, String password) {
@@ -306,7 +306,7 @@ public class RoomManager implements Initializable {
 		List<IRoomData> rooms = new ArrayList<>();
 		
 		this.getRoomInstances().values().stream()
-		.filter(room -> category == -1 || (room.getCategory() != null && room.getCategory().getId() == category))
+		.filter(room -> category == -1 || (room.getCategory() != null && room.getCategory().id() == category))
 		.filter(room -> room.getEntities() == null || room.getEntities().playerCount() >= minimumPlayers).forEachOrdered(room -> {
 			if (room.getData().getAccess() == RoomAccessType.INVISIBLE && player.getData().getRank() < 3) {
 				if (room.getGroup() != null) {

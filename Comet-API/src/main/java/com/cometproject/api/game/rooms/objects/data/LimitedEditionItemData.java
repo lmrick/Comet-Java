@@ -6,9 +6,9 @@ public class LimitedEditionItemData implements ILimitedEditionItem {
 	
 	public static final LimitedEditionItemData NONE = new LimitedEditionItemData(0, 0, 0);
 	
-	private long itemId;
-	private int limitedRare;
-	private int limitedRareTotal;
+	private final long itemId;
+	private final int limitedRare;
+	private final int limitedRareTotal;
 	
 	public LimitedEditionItemData(long itemId, int limitedRare, int limitedRareTotal) {
 		this.itemId = itemId;

@@ -49,7 +49,6 @@ public class PunchCommand extends ChatCommand {
 			client.getPlayer().getEntity().getRoom().getEntities().broadcastMessage(new WhisperMessageComposer(client.getPlayer().getEntity().getId(), "* " + client.getPlayer().getData().getUsername() + " " + Locale.getOrDefault("command.punch.word", "punched") + " " + punchedSession.getPlayer().getData().getUsername() + " *", 34));
 		} else {
 			client.getPlayer().getSession().send(new WhisperMessageComposer(client.getPlayer().getEntity().getId(), Locale.getOrDefault("command.notaround", "Oops! %playername% is not near, walk to this player.").replace("%playername%", punchedSession.getPlayer().getData().getUsername()), 34));
-			return;
 		}
 	}
 	

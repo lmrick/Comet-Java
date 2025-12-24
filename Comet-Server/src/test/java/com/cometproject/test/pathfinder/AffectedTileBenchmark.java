@@ -11,7 +11,7 @@ import com.cometproject.server.game.rooms.objects.entities.pathfinding.AffectedT
 @State(Scope.Benchmark)
 public class AffectedTileBenchmark {
 
-    public static void main(String[] args) throws Exception{
+    static void main(String[] args) throws Exception{
         Main.main(args);
     }
 

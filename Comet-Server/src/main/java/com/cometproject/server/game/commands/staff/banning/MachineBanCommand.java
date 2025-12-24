@@ -34,7 +34,7 @@ public class MachineBanCommand extends ChatCommand {
 			return;
 		}
 		
-		long expire = Comet.getTime() + (length * 3600);
+		long expire = Comet.getTime() + (length * 3600L);
 		
 		String uniqueId = user.getUniqueId();
 		

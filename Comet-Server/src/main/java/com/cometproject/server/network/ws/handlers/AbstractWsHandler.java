@@ -4,12 +4,13 @@ import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.server.network.sessions.Session;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public abstract class AbstractWsHandler<T> implements IWsHandler {
 	
 	protected static final AttributeKey<Session> SESSION = AttributeKey.newInstance("Session");
-	private static final Logger log = Logger.getLogger(AbstractWsHandler.class);
+	private static final Logger log = LogManager.getLogger(AbstractWsHandler.class);
 	private final Class<? extends T> messageClass;
 	
 	public AbstractWsHandler(Class<? extends T> messageType) {

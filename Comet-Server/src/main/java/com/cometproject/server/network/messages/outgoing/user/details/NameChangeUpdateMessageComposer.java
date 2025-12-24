@@ -7,8 +7,8 @@ import com.cometproject.server.protocol.messages.MessageComposer;
 import java.util.List;
 
 public class NameChangeUpdateMessageComposer extends MessageComposer {
-    private String name;
-    private int error;
+    private final String name;
+    private final int error;
     private List<String> tags;
 
     public NameChangeUpdateMessageComposer(String name, int error, List<String> tags) {

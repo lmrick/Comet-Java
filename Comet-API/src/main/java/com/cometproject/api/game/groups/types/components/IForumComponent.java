@@ -14,9 +14,9 @@ public interface IForumComponent extends IGroupComponent {
 
     List<IForumThread> getForumThreads(int start);
 
-    IForumSettings getForumSettings();
+    IForumSettings forumSettings();
 
-    Map<Integer, IForumThread> getForumThreads();
+    Map<Integer, IForumThread> forumThreads();
 
-    List<Integer> getPinnedThreads();
+    List<Integer> pinnedThreads();
 }

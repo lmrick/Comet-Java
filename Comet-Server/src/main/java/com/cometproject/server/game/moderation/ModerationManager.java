@@ -11,8 +11,8 @@ import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.storage.queries.moderation.PresetDao;
 import com.cometproject.server.storage.queries.moderation.TicketDao;
 import com.cometproject.server.utilities.collections.ConcurrentHashSet;
-import org.apache.log4j.Logger;
-
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +26,7 @@ public class ModerationManager implements Initializable {
 	private Map<Integer, HelpTicket> tickets;
 	private ConcurrentHashSet<Session> moderators;
 	private ConcurrentHashSet<Session> logChatUsers;
-	private static final Logger log = Logger.getLogger(ModerationManager.class.getName());
+	private static final Logger log = LogManager.getLogger(ModerationManager.class.getName());
 	
 	public ModerationManager() {
 	

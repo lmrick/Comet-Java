@@ -4,12 +4,14 @@ import com.cometproject.api.config.Configuration;
 import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.api.routes.*;
 import com.cometproject.server.api.transformers.JsonTransformer;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import spark.Spark;
 import java.util.Arrays;
 
 public class APIManager implements Initializable {
-    private static final Logger log = Logger.getLogger(APIManager.class.getName());
+    private static final Logger log = LogManager.getLogger(APIManager.class.getName());
     private static final String[] configProperties = new String[]{
             "comet.api.enabled",
             "comet.api.port",

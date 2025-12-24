@@ -2,7 +2,7 @@ package com.cometproject.server.network.messages.incoming.moderation;
 
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.rooms.IRoomData;
-import com.cometproject.server.logging.LogManager;
+import com.cometproject.server.logging.LogService;
 import com.cometproject.server.logging.database.queries.LogQueries;
 import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.messages.outgoing.moderation.ModToolRoomChatlogMessageComposer;
@@ -22,7 +22,7 @@ public class ModToolRoomChatlogMessageEvent implements Event {
 			return;
 		}
 		
-		if (!LogManager.ENABLED) {
+		if (!LogService.ENABLED) {
 			client.send(new AdvancedAlertMessageComposer("Notice", "Logging is not currently enabled, please contact your system administrator to enable it."));
 			return;
 		}

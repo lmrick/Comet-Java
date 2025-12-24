@@ -7,6 +7,7 @@ import spark.Request;
 import spark.Response;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class FacebookRoute {
     
@@ -43,18 +44,13 @@ public class FacebookRoute {
 
             return "failed to login!";
         }
-
-        try {
-            res.redirect("http://www.facebook.com/dialog/oauth?" + "client_id="
-                    + FbApiClient.FB_APP_ID + "&redirect_uri="
-                    + URLEncoder.encode(Configuration.getInstance().getSiteUrl() + "/facebook", "UTF-8")
-                    + "&scope=email");
-
-
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+			
+			res.redirect("http://www.facebook.com/dialog/oauth?" + "client_id="
+							+ FbApiClient.FB_APP_ID + "&redirect_uri="
+							+ URLEncoder.encode(Configuration.getInstance().getSiteUrl() + "/facebook", StandardCharsets.UTF_8)
+							+ "&scope=email");
+			
+			
+			return null;
     }
 }

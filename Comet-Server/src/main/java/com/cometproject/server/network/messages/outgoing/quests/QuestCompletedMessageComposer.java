@@ -7,8 +7,8 @@ import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class QuestCompletedMessageComposer extends MessageComposer {
-    private IQuest quest;
-    private IPlayer player;
+    private final IQuest quest;
+    private final IPlayer player;
 
     public QuestCompletedMessageComposer(IQuest quest, IPlayer player) {
         this.quest = quest;

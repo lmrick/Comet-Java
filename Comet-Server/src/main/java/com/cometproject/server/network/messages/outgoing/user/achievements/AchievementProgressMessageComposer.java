@@ -35,12 +35,8 @@ public class AchievementProgressMessageComposer extends MessageComposer {
         msg.writeInt(achievement.rewardActivityPoints());
         msg.writeInt(0);
         msg.writeInt(achievementProgress.getProgress());
-
-        if (achievementProgress.getLevel() >= achievementGroup.getLevelCount()) {
-            msg.writeBoolean(true);
-        } else {
-            msg.writeBoolean(false);
-        }
+			
+			msg.writeBoolean(achievementProgress.getLevel() >= achievementGroup.getLevelCount());
 
         msg.writeString(achievementGroup.category().toString().toLowerCase());
         msg.writeString("");

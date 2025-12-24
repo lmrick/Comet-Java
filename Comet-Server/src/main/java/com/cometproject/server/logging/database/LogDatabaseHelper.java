@@ -2,7 +2,8 @@ package com.cometproject.server.logging.database;
 
 import com.cometproject.server.logging.database.queries.LogQueries;
 import com.cometproject.server.storage.SQLUtility;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class LogDatabaseHelper {
-	private static final Logger log = Logger.getLogger(LogDatabaseHelper.class.getName());
+	private static final Logger log = LogManager.getLogger(LogDatabaseHelper.class.getName());
 	
 	public static void init() {
 		LogQueries.updateRoomEntries();
@@ -72,7 +73,7 @@ public class LogDatabaseHelper {
 		return prepare(query, connection, false);
 	}
 	
-	public static PreparedStatement prepare(String query, Connection connection, boolean returnKeys) throws SQLException {
+	public static PreparedStatement prepare(final String query, Connection connection, boolean returnKeys) throws SQLException {
 		return returnKeys ? connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS) : connection.prepareStatement(query);
 	}
 	

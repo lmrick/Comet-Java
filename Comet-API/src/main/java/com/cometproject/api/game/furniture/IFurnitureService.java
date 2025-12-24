@@ -4,9 +4,7 @@ import com.cometproject.api.game.furniture.types.CrackableReward;
 import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.game.furniture.types.IMusicData;
 import com.cometproject.api.utilities.process.Initializable;
-
-import org.apache.log4j.Logger;
-
+import org.apache.logging.log4j.Logger;
 import java.util.Map;
 
 public interface IFurnitureService extends Initializable {

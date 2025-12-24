@@ -34,7 +34,6 @@ public abstract class GameTimerFloorItem extends RoomItemFloor {
 			}
 			
 			time = switch (time) {
-				default -> 0;
 				case 0 -> 30;
 				case 30 -> 60;
 				case 60 -> 120;
@@ -43,6 +42,7 @@ public abstract class GameTimerFloorItem extends RoomItemFloor {
 				case 300 -> 600;
 				case 600 -> 1200;
 				case 1200 -> 1800;
+				default -> 0;
 			};
 			
 			this.getItemData().setData(time + "");

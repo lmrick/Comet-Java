@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PositionMapTest extends TestCase {
-    private Map<Position, String> positionMap;
+    private final Map<Position, String> positionMap;
 
     public PositionMapTest() {
         this.positionMap = new HashMap<>();

@@ -5,6 +5,7 @@ import com.cometproject.server.logging.AbstractLogEntry;
 import com.cometproject.server.logging.database.LogDatabaseHelper;
 import com.cometproject.server.logging.entries.RoomChatLogEntry;
 import com.cometproject.server.logging.entries.RoomVisitLogEntry;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -129,7 +130,7 @@ public class LogQueries {
 			LogDatabaseHelper.closeSilently(sqlConnection);
 		}
 	}
-
+	
 	public static List<RoomChatLogEntry> getChatLogsByCriteria(int playerId, int roomId, long entryTime, long exitTime) {
 		return getChatLogsByCriteria(playerId, roomId, entryTime, exitTime);
 	}
@@ -236,7 +237,7 @@ public class LogQueries {
 		
 		return chatLogs;
 	}
-
+	
 	public static List<RoomVisitLogEntry> getLastRoomVisits(int playerId, int count) {
 		Connection sqlConnection = null;
 		PreparedStatement preparedStatement = null;

@@ -7,17 +7,17 @@ public class CatalogPurchase {
     /**
      * The ID of the player who purchased the item
      */
-    private int playerId;
+    private final int playerId;
 
     /**
      * The item definition ID of the item
      */
-    private int itemBaseId;
+    private final int itemBaseId;
 
     /**
      * The data generated for items such as trophies etc
      */
-    private String data;
+    private final String data;
 
     /**
      * Initialize the catalog purchase object

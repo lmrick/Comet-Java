@@ -5,12 +5,12 @@ import com.cometproject.api.game.players.data.components.IPlayerRelationships;
 import com.cometproject.api.game.players.data.components.messenger.RelationshipLevel;
 import com.cometproject.server.game.players.components.PlayerComponent;
 import com.cometproject.server.storage.queries.player.relationships.RelationshipDao;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 public class RelationshipComponent extends PlayerComponent implements IPlayerRelationships {
-	private final Logger LOG = super.getLogger(RelationshipComponent.class);
+	private final Logger LOG = getLogger(RelationshipComponent.class);
 	private Map<Integer, RelationshipLevel> relationships;
 	
 	public RelationshipComponent(PlayerComponentContext componentContext) {

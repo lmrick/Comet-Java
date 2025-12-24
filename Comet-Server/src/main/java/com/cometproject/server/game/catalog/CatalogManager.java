@@ -8,7 +8,8 @@ import com.cometproject.server.storage.queries.catalog.CatalogDao;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections4.map.ListOrderedMap;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class CatalogManager implements ICatalogService {
 	private Map<Integer, ICatalogItem> items;
 	private Map<Integer, Integer> catalogItemIdToPageId;
 	private ICatalogPurchaseHandler purchaseHandler;
-	private static final Logger log = Logger.getLogger(CatalogManager.class.getName());
+	private static final Logger log = LogManager.getLogger(CatalogManager.class.getName());
 	private final List<ICatalogPage> parentPages = Lists.newCopyOnWriteArrayList();
 	
 	public CatalogManager() {

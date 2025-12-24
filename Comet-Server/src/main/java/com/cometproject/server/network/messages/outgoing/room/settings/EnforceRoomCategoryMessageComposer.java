@@ -6,7 +6,7 @@ import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class EnforceRoomCategoryMessageComposer extends MessageComposer {
 
-    private int defaultCategory = 16;
+    private final int defaultCategory = 16;
 
     public EnforceRoomCategoryMessageComposer() {
 

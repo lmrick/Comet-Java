@@ -22,17 +22,17 @@ public class ViewThreadMessageEvent implements Event {
             return;
         }
 
-        IForumThread forumThread = group.getForum().getForumThreads().get(threadId);
+        IForumThread forumThread = group.getForum().forumThreads().get(threadId);
 
         if (forumThread == null) {
             return;
         }
 
-        if (group.getForum().getForumSettings().getReadPermission() == ForumPermission.MEMBERS) {
+        if (group.getForum().forumSettings().getReadPermission() == ForumPermission.MEMBERS) {
             if (!group.getMembers().getAll().containsKey(client.getPlayer().getId())) {
                 return;
             }
-        } else if (group.getForum().getForumSettings().getReadPermission() == ForumPermission.ADMINISTRATORS) {
+        } else if (group.getForum().forumSettings().getReadPermission() == ForumPermission.ADMINISTRATORS) {
             if (!group.getMembers().getAdministrators().contains(client.getPlayer().getId())) {
                 return;
             }

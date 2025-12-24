@@ -130,7 +130,7 @@ public class WiredActionGiveReward extends WiredActionItem {
 							}
 							
 							this.givenRewards.get(playerEntity.getPlayerId()).add(reward.productCode);
-							StorageContext.getCurrentContext().getRoomItemRepository().saveReward(this.getId(), ((PlayerEntity) event.entity).getPlayerId(), reward.productCode);
+							StorageContext.getCurrentContext().getRoomItemRepository().saveReward(this.getId(), playerEntity.getPlayerId(), reward.productCode);
 						}
 						
 						if (rewardTimings.get(this.getId()).containsKey(playerEntity.getPlayerId())) {

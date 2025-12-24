@@ -63,7 +63,7 @@ public class PostMessageMessageEvent implements Event {
         }
 
 
-        final IForumSettings forumSettings = group.getForum().getForumSettings();
+        final IForumSettings forumSettings = group.getForum().forumSettings();
 
         if (threadId == 0) {
 
@@ -106,7 +106,7 @@ public class PostMessageMessageEvent implements Event {
                 return;
             }
 
-            group.getForum().getForumThreads().put(forumThread.getId(), forumThread);
+            group.getForum().forumThreads().put(forumThread.getId(), forumThread);
             client.send(new GroupForumPostThreadMessageComposer(groupId, forumThread));
 
             client.getPlayer().setLastForumPost((int) Comet.getTime());
@@ -139,7 +139,7 @@ public class PostMessageMessageEvent implements Event {
                 return;
             }
 
-            IForumThread forumThread = group.getForum().getForumThreads().get(threadId);
+            IForumThread forumThread = group.getForum().forumThreads().get(threadId);
 
             if (forumThread == null) {
                 return;

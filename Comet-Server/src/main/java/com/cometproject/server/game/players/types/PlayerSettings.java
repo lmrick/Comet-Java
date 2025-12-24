@@ -18,15 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerSettings implements IPlayerSettings {
-	private VolumeData volumes;
+	private final VolumeData volumes;
 	private List<IWardrobeItem> wardrobe;
-	private List<IPlaylistItem> playlist;
-	private boolean hideOnline;
-	private boolean hideInRoom;
+	private final List<IPlaylistItem> playlist;
+	private final boolean hideOnline;
+	private final boolean hideInRoom;
 	private boolean allowFriendRequests;
-	private boolean allowTrade;
-	private boolean allowFollow;
-	private boolean allowMimic;
+	private final boolean allowTrade;
+	private final boolean allowFollow;
+	private final boolean allowMimic;
 	private boolean personalStaff;
 	private int homeRoom;
 	private boolean useOldChat;

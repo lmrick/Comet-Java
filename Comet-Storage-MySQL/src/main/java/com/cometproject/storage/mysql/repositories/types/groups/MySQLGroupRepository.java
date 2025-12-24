@@ -55,7 +55,7 @@ public class MySQLGroupRepository extends MySQLRepository implements IGroupRepos
     public void createForumSettings(IForumComponent forumComponent) {
         insert("INSERT INTO group_forum_settings (`group_id`, `read_permission`, `post_permission`, `thread_permission`, `moderate_permission`) " +
                 "VALUES (?,?,?,?,?);", key -> {
-        }, forumComponent.getForumSettings().getGroupId(), forumComponent.getForumSettings().getReadPermission().name(), forumComponent.getForumSettings().getPostPermission().name(), forumComponent.getForumSettings().getStartThreadsPermission().name(), forumComponent.getForumSettings().getModeratePermission().name());
+        }, forumComponent.forumSettings().getGroupId(), forumComponent.forumSettings().getReadPermission().name(), forumComponent.forumSettings().getPostPermission().name(), forumComponent.forumSettings().getStartThreadsPermission().name(), forumComponent.forumSettings().getModeratePermission().name());
     }
 
     @Override

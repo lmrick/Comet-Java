@@ -35,7 +35,6 @@ public class ReloadCommand extends ChatCommand {
         String command = params.length == 0 ? "" : params[0];
 			
 			switch (command) {
-				default -> client.send(new MotdNotificationMessageComposer("Here's a list of what you can reload using the :reload <type> command!\n\n- bans\n- catalog\n- navigator\n- permissions\n- rooms\n- catalog\n- news\n- config\n- items\n- filter\n- locale\n- modpresets\n- groupitems\n- models\n- music\n- quests\n- achievements\n- pets\n- polls\n- bundles"));
 				case "bans" -> {
 					BanManager.getInstance().loadBans();
 					
@@ -147,6 +146,7 @@ public class ReloadCommand extends ChatCommand {
 					sendNotification(Locale.get("command.reload.bundles"), client);
 					
 				}
+				default -> client.send(new MotdNotificationMessageComposer("Here's a list of what you can reload using the :reload <type> command!\n\n- bans\n- catalog\n- navigator\n- permissions\n- rooms\n- catalog\n- news\n- config\n- items\n- filter\n- locale\n- modpresets\n- groupitems\n- models\n- music\n- quests\n- achievements\n- pets\n- polls\n- bundles"));
 			}
     }
 

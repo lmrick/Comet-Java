@@ -28,11 +28,7 @@ public class GroupMembersMessageEvent implements Event {
 
         List<GroupMemberAvatar> avatars;
         switch (requestType) {
-            default: {
-                avatars = group.getMembers().getMemberAvatars();
-            }
-            break;
-            case 1: {
+					case 1: {
                 avatars = group.getMembers().getAdminAvatars();
             }
             break;
@@ -41,14 +37,18 @@ public class GroupMembersMessageEvent implements Event {
                 avatars = group.getMembers().getRequestAvatars();
             }
             break;
-
-        }
+					
+					default: {
+							avatars = group.getMembers().getMemberAvatars();
+					}
+					break;
+				}
 
         final Set<GroupMemberAvatar> playersToRemove = Sets.newHashSet();
 
         if (!searchQuery.isEmpty()) {
             for (GroupMemberAvatar playerAvatar : avatars) {
-                if (!playerAvatar.getPlayerAvatar().getUsername().toLowerCase().startsWith(searchQuery.toLowerCase())) {
+                if (!playerAvatar.playerAvatar().getUsername().toLowerCase().startsWith(searchQuery.toLowerCase())) {
                     playersToRemove.add(playerAvatar);
                 }
             }

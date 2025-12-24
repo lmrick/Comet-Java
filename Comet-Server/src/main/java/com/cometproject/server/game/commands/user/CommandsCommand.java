@@ -17,7 +17,7 @@ public class CommandsCommand extends ChatCommand {
 		List<String> list;
 		String builder;
 		
-		list = ModuleManager.getInstance().getEventHandler().getCommands().entrySet().stream().filter(commandInfoEntry -> client.getPlayer().getPermissions().hasCommand(commandInfoEntry.getValue().getPermission()) || commandInfoEntry.getValue().getPermission().isEmpty()).map(commandInfoEntry -> commandInfoEntry.getKey() + " - " + commandInfoEntry.getValue().getDescription() + "\n").collect(Collectors.toList());
+		list = ModuleManager.getInstance().getEventHandler().getCommands().entrySet().stream().filter(commandInfoEntry -> client.getPlayer().getPermissions().hasCommand(commandInfoEntry.getValue().permission()) || commandInfoEntry.getValue().permission().isEmpty()).map(commandInfoEntry -> commandInfoEntry.getKey() + " - " + commandInfoEntry.getValue().description() + "\n").collect(Collectors.toList());
 		CommandManager.getInstance().getChatCommands().entrySet().stream().filter(command -> !command.getValue().isHidden()).filter(command -> client.getPlayer().getPermissions().hasCommand(command.getValue().getPermission())).map(command -> command.getKey().split(",")[0] + " " + command.getValue().getParameter() + " " + command.getValue().getDescription() + "\n").forEachOrdered(list::add);
 		list.sort(String::compareToIgnoreCase);
 		builder = String.join("", list);

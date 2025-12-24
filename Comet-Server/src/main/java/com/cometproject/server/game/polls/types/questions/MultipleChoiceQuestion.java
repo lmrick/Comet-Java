@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MultipleChoiceQuestion extends PollQuestion {
-    private List<String> choices;
+    private final List<String> choices;
 
     public MultipleChoiceQuestion(String question, String questionData) {
         super(question);

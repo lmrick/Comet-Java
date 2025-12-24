@@ -64,7 +64,7 @@ public class EjectAllCommand extends ChatCommand {
 				}
 				
 				if (groupMemberSession != null && groupMemberSession.getPlayer() != null && group != null) {
-					groupMemberSession.getPlayer().getGroups().remove(new Integer(group.getId()));
+					groupMemberSession.getPlayer().getGroups().remove(Integer.valueOf(group.getId()));
 					
 					if (groupMemberSession.getPlayer().getData().getFavouriteGroup() == group.getId()) {
 						groupMemberSession.getPlayer().getData().setFavouriteGroup(0);

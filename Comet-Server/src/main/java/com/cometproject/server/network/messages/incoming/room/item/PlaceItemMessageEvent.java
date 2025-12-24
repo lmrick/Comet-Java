@@ -97,7 +97,7 @@ public class PlaceItemMessageEvent implements Event {
 				}
 			}
 		} catch (Exception e) {
-			client.getLogger().error("Error while placing item", e);
+			client.getLog().error("Error while placing item", e);
 		}
 		
 		client.getPlayer().getQuests().progressQuest(QuestType.FURNI_PLACE);

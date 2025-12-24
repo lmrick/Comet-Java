@@ -38,7 +38,7 @@ public class SwitchTVCommand extends PetCommand {
                 CometThreadManager.getInstance().executeSchedule(() -> {
                     television.toggleInteract(true);
                     television.sendUpdate();
-                }, 1000l, TimeUnit.MILLISECONDS);
+                }, 1000L, TimeUnit.MILLISECONDS);
             });
         }
 

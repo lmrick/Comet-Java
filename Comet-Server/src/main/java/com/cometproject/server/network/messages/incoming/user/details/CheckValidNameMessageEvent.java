@@ -49,20 +49,15 @@ public class CheckValidNameMessageEvent implements Event {
 		
 		if (name.toLowerCase().contains("mod") || name.toLowerCase().contains("adm") || name.toLowerCase().contains("admin") || name.toLowerCase().contains("m0d") || name.toLowerCase().contains("mob") || name.toLowerCase().contains("m0b")) {
 			client.send(new NameChangeUpdateMessageComposer(name, 4));
-			return;
 		} else if (name.length() > 15) {
 			client.send(new NameChangeUpdateMessageComposer(name, 3));
-			return;
 		} else if (name.length() < 3) {
 			client.send(new NameChangeUpdateMessageComposer(name, 2));
-			return;
 		} else if (inUse) {
 			LinkedList<String> suggestions = IntStream.range(100, 103).mapToObj(i -> i + "").collect(Collectors.toCollection(LinkedList::new));
 			client.send(new NameChangeUpdateMessageComposer(name, 5, suggestions));
-			return;
 		} else {
 			client.send(new NameChangeUpdateMessageComposer(name, 0));
-			return;
 		}
 	}
 	

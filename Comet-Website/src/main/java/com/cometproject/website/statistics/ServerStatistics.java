@@ -4,9 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ServerStatistics {
-    private int activePlayers;
-    private int activeRooms;
-    private String serverVersion;
+    private final int activePlayers;
+    private final int activeRooms;
+    private final String serverVersion;
 
     public ServerStatistics(ResultSet data) throws SQLException {
         this.activePlayers = data.getInt("active_players");

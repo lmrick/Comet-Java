@@ -4,12 +4,10 @@ import com.cometproject.server.game.rooms.objects.items.types.floor.games.freeze
 
 public class FreezeBall {
     public static final int START_TICKS = 2;
-
     private final int playerId;
     private final FreezeTileFloorItem source;
     private final int range;
     private final boolean diagonal;
-
     private int ticksUntilExplode;
 
     public FreezeBall(int playerId, FreezeTileFloorItem source, int range, boolean diagonal) {
@@ -17,8 +15,6 @@ public class FreezeBall {
         this.source = source;
         this.range = range;
         this.diagonal = diagonal;
-
-        // default ticks = 4
         this.ticksUntilExplode = 2;
     }
 

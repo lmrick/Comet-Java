@@ -31,7 +31,7 @@ public class CometWebsite {
         return true;
     }
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         arguments = args;
         cometManager = new CometWebsite();
     }

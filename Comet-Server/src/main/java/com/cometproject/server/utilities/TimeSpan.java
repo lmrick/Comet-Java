@@ -9,24 +9,16 @@ public class TimeSpan {
 	}
 	
 	public static String millisecondsToDate(long time) {
+		var SECOND = 1000;
+		var MINUTE = 60 * SECOND;
+		var HOUR = 60 * MINUTE;
+		var DAY = 24 * HOUR;
 		
-		int SECOND = 1000;
-		int MINUTE = 60 * SECOND;
-		int HOUR = 60 * MINUTE;
-		int DAY = 24 * HOUR;
-		
-		long ms = time;
-		
-		StringBuilder text = new StringBuilder();
-		if (ms > DAY) {
-			text.append(ms / DAY).append("d ");
-		} else if (ms > HOUR) {
-			text.append(ms / HOUR).append("h ");
-		} else if (ms > MINUTE) {
-			text.append(ms / MINUTE).append("min ");
-		} else if (ms > SECOND) {
-			text.append(ms / SECOND).append("sec ");
-		}
+		var text = new StringBuilder();
+		if (time > DAY) text.append(time / DAY).append("d ");
+		else if (time > HOUR) text.append(time / HOUR).append("h ");
+		else if (time > MINUTE) text.append(time / MINUTE).append("min ");
+		else if (time > SECOND) text.append(time / SECOND).append("sec ");
 		
 		return text.toString();
 	}
@@ -40,19 +32,19 @@ public class TimeSpan {
 	}
 	
 	public long toMinutes() {
-		return (this.difference / 1000) / 60;
+		return this.difference / 1000 / 60;
 	}
 	
 	public long toHours() {
-		return ((this.difference / 1000) / 60) / 60;
+		return this.difference / 1000 / 60 / 60;
 	}
 	
 	public long toDays() {
-		return (((this.difference / 1000) / 60) / 60) / 24;
+		return this.difference / 1000 / 60 / 60 / 24;
 	}
 	
 	public long toWeeks() {
-		return ((((this.difference / 1000) / 60) / 60) / 24) / 7;
+		return this.difference / 1000 / 60 / 60 / 24 / 7;
 	}
 	
 }

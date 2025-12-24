@@ -6,8 +6,8 @@ import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class SongIdMessageComposer extends MessageComposer {
 
-    private String songName;
-    private int songId;
+    private final String songName;
+    private final int songId;
 
     public SongIdMessageComposer(String songName, int songId) {
         this.songName = songName;

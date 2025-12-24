@@ -27,7 +27,7 @@ public class SoundMachineFloorItem extends RoomItemFloor implements Stateable {
 	private int currentPlayingIndex = -1;
 	private long startTimestamp = 0;
 	
-	private List<SongItemData> songs;
+	private final List<SongItemData> songs;
 	
 	private boolean pendingPlay = false;
 	

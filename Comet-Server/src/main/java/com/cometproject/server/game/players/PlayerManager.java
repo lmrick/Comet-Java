@@ -14,8 +14,8 @@ import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.storage.queries.player.PlayerDao;
 import com.cometproject.server.tasks.CometThreadManager;
 import com.cometproject.server.tasks.CometConstants;
-
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +27,7 @@ import java.util.concurrent.Executors;
 public class PlayerManager implements IPlayerService {
 	
 	private static PlayerManager playerManagerInstance;
-	private static final Logger log = Logger.getLogger(PlayerManager.class.getName());
+	private static final Logger log = LogManager.getLogger(PlayerManager.class.getName());
 	
 	private Map<Integer, Integer> playerIdToSessionId;
 	private Map<String, Integer> playerUsernameToPlayerId;

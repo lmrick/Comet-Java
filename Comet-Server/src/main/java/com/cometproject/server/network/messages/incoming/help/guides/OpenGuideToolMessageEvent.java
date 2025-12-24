@@ -1,7 +1,7 @@
 package com.cometproject.server.network.messages.incoming.help.guides;
 
-import com.cometproject.server.game.guides.GuideManager;
-import com.cometproject.server.game.guides.types.HelperSession;
+import com.cometproject.server.game.moderation.guides.GuideManager;
+import com.cometproject.server.game.moderation.guides.types.HelperSession;
 import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.messages.outgoing.help.guides.GuideToolsMessageComposer;
 import com.cometproject.server.network.sessions.Session;

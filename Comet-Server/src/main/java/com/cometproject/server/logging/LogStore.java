@@ -11,7 +11,7 @@ public class LogStore {
     private LogEntryContainer logEntryContainer;
 
     public LogStore() {
-        if (!LogManager.ENABLED) return;
+        if (!LogService.ENABLED) return;
         roomVisitContainer = new RoomVisitContainer();
         logEntryContainer = new LogEntryContainer();
     }

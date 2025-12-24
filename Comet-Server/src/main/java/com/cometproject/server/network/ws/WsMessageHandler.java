@@ -8,13 +8,14 @@ import com.cometproject.server.network.ws.request.WsRequestType;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class WsMessageHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 	
-	private static final Logger log = Logger.getLogger(WsMessageHandler.class);
+	private static final Logger log = LogManager.getLogger(WsMessageHandler.class);
 	
 	private static final Map<WsRequestType, IWsHandler> handlers = new ConcurrentHashMap<>() {{
 		put(WsRequestType.AUTH, new AuthMessageHandler());
@@ -25,7 +26,7 @@ public class WsMessageHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	}};
 	
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame frame) throws Exception {
+	protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
 		try {
 			final var request = JsonUtil.getInstance().fromJson(frame.text(), WsRequest.class);
 			final var handler = handlers.get(request.type());
@@ -33,8 +34,8 @@ public class WsMessageHandler extends SimpleChannelInboundHandler<TextWebSocketF
 			if (handler != null) {
 				handler.handle(frame.text(), ctx);
 			}
+			
 		} catch (Exception e) {
-			e.printStackTrace();
 			log.error("Error handling websocket msg", e);
 		}
 	}

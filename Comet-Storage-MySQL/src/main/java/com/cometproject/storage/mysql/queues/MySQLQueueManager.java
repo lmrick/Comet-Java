@@ -25,7 +25,7 @@ public class MySQLQueueManager {
     }
 
     public static MySQLQueueManager getInstance() {
-        MySQLConnectionProvider connectionProvider = MySQLStorageContext.getCurrentContext().getConnectionProvider();
+        MySQLConnectionProvider connectionProvider = MySQLStorageContext.getCurrentContext().connectionProvider();
         return getInstance(connectionProvider);
     }
 

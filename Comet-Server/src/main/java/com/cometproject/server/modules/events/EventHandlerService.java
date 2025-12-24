@@ -7,7 +7,8 @@ import com.cometproject.api.utilities.events.EventArgs;
 import com.cometproject.api.utilities.events.IEventHandler;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ import java.util.function.BiConsumer;
 
 public class EventHandlerService implements IEventHandler {
 	private final ExecutorService asyncEventExecutor;
-	private final Logger log = Logger.getLogger(EventHandlerService.class);
+	private final Logger log = LogManager.getLogger(EventHandlerService.class);
 	private final Map<Class<?>, List<Event<?>>> listeners;
 	private final Map<String, BiConsumer<ISession, String[]>> chatCommands;
 	private final Map<String, CommandInfo> commandInfo;
@@ -89,7 +90,7 @@ public class EventHandlerService implements IEventHandler {
 		}
 		
 		CommandInfo commandInfo = this.commandInfo.get(commandExecutor);
-		if (!session.getPlayer().getPermissions().hasCommand(commandInfo.getPermission()) && !commandInfo.getPermission().isEmpty()) {
+		if (!session.getPlayer().getPermissions().hasCommand(commandInfo.permission()) && !commandInfo.permission().isEmpty()) {
 			return false;
 		}
 		

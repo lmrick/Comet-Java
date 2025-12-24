@@ -1,8 +1,8 @@
-package com.cometproject.server.game.guides;
+package com.cometproject.server.game.moderation.guides;
 
 import com.cometproject.api.utilities.process.Initializable;
-import com.cometproject.server.game.guides.types.HelpRequest;
-import com.cometproject.server.game.guides.types.HelperSession;
+import com.cometproject.server.game.moderation.guides.types.HelpRequest;
+import com.cometproject.server.game.moderation.guides.types.HelperSession;
 import com.cometproject.server.network.messages.outgoing.help.guides.GuideSessionAttachedMessageComposer;
 import com.cometproject.server.tasks.CometConstants;
 import com.cometproject.server.tasks.CometThreadManager;

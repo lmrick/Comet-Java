@@ -19,12 +19,12 @@ public class SpyAI extends AbstractBotAI {
 	public boolean onPlayerEnter(PlayerEntity playerEntity) {
 		if (playerEntity.getPlayerId() != this.getBotEntity().getData().getOwnerId()) {
 			if (!playerEntity.getPlayer().isInvisible()) {
-				if (!((SpyBotData) this.getBotEntity().getDataObject()).getVisitors().contains(playerEntity.getUsername())) {
-					((SpyBotData) this.getBotEntity().getDataObject()).getVisitors().add(playerEntity.getUsername());
+				if (!((SpyBotData) this.getBotEntity().getDataObject()).visitors().contains(playerEntity.getUsername())) {
+					((SpyBotData) this.getBotEntity().getDataObject()).visitors().add(playerEntity.getUsername());
 				}
 			}
 		} else {
-			if (((SpyBotData) this.getBotEntity().getDataObject()).getVisitors().isEmpty()) {
+			if (((SpyBotData) this.getBotEntity().getDataObject()).visitors().isEmpty()) {
 				this.getBotEntity().say(Locale.getOrDefault("comet.game.bot.spy.noVisitors", "There have been no visitors while you've been away!!!"));
 				this.hasSaidYes = true;
 			} else {
@@ -47,8 +47,8 @@ public class SpyAI extends AbstractBotAI {
 				StringBuilder stillIn = new StringBuilder();
 				StringBuilder left = new StringBuilder();
 				
-				((SpyBotData) this.getBotEntity().getDataObject()).getVisitors().forEach(username -> {
-					boolean isLast = ((SpyBotData) this.getBotEntity().getDataObject()).getVisitors().indexOf(username) == (((SpyBotData) this.getBotEntity().getDataObject()).getVisitors().size() - 1);
+				((SpyBotData) this.getBotEntity().getDataObject()).visitors().forEach(username -> {
+					boolean isLast = ((SpyBotData) this.getBotEntity().getDataObject()).visitors().indexOf(username) == (((SpyBotData) this.getBotEntity().getDataObject()).visitors().size() - 1);
 					if (this.getBotEntity().getRoom().getEntities().getEntityByName(username, RoomEntityType.PLAYER) != null) {
 						stillIn.append(username).append(isLast ? (stillIn.isEmpty()) ? Locale.getOrDefault("comet.game.bot.spy.stillInRoom.single", " is still in the room") : Locale.getOrDefault("comet.game.bot.spy.stillInRoom.multiple", " are still in the room") : ", ");
 					} else {
@@ -64,7 +64,7 @@ public class SpyAI extends AbstractBotAI {
 					this.getBotEntity().say(stillIn.toString());
 				}
 				
-				((SpyBotData) this.getBotEntity().getDataObject()).getVisitors().clear();
+				((SpyBotData) this.getBotEntity().getDataObject()).visitors().clear();
 				this.getBotEntity().saveDataObject();
 				this.hasSaidYes = true;
 			}

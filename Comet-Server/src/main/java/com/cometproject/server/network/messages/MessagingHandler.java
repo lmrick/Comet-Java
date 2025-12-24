@@ -35,7 +35,7 @@ public class MessagingHandler {
 						this.messageHandler.getEventExecutor().submit(new MessageEventTask(event, client, message));
 					} else {
 						final long start = System.currentTimeMillis();
-						MessageHandler.log.info(MessageFormat.format("Started packet process for packet: [{0}][{1}]", event.getClass().getSimpleName(), header));
+						MessageHandler.log.info("Started packet process for packet: [{}][{}]", event.getClass().getSimpleName(), header);
 						
 						event.handle(client, message);
 						
@@ -44,18 +44,18 @@ public class MessagingHandler {
 							MessageHandler.log.info(client.getPlayer() != null && client.getPlayer().getData() != null ? MessageFormat.format("[{0}][{1}][{2}][{3}] Packet took {4}ms to execute", event.getClass().getSimpleName(), message.getId(), client.getPlayer().getId(), client.getPlayer().getData().getUsername(), timeTakenSinceCreation) : "[" + event.getClass().getSimpleName() + "][" + message.getId() + "] Packet took " + timeTakenSinceCreation + "ms to execute");
 						}
 						
-						MessageHandler.log.info(MessageFormat.format("Finished packet process for packet: [{0}][{1}] in {2}ms", event.getClass().getSimpleName(), header, System.currentTimeMillis() - start));
+						MessageHandler.log.info("Finished packet process for packet: [{}][{}] in {}ms", event.getClass().getSimpleName(), header, System.currentTimeMillis() - start);
 					}
 				}
 			} catch (Exception e) {
-				if (client.getLogger() != null) {
-					client.getLogger().error(MessageFormat.format("Error while handling event: {0}", this.messageHandler.getMessages().get(header).getClass().getSimpleName()), e);
+				if (client.getLog() != null) {
+					client.getLog().error(MessageFormat.format("Error while handling event: {0}", this.messageHandler.getMessages().get(header).getClass().getSimpleName()), e);
 				} else {
-					MessageHandler.log.error(MessageFormat.format("Error while handling event: {0}", this.messageHandler.getMessages().get(header).getClass().getSimpleName()), e);
+					MessageHandler.log.error("Error while handling event: {}", this.messageHandler.getMessages().get(header).getClass().getSimpleName(), e);
 				}
 			}
 		} else if (Comet.isDebugging) {
-			MessageHandler.log.info(MessageFormat.format("Unhandled message: {0} / {1}", Events.valueOfId(header), header));
+			MessageHandler.log.info("Unhandled message: {} / {}", Events.valueOfId(header), header);
 		}
 	}
 	

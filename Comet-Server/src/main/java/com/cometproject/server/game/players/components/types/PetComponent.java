@@ -5,11 +5,12 @@ import com.cometproject.api.game.players.components.PlayerComponentContext;
 import com.cometproject.api.game.players.data.components.IPlayerPets;
 import com.cometproject.server.game.players.components.PlayerComponent;
 import com.cometproject.server.storage.queries.pets.PetDao;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Map;
-import org.apache.log4j.Logger;
 
 public class PetComponent extends PlayerComponent implements IPlayerPets {
-	private final Logger LOG = super.getLogger(PetComponent.class);
+	private final Logger LOG = getLogger(PetComponent.class);
 	private Map<Integer, IPetData> pets;
 	
 	public PetComponent(PlayerComponentContext componentContext) {

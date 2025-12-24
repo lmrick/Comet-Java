@@ -37,11 +37,11 @@ public class PostItWallItem extends RoomItemWall {
 	
 	private boolean isValidColour(String colour) {
 		switch (colour) {
-			default -> {
-				return false;
-			}
 			case "FFFF33", "FF9CFF", "9CCEFF", "9CFF9C" -> {
 				return true;
+			}
+			default -> {
+				return false;
 			}
 		}
 	}

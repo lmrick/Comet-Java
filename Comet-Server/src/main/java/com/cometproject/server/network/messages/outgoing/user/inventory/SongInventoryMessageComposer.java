@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SongInventoryMessageComposer extends MessageComposer {
 
-    private List<ISongItem> songItems;
+    private final List<ISongItem> songItems;
 
     public SongInventoryMessageComposer(List<ISongItem> songItems) {
         this.songItems = songItems;

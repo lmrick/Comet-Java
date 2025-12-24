@@ -26,9 +26,9 @@ public class RoomCategoriesMessageComposer extends MessageComposer {
         msg.writeInt(this.categories.size());
 
         for (Category cat : this.categories) {
-            msg.writeInt(cat.getId());
-            msg.writeString(cat.getPublicName());
-            msg.writeBoolean(cat.getRequiredRank() <= this.rank);
+            msg.writeInt(cat.id());
+            msg.writeString(cat.publicName());
+            msg.writeBoolean(cat.requiredRank() <= this.rank);
             msg.writeBoolean(false);
             msg.writeString("");
             msg.writeString("");

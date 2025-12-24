@@ -9,12 +9,11 @@ import com.cometproject.api.game.players.data.components.IPlayerInventory;
 import com.cometproject.api.game.quests.IQuest;
 import com.cometproject.api.game.quests.QuestType;
 import com.cometproject.api.networking.sessions.ISession;
-import com.cometproject.api.utilities.observers.IObserver;
 import com.cometproject.api.utilities.observers.types.players.PlayerObserver;
 import com.cometproject.server.boot.Comet;
-import com.cometproject.server.game.guides.GuideManager;
-import com.cometproject.server.game.guides.types.HelpRequest;
-import com.cometproject.server.game.guides.types.HelperSession;
+import com.cometproject.server.game.moderation.guides.GuideManager;
+import com.cometproject.server.game.moderation.guides.types.HelpRequest;
+import com.cometproject.server.game.moderation.guides.types.HelperSession;
 import com.cometproject.server.game.players.PlayerManager;
 import com.cometproject.server.game.players.components.*;
 import com.cometproject.server.game.players.components.types.*;
@@ -208,7 +207,7 @@ public class Player implements IPlayer {
 			try {
 				this.getEntity().leaveRoom(true, false, false);
 			} catch (Exception e) {
-				this.getSession().getLogger().error("Error while disposing entity when player disconnects", e);
+				this.getSession().getLog().error("Error while disposing entity when player disconnects", e);
 			}
 		}
 		
@@ -225,7 +224,7 @@ public class Player implements IPlayer {
 			e.printStackTrace();
 		}
 		
-		this.session.getLogger().debug(this.getData().getUsername() + " logged out");
+		this.session.getLog().debug(this.getData().getUsername() + " logged out");
 		
 		PlayerDao.updatePlayerStatus(this, this.isOnline(), false);
 		

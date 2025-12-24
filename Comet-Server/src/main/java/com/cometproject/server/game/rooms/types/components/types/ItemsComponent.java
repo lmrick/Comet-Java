@@ -42,7 +42,10 @@ import com.cometproject.storage.api.data.DataWrapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -63,7 +66,7 @@ public class ItemsComponent extends RoomComponent implements IItemsComponent {
 	public ItemsComponent(RoomComponentContext roomComponentContext) {
 		super(roomComponentContext);
 		
-		this.log = Logger.getLogger("Room Items Component [" + roomComponentContext.getRoom().getData().getName() + "]");
+		this.log = LogManager.getLogger(MessageFormat.format("Room Items Component [{0}]", roomComponentContext.getRoom().getData().getName()));
 		this.room = (Room) roomComponentContext.getRoom();
 
 		this.itemClassIndex.put(HighScoreFloorItem.class, Sets.newConcurrentHashSet());
@@ -177,7 +180,6 @@ public class ItemsComponent extends RoomComponent implements IItemsComponent {
 	
 	public void commit() {
 		if (!CometSettings.storageItemQueueEnabled) {
-			return;
 		}
 	}
 	

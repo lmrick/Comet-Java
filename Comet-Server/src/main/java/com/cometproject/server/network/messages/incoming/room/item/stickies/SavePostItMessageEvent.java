@@ -23,14 +23,13 @@ public class SavePostItMessageEvent implements Event {
         String message = msg.readString();
         RoomItemWall wallItem = room.getItems().getWallItem(itemId);
 
-        if (wallItem == null || !(wallItem instanceof PostItWallItem)) return;
+        if (wallItem == null || !(wallItem instanceof PostItWallItem item)) return;
 
         if (!client.getPlayer().getEntity().getRoom().getRights().hasRights(client.getPlayer().getId()) && !client.getPlayer().getPermissions().getRank().roomFullControl()) {
             return;
         }
-
-        final PostItWallItem item = (PostItWallItem) wallItem;
-        item.setExtraData(colour + " " + message);
+			
+			item.setExtraData(colour + " " + message);
         item.sendUpdate();
         item.saveData();
     }

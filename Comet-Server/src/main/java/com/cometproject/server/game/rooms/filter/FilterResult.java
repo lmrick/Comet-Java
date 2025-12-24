@@ -7,9 +7,9 @@ import com.cometproject.server.network.messages.outgoing.messenger.InstantChatMe
 import com.cometproject.server.network.sessions.Session;
 
 public class FilterResult implements IFilterResult {
-    private boolean isBlocked;
-    private boolean wasModified;
-    private String message;
+    private final boolean isBlocked;
+    private final boolean wasModified;
+    private final String message;
 
     public FilterResult(String chatMessage) {
         this.isBlocked = false;

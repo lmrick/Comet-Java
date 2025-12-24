@@ -1,4 +1,4 @@
-package com.cometproject.server.game.guides.types;
+package com.cometproject.server.game.moderation.guides.types;
 
 public class HelperSession {
 	

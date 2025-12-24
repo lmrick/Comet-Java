@@ -23,13 +23,13 @@ import java.util.function.Consumer;
 public class RollerFloorItem extends AdvancedFloorItem<RollerFloorItemEvent> {
 	private final RollerFloorItemEvent event;
 
-	private boolean hasRollScheduled = false;
-	private long lastTick = 0;
+	private final boolean hasRollScheduled = false;
+	private final long lastTick = 0;
 	private boolean cycleCancelled = false;
-	private Set<Integer> previouslySkipped = Sets.newConcurrentHashSet();
-	private Set<Integer> skippedEntities = Sets.newConcurrentHashSet();
-	private Set<Integer> skippedItems = Sets.newConcurrentHashSet();
-	private Set<RoomEntity> movedEntities = new ConcurrentHashSet<>();
+	private final Set<Integer> previouslySkipped = Sets.newConcurrentHashSet();
+	private final Set<Integer> skippedEntities = Sets.newConcurrentHashSet();
+	private final Set<Integer> skippedItems = Sets.newConcurrentHashSet();
+	private final Set<RoomEntity> movedEntities = new ConcurrentHashSet<>();
 	
 	public RollerFloorItem(RoomItemData itemData, Room room) {
 		super(itemData, room);

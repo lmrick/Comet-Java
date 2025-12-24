@@ -12,11 +12,11 @@ public class RoomModelDataFactory {
 
     public RoomModelData createData(CustomFloorMapData customFloorData) {
         return new RoomModelData("dynamic_heightmap", 
-        customFloorData.getModelData(), 
-        customFloorData.getDoorX(),
-        customFloorData.getDoorY(), 
-        customFloorData.getDoorRotation(), 
-        customFloorData.getWallHeight());
+        customFloorData.modelData(),
+        customFloorData.doorX(),
+        customFloorData.doorY(),
+        customFloorData.doorRotation(),
+        customFloorData.wallHeight());
     }
 
 }

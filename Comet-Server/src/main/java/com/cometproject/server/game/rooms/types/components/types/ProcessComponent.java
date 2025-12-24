@@ -30,8 +30,10 @@ import com.cometproject.server.network.messages.outgoing.room.avatar.TalkMessage
 import com.cometproject.server.tasks.ICometTask;
 import com.cometproject.server.tasks.CometThreadManager;
 import com.cometproject.server.utilities.TimeSpan;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +60,7 @@ public class ProcessComponent extends RoomComponent implements ICometTask, IProc
 		
 		this.room = (Room) roomComponentContext.getRoom();
 		
-		this.log = Logger.getLogger("Room Process [" + room.getData().getName() + ", #" + room.getId() + "]");
+		this.log = LogManager.getLogger(MessageFormat.format("Room Process [{0}, #{1}]", room.getData().getName(), room.getId()));
 		this.adaptiveProcessTimes = CometSettings.adaptiveEntityProcessDelay;
 	}
 	
@@ -82,7 +84,7 @@ public class ProcessComponent extends RoomComponent implements ICometTask, IProc
 		this.lastProcess = System.currentTimeMillis();
 		
 		if (this.getProcessTimes() != null && this.getProcessTimes().size() < 30) {
-			log.info("Time since last process: " + timeSinceLastProcess + "ms");
+			log.info("Time since last process: {} MS", timeSinceLastProcess);
 		}
 		
 		long timeStart = System.currentTimeMillis();
@@ -90,7 +92,7 @@ public class ProcessComponent extends RoomComponent implements ICometTask, IProc
 		try {
 			if (this.update) this.getRoom().tick();
 		} catch (Exception e) {
-			log.error("Error while cycling room: " + room.getData().getId() + ", " + room.getData().getName(), e);
+			log.error("Error while cycling room: {}, {}", room.getData().getId(), room.getData().getName(), e);
 		}
 		
 		try {
@@ -215,7 +217,7 @@ public class ProcessComponent extends RoomComponent implements ICometTask, IProc
 					}
 				}
 			} catch (Exception e) {
-				log.error(String.format("Error while processing entity %s", entity.getId()), e);
+				log.error("Error while processing entity {}", entity.getId(), e);
 			}
 		}
 		

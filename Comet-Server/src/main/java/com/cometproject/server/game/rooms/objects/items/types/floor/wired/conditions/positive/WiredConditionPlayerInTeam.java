@@ -8,7 +8,7 @@ import com.cometproject.server.game.rooms.types.Room;
 
 public class WiredConditionPlayerInTeam extends WiredConditionItem {
 	
-	private static int PARAM_TEAM = 0;
+	private static final int PARAM_TEAM = 0;
 	
 	public WiredConditionPlayerInTeam(RoomItemData itemData, Room room) {
 		super(itemData, room);

@@ -5,11 +5,12 @@ import com.cometproject.api.game.players.data.components.IPlayerWardrobe;
 import com.cometproject.server.game.players.components.PlayerComponent;
 import com.cometproject.server.storage.queries.player.PlayerClothingDao;
 import com.cometproject.server.utilities.collections.ConcurrentHashSet;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Set;
-import org.apache.log4j.Logger;
 
 public class WardrobeComponent extends PlayerComponent implements IPlayerWardrobe {
-	private final Logger LOG = super.getLogger(WardrobeComponent.class);
+	private final Logger LOG = getLogger(WardrobeComponent.class);
 	private final Set<String> purchasedClothing;
 	
 	public WardrobeComponent(PlayerComponentContext componentContext) {

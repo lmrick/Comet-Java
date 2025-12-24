@@ -11,7 +11,8 @@ import io.netty.channel.socket.ChannelInputShutdownEvent;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.AttributeKey;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import static io.netty.channel.ChannelHandler.*;
 
@@ -20,7 +21,7 @@ import static io.netty.channel.ChannelHandler.*;
 public class ClientHandler extends SimpleChannelInboundHandler<MessageEvent> {
 	
 	private static final AttributeKey<INetSession> ATTR_SESSION = AttributeKey.newInstance("NetSession");
-	private static final Logger log = Logger.getLogger(ClientHandler.class.getName());
+	private static final Logger log = LogManager.getLogger(ClientHandler.class.getName());
 	private static ClientHandler clientHandlerInstance;
 	private final INetSessionFactory sessionFactory;
 	

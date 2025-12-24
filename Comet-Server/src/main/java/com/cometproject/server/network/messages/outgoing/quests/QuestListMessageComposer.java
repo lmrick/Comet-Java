@@ -15,7 +15,7 @@ import java.util.Map;
 public class QuestListMessageComposer extends MessageComposer {
     private final Map<String, IQuest> quests;
     private final IPlayer player;
-    private boolean isWindow;
+    private final boolean isWindow;
 
     public QuestListMessageComposer(final Map<String, IQuest> quests, IPlayer player, boolean isWindow) {
         this.quests = quests;

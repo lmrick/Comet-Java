@@ -16,13 +16,11 @@ public class PetNestFloorItem extends DefaultFloorItem {
 
     @Override
     public void onEntityStepOn(RoomEntity entity) {
-        if (!(entity instanceof PetEntity)) {
+        if (!(entity instanceof PetEntity petEntity)) {
             return;
         }
-
-        final PetEntity petEntity = (PetEntity) entity;
-
-        this.petEntity = petEntity;
+			
+			this.petEntity = petEntity;
 
         petEntity.getPetAI().beginNesting();
         this.setTicks(RoomItemFactory.getProcessTime(30.0));

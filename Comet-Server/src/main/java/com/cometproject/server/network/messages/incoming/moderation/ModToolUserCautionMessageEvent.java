@@ -18,7 +18,7 @@ public class ModToolUserCautionMessageEvent implements Event {
 		
 		if (!client.getPlayer().getPermissions().getRank().modTool()) {
 			// fuck off
-			client.getLogger().error(ModToolUserCautionMessageEvent.class.getName() + " - tried to caution user with ID: " + playerId + " and message: " + message);
+			client.getLog().error(ModToolUserCautionMessageEvent.class.getName() + " - tried to caution user with ID: " + playerId + " and message: " + message);
 			client.disconnect();
 			return;
 		}

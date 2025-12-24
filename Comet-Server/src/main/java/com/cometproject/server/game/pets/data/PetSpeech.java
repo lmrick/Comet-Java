@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PetSpeech {
-    private Map<PetMessageType, List<String>> messages;
+    private final Map<PetMessageType, List<String>> messages;
 
     public PetSpeech() {
         this.messages = new HashMap<>();

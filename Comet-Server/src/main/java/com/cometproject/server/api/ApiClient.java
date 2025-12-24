@@ -8,8 +8,8 @@ import java.util.concurrent.Future;
 
 public class ApiClient {
     private static ApiClient apiClient;
-    private AsyncHttpClient asyncHttpClient;
-    private boolean isOffline = false;
+    private final AsyncHttpClient asyncHttpClient;
+    private final boolean isOffline = false;
 
     public ApiClient() {
         this.asyncHttpClient = new AsyncHttpClient();

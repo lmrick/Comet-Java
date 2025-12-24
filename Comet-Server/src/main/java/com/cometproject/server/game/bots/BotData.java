@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 public abstract class BotData implements IBotData {
 	
-	private int id;
+	private final int id;
 	private int chatDelay;
 	private int ownerId;
 	private String username;

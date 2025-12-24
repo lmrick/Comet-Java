@@ -23,7 +23,8 @@ import com.cometproject.server.storage.queries.player.messenger.MessengerDao;
 import com.cometproject.server.storage.queries.player.messenger.MessengerSearchDao;
 import com.cometproject.server.tasks.CometThreadManager;
 import com.google.common.collect.Lists;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -32,9 +33,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MessengerComponent extends PlayerComponent implements IPlayerMessenger, IMessengerObserver {
-	private final Logger LOG = super.getLogger(MessengerComponent.class);
+	private final Logger LOG = getLogger(MessengerComponent.class);
 	private final MessengerObserverService messengerObserver;
-	private Map<Integer, IMessengerFriend> friends = new ConcurrentHashMap<>();
+	private final Map<Integer, IMessengerFriend> friends = new ConcurrentHashMap<>();
 	private List<Integer> requests = new CopyOnWriteArrayList<>();
     private boolean initialized;
 
@@ -53,7 +54,7 @@ public class MessengerComponent extends PlayerComponent implements IPlayerMessen
         	initialFriends.forEach((friendId, friend) -> friendsCache.add(friendId, friend));
         	this.friends.putAll(initialFriends);
 		} catch (Exception e) {
-			Logger.getLogger(MessengerComponent.class.getName()).error("Error while loading messenger friends", e);
+			LogManager.getLogger(MessengerComponent.class.getName()).error("Error while loading messenger friends", e);
 		}
 	}
 
@@ -111,7 +112,7 @@ public class MessengerComponent extends PlayerComponent implements IPlayerMessen
 				}
 			}
 		} catch (Exception e) {
-			this.getPlayer().getSession().getLogger().error("Error while searching for players", e);
+			this.getPlayer().getSession().getLog().error("Error while searching for players", e);
 		}
 		
 		return new MessengerSearchResultsMessageComposer(currentFriends, otherPeople);

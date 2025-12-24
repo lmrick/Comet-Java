@@ -239,9 +239,9 @@ public class PlayerDao {
             preparedStatement.setInt(6, SiteSettings.getInstance().getPlayerDefaultCredits());
             preparedStatement.setInt(7, SiteSettings.getInstance().getPlayerDefaultActivityPoints());
             preparedStatement.setInt(8, SiteSettings.getInstance().getPlayerDefaultVipPoints());
-            preparedStatement.setInt(9, (int) (System.currentTimeMillis() / 1000l));
-            preparedStatement.setInt(10, (int) (System.currentTimeMillis() / 1000l));
-            preparedStatement.setInt(11, (int) (System.currentTimeMillis() / 1000l));
+            preparedStatement.setInt(9, (int) (System.currentTimeMillis() / 1000L));
+            preparedStatement.setInt(10, (int) (System.currentTimeMillis() / 1000L));
+            preparedStatement.setInt(11, (int) (System.currentTimeMillis() / 1000L));
 
             preparedStatement.execute();
 

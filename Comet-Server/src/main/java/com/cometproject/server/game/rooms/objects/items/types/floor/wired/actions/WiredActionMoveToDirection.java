@@ -59,7 +59,6 @@ public class WiredActionMoveToDirection extends WiredActionItem {
 			});
 		}
 		
-		return;
 	}
 	
 	private void moveItem(RoomItemFloor floorItem, AtomicInteger tries) {

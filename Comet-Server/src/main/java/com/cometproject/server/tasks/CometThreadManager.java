@@ -4,7 +4,8 @@ import com.cometproject.api.config.Configuration;
 import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.game.rooms.types.components.types.ItemProcessComponent;
 import com.cometproject.server.game.rooms.types.components.types.ProcessComponent;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -34,7 +35,7 @@ public class CometThreadManager implements Initializable {
 			var scheduledThread = new CometThread(r);
 			scheduledThread.setName("Comet-Scheduler-Thread-" + POOL_SIZE);
 			
-			final var log = Logger.getLogger("Comet-Scheduler-Thread-" + POOL_SIZE);
+			final var log = LogManager.getLogger("Comet-Scheduler-Thread-" + POOL_SIZE);
 			scheduledThread.setUncaughtExceptionHandler((t, e) -> log.error("Exception in worker thread", e));
 			
 			return scheduledThread;
@@ -47,7 +48,7 @@ public class CometThreadManager implements Initializable {
 			var scheduledThread = new CometThread(r);
 			scheduledThread.setName("Room-Processor-" + counter.incrementAndGet());
 			
-			final Logger log = Logger.getLogger(scheduledThread.getName());
+			final Logger log = LogManager.getLogger(scheduledThread.getName());
 			scheduledThread.setUncaughtExceptionHandler((t, e) -> log.error("Exception in room worker thread", e));
 			
 			return scheduledThread;

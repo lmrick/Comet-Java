@@ -37,7 +37,7 @@ public class SaveForumSettingsMessageEvent implements Event {
             return;
         }
 
-        IForumSettings forumSettings = group.getForum().getForumSettings();
+        IForumSettings forumSettings = group.getForum().forumSettings();
 
         forumSettings.setReadPermission(whoCanReadForum);
         forumSettings.setModeratePermission(whoCanModerate);

@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
 
 public class ApiClient {
     private static ApiClient apiClient;
-    private AsyncHttpClient asyncHttpClient;
+    private final AsyncHttpClient asyncHttpClient;
     private static final Logger log = Logger.getLogger(ApiClient.class.getName());
     private static final String RECAPTCHA_SECRET = "6LfDiv8SAAAAAKtNon-NPLdyRf4Rgro6FtT-dNGS";
     private boolean isOffline = false;

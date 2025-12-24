@@ -55,21 +55,21 @@ public class GroupMembersMessageComposer extends MessageComposer {
 			int dateJoined = 0;
 			
 			for (GroupMemberAvatar groupMember : paginatedMembers.get(page)) {
-				if (groupMember.getGroupMember() == null) {
-					msg.writeInt(requestType == 1 ? groupMember.getPlayerAvatar().getId() == group.getOwnerId() ? 0 : 1 : 3);
+				if (groupMember.groupMember() == null) {
+					msg.writeInt(requestType == 1 ? groupMember.playerAvatar().getId() == group.getOwnerId() ? 0 : 1 : 3);
 				} else {
-					final IGroupMember member = groupMember.getGroupMember();
+					final IGroupMember member = groupMember.groupMember();
 					
 					dateJoined = member.getDateJoined();
 					
-					msg.writeInt(member.getAccessLevel().isAdmin() ? group.getOwnerId() == groupMember.getPlayerAvatar().getId() ? 0 : 1 : requestType == 2 ? 3 : 2);
+					msg.writeInt(member.getAccessLevel().isAdmin() ? group.getOwnerId() == groupMember.playerAvatar().getId() ? 0 : 1 : requestType == 2 ? 3 : 2);
 				}
 				
-				msg.writeInt(groupMember.getPlayerAvatar().getId());
-				msg.writeString(groupMember.getPlayerAvatar().getUsername());
-				msg.writeString(groupMember.getPlayerAvatar().getFigure());
+				msg.writeInt(groupMember.playerAvatar().getId());
+				msg.writeString(groupMember.playerAvatar().getUsername());
+				msg.writeString(groupMember.playerAvatar().getFigure());
 				
-				msg.writeString(groupMember.getPlayerAvatar() != null ? GroupInformationMessageComposer.getDate(dateJoined) : "");
+				msg.writeString(groupMember.playerAvatar() != null ? GroupInformationMessageComposer.getDate(dateJoined) : "");
 			}
 			
 		}

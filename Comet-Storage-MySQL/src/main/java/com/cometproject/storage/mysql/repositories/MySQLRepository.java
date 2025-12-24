@@ -66,7 +66,7 @@ public abstract class MySQLRepository {
     
         try {
             if (transaction != null) {
-                connection = transaction.getConnection();
+                connection = transaction.connection();
             } else {
                 connection = this.connectionProvider.getConnection();
                 ownConnection = true;
@@ -92,7 +92,7 @@ public abstract class MySQLRepository {
     
         try {
             if (transaction != null) {
-                connection = transaction.getConnection();
+                connection = transaction.connection();
             } else {
                 connection = this.connectionProvider.getConnection();
                 ownConnection = true;
@@ -119,7 +119,7 @@ public abstract class MySQLRepository {
     
         try {
             if (transaction != null) {
-                connection = transaction.getConnection();
+                connection = transaction.connection();
             } else {
                 connection = this.connectionProvider.getConnection();
                 ownConnection = true;
@@ -155,7 +155,7 @@ public abstract class MySQLRepository {
                 connection = this.connectionProvider.getConnection();
                 ownConnection = true;
             } else {
-                connection = transaction.getConnection();
+                connection = transaction.connection();
             }
     
             // Use getPreparedStatement method for caching

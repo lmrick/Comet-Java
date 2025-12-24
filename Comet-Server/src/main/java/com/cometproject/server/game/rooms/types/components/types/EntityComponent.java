@@ -20,7 +20,8 @@ import com.cometproject.server.network.messages.outgoing.room.settings.RoomRatin
 import com.cometproject.server.network.ws.messages.WsMessage;
 import com.cometproject.server.protocol.messages.MessageComposer;
 import com.cometproject.server.utilities.collections.ConcurrentHashSet;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class EntityComponent extends RoomComponent implements IEntityComponent {
-	private static final Logger log = Logger.getLogger(EntityComponent.class.getName());
+	private static final Logger log = LogManager.getLogger(EntityComponent.class.getName());
 	public static final int MAX_BOTS_IN_ROOM = 150;
 	public static final int MAX_PETS_IN_ROOM = 50;
 	private final Map<Integer, RoomEntity> entities = new ConcurrentHashMap<>();
@@ -284,7 +285,7 @@ public class EntityComponent extends RoomComponent implements IEntityComponent {
 	}
 	
 	public void refreshScore() {
-		getPlayerEntities().forEach(entity -> entity.getPlayer().getSession().send(new RoomRatingMessageComposer(((Room) this.getRoomComponentContext().getRoom()).getData().getScore(), entity.canRateRoom())));
+		getPlayerEntities().forEach(entity -> entity.getPlayer().getSession().send(new RoomRatingMessageComposer(this.getRoomComponentContext().getRoom().getData().getScore(), entity.canRateRoom())));
 	}
 	
 	protected int getFreeId() {

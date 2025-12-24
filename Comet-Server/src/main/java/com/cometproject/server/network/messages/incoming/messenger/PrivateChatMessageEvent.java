@@ -10,7 +10,7 @@ import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.moderation.ModerationManager;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.filter.FilterResult;
-import com.cometproject.server.logging.LogManager;
+import com.cometproject.server.logging.LogService;
 import com.cometproject.server.logging.entries.MessengerChatLogEntry;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.messages.incoming.Event;
@@ -67,8 +67,8 @@ public class PrivateChatMessageEvent implements Event {
 		}
 		
 		try {
-			if (LogManager.ENABLED && CometSettings.messengerLogMessages) {
-				LogManager.getInstance().getStore().getLogEntryContainer().put(new MessengerChatLogEntry(client.getPlayer().getId(), userId, message));
+			if (LogService.ENABLED && CometSettings.messengerLogMessages) {
+				LogService.getInstance().getStore().getLogEntryContainer().put(new MessengerChatLogEntry(client.getPlayer().getId(), userId, message));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

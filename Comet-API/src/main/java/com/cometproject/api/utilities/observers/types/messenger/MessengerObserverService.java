@@ -7,7 +7,7 @@ import com.cometproject.api.utilities.observers.IObserver;
 import com.cometproject.api.utilities.observers.IObserverService;
 
 public class MessengerObserverService implements IObserverService, IMessengerObserver {
-    private List<IMessengerObserver> observers = new CopyOnWriteArrayList<>();
+    private final List<IMessengerObserver> observers = new CopyOnWriteArrayList<>();
 
     public MessengerObserverService() {}
 

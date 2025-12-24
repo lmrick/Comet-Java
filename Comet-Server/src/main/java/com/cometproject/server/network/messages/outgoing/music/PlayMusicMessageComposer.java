@@ -6,7 +6,7 @@ import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class PlayMusicMessageComposer extends MessageComposer {
 
-    private int songId;
+    private final int songId;
     private int playlistIndex;
     private int timestamp;
 

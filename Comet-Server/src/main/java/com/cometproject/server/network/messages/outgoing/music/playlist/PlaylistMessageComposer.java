@@ -9,7 +9,7 @@ import com.cometproject.server.protocol.messages.MessageComposer;
 import java.util.List;
 
 public class PlaylistMessageComposer extends MessageComposer {
-    private List<SongItemData> songItemDatas;
+    private final List<SongItemData> songItemDatas;
 
     public PlaylistMessageComposer(List<SongItemData> songItemDatas) {
         this.songItemDatas = songItemDatas;

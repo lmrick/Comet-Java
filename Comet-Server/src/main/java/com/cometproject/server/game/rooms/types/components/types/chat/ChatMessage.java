@@ -1,8 +1,8 @@
 package com.cometproject.server.game.rooms.types.components.types.chat;
 
 public class ChatMessage {
-    private int playerId;
-    private String message;
+    private final int playerId;
+    private final String message;
 
     public ChatMessage(int userId, String message) {
         this.playerId = userId;

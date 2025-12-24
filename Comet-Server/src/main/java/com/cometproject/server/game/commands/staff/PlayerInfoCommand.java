@@ -45,7 +45,7 @@ public class PlayerInfoCommand extends ChatCommand {
 		
 		userInfo.append("<b>" + Locale.getOrDefault("command.playerinfo.username", "Username") + "</b>: " + playerData.getUsername() + "<br>");
 		userInfo.append("<b>" + Locale.getOrDefault("command.playerinfo.motto", "Motto") + "</b>: " + playerData.getMotto() + "<br>");
-		userInfo.append("<b>" + Locale.getOrDefault("command.playerinfo.gender", "Gender") + "</b>: " + (playerData.getGender().toLowerCase().equals("m") ? Locale.getOrDefault("command.playerinfo.male", "Male") : Locale.getOrDefault("command.playerinfo.female", "Female")) + "<br>");
+		userInfo.append("<b>" + Locale.getOrDefault("command.playerinfo.gender", "Gender") + "</b>: " + (playerData.getGender().equalsIgnoreCase("m") ? Locale.getOrDefault("command.playerinfo.male", "Male") : Locale.getOrDefault("command.playerinfo.female", "Female")) + "<br>");
 		userInfo.append("<b>" + Locale.getOrDefault("command.playerinfo.status", "Status") + "</b>: " + (session == null ? Locale.getOrDefault("command.playerinfo.offline", "Offline") : Locale.getOrDefault("command.playerinfo.online", "Online")) + "<br>");
 		userInfo.append("<b>" + Locale.getOrDefault("command.playerinfo.achievementPoints", "IAchievement Points") + "</b>: " + playerData.getAchievementPoints() + "<br>");
 		

@@ -43,11 +43,7 @@ public class AchievementsListMessageComposer extends MessageComposer {
 
             if (achievementProgress == null) {
                 msg.writeBoolean(false);
-            } else if (achievementProgress.getLevel() >= entry.getValue().getLevelCount()) {
-                msg.writeBoolean(true);
-            } else {
-                msg.writeBoolean(false);
-            }
+            } else msg.writeBoolean(achievementProgress.getLevel() >= entry.getValue().getLevelCount());
 
             msg.writeString(entry.getValue().category().toString().toLowerCase());
             msg.writeString("");

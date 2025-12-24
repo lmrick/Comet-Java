@@ -1,10 +1,10 @@
 package com.cometproject.server.game.rooms.types.components.types.ban;
 
 public class RoomBan {
-    private int playerId;
-    private String playerName;
-    private int expireTimestamp;
-    private boolean isPermanent;
+    private final int playerId;
+    private final String playerName;
+    private final int expireTimestamp;
+    private final boolean isPermanent;
 
     public RoomBan(int playerId, String playerName, int expireTimestamp) {
         this.playerId = playerId;

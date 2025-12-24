@@ -87,11 +87,11 @@ public class NavigatorSearchResultSetMessageComposer extends MessageComposer {
 			msg.writeInt(this.categories.size());
 			
 			this.categories.forEach(category -> {
-				msg.writeString(category.getCategoryId());
-				msg.writeString(category.getPublicName());
-				msg.writeInt(NavigatorSearchAllowance.getIntValue(category.getSearchAllowance()));
+				msg.writeString(category.categoryId());
+				msg.writeString(category.publicName());
+				msg.writeInt(NavigatorSearchAllowance.getIntValue(category.searchAllowance()));
 				msg.writeBoolean(false);//is minimised
-				msg.writeInt(this.player.getNavigator().getViewModes().containsKey(category.getCategoryId()) ? this.player.getNavigator().getViewModes().get(category.getCategoryId()) : category.getViewMode() == NavigatorViewMode.REGULAR ? 0 : category.getViewMode() == NavigatorViewMode.THUMBNAIL ? 1 : 0);
+				msg.writeInt(this.player.getNavigator().getViewModes().containsKey(category.categoryId()) ? this.player.getNavigator().getViewModes().get(category.categoryId()) : category.viewMode() == NavigatorViewMode.REGULAR ? 0 : category.viewMode() == NavigatorViewMode.THUMBNAIL ? 1 : 0);
 				List<IRoomData> rooms = NavigatorSearchService.getInstance().search(category, this.player, this.categories.size() == 1);
 				msg.writeInt(rooms.size());// size of rooms found.
 				rooms.forEach(roomData -> RoomWriter.write(roomData, msg));

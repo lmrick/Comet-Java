@@ -6,13 +6,14 @@ import com.cometproject.api.utilities.process.Initializable;
 import com.cometproject.server.game.landing.types.PromoArticle;
 import com.cometproject.server.storage.queries.landing.LandingDao;
 import com.cometproject.server.tasks.CometThreadManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
 public class LandingManager implements Initializable {
-    private static final Logger log = Logger.getLogger(LandingManager.class.getName());
+    private static final Logger log = LogManager.getLogger(LandingManager.class.getName());
     private static LandingManager landingManagerInstance;
     private Map<Integer, PromoArticle> articles;
     private Map<IPlayerAvatar, Integer> hallOfFame;

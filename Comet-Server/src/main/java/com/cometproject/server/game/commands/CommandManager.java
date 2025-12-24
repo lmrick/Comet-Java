@@ -36,14 +36,15 @@ import com.cometproject.server.game.commands.user.ws.RoomVideoCommand;
 import com.cometproject.server.game.commands.vip.*;
 import com.cometproject.server.game.moderation.ModerationManager;
 import com.cometproject.server.game.permissions.PermissionsManager;
-import com.cometproject.server.logging.LogManager;
+import com.cometproject.server.logging.LogService;
 import com.cometproject.server.logging.entries.CommandLogEntry;
 import com.cometproject.server.modules.ModuleManager;
 import com.cometproject.server.network.messages.outgoing.messenger.InstantChatMessageComposer;
 import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.tasks.CometConstants;
 import com.google.common.collect.Lists;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +53,7 @@ import java.util.stream.IntStream;
 
 public class CommandManager implements Initializable {
 	private static CommandManager commandManagerInstance;
-	private static final Logger log = Logger.getLogger(CommandManager.class.getName());
+	private static final Logger log = LogManager.getLogger(CommandManager.class.getName());
 	private NotificationManager notifications;
 	private Map<String, ChatCommand> commands;
 	private final ExecutorService executorService = CometConstants.COMMAND_EXECUTOR;
@@ -258,7 +259,7 @@ public class CommandManager implements Initializable {
 		
 		final CommandInfo moduleCommandInfo = ModuleManager.getInstance().getEventHandler().getCommands().get(executor);
 		
-		String commandName = chatCommand == null ? (moduleCommandInfo != null ? moduleCommandInfo.getPermission() : null) : chatCommand.getPermission();
+		String commandName = chatCommand == null ? (moduleCommandInfo != null ? moduleCommandInfo.permission() : null) : chatCommand.getPermission();
 		
 		if (commandName == null) {
 			return false;
@@ -283,8 +284,8 @@ public class CommandManager implements Initializable {
 			}
 			
 			try {
-				if (LogManager.ENABLED) {
-					LogManager.getInstance().getStore().getLogEntryContainer().put(new CommandLogEntry(client.getPlayer().getEntity().getRoom().getId(), client.getPlayer().getId(), message));
+				if (LogService.ENABLED) {
+					LogService.getInstance().getStore().getLogEntryContainer().put(new CommandLogEntry(client.getPlayer().getEntity().getRoom().getId(), client.getPlayer().getId(), message));
 					if (chatCommand != null && client.getPlayer().getData().getRank() >= Integer.parseInt(Locale.getOrDefault("logchat.minrank", "5")) && chatCommand.isLoggable()) {
 						ModerationManager.getInstance().getLogChatUsers().forEach(player -> player.send(new InstantChatMessageComposer(chatCommand.getLoggableDescription(), Integer.MAX_VALUE - 1)));
 					}

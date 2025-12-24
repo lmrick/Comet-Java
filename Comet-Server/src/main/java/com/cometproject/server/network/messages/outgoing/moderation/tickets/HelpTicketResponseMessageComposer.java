@@ -6,7 +6,7 @@ import com.cometproject.server.protocol.messages.MessageComposer;
 
 public class HelpTicketResponseMessageComposer extends MessageComposer {
 
-    private int response;
+    private final int response;
 
     public HelpTicketResponseMessageComposer(final int response) {
         this.response = response;

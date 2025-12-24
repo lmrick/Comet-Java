@@ -6,9 +6,9 @@ public class RoomBundleItem {
     private int x;
     private int y;
     private double z;
-    private int rotation;
+    private final int rotation;
 
-    private String wallPosition;
+    private final String wallPosition;
 
     private String extraData;
 

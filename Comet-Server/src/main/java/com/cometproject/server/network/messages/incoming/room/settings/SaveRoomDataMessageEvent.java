@@ -12,9 +12,7 @@ import com.cometproject.server.game.navigator.NavigatorManager;
 import com.cometproject.server.game.navigator.types.categories.Category;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.filter.FilterResult;
-import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.types.Room;
-import com.cometproject.server.game.rooms.types.RoomWriter;
 import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.messages.outgoing.notification.AdvancedAlertMessageComposer;
 import com.cometproject.server.network.messages.outgoing.room.settings.RoomInfoUpdatedMessageComposer;
@@ -122,7 +120,7 @@ public class SaveRoomDataMessageEvent implements Event {
 			return;
 		}
 		
-		if (category.getRequiredRank() > client.getPlayer().getData().getRank()) {
+		if (category.requiredRank() > client.getPlayer().getData().getRank()) {
 			categoryId = 15; // 15 = the uncategorized category.
 		}
 		

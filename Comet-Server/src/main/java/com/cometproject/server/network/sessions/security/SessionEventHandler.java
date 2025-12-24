@@ -4,10 +4,12 @@ import com.cometproject.server.network.sessions.Session;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.protocol.headers.Events;
 import com.cometproject.server.protocol.messages.MessageEvent;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class SessionEventHandler {
+	
 	private final Session session;
 	private final Map<Short, Boolean> loginEvents;
 	

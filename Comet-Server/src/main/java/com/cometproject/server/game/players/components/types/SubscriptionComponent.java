@@ -1,14 +1,13 @@
 package com.cometproject.server.game.players.components.types;
 
-import org.apache.log4j.Logger;
-
 import com.cometproject.api.game.players.components.PlayerComponentContext;
 import com.cometproject.api.game.players.data.components.IPlayerSubscription;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.players.components.PlayerComponent;
+import org.apache.logging.log4j.Logger;
 
 public class SubscriptionComponent extends PlayerComponent implements IPlayerSubscription {
-	private final Logger LOG = super.getLogger(SubscriptionComponent.class);
+	private final Logger LOG = getLogger(SubscriptionComponent.class);
 	private boolean hasSub;
 	private int expire;
 	

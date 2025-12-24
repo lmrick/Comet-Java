@@ -4,7 +4,8 @@ import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.tasks.ICometTask;
 import com.cometproject.server.tasks.CometConstants;
 import com.cometproject.server.tasks.CometThreadManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class LowPriorityItemProcessor implements ICometTask {
 	private static final int processTime = CometConstants.LOW_PRIORITY_ITEM_PROCESS_TIME_MS;
 	private static LowPriorityItemProcessor instance;
-	private final Logger log = Logger.getLogger(LowPriorityItemProcessor.class);
+	private final Logger log = LogManager.getLogger(LowPriorityItemProcessor.class);
 	private final List<RoomItemFloor> itemsToProcess;
 	
 	public LowPriorityItemProcessor() {

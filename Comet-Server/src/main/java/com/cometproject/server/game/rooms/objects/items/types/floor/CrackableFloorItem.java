@@ -36,38 +36,38 @@ public class CrackableFloorItem extends RoomItemFloor {
 		final Player player = ((PlayerEntity) entity).getPlayer();
 		
 		int hits = Integer.parseInt(this.getItemData().getData());
-		int maxHits = crackableReward.getHitRequirement();
+		int maxHits = crackableReward.hitRequirement();
 		
 		if (hits <= maxHits) {
 			hits++;
 		} else {
 			// we're open!
-			switch (crackableReward.getRewardType()) {
+			switch (crackableReward.rewardType()) {
 				case ITEM -> {
 					// we need to turn into this item!
-					final IFurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(crackableReward.getRewardDataInt());
+					final IFurnitureDefinition itemDefinition = ItemManager.getInstance().getDefinition(crackableReward.rewardDataInt());
 					
 					if (itemDefinition != null) {
 						this.getRoom().getItems().removeItem(this, player.getSession(), false);
-						this.getRoom().getItems().placeFloorItem(new InventoryItem(this.getId(), itemDefinition.getId(), crackableReward.getRewardData()), this.getPosition().getX(), this.getPosition().getY(), this.getRotation(), player);
+						this.getRoom().getItems().placeFloorItem(new InventoryItem(this.getId(), itemDefinition.getId(), crackableReward.rewardData()), this.getPosition().getX(), this.getPosition().getY(), this.getRotation(), player);
 					}
 				}
 				case COINS -> {
-					player.getData().increaseCredits(crackableReward.getRewardDataInt());
+					player.getData().increaseCredits(crackableReward.rewardDataInt());
 					player.sendBalance();
 					player.getData().save();
 				}
 				case VIP_POINTS -> {
-					player.getData().increaseVipPoints(crackableReward.getRewardDataInt());
+					player.getData().increaseVipPoints(crackableReward.rewardDataInt());
 					player.sendBalance();
 					player.getData().save();
 				}
 				case ACTIVITY_POINTS -> {
-					player.getData().increaseActivityPoints(crackableReward.getRewardDataInt());
+					player.getData().increaseActivityPoints(crackableReward.rewardDataInt());
 					player.sendBalance();
 					player.getData().save();
 				}
-				case BADGE -> player.getInventory().addBadge(crackableReward.getRewardData(), true, true);
+				case BADGE -> player.getInventory().addBadge(crackableReward.rewardData(), true, true);
 			}
 		}
 		
@@ -86,9 +86,9 @@ public class CrackableFloorItem extends RoomItemFloor {
 		final CrackableReward crackableReward = ItemManager.getInstance().getCrackableRewards().get(this.getItemData().getItemId());
 		
 		if (crackableReward != null) {
-			msg.writeString(this.calculateState(crackableReward.getHitRequirement(), state));
+			msg.writeString(this.calculateState(crackableReward.hitRequirement(), state));
 			msg.writeInt(state);//state
-			msg.writeInt(crackableReward.getHitRequirement());//max
+			msg.writeInt(crackableReward.hitRequirement());//max
 		} else {
 			msg.writeString(this.calculateState(20, state));
 			msg.writeInt(state);//state

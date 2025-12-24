@@ -12,7 +12,7 @@ public class GroupData implements IGroupData {
     private String badge;
     private int ownerId;
     private int roomId;
-    private int created;
+    private final int created;
     private GroupType type;
     private int colourA;
     private int colourB;

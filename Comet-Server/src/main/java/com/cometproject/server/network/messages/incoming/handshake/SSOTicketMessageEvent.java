@@ -14,7 +14,7 @@ public class SSOTicketMessageEvent implements Event {
 	@Override
 	public void handle(Session client, MessageEvent msg) {
 		if (BanManager.getInstance().hasBan(client.getUniqueId(), BanType.MACHINE)) {
-			client.getLogger().warn("Banned player: " + client.getUniqueId() + " tried logging in");
+			client.getLog().warn("Banned player: " + client.getUniqueId() + " tried logging in");
 			return;
 		}
 		

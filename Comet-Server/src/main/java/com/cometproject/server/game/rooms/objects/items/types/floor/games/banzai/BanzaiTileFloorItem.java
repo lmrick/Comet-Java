@@ -65,16 +65,16 @@ public class BanzaiTileFloorItem extends RoomItemFloor {
 			return;
 		}
 		
-		if (((PlayerEntity) entity).getGameTeam() == this.gameTeam) {
+		if (playerEntity.getGameTeam() == this.gameTeam) {
 			this.points++;
 		} else {
-			this.gameTeam = ((PlayerEntity) entity).getGameTeam();
+			this.gameTeam = playerEntity.getGameTeam();
 			this.points = 1;
 		}
 		
 		if (this.points == 3) {
-			((PlayerEntity) entity).getPlayer().getAchievements().progressAchievement(AchievementType.BB_TILES_LOCKED, 1);
-			gameInstance.getBanzaiGame().increaseScore(gameInstance, (PlayerEntity) entity, 1);
+			playerEntity.getPlayer().getAchievements().progressAchievement(AchievementType.BB_TILES_LOCKED, 1);
+			gameInstance.getBanzaiGame().increaseScore(gameInstance, playerEntity, 1);
 			gameInstance.getBanzaiGame().decreaseTileCount();
 			
 			final List<BanzaiTileFloorItem> rectangle = buildBanzaiRectangle(this, this.getPosition().getX(), this.getPosition().getY(), 0, 0, -1, 4, gameTeam);
@@ -102,8 +102,8 @@ public class BanzaiTileFloorItem extends RoomItemFloor {
 							floorItem.setPoints(3);
 							floorItem.setTeam(this.gameTeam);
 							
-							((PlayerEntity) entity).getPlayer().getAchievements().progressAchievement(AchievementType.BB_TILES_LOCKED, 1);
-							gameInstance.getBanzaiGame().increaseScore(gameInstance, (PlayerEntity) entity, 1);
+							playerEntity.getPlayer().getAchievements().progressAchievement(AchievementType.BB_TILES_LOCKED, 1);
+							gameInstance.getBanzaiGame().increaseScore(gameInstance, playerEntity, 1);
 							gameInstance.getBanzaiGame().decreaseTileCount();
 							floorItem.updateTileData();
 						}

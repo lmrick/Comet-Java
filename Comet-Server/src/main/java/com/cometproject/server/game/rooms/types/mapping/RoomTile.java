@@ -24,8 +24,8 @@ import java.util.stream.IntStream;
 
 public class RoomTile {
     public Set<RoomEntity> entities;
-    private RoomMapping mappingInstance;
-    private Position position;
+    private final RoomMapping mappingInstance;
+    private final Position position;
     private RoomEntityMovementNode movementNode;
     private RoomTileStatusType status;
     private RoomTileState state;
@@ -40,8 +40,8 @@ public class RoomTile {
     private boolean hasMagicTile = false;
     private boolean hasAdjustableHeight = false;
     private boolean hasGate = false;
-    private List<RoomItemFloor> items;
-    private Map<Integer, Consumer<RoomEntity>> pendingEvents = new ConcurrentHashMap<>();
+    private final List<RoomItemFloor> items;
+    private final Map<Integer, Consumer<RoomEntity>> pendingEvents = new ConcurrentHashMap<>();
 
     public RoomTile(RoomMapping mappingInstance, Position position) {
         this.mappingInstance = mappingInstance;

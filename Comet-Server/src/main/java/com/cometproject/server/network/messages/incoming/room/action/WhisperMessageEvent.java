@@ -6,7 +6,7 @@ import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.filter.FilterResult;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.types.Room;
-import com.cometproject.server.logging.LogManager;
+import com.cometproject.server.logging.LogService;
 import com.cometproject.server.logging.entries.RoomChatLogEntry;
 import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.messages.outgoing.notification.AdvancedAlertMessageComposer;
@@ -71,7 +71,7 @@ public class WhisperMessageEvent implements Event {
 			if (filterResult.isBlocked()) {
 				filterResult.sendLogToStaffs(client, "<Whisper: " + playerEntity.getRoom().getData().getId() + ">");
 				client.send(new AdvancedAlertMessageComposer(Locale.get("game.message.blocked").replace("%s", filterResult.getMessage())));
-				client.getLogger().info("Filter detected a blacklisted word in message: \"" + message + "\"");
+				client.getLog().info("Filter detected a blacklisted word in message: \"" + message + "\"");
 				return;
 			} else if (filterResult.wasModified()) {
 				filteredMessage = filterResult.getMessage();
@@ -82,8 +82,8 @@ public class WhisperMessageEvent implements Event {
 		
 		if (playerEntity.onChat(filteredMessage)) {
 			try {
-				if (LogManager.ENABLED)
-					LogManager.getInstance().getStore().getLogEntryContainer().put(new RoomChatLogEntry(room.getId(), client.getPlayer().getId(), Locale.getOrDefault("game.logging.whisper", "<Whisper to %username%>").replace("%username%", user) + " " + message));
+				if (LogService.ENABLED)
+					LogService.getInstance().getStore().getLogEntryContainer().put(new RoomChatLogEntry(room.getId(), client.getPlayer().getId(), Locale.getOrDefault("game.logging.whisper", "<Whisper to %username%>").replace("%username%", user) + " " + message));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

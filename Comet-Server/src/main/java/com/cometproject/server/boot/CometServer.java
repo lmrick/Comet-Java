@@ -6,7 +6,7 @@ import com.cometproject.server.game.GameCycle;
 import com.cometproject.server.game.catalog.CatalogManager;
 import com.cometproject.server.game.commands.CommandManager;
 import com.cometproject.server.game.groups.items.GroupItemManager;
-import com.cometproject.server.game.guides.GuideManager;
+import com.cometproject.server.game.moderation.guides.GuideManager;
 import com.cometproject.server.game.items.ItemManager;
 import com.cometproject.server.game.landing.LandingManager;
 import com.cometproject.server.game.moderation.BanManager;
@@ -21,20 +21,21 @@ import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.bundles.RoomBundleManager;
 import com.cometproject.server.game.utilities.validator.PlayerFigureValidator;
 import com.cometproject.server.locale.Locale;
-import com.cometproject.server.logging.LogManager;
+import com.cometproject.server.logging.LogService;
 import com.cometproject.server.modules.ModuleManager;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.storage.StorageManager;
 import com.cometproject.server.storage.queries.config.ConfigDao;
 import com.cometproject.server.tasks.CometThreadManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
 public class CometServer {
 	
 	public static final String CLIENT_VERSION = "PRODUCTION-201709192204-203982672";
-	private final Logger log = Logger.getLogger(CometServer.class.getName());
+	private final Logger log = LogManager.getLogger(CometServer.class.getName());
 	
 	public CometServer(Map<String, String> overridenConfig) {
 		Configuration.setConfiguration(new Configuration("./config/comet.properties"));
@@ -50,7 +51,7 @@ public class CometServer {
 		
 		CometThreadManager.getInstance().initialize();
 		StorageManager.getInstance().initialize();
-		LogManager.getInstance().initialize();
+		LogService.getInstance().initialize();
 		
 		ConfigDao.getAll();
 		Locale.initialize();

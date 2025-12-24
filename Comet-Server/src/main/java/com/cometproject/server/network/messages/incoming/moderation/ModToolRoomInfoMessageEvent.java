@@ -15,7 +15,7 @@ public class ModToolRoomInfoMessageEvent implements Event {
 		
 		if (!client.getPlayer().getPermissions().getRank().modTool()) {
 			// fuck off
-			client.getLogger().error(ModToolUserInfoMessageEvent.class.getName() + " - tried to view room info for room: " + roomId);
+			client.getLog().error(ModToolUserInfoMessageEvent.class.getName() + " - tried to view room info for room: " + roomId);
 			client.disconnect();
 			return;
 		}

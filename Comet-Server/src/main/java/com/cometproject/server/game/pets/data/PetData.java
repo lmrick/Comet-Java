@@ -9,8 +9,8 @@ import com.google.gson.JsonObject;
 
 
 public class PetData implements IPetData {
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
 
     private int scratches;
 
@@ -20,12 +20,12 @@ public class PetData implements IPetData {
     private int experience;
     private int energy;
     private int hunger;
-    private int ownerId;
+    private final int ownerId;
 
     private String ownerName;
-    private String colour;
+    private final String colour;
     private int raceId;
-    private int typeId;
+    private final int typeId;
     private int hairDye = 0;
 
     private int hair = -1;

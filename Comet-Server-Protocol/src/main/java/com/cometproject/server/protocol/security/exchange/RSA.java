@@ -8,7 +8,7 @@ public class RSA {
     public BigInteger privateKey;
     public boolean decryptable;
     public boolean encry;
-    private BigInteger zero = new BigInteger("0");
+    private final BigInteger zero = new BigInteger("0");
 
     public RSA() {
 

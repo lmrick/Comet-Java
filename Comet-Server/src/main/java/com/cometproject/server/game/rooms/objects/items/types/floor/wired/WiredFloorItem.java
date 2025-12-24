@@ -22,7 +22,7 @@ public abstract class WiredFloorItem extends AdvancedFloorItem<WiredItemEvent> i
 
     private WiredItemData wiredItemData = null;
     private boolean state;
-    private boolean hasTicked = false;
+    private final boolean hasTicked = false;
     private boolean isFlashing = false;
 
     public WiredFloorItem(RoomItemData itemData, Room room) {
@@ -62,13 +62,11 @@ public abstract class WiredFloorItem extends AdvancedFloorItem<WiredItemEvent> i
 
     @Override
     public boolean onInteract(RoomEntity entity, int requestData, boolean isWiredTrigger) {
-        if (!(entity instanceof PlayerEntity)) {
+        if (!(entity instanceof PlayerEntity playerEntity)) {
             return true;
         }
-
-        PlayerEntity playerEntity = (PlayerEntity) entity;
-
-        if (!this.getRoom().getRights().hasRights(playerEntity.getPlayerId()) && !playerEntity.getPlayer().getPermissions().getRank().roomFullControl()) {
+			
+			if (!this.getRoom().getRights().hasRights(playerEntity.getPlayerId()) && !playerEntity.getPlayer().getPermissions().getRank().roomFullControl()) {
             return true;
         }
 

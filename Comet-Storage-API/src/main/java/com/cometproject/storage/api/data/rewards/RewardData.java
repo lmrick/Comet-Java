@@ -1,9 +1,9 @@
 package com.cometproject.storage.api.data.rewards;
 
 public class RewardData {
-    private String code;
-    private String badge;
-    private int diamonds;
+    private final String code;
+    private final String badge;
+    private final int diamonds;
     private int seasonal;
 
     public RewardData(String code, String badge, int diamonds, int seasonal) {

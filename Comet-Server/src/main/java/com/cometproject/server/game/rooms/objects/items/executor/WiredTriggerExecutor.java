@@ -1,5 +1,6 @@
-package com.cometproject.server.game.rooms.objects.entities;
+package com.cometproject.server.game.rooms.objects.items.executor;
 
+import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.base.WiredTriggerItem;
 import com.cometproject.server.tasks.ICometTask;

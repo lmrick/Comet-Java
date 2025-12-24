@@ -17,11 +17,12 @@ import com.cometproject.server.network.messages.outgoing.user.purse.UpdateActivi
 import com.cometproject.server.storage.queries.achievements.PlayerAchievementDao;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Map;
-import org.apache.log4j.Logger;
 
 public class AchievementComponent extends PlayerComponent implements IPlayerAchievements {
-	private final Logger LOG = super.getLogger(AchievementComponent.class);
+	private final Logger LOG = getLogger(AchievementComponent.class);
 	private Map<AchievementType, IAchievementProgress> progression;
 	
 	public AchievementComponent(PlayerComponentContext componentContext) {

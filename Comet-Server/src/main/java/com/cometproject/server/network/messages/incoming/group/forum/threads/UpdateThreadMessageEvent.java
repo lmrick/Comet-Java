@@ -26,7 +26,7 @@ public class UpdateThreadMessageEvent implements Event {
             return;
         }
 
-        IForumSettings forumSettings = group.getForum().getForumSettings();
+        IForumSettings forumSettings = group.getForum().forumSettings();
 
         if (forumSettings.getModeratePermission() == ForumPermission.OWNER) {
             if (client.getPlayer().getId() != group.getData().getId()) {
@@ -38,7 +38,7 @@ public class UpdateThreadMessageEvent implements Event {
             }
         }
 
-        IForumThread forumThread = group.getForum().getForumThreads().get(threadId);
+        IForumThread forumThread = group.getForum().forumThreads().get(threadId);
 
         if (forumThread == null) {
             return;
@@ -49,9 +49,9 @@ public class UpdateThreadMessageEvent implements Event {
             client.send(new NotificationMessageComposer("forums.thread." + (isPinned ? "pinned" : "unpinned")));
 
             if (isPinned) {
-                group.getForum().getPinnedThreads().add(forumThread.getId());
+                group.getForum().pinnedThreads().add(forumThread.getId());
             } else {
-                group.getForum().getPinnedThreads().remove((Integer) forumThread.getId());
+                group.getForum().pinnedThreads().remove((Integer) forumThread.getId());
             }
         }
 

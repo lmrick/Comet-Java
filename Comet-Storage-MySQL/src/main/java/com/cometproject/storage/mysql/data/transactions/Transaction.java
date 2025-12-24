@@ -7,7 +7,7 @@ public interface Transaction {
     Transaction NULL = null;
 
     void startTransaction() throws Exception;
-    Connection getConnection();
+    Connection connection();
     void commit() throws Exception;
     void rollback() throws Exception;
     void close() throws Exception;

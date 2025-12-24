@@ -61,15 +61,15 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.joda.time.DateTime;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class LegacyPurchaseHandler implements ICatalogPurchaseHandler {
-	private final Logger log = Logger.getLogger(LegacyPurchaseHandler.class.getName());
+	private final Logger log = LogManager.getLogger(LegacyPurchaseHandler.class.getName());
 	private ExecutorService executorService;
 
 	public LegacyPurchaseHandler() {
@@ -210,7 +210,7 @@ public class LegacyPurchaseHandler implements ICatalogPurchaseHandler {
 			if ((!CometSettings.playerInfiniteBalance && (client.getPlayer().getData().getCredits() < totalCostCredits
 					|| client.getPlayer().getData().getActivityPoints() < totalCostActivityPoints))
 					|| client.getPlayer().getData().getVipPoints() < totalCostPoints) {
-				client.getLogger()
+				client.getLog()
 						.warn("Player with ID: " + client.getPlayer().getId() + " tried to purchase item with ID: "
 								+ item.getId() + " with the incorrect amount of credits or points.");
 				client.send(new AlertMessageComposer(Locale.get("catalog.error.notEnough")));

@@ -10,14 +10,15 @@ import com.cometproject.game.groups.GroupsModule;
 import com.cometproject.game.rooms.RoomsModule;
 import com.cometproject.game.achievements.AchievementsModule;
 import com.cometproject.server.modules.events.EventHandlerService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ModuleManager implements Initializable {
 	
-	private static final Logger log = Logger.getLogger(ModuleManager.class.getName());
+	private static final Logger log = LogManager.getLogger(ModuleManager.class.getName());
 	private static ModuleManager moduleManagerInstance;
 	private final IEventHandler eventHandler;
 	private final CometGameService gameService;

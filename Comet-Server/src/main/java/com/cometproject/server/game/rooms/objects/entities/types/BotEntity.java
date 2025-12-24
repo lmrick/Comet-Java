@@ -39,13 +39,13 @@ public class BotEntity extends RoomEntity {
 		this.data = data;
 		
 		switch (data.getBotType()) {
-			default -> this.ai = new DefaultAI(this);
 			case WAITER -> this.ai = new WaiterAI(this);
 			case MIMIC -> this.ai = new MinionAI(this);
 			case SPY -> {
 				this.ai = new SpyAI(this);
 				this.dataObject = this.data.getData() == null ? new SpyBotData(new LinkedList<>()) : JsonUtil.getInstance().fromJson(this.data.getData(), SpyBotData.class);
 			}
+			default -> this.ai = new DefaultAI(this);
 		}
 	}
 	

@@ -6,7 +6,7 @@ public enum PetBreedLevel {
     RARE(1),
     EPIC(0);
 
-    private int levelId;
+    private final int levelId;
 
     PetBreedLevel(int levelId) {
         this.levelId = levelId;

@@ -8,7 +8,7 @@ import com.cometproject.server.game.rooms.filter.FilterResult;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.objects.items.types.floor.PrivateChatFloorItem;
-import com.cometproject.server.logging.LogManager;
+import com.cometproject.server.logging.LogService;
 import com.cometproject.server.logging.entries.RoomChatLogEntry;
 import com.cometproject.server.network.messages.incoming.Event;
 import com.cometproject.server.network.messages.outgoing.notification.AdvancedAlertMessageComposer;
@@ -70,7 +70,7 @@ public class ShoutMessageEvent implements Event {
 			if (filterResult.isBlocked()) {
 				filterResult.sendLogToStaffs(client, "<Shout: " + playerEntity.getRoom().getData().getId() + ">");
 				client.send(new AdvancedAlertMessageComposer(Locale.get("game.message.blocked").replace("%s", filterResult.getMessage())));
-				client.getLogger().info("Filter detected a blacklisted word in message: \"" + message + "\"");
+				client.getLog().info("Filter detected a blacklisted word in message: \"" + message + "\"");
 				return;
 			} else if (filterResult.wasModified()) {
 				filteredMessage = filterResult.getMessage();
@@ -81,8 +81,8 @@ public class ShoutMessageEvent implements Event {
 		
 		if (playerEntity.onChat(filteredMessage)) {
 			try {
-				if (LogManager.ENABLED)
-					LogManager.getInstance().getStore().getLogEntryContainer().put(new RoomChatLogEntry(playerEntity.getRoom().getId(), client.getPlayer().getId(), message));
+				if (LogService.ENABLED)
+					LogService.getInstance().getStore().getLogEntryContainer().put(new RoomChatLogEntry(playerEntity.getRoom().getId(), client.getPlayer().getId(), message));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -1,7 +1,8 @@
 package com.cometproject.server.storage;
 
 import com.cometproject.storage.mysql.connections.MySQLConnectionProvider;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,7 @@ public class SQLUtility {
 	public static boolean queryLogEnabled = false;
 	public static Map<Integer, QueryLog> queryLog = new ConcurrentHashMap<>();
 	private static MySQLConnectionProvider connectionProvider;
-	private static final Logger log = Logger.getLogger(SQLUtility.class.getName());
+	private static final Logger log = LogManager.getLogger(SQLUtility.class.getName());
 	private static final Map<String, AtomicInteger> queryCounters = new ConcurrentHashMap<>();
 	
 	public static void init(MySQLConnectionProvider connectionProvider) {
@@ -70,7 +71,7 @@ public class SQLUtility {
 				final QueryLog queryLogger = queryLog.get(statement.hashCode());
 				final long timeTaken = (System.currentTimeMillis() - queryLogger.startTime);
 				
-				log.info(MessageFormat.format("[QUERY] {0} took {1}MS", queryLogger.query, timeTaken));
+				log.info("[QUERY] {} took {}MS", queryLogger.query, timeTaken);
 				
 				queryLog.remove(statement.hashCode());
 			}
@@ -103,7 +104,7 @@ public class SQLUtility {
 	
 	public static PreparedStatement prepare(String query, Connection connection, boolean returnKeys) throws SQLException {
 		if (Thread.currentThread().getName().startsWith("Room-Processor")) {
-			log.trace(MessageFormat.format("Executing query from room processor: {0}", query));
+			log.trace("Executing query from room processor: {}", query);
 		}
 		
 		if (!queryCounters.containsKey(query)) {

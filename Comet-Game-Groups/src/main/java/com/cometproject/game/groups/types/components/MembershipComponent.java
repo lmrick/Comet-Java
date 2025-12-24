@@ -72,12 +72,7 @@ public class MembershipComponent implements IMembershipComponent {
         final List<GroupMemberAvatar> playerAvatars = Lists.newArrayList();
 
         switch (type) {
-            default: {
-                for(IGroupMember groupMember : this.getMembersAsList()) {
-                    addPlayerAvatar(groupMember.getPlayerId(), playerAvatars, false, groupMember);
-                }
-            } break;
-            case 1: {
+					case 1: {
                 for(Integer adminId : this.getAdministrators()) {
                     final IGroupMember member = this.getAll().get(adminId);
                     if (member != null) {
@@ -90,8 +85,14 @@ public class MembershipComponent implements IMembershipComponent {
                     addPlayerAvatar(request, playerAvatars, true, null);
                 }
             } break;
-
-        }
+					
+					default: {
+							for(IGroupMember groupMember : this.getMembersAsList()) {
+									addPlayerAvatar(groupMember.getPlayerId(), playerAvatars, false, groupMember);
+							}
+					}
+					break;
+				}
 
         return playerAvatars;
     }

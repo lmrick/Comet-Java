@@ -30,11 +30,7 @@ public class ToggleMoodlightMessageEvent implements Event {
 			return;
 		}
 		
-		if (!moodlight.getMoodlightData().isEnabled()) {
-			moodlight.getMoodlightData().setEnabled(true);
-		} else {
-			moodlight.getMoodlightData().setEnabled(false);
-		}
+		moodlight.getMoodlightData().setEnabled(!moodlight.getMoodlightData().isEnabled());
 		
 		// save the data!
 		MoodlightDao.updateMoodlight(moodlight);

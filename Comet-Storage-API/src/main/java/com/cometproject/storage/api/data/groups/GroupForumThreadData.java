@@ -13,13 +13,13 @@ public class GroupForumThreadData implements IForumThread {
     private static final int MAX_MESSAGES_PER_PAGE = 20;
     private int id;
     private String title;
-    private int authorId;
-    private int authorTimestamp;
+    private final int authorId;
+    private final int authorTimestamp;
     private int state;
     private boolean isLocked;
     private boolean isPinned;
-    private int adminId;
-    private String adminUsername;
+    private final int adminId;
+    private final String adminUsername;
     private List<IForumThreadReply> replies;
 
     public GroupForumThreadData(int id, String title, String message, int authorId, int authorTimestamp, int state, boolean isLocked, boolean isPinned, int adminId, String adminUsername) {

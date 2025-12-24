@@ -7,7 +7,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.apache.log4j.Logger;
 
 public class SqlStorageManager {
-    private static Logger log = Logger.getLogger(SqlStorageManager.class.getName());
+    private static final Logger log = Logger.getLogger(SqlStorageManager.class.getName());
     private HikariDataSource connections = null;
 
     public SqlStorageManager() {

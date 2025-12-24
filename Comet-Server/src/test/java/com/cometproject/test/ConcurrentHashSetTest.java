@@ -3,6 +3,7 @@ package com.cometproject.test;
 import com.cometproject.server.utilities.collections.ConcurrentHashSet;
 import junit.framework.TestCase;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 import java.util.Collection;
 import java.util.concurrent.CountDownLatch;
@@ -71,7 +72,7 @@ public class ConcurrentHashSetTest extends TestCase {
     public void testRetainAll() {
         set.add("test1");
         set.add("test2");
-        Collection<String> collection = Arrays.asList("test1");
+        Collection<String> collection = List.of("test1");
         assertTrue(set.retainAll(collection));
         assertTrue(set.contains("test1"));
         assertFalse(set.contains("test2"));
@@ -98,7 +99,7 @@ public class ConcurrentHashSetTest extends TestCase {
         ConcurrentHashSet<String> otherSet = new ConcurrentHashSet<>();
         otherSet.add("test1");
         otherSet.add("test2");
-        assertTrue(set.equals(otherSet));
+			assertEquals(set, otherSet);
     }
 
     public void testHashCode() {

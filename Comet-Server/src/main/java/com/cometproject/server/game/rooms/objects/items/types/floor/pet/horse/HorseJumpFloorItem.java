@@ -74,11 +74,9 @@ public class HorseJumpFloorItem extends DefaultFloorItem {
 	
 	@Override
 	public void onEntityStepOn(RoomEntity entity) {
-		if (!(entity instanceof PetEntity)) {
+		if (!(entity instanceof PetEntity petEntity)) {
 			return;
 		}
-		
-		final PetEntity petEntity = (PetEntity) entity;
 		
 		if (petEntity.getMountedEntity() == null) {
 			return;

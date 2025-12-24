@@ -25,7 +25,7 @@ public class ModerateThreadMessageEvent implements Event {
             return;
         }
 
-        IForumSettings forumSettings = group.getForum().getForumSettings();
+        IForumSettings forumSettings = group.getForum().forumSettings();
 
         if (forumSettings.getModeratePermission() == ForumPermission.OWNER) {
             if (client.getPlayer().getId() != group.getData().getId()) {
@@ -37,7 +37,7 @@ public class ModerateThreadMessageEvent implements Event {
             }
         }
 
-        IForumThread forumThread = group.getForum().getForumThreads().get(threadId);
+        IForumThread forumThread = group.getForum().forumThreads().get(threadId);
 
         if (forumThread == null) {
             return;

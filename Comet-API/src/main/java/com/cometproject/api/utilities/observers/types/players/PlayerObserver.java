@@ -6,7 +6,7 @@ import com.cometproject.api.utilities.observers.IObserver;
 import com.cometproject.api.utilities.observers.IObserverService;
 
 public class PlayerObserver implements IObserverService {
-    private List<IObserver> observers = new CopyOnWriteArrayList<>();
+    private final List<IObserver> observers = new CopyOnWriteArrayList<>();
 
     @Override
     public void notifyObservers(Object... arguments) {

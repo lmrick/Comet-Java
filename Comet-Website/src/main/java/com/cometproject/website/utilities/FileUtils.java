@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.StringWriter;
 
 public class FileUtils {
-    private static Logger log = Logger.getLogger(FileUtils.class.getName());
+    private static final Logger log = Logger.getLogger(FileUtils.class.getName());
 
     public static String getContents(String file) {
         FileInputStream fileInputStream = null;

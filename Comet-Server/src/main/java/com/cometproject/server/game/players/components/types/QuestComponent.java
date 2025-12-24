@@ -5,18 +5,19 @@ import com.cometproject.api.game.players.data.components.IPlayerQuests;
 import com.cometproject.api.game.quests.IQuest;
 import com.cometproject.api.game.quests.QuestType;
 import com.cometproject.server.game.players.components.PlayerComponent;
-import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.quests.QuestManager;
+import com.cometproject.server.locale.Locale;
 import com.cometproject.server.network.messages.outgoing.quests.QuestCompletedMessageComposer;
 import com.cometproject.server.network.messages.outgoing.quests.QuestListMessageComposer;
 import com.cometproject.server.network.messages.outgoing.quests.QuestStartedMessageComposer;
 import com.cometproject.server.network.messages.outgoing.user.purse.UpdateActivityPointsMessageComposer;
 import com.cometproject.server.storage.queries.quests.PlayerQuestsDao;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Map;
 
 public class QuestComponent extends PlayerComponent implements IPlayerQuests {
-	private final Logger LOG = super.getLogger(QuestComponent.class);
+	private final Logger LOG = getLogger(QuestComponent.class);
 	private Map<Integer, Integer> questProgression;
 	
 	public QuestComponent(PlayerComponentContext componentContext) {
@@ -137,7 +138,6 @@ public class QuestComponent extends PlayerComponent implements IPlayerQuests {
 			}
 			case PROFILE_BADGE -> {
 			}
-			default -> newProgressValue++;
 			case EXPLORE_FIND_ITEM -> {
 				if (quest.getGoalData() != data) {
 					return;
@@ -145,6 +145,7 @@ public class QuestComponent extends PlayerComponent implements IPlayerQuests {
 				
 				newProgressValue = quest.getGoalData();
 			}
+			default -> newProgressValue++;
 		}
 		
 		if (newProgressValue >= quest.getGoalData()) {

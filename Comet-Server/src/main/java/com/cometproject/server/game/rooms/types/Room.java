@@ -36,7 +36,10 @@ import com.cometproject.server.storage.cache.objects.items.WallItemDataObject;
 import com.cometproject.server.utilities.attributes.Attributable;
 import com.cometproject.storage.api.factories.rooms.RoomModelDataFactory;
 import com.google.common.collect.Sets;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -84,7 +87,7 @@ public class Room implements Attributable, IRoom {
 	
 	public Room(IRoomData data) {
 		this.data = data;
-		this.log = Logger.getLogger("Room \"" + this.getData().getName() + "\"");
+		this.log = LogManager.getLogger(MessageFormat.format("Room \"{0}\"", this.getData().getName()));
 		this.cachedData = null;
 		
 		this.roomContext = new RoomContext(this);
@@ -271,9 +274,8 @@ public class Room implements Attributable, IRoom {
 		}
 		
 		long timeTaken = System.currentTimeMillis() - currentTime;
-		
 		if (timeTaken >= 250) {
-			this.log.warn("Room [" + this.getData().getId() + "][" + this.getData().getName() + "] took " + timeTaken + "ms to dispose");
+			this.log.warn("Room [{}][{}] took {} MS to dispose", this.getData().getId(), this.getData().getName(), timeTaken);
 		}
 		
 		this.log.debug("Room has been disposed");

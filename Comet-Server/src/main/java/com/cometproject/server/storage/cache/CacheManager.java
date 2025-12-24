@@ -8,7 +8,8 @@ import com.cometproject.server.storage.cache.subscribers.ISubscriber;
 import com.cometproject.server.storage.cache.subscribers.RefreshDataSubscriber;
 import com.cometproject.server.tasks.CometThreadManager;
 import com.cometproject.server.utilities.TimeSpan;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -22,7 +23,7 @@ import java.util.Arrays;
 public class CacheManager extends CachableObject implements Initializable {
 	
 	private static CacheManager cacheManager;
-	private final Logger log = Logger.getLogger(CacheManager.class.getName());
+	private final Logger log = LogManager.getLogger(CacheManager.class.getName());
 	private final String keyPrefix;
 	private final String host;
 	private final int port;

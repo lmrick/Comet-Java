@@ -58,7 +58,7 @@ public class FreezeGame extends RoomGameLogic {
 
         for (FreezeBall freezeBall : this.activeBalls) {
             if (freezeBall.getTicksUntilExplode() == FreezeBall.START_TICKS) {
-                freezeBall.getSource().tempState(freezeBall.isMega() ? 6000 : (freezeBall.getRange() <= 4 ? freezeBall.getRange() : 4) * 1000);
+                freezeBall.getSource().tempState(freezeBall.isMega() ? 6000 : (Math.min(freezeBall.getRange(), 4)) * 1000);
             }
 
             if (freezeBall.getTicksUntilExplode() > 0) {
@@ -96,10 +96,9 @@ public class FreezeGame extends RoomGameLogic {
                         }
 
                         for (RoomEntity entity : tile.getEntities()) {
-                            if (entity instanceof PlayerEntity) {
-                                final PlayerEntity playerEntity = ((PlayerEntity) entity);
-
-                                if (this.players.containsKey(playerEntity.getPlayerId())) {
+                            if (entity instanceof PlayerEntity playerEntity) {
+															
+															if (this.players.containsKey(playerEntity.getPlayerId())) {
                                     // we lost 10 points!
                                     roomGame.getGameComponent().decreaseScore(playerEntity.getGameTeam(), 10);
 

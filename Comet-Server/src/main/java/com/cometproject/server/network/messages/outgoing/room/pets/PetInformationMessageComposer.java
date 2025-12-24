@@ -104,7 +104,7 @@ public class PetInformationMessageComposer extends MessageComposer {
 
     private int daysSinceBirthday(long birthday) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(birthday * 1000l);
+        calendar.setTimeInMillis(birthday * 1000L);
 
         Calendar newCalendar = Calendar.getInstance();
         newCalendar.setTimeInMillis(System.currentTimeMillis());

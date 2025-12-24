@@ -16,7 +16,7 @@ public class ModToolUserInfoMessageEvent implements Event {
 		int userId = msg.readInt();
 		
 		if (!client.getPlayer().getPermissions().getRank().modTool()) {
-			client.getLogger().error(ModToolUserInfoMessageEvent.class.getName() + " - tried to gather information on user: " + userId);
+			client.getLog().error(ModToolUserInfoMessageEvent.class.getName() + " - tried to gather information on user: " + userId);
 			client.disconnect();
 			return;
 		}

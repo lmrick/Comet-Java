@@ -93,7 +93,7 @@ public class PlayerLoginRequest implements ICometTask {
 			}
 			
 			if (BanManager.getInstance().hasBan(Integer.toString(player.getId()), BanType.USER)) {
-				client.getLogger().warn("Banned player: " + player.getId() + " tried logging in");
+				client.getLog().warn("Banned player: " + player.getId() + " tried logging in");
 				client.disconnect("banned");
 				return;
 			}
@@ -105,7 +105,7 @@ public class PlayerLoginRequest implements ICometTask {
 			
 			if (ipAddress != null && !ipAddress.isEmpty()) {
 				if (BanManager.getInstance().hasBan(ipAddress, BanType.IP)) {
-					client.getLogger().warn("Banned player: " + player.getId() + " tried logging in");
+					client.getLog().warn("Banned player: " + player.getId() + " tried logging in");
 					client.disconnect("banned");
 					return;
 				}
@@ -122,7 +122,7 @@ public class PlayerLoginRequest implements ICometTask {
 			
 			RoomManager.getInstance().loadRoomsForUser(player);
 			
-			client.getLogger().debug(client.getPlayer().getData().getUsername() + " logged in");
+			client.getLog().debug(client.getPlayer().getData().getUsername() + " logged in");
 			
 			player.setOnline(true);
 			

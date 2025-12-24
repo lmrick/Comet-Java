@@ -27,7 +27,7 @@ public class GroupForumDataMessageComposer extends MessageComposer {
 	public void compose(IComposerDataWrapper msg) {
 		this.group.getForum().composeData(msg, group.getData());
 		
-		final IForumSettings forumSettings = this.group.getForum().getForumSettings();
+		final IForumSettings forumSettings = this.group.getForum().forumSettings();
 		
 		msg.writeInt(forumSettings.getReadPermission().getPermissionId());
 		msg.writeInt(forumSettings.getPostPermission().getPermissionId());

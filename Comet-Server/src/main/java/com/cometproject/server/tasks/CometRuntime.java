@@ -4,14 +4,15 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.platform.mac.SystemB;
 import com.sun.jna.platform.win32.Kernel32;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.text.MessageFormat;
 
 public class CometRuntime {
 	
 	public static final String OPERATING_SYSTEM = System.getProperty("os.name");
 	public static final String OPERATING_SYSTEM_ARCHITECTURE = System.getProperty("os.arch");
-	private static final Logger log = Logger.getLogger(CometRuntime.class.getName());
+	private static final Logger log = LogManager.getLogger(CometRuntime.class.getName());
 	public static int processId = 0;
 	
 	static {
@@ -24,7 +25,7 @@ public class CometRuntime {
 		}
 		
 		if (processId < 1) {
-			log.warn(MessageFormat.format("Failed to get process identifier - OS: {0} ({1})", OPERATING_SYSTEM, OPERATING_SYSTEM_ARCHITECTURE));
+			log.warn("Failed to get process identifier - OS: {} ({})", OPERATING_SYSTEM, OPERATING_SYSTEM_ARCHITECTURE);
 		}
 	}
 	

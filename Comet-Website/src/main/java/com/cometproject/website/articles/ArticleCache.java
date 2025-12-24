@@ -8,8 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ArticleCache {
     private static ArticleCache articleCache;
-    private Map<Integer, Article> articles;
-    private Map<String, Integer> articleSlugToId;
+    private final Map<Integer, Article> articles;
+    private final Map<String, Integer> articleSlugToId;
 
     public ArticleCache() {
         articles = new ConcurrentHashMap<>();

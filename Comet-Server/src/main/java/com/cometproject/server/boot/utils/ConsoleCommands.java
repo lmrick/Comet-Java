@@ -10,13 +10,15 @@ import com.cometproject.server.game.permissions.PermissionsManager;
 import com.cometproject.server.modules.ModuleManager;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.storage.SQLUtility;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class ConsoleCommands {
 	
-	private static final Logger log = Logger.getLogger("Console Command Handler");
+	private static final Logger log = LogManager.getLogger("Console Command Handler");
 	
 	public static void init() {
 		final var cmdThr = new Thread(ConsoleCommands::run);
@@ -26,11 +28,10 @@ public class ConsoleCommands {
 	public static void handleCommand(String line) {
 		if (line.startsWith("/")) {
 			switch (line.split(" ")[0]) {
-				default -> log.error("Invalid command");
-				
 				case "/query-log" -> SQLUtility.queryLogEnabled = !SQLUtility.queryLogEnabled;
 				
-				case "/", "/help", "/commands" -> log.info("Commands available: /about, /reload_messages, /gc, /reload_permissions, /changemotd, /reload_catalog, /reload_bans, /reload_locale, /reload_permissions, /queries, /queries");
+				case "/", "/help", "/commands" ->
+								log.info("Commands available: /about, /reload_messages, /gc, /reload_permissions, /changemotd, /reload_catalog, /reload_bans, /reload_locale, /reload_permissions, /queries, /queries");
 				
 				case "/reload_modules" -> {
 					ModuleManager.getInstance().initialize();
@@ -39,14 +40,23 @@ public class ConsoleCommands {
 				
 				case "/about" -> {
 					final var stats = Comet.getStats();
-					
-					log.info("This server is powered by Comet (%s)".formatted(Comet.getBuild()));
-					log.info("    Players online: %d".formatted(stats.getPlayers()));
-					log.info("    Active rooms: %d".formatted(stats.getRooms()));
-					log.info("    Uptime: %s".formatted(stats.getUptime()));
-					log.info("    Process ID: %d".formatted(stats.getProcessId()));
-					log.info("    Memory allocated: %dMB".formatted(stats.getAllocatedMemory()));
-					log.info("    Memory usage: %dMB".formatted(stats.getUsedMemory()));
+					final var aboutLog = """
+														This server is powered by Comet ({})
+														Players online: {}
+														Active rooms: {}
+														Uptime: {}
+														Process ID: {}
+														Memory allocated: {} MB
+														Memory usage: {} MB
+														CPU Cores: {}
+														OS: {}
+														""";
+					log.info(aboutLog, Comet.getBuild(),
+									stats.getPlayers(), stats.getRooms(),
+									stats.getUptime(), stats.getProcessId(),
+									stats.getAllocatedMemory(), stats.getUsedMemory(),
+									stats.getCpuCores(), stats.getOperatingSystem()
+					);
 				}
 				case "/reload_messages" -> {
 					NetworkManager.getInstance().getMessages().load();
@@ -92,8 +102,8 @@ public class ConsoleCommands {
 					log.info("================================================");
 					
 					SQLUtility.getQueryCounters().forEach((key, value) -> {
-						log.info("Query:" + key);
-						log.info("Count: " + value.get());
+						log.info("Query:{}", key);
+						log.info("Count: {}", value.get());
 						log.info("");
 					});
 				}
@@ -101,6 +111,8 @@ public class ConsoleCommands {
 					SQLUtility.getQueryCounters().clear();
 					log.info("Query counters have been cleared.");
 				}
+				default -> log.error("Invalid command");
+				
 			}
 		} else {
 			log.error("Invalid command");

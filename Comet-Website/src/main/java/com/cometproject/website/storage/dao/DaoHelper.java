@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 
 public class DaoHelper {
     private static SqlStorageManager storageManager;
-    private static Logger log = Logger.getLogger(DaoHelper.class.getName());
+    private static final Logger log = Logger.getLogger(DaoHelper.class.getName());
 
     public static void init(SqlStorageManager sqlStorageManager) {
         storageManager = sqlStorageManager;

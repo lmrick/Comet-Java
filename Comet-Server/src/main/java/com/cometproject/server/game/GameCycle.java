@@ -13,9 +13,8 @@ import com.cometproject.server.storage.queries.player.PlayerDao;
 import com.cometproject.server.storage.queries.system.StatisticsDao;
 import com.cometproject.server.tasks.ICometTask;
 import com.cometproject.server.tasks.CometThreadManager;
-import org.apache.log4j.Logger;
-import java.time.LocalDate;
-import java.util.Calendar;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -23,7 +22,7 @@ public class GameCycle implements ICometTask, Initializable {
 	
 	private static final int interval = 1;
 	private static GameCycle gameThreadInstance;
-	private static final Logger log = Logger.getLogger(GameCycle.class.getName());
+	private static final Logger log = LogManager.getLogger(GameCycle.class.getName());
 	private ScheduledFuture<?> gameFuture;
 	private boolean active = false;
 	private int currentOnlineRecord = 0;

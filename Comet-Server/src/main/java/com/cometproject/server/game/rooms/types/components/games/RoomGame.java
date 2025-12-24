@@ -12,7 +12,8 @@ import com.cometproject.server.game.rooms.types.components.games.banzai.BanzaiGa
 import com.cometproject.server.game.rooms.types.components.games.freeze.FreezeGame;
 import com.cometproject.server.tasks.ICometTask;
 import com.cometproject.server.tasks.CometThreadManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.ScheduledFuture;
@@ -33,7 +34,7 @@ public class RoomGame implements ICometTask {
 	private final RoomGameLogic[] logicHandlers;
 	
 	public RoomGame(Room room) {
-		this.log = Logger.getLogger(MessageFormat.format("RoomGame [{0}][{1}]", room.getData().getName(), room.getData().getId()));
+		this.log = LogManager.getLogger(MessageFormat.format("RoomGame [{0}][{1}]", room.getData().getName(), room.getData().getId()));
 		this.room = room;
 		
 		this.logicHandlers = new RoomGameLogic[] { new BanzaiGame(), new FreezeGame(), };
@@ -115,7 +116,7 @@ public class RoomGame implements ICometTask {
 		this.gameLength = amount;
 		this.active = true;
 		
-		log.debug("Game active for " + amount + " seconds");
+		log.debug("Game active for {} seconds", amount);
 	}
 	
 	public GameComponent getGameComponent() {

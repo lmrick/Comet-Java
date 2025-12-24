@@ -13,7 +13,6 @@ public class PetWaterFloorItem extends RoomItemFloor {
     @Override
     public void onEntityStepOn(RoomEntity entity) {
         if (this.getItemData().getData().equalsIgnoreCase("0")) {
-            return;
-        }
+				}
     }
 }

@@ -13,7 +13,6 @@ public class FlagMeCommand extends ChatCommand {
 			final String command = Locale.get("command.flagme.name");
 			final String yes = Locale.getOrDefault("command.flagme.yes", "yes");
 			sendNotification(Locale.getOrDefault("command.flagme.none", "Type:" + command + " " + yes + "'"), client);
-			return;
 		} else {
 			if (client == null || client.getPlayer() == null || client.getPlayer().getData() == null) {
 				return;
@@ -24,10 +23,8 @@ public class FlagMeCommand extends ChatCommand {
 			
 			if (!message[0].equals(yes)) {
 				sendNotification(Locale.getOrDefault("command.flagme.incorrect", "To continue, type ':" + command + " " + yes + "'"), client);
-				return;
 			} else if (client.getPlayer().getData().getChangingName()) {
 				sendNotification(Locale.getOrDefault("command.flagme.alreadybought", "Hey! You have entered this command already, click on your avatar and after that on the button 'Change your name'."), client);
-				return;
 			} else {
 				client.getPlayer().getData().setChangingName(true);
 				client.send(new UserObjectMessageComposer(client.getPlayer()));

@@ -52,9 +52,8 @@ public class BanzaiGame extends RoomGameLogic {
         GameTeam winningTeam = game.winningTeam();
 
         for (RoomItemFloor item : game.getRoom().getItems().getByClass(BanzaiTileFloorItem.class)) {
-            if (item instanceof BanzaiTileFloorItem) {
-                final BanzaiTileFloorItem tileItem = (BanzaiTileFloorItem) item;
-                if (tileItem.getTeam() == winningTeam && winningTeam != GameTeam.NONE && tileItem.getPoints() == 3) {
+            if (item instanceof BanzaiTileFloorItem tileItem) {
+							if (tileItem.getTeam() == winningTeam && winningTeam != GameTeam.NONE && tileItem.getPoints() == 3) {
                     tileItem.flash();
                 } else {
                     tileItem.onGameEnds();

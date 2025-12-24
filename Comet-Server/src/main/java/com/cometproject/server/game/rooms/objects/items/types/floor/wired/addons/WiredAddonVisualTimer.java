@@ -30,13 +30,13 @@ public class WiredAddonVisualTimer extends RoomItemFloor {
 			
 			if (time == 0 || time == 30 || time == 60 || time == 120 || time == 180 || time == 300 || time == 600) {
 				time = switch (time) {
-					default -> 0;
 					case 0 -> 30;
 					case 30 -> 60;
 					case 60 -> 120;
 					case 120 -> 180;
 					case 180 -> 300;
 					case 300 -> 600;
+					default -> 0;
 				};
 			} else {
 				time = 0;

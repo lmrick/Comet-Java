@@ -5,7 +5,8 @@ import com.cometproject.server.tasks.ICometTask;
 import com.cometproject.server.tasks.CometConstants;
 import com.cometproject.server.tasks.CometThreadManager;
 import com.cometproject.server.utilities.TimeSpan;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.concurrent.ScheduledFuture;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 public class RoomCycle implements ICometTask {
 	private final static int PERIOD = CometConstants.ROOM_CYCLE_PERIOD;
 	private final static int FLAG = CometConstants.ROOM_CYCLE_FLAG;
-	private static final Logger log = Logger.getLogger(RoomCycle.class.getName());
+	private static final Logger log = LogManager.getLogger(RoomCycle.class.getName());
 	private ScheduledFuture<?> myFuture;
 	
 	public RoomCycle() {
@@ -68,7 +69,7 @@ public class RoomCycle implements ICometTask {
 			TimeSpan span = new TimeSpan(start, System.currentTimeMillis());
 			
 			if (span.toMilliseconds() > FLAG) {
-				log.warn(MessageFormat.format("Global room processing ({0} rooms) took: {1}MS to execute.", RoomManager.getInstance().getRoomInstances().size(), span.toMilliseconds()));
+				log.warn("Global room processing ({} rooms) took: {} MS to execute.", RoomManager.getInstance().getRoomInstances().size(), span.toMilliseconds());
 			}
 		} catch (Exception e) {
 			log.error("Error while cycling rooms", e);

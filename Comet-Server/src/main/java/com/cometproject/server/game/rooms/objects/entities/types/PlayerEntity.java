@@ -31,7 +31,7 @@ import com.cometproject.server.game.rooms.types.Room;
 import com.cometproject.server.game.rooms.types.components.games.GameTeam;
 import com.cometproject.server.game.rooms.types.components.games.GameType;
 import com.cometproject.server.game.rooms.types.components.types.trade.Trade;
-import com.cometproject.server.logging.LogManager;
+import com.cometproject.server.logging.LogService;
 import com.cometproject.server.logging.entries.RoomVisitLogEntry;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.messages.incoming.room.engine.InitializeRoomMessageEvent;
@@ -55,7 +55,8 @@ import com.cometproject.server.network.ws.messages.alerts.MutedMessage;
 import com.cometproject.server.protocol.messages.MessageComposer;
 import com.cometproject.server.storage.queries.pets.RoomPetDao;
 import com.cometproject.server.utilities.attributes.Attributable;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.HashMap;
@@ -64,7 +65,7 @@ import java.util.Objects;
 
 public class PlayerEntity extends RoomEntity implements IPlayerEntityAccess, Attributable, IPlayerRoomEntity {
 	
-	private static final Logger log = Logger.getLogger(PlayerEntity.class.getName());
+	private static final Logger log = LogManager.getLogger(PlayerEntity.class.getName());
 	private Player player;
 	private PlayerData playerData;
 	
@@ -110,8 +111,8 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntityAccess, Att
 			this.setOverriden(true);
 		}
 		
-		if (LogManager.ENABLED) {
-			this.visitLogEntry = LogManager.getInstance().getStore().getRoomVisitContainer().put(player.getId(), roomInstance.getId(), Comet.getTime());
+		if (LogService.ENABLED) {
+			this.visitLogEntry = LogService.getInstance().getStore().getRoomVisitContainer().put(player.getId(), roomInstance.getId(), Comet.getTime());
 		}
 	}
 	
@@ -348,7 +349,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntityAccess, Att
 		if (this.visitLogEntry != null) {
 			this.visitLogEntry.setExitTime((int) Comet.getTime());
 			
-			LogManager.getInstance().getStore().getRoomVisitContainer().updateExit(this.visitLogEntry);
+			LogService.getInstance().getStore().getRoomVisitContainer().updateExit(this.visitLogEntry);
 		}
 		
 		WiredTriggerLeavesRoom.executeTriggers(this);

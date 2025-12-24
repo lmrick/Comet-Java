@@ -1,4 +1,4 @@
-package com.cometproject.server.game.guides.types;
+package com.cometproject.server.game.moderation.guides.types;
 
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.sessions.Session;
@@ -11,7 +11,7 @@ public class HelpRequest {
 	private final int type;
 	private final String message;
 	public int guideId = -1;
-	private boolean recommendation = false;
+	private final boolean recommendation = false;
 	private int processTicks = 60;
 	private final Set<Integer> declinedGuides = Sets.newConcurrentHashSet();
 	

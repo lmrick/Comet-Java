@@ -5,7 +5,6 @@ import com.cometproject.api.game.rooms.components.RoomComponentContext;
 import com.cometproject.api.game.rooms.components.types.IItemsProcessComponent;
 import com.cometproject.api.game.rooms.objects.IRoomItemData;
 import com.cometproject.server.boot.Comet;
-import com.cometproject.server.game.rooms.objects.entities.WiredTriggerExecutor;
 import com.cometproject.server.game.rooms.objects.items.RoomItem;
 import com.cometproject.server.game.rooms.objects.items.types.floor.RollerFloorItem;
 import com.cometproject.server.game.rooms.objects.items.types.floor.wired.triggers.WiredTriggerPeriodically;
@@ -19,9 +18,10 @@ import com.cometproject.server.utilities.TimeSpan;
 import com.cometproject.storage.api.StorageContext;
 import com.google.common.collect.Queues;
 import com.google.common.collect.Sets;
-import org.apache.log4j.Logger;
-import org.checkerframework.checker.units.qual.C;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
+import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
@@ -42,7 +42,7 @@ public class ItemProcessComponent extends RoomComponent implements ICometTask, I
 		super(roomComponentContext);
 		this.room = roomComponentContext.getRoom();
 		
-		log = Logger.getLogger("Item Process [" + room.getData().getName() + "]");
+		log = LogManager.getLogger(MessageFormat.format("Item Process [{0}]", room.getData().getName()));
 	}
 	
 	@Override
@@ -128,7 +128,7 @@ public class ItemProcessComponent extends RoomComponent implements ICometTask, I
 						item.restoreState();
 					}
 					
-					Comet.getServer().getLogger().debug(item.getId() + " tick");
+					Comet.getServer().getLogger().debug("{} tick", item.getId());
 					
 					item.tick();
 				}
@@ -150,7 +150,7 @@ public class ItemProcessComponent extends RoomComponent implements ICometTask, I
 		TimeSpan span = new TimeSpan(timeStart, System.currentTimeMillis());
 		
 		if (span.toMilliseconds() > FLAG && Comet.isDebugging) {
-			log.warn("ItemProcessComponent process took: " + span.toMilliseconds() + "ms to execute.");
+			log.warn("ItemProcessComponent process took: {}MS to execute.", span.toMilliseconds());
 		}
 	}
 	
@@ -165,7 +165,7 @@ public class ItemProcessComponent extends RoomComponent implements ICometTask, I
 	}
 	
 	protected void handleException(RoomItem item, Exception e) {
-		log.error("Error while processing item: " + item.getId() + " (" + item.getClass().getSimpleName() + ")", e);
+		log.error("Error while processing item: {} ({})", item.getId(), item.getClass().getSimpleName(), e);
 	}
 	
 	public Room getRoom() {

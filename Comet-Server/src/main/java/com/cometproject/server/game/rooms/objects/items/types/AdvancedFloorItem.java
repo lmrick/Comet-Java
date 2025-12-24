@@ -20,13 +20,13 @@ public abstract class AdvancedFloorItem<T extends FloorItemEvent> extends RoomIt
 	
 	@Override
 	public void onTick() {
-		final Set<T> finishedEvents = new ConcurrentHashSet<T>();
+		final Set<T> finishedEvents = new ConcurrentHashSet<>();
 		
 		itemEvents.forEach(itemEvent -> {
-			Comet.getServer().getLogger().debug(this.getId() + " incrementing tick");
+			Comet.getServer().getLogger().debug("{} incrementing tick", this.getId());
 			itemEvent.incrementTicks();
 			if (itemEvent.isFinished()) {
-				Comet.getServer().getLogger().debug(this.getId() + " event finished");
+				Comet.getServer().getLogger().debug("{} event finished", this.getId());
 				
 				finishedEvents.add(itemEvent);
 			}
@@ -36,7 +36,7 @@ public abstract class AdvancedFloorItem<T extends FloorItemEvent> extends RoomIt
 			this.itemEvents.remove(finishedEvent);
 			finishedEvent.onCompletion(this);
 			if (finishedEvent.isInteractiveEvent()) {
-				Comet.getServer().getLogger().debug(this.getId() + " calling onComplete");
+				Comet.getServer().getLogger().debug("{} calling onComplete", this.getId());
 				
 				this.onEventComplete(finishedEvent);
 			}

@@ -3,20 +3,21 @@ package com.cometproject.server.game.rooms.models;
 import com.cometproject.api.game.rooms.models.InvalidModelException;
 import com.cometproject.api.game.rooms.models.RoomTileState;
 import com.cometproject.api.utilities.ModelUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.Arrays;
 
 public abstract class RoomModel {
-	private String name;
+	private final String name;
 	private String map = "";
-	private int doorX;
-	private int doorY;
+	private final int doorX;
+	private final int doorY;
 	private int doorZ;
-	private int doorRotation;
-	private int mapSizeX;
-	private int mapSizeY;
-	private int[][] squareHeight;
-	private RoomTileState[][] squareState;
+	private final int doorRotation;
+	private final int mapSizeX;
+	private final int mapSizeY;
+	private final int[][] squareHeight;
+	private final RoomTileState[][] squareState;
 	private int wallHeight;
 	
 	public RoomModel(String name, String heightmap, int doorX, int doorY, int doorRotation, int wallHeight) throws InvalidModelException {
@@ -72,7 +73,7 @@ public abstract class RoomModel {
 				throw e;
 			}
 			
-			Logger.getLogger(RoomModel.class.getName()).error("Failed to parse heightmap for model: " + this.name, e);
+			LogManager.getLogger(RoomModel.class.getName()).error("Failed to parse heightmap for model: " + this.name, e);
 		}
 		
 		if (maxTileHeight >= 29) {

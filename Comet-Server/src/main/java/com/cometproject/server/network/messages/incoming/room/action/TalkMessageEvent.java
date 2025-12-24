@@ -7,7 +7,7 @@ import com.cometproject.server.game.rooms.filter.FilterResult;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
 import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
 import com.cometproject.server.game.rooms.objects.items.types.floor.PrivateChatFloorItem;
-import com.cometproject.server.logging.LogManager;
+import com.cometproject.server.logging.LogService;
 import com.cometproject.server.logging.entries.RoomChatLogEntry;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.network.messages.incoming.Event;
@@ -104,8 +104,8 @@ public class TalkMessageEvent implements Event {
 			}
 			
 			try {
-				if (LogManager.ENABLED && !message.replace(" ", "").isEmpty())
-					LogManager.getInstance().getStore().getLogEntryContainer().put(new RoomChatLogEntry(playerEntity.getRoom().getId(), client.getPlayer().getId(), message));
+				if (LogService.ENABLED && !message.replace(" ", "").isEmpty())
+					LogService.getInstance().getStore().getLogEntryContainer().put(new RoomChatLogEntry(playerEntity.getRoom().getId(), client.getPlayer().getId(), message));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

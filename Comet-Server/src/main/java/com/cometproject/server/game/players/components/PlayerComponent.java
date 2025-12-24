@@ -1,8 +1,8 @@
 package com.cometproject.server.game.players.components;
 
 import java.text.MessageFormat;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import com.cometproject.api.game.players.IPlayer;
 import com.cometproject.api.game.players.PlayerContext;
 import com.cometproject.api.game.players.components.PlayerComponentContext;
@@ -29,7 +29,7 @@ public abstract class PlayerComponent implements IPlayerComponent {
 	}
 
 	public static Logger getLogger(Class<?> componentClass) {
-		LOG = LogManager.getLogger(MessageFormat.format("PlayerComponentLoggger: %s -", componentClass.getSimpleName()));
+		LOG = LogManager.getLogger(MessageFormat.format("PlayerComponentLoggger: {0} -", componentClass.getSimpleName()));
 		return LOG;
 	}
 	

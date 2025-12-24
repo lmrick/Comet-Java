@@ -7,36 +7,40 @@ import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.network.NetworkManager;
 import com.cometproject.server.tasks.CometRuntime;
 import com.cometproject.server.utilities.TimeSpan;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-
-import java.io.FileInputStream;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.Configurator;
 import java.lang.management.ManagementFactory;
+import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Comet {
+	private static final Path configFile = Path.of("./config/log4j2.properties");
 	public static String instanceId = UUID.randomUUID().toString();
 	public static long start;
 	public static volatile boolean isDebugging = true;
 	public static volatile boolean isRunning = true;
 	public static boolean daemon = false;
-	private static final Logger log = Logger.getLogger(Comet.class.getName());
+	private static final Logger log = LogManager.getLogger(Comet.class.getName());
 	private static CometServer server;
 	
 	public static void run(String[] args) {
 		start = System.currentTimeMillis();
 		
 		try {
-			PropertyConfigurator.configure(new FileInputStream("./config/log4j.properties"));
+			var context = (LoggerContext) LogManager.getContext(false);
+			context.setConfigLocation(configFile.toUri());
 		} catch (Exception e) {
-			log.error("Error while loading log4j configuration", e);
+			log.error("Error while loading log4j2 configuration", e);
 			return;
 		}
 		
-		log.info("Comet Server - " + getBuild());
+		
+		log.info("Comet Server - {}", getBuild());
 		log.info("  /$$$$$$                                      /$$    ");
 		log.info(" /$$__  $$                                    | $$    ");
 		log.info("| $$  \\__/  /$$$$$$  /$$$$$$/$$$$   /$$$$$$  /$$$$$$  ");
@@ -79,7 +83,7 @@ public class Comet {
 			server = new CometServer(cometConfiguration);
 		}
 		
-		Logger.getRootLogger().setLevel(logLevel);
+		Configurator.setRootLevel(logLevel);
 		server.init();
 		
 		if (!daemon) {
@@ -90,7 +94,7 @@ public class Comet {
 	}
 	
 	public static void exit(String message) {
-		log.error(MessageFormat.format("Comet has shutdown. Reason: \"{0}\"", message));
+		log.error("Comet has shutdown. Reason: \"{}\"", message);
 		System.exit(0);
 	}
 	

@@ -3,7 +3,8 @@ package com.cometproject.server.storage.queries.player.inventory;
 import com.cometproject.api.game.players.data.components.inventory.IPlayerItem;
 import com.cometproject.server.game.players.components.types.inventory.InventoryItem;
 import com.cometproject.server.storage.SQLUtility;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class InventoryDao {
     public static String ITEMS_USERID_INDEX = "";
-    private static Logger log = Logger.getLogger(InventoryDao.class.getName());
+    private static final Logger log = LogManager.getLogger(InventoryDao.class.getName());
 
     public static Map<Long, IPlayerItem> getInventoryByPlayerId(int playerId) {
         Connection sqlConnection = null;

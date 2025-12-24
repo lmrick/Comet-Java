@@ -41,7 +41,7 @@ public class ModifyGroupSettingsMessageEvent implements Event {
         group.getData().setCanMembersDecorate(rightsType == 0);
 
         if(group.getForum() != null) {
-            GameContext.getCurrent().getGroupService().saveForumSettings(group.getForum().getForumSettings());
+            GameContext.getCurrent().getGroupService().saveForumSettings(group.getForum().forumSettings());
         }
 
         if (RoomManager.getInstance().isActive(group.getData().getRoomId())) {

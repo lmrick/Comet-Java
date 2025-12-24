@@ -13,7 +13,6 @@ import com.cometproject.server.game.moderation.ModerationManager;
 import com.cometproject.server.game.players.PlayerManager;
 import com.cometproject.server.game.players.types.Player;
 import com.cometproject.server.network.NetworkManager;
-import com.cometproject.server.network.messages.GameMessageHandler;
 import com.cometproject.server.network.messages.outgoing.notification.LogoutMessageComposer;
 import com.cometproject.server.network.messages.outgoing.room.avatar.AvatarUpdateMessageComposer;
 import com.cometproject.server.network.messages.outgoing.room.items.UpdateFloorItemMessageComposer;
@@ -22,7 +21,8 @@ import com.cometproject.server.protocol.security.exchange.DiffieHellman;
 import com.cometproject.server.storage.queries.player.PlayerDao;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.net.InetSocketAddress;
 import java.text.MessageFormat;
 import java.util.UUID;
@@ -32,9 +32,9 @@ public class Session implements ISession, INetSession<Session> {
 	public static int CLIENT_VERSION = 0;
 	private final ChannelHandlerContext channel;
 	private final UUID uuid = UUID.randomUUID();
-	private Logger logger = Logger.getLogger("Session");
+	private Logger log = LogManager.getLogger("Session");
 	private SessionEventHandler eventHandler;
-	private boolean isClone = false;
+	private final boolean isClone = false;
 	private String uniqueId = "";
 	private Player player;
 	private boolean disconnectCalled = false;
@@ -76,13 +76,13 @@ public class Session implements ISession, INetSession<Session> {
 					try {
 						this.getPlayer().dispose();
 					} catch (Exception e) {
-						e.printStackTrace();
+						log.error("Error while disconnecting", e);
 					}
 				}
 				
 				this.setPlayer(null);
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.error("Error while disconnecting", e);
 			}
 		});
 	}
@@ -139,11 +139,11 @@ public class Session implements ISession, INetSession<Session> {
 		}
 		
 		if (msg.getId() == 0) {
-			logger.debug(MessageFormat.format("Unknown header ID for message: {0}", msg.getClass().getSimpleName()));
+			log.debug("Unknown header ID for message: {}", msg.getClass().getSimpleName());
 		}
 		
 		if (!(msg instanceof AvatarUpdateMessageComposer) && !(msg instanceof UpdateFloorItemMessageComposer)) {
-			logger.info(MessageFormat.format("Sent message: {0} / {1}", msg.getClass().getSimpleName(), msg.getId()));
+			log.info("Sent message: {} / {}", msg.getClass().getSimpleName(), msg.getId());
 		}
 		
 		if (!queue) {
@@ -159,8 +159,8 @@ public class Session implements ISession, INetSession<Session> {
 		this.channel.flush();
 	}
 	
-	public Logger getLogger() {
-		return this.logger;
+	public Logger getLog() {
+		return this.log;
 	}
 	
 	public Player getPlayer() {
@@ -174,7 +174,7 @@ public class Session implements ISession, INetSession<Session> {
 		
 		String username = player.getData().getUsername();
 		
-		this.logger = Logger.getLogger(MessageFormat.format("[{0}][{1}]", username, player.getId()));
+		this.log = LogManager.getLogger(MessageFormat.format("[{0}][{1}]", username, player.getId()));
 		this.player = player;
 		
 		int channelId = this.channel.channel().attr(SessionManager.CHANNEL_ID_ATTR).get();

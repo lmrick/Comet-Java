@@ -39,9 +39,9 @@ public class RoomData implements IRoomData {
 	private int bubbleScroll;
 	private int chatDistance;
 	private int antiFloodSettings;
-	private List<String> disabledCommands;
+	private final List<String> disabledCommands;
 	private int groupId;
-	private String requiredBadge;
+	private final String requiredBadge;
 	private String thumbnail;
 	private boolean wiredHidden;
 	

@@ -20,7 +20,7 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebsiteManager {
-    private Map<String, AccessLevel> accessLevels = new HashMap<>();
+    private final Map<String, AccessLevel> accessLevels = new HashMap<>();
 
     public WebsiteManager() {
         configure();

@@ -5,14 +5,15 @@ import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.moderation.types.Ban;
 import com.cometproject.server.game.moderation.types.BanType;
 import com.cometproject.server.storage.queries.moderation.BanDao;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BanManager implements Initializable {
 	private static BanManager banManagerInstance;
-	private static final Logger log = Logger.getLogger(BanManager.class.getName());
+	private static final Logger log = LogManager.getLogger(BanManager.class.getName());
 	private Map<String, Ban> bans;
 	
 	public BanManager() {

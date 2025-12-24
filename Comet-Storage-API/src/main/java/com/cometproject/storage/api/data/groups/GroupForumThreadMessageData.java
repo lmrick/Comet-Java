@@ -9,7 +9,7 @@ public class GroupForumThreadMessageData implements IForumThreadReply {
     private int id;
     private int index;
     private String message;
-    private int threadId;
+    private final int threadId;
     private int authorId;
     private int authorTimestamp;
     private int state;
@@ -40,7 +40,7 @@ public class GroupForumThreadMessageData implements IForumThreadReply {
         msg.writeString(playerAvatar.getUsername());
         msg.writeString(playerAvatar.getFigure());
 
-        msg.writeInt((int) (System.currentTimeMillis() / 1000l) - this.getAuthorTimestamp());
+        msg.writeInt((int) (System.currentTimeMillis() / 1000L) - this.getAuthorTimestamp());
         msg.writeString(this.getMessage());
         msg.writeByte(this.getState()); // state
 

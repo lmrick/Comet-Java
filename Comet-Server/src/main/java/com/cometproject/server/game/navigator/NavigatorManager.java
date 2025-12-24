@@ -6,7 +6,8 @@ import com.cometproject.server.game.navigator.types.categories.NavigatorCategory
 import com.cometproject.server.game.navigator.types.publics.PublicRoom;
 import com.cometproject.server.storage.queries.navigator.NavigatorDao;
 import com.google.common.collect.Lists;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class NavigatorManager implements Initializable {
 	private static NavigatorManager navigatorManagerInstance;
-	private final Logger log = Logger.getLogger(NavigatorManager.class.getName());
+	private final Logger log = LogManager.getLogger(NavigatorManager.class.getName());
 	private Map<Integer, Category> categories;
 	private List<Category> userCategories;
 	private Map<Integer, PublicRoom> publicRooms;
@@ -82,7 +83,7 @@ public class NavigatorManager implements Initializable {
 			
 			this.categories = NavigatorDao.getCategories();
 			
-			this.categories.values().stream().filter(category -> category.getCategoryType() == NavigatorCategoryType.CATEGORY).forEachOrdered(category -> this.userCategories.add(category));
+			this.categories.values().stream().filter(category -> category.categoryType() == NavigatorCategoryType.CATEGORY).forEachOrdered(category -> this.userCategories.add(category));
 		} catch (Exception e) {
 			log.error("Error while loading navigator categories", e);
 		}
