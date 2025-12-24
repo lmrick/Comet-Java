@@ -1,9 +1,9 @@
 package com.cometproject.server.composers.catalog;
 
 import com.cometproject.api.game.catalog.ICatalogService;
-import com.cometproject.api.game.catalog.types.CatalogPageType;
-import com.cometproject.api.game.catalog.types.ICatalogItem;
-import com.cometproject.api.game.catalog.types.ICatalogPage;
+import com.cometproject.api.game.catalog.types.pages.CatalogPageType;
+import com.cometproject.api.game.catalog.types.items.ICatalogItem;
+import com.cometproject.api.game.catalog.types.pages.ICatalogPage;
 import com.cometproject.api.game.players.IPlayer;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.protocol.headers.Composers;

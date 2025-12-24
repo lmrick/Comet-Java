@@ -1,9 +1,9 @@
 package com.cometproject.server.game.catalog.types;
 
-import com.cometproject.api.game.catalog.types.CatalogPageType;
-import com.cometproject.api.game.catalog.types.ICatalogBundledItem;
-import com.cometproject.api.game.catalog.types.ICatalogItem;
-import com.cometproject.api.game.catalog.types.ICatalogPage;
+import com.cometproject.api.game.catalog.types.pages.CatalogPageType;
+import com.cometproject.api.game.catalog.types.bundles.ICatalogBundledItem;
+import com.cometproject.api.game.catalog.types.items.ICatalogItem;
+import com.cometproject.api.game.catalog.types.pages.ICatalogPage;
 import com.cometproject.api.game.catalog.types.bundles.RoomBundleItem;
 import com.cometproject.api.utilities.JsonUtil;
 import com.cometproject.server.game.items.ItemManager;

@@ -1,8 +1,8 @@
 package com.cometproject.server.game.rooms.objects.items.types.floor;
 
-import com.cometproject.api.game.catalog.types.ICatalogItem;
-import com.cometproject.api.game.furniture.types.GiftData;
-import com.cometproject.api.game.furniture.types.LegacyGiftData;
+import com.cometproject.api.game.catalog.types.items.ICatalogItem;
+import com.cometproject.api.game.furniture.types.gift.GiftData;
+import com.cometproject.api.game.furniture.types.gift.LegacyGiftData;
 import com.cometproject.api.game.players.data.IPlayerAvatar;
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;

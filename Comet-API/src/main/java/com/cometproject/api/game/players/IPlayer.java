@@ -1,9 +1,9 @@
 package com.cometproject.api.game.players;
 
+import com.cometproject.api.game.players.components.types.*;
 import com.cometproject.api.game.players.data.IPlayerData;
 import com.cometproject.api.game.players.data.IPlayerSettings;
 import com.cometproject.api.game.players.data.IPlayerStatistics;
-import com.cometproject.api.game.players.data.components.*;
 import com.cometproject.api.game.rooms.entities.IPlayerRoomEntity;
 import com.cometproject.api.networking.messages.IMessageComposer;
 import com.cometproject.api.networking.sessions.ISession;

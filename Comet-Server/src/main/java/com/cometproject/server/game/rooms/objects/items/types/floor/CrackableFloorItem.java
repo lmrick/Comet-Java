@@ -1,6 +1,6 @@
 package com.cometproject.server.game.rooms.objects.items.types.floor;
 
-import com.cometproject.api.game.furniture.types.CrackableReward;
+import com.cometproject.api.game.furniture.types.crackable.CrackableReward;
 import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.game.rooms.objects.data.RoomItemData;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;

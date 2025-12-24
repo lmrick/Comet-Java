@@ -2,7 +2,7 @@ package com.cometproject.server.composers.catalog;
 
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.catalog.ICatalogService;
-import com.cometproject.api.game.catalog.types.ICatalogPage;
+import com.cometproject.api.game.catalog.types.pages.ICatalogPage;
 import com.cometproject.api.game.furniture.IFurnitureService;
 import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;

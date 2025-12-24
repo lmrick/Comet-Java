@@ -1,7 +1,7 @@
 package com.cometproject.server.game.catalog.types;
 
-import com.cometproject.api.game.catalog.types.ICatalogBundledItem;
-import com.cometproject.api.game.catalog.types.ICatalogItem;
+import com.cometproject.api.game.catalog.types.bundles.ICatalogBundledItem;
+import com.cometproject.api.game.catalog.types.items.ICatalogItem;
 import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.boot.Comet;

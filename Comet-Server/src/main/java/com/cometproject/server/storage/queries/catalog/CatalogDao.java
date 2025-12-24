@@ -1,9 +1,9 @@
 package com.cometproject.server.storage.queries.catalog;
 
-import com.cometproject.api.game.catalog.types.ICatalogFrontPageEntry;
-import com.cometproject.api.game.catalog.types.ICatalogItem;
-import com.cometproject.api.game.catalog.types.ICatalogPage;
-import com.cometproject.api.game.catalog.types.IClothingItem;
+import com.cometproject.api.game.catalog.types.pages.ICatalogFrontPageEntry;
+import com.cometproject.api.game.catalog.types.items.ICatalogItem;
+import com.cometproject.api.game.catalog.types.pages.ICatalogPage;
+import com.cometproject.api.game.catalog.types.clothing.IClothingItem;
 import com.cometproject.server.boot.Comet;
 import com.cometproject.server.game.catalog.CatalogManager;
 import com.cometproject.server.game.catalog.types.CatalogFrontPageEntry;

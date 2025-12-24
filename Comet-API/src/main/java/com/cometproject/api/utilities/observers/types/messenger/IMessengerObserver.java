@@ -1,6 +1,6 @@
 package com.cometproject.api.utilities.observers.types.messenger;
 
-import com.cometproject.api.game.players.data.components.messenger.IMessengerFriend;
+import com.cometproject.api.game.players.components.types.messenger.IMessengerFriend;
 import com.cometproject.api.utilities.observers.IObserver;
 
 public interface IMessengerObserver extends IObserver {

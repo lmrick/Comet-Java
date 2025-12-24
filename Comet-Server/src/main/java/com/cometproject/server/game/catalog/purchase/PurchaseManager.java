@@ -1,7 +1,7 @@
 package com.cometproject.server.game.catalog.purchase;
 
 import com.cometproject.api.game.achievements.types.AchievementType;
-import com.cometproject.api.game.furniture.types.GiftData;
+import com.cometproject.api.game.furniture.types.gift.GiftData;
 import com.cometproject.server.composers.catalog.GiftUserNotFoundMessageComposer;
 import com.cometproject.server.locale.Locale;
 import com.cometproject.server.game.catalog.purchase.handlers.BotPurchaseHandler;

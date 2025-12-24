@@ -1,113 +1,57 @@
 package com.cometproject.server.game.rooms.objects.entities.pathfinding.types;
 
-import com.cometproject.api.game.rooms.models.RoomTileState;
 import com.cometproject.api.game.utilities.Position;
 import com.cometproject.server.game.rooms.objects.RoomObject;
 import com.cometproject.server.game.rooms.objects.entities.RoomEntity;
 import com.cometproject.server.game.rooms.objects.entities.pathfinding.Pathfinder;
-import com.cometproject.server.game.rooms.objects.items.RoomItemFloor;
-import com.cometproject.server.game.rooms.objects.items.types.floor.RollableFloorItem;
-import com.cometproject.server.game.rooms.objects.items.types.floor.games.football.FootballFloorItem;
-import com.cometproject.server.game.rooms.objects.items.types.floor.groups.GroupGateFloorItem;
-import com.cometproject.server.game.rooms.objects.items.types.floor.wired.actions.WiredActionChase;
-import com.cometproject.server.game.rooms.types.mapping.RoomEntityMovementNode;
+import com.cometproject.server.game.rooms.objects.entities.pathfinding.validators.movement.items.ItemMovementRule;
+import com.cometproject.server.game.rooms.objects.entities.pathfinding.validators.movement.MovementContext;
+import com.cometproject.server.game.rooms.objects.entities.pathfinding.validators.movement.items.rules.*;
+import com.cometproject.server.game.rooms.objects.entities.pathfinding.validators.walk.TileContext;
+import com.cometproject.server.game.rooms.objects.entities.pathfinding.validators.walk.WalkRule;
 import com.cometproject.server.game.rooms.types.mapping.RoomTile;
+import com.cometproject.server.game.rooms.types.mapping.chunks.RoomChunk;
+
+import java.util.List;
 
 public class ItemPathfinder extends Pathfinder {
-    private static ItemPathfinder pathfinderInstance;
-
-    public static ItemPathfinder getInstance() {
-        if (pathfinderInstance == null) pathfinderInstance = new ItemPathfinder();
-        return pathfinderInstance;
-    }
-
-    @Override
-    public boolean isValidStep(RoomObject roomFloorObject, Position from, Position to, boolean lastStep, boolean isRetry) {
-        if (from.getX() == to.getX() && from.getY() == to.getY()) {
-            return true;
-        }
-
-        if (!(to.getX() < roomFloorObject.getRoom().getModel().getSquareState().length)) {
-            return false;
-        }
-
-        if ((roomFloorObject.getRoom().getMapping().isValidPosition(to) || (roomFloorObject.getRoom().getModel().getSquareState()[to.getX()][to.getY()] == RoomTileState.INVALID))) {
-            return false;
-        }
-
-        final int rotation = Position.calculateRotation(from, to);
-
-        if (rotation == 1 || rotation == 3 || rotation == 5 || rotation == 7) {
-            RoomTile left = null;
-            RoomTile right = switch (rotation) {
-							case 1 -> {
-								left = roomFloorObject.getRoom().getMapping().getTile(from.squareInFront(rotation + 1));
-								yield roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(rotation + 1));
-							}
-							case 3 -> {
-								left = roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(rotation + 1));
-								yield roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(rotation - 1));
-							}
-							case 5 -> {
-								left = roomFloorObject.getRoom().getMapping().getTile(from.squareInFront(rotation - 1));
-								yield roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(rotation - 1));
-							}
-							case 7 -> {
-								left = roomFloorObject.getRoom().getMapping().getTile(to.squareBehind(0));
-								yield roomFloorObject.getRoom().getMapping().getTile(from.squareInFront(rotation - 1));
-							}
-							default -> null;
-						};
-					
-					if (left != null && right != null) {
-                if (left.getMovementNode() != RoomEntityMovementNode.OPEN && right.getMovementNode() != RoomEntityMovementNode.OPEN)
-                    return false;
-            }
-        }
-
-        RoomTile tile = roomFloorObject.getRoom().getMapping().getTile(to.getX(), to.getY());
-
-        if (tile == null) {
-            return false;
-        }
-
-        if (roomFloorObject instanceof FootballFloorItem) {
-            for (RoomItemFloor floor : tile.getItems()) {
-                if (floor instanceof GroupGateFloorItem) {
-                    return false;
-                }
-            }
-
-            if (tile.getItems().size() == 1) {
-                return tile.getStackHeight() <= 0.5 && tile.canPlaceItemHere();
-            }
-        }
-
-        if (roomFloorObject instanceof WiredActionChase) {
-            int target = ((WiredActionChase) roomFloorObject).getTargetId();
-
-            if (target != -1) {
-                for (RoomEntity entity : tile.getEntities()) {
-                    if (entity.getId() != target) {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        if (roomFloorObject instanceof RollableFloorItem) {
-            for (RoomEntity entity : tile.getEntities()) {
-                return false;
-            }
-        }
-
-        if (tile.getMovementNode() == RoomEntityMovementNode.CLOSED || (tile.getMovementNode() == RoomEntityMovementNode.END_OF_ROUTE && !lastStep)) {
-            return false;
-        }
-
-        final double fromHeight = roomFloorObject.getRoom().getMapping().getStepHeight(from);
-        final double toHeight = roomFloorObject.getRoom().getMapping().getStepHeight(to);
-
-        return !(fromHeight < toHeight) || !((toHeight - fromHeight) > 1.0);
-    }
+	private final List<WalkRule> walkRules;
+	
+	private final List<ItemMovementRule> rules = List.of(new ValidTileRule(), new DiagonalMovementRule(), new FootballGateRule(), new FootballHeightRule(), new WiredChaseRule(), new RollableRule(), new MovementNodeRule(), new StepHeightRule());
+	
+	private static ItemPathfinder pathfinderInstance;
+	
+	public ItemPathfinder(List<WalkRule> rules) {
+		this.walkRules = rules;
+	}
+	
+	public static ItemPathfinder getInstance() {
+		if (pathfinderInstance == null) pathfinderInstance = new ItemPathfinder();
+		return pathfinderInstance;
+	}
+	
+	@Override
+	public boolean isValidStep(RoomObject object, Position from, Position to, boolean lastStep, boolean isRetry) {
+		var tile = object.getRoom().getMapping().getTile(to);
+		var ctx = new MovementContext(from, to, lastStep);
+		return rules.stream().allMatch(rule -> rule.allows(object, tile, ctx));
+	}
+	
+	public boolean canStep(RoomEntity entity, int x, int y) {
+		RoomChunk chunk = entity.getRoom()
+						.getMapping()
+						.getChunkAtTile(x, y);
+		
+		if (chunk == null) return false;
+		RoomTile tile = chunk.getTile(x, y);
+		TileContext ctx = new TileContext(
+						tile,
+						chunk,
+						chunk.getItems(),
+						chunk.getEntities()
+		);
+		
+		return walkRules.stream().allMatch(rule -> rule.canWalk(entity, ctx));
+	}
+	
 }

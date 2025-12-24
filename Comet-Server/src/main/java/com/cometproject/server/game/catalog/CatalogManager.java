@@ -1,8 +1,12 @@
 package com.cometproject.server.game.catalog;
 
 import com.cometproject.api.game.catalog.ICatalogService;
-import com.cometproject.api.game.catalog.types.*;
-import com.cometproject.api.game.catalog.types.purchase.ICatalogPurchaseHandler;
+import com.cometproject.api.game.catalog.purchase.ICatalogPurchaseHandler;
+import com.cometproject.api.game.catalog.types.clothing.IClothingItem;
+import com.cometproject.api.game.catalog.types.items.ICatalogItem;
+import com.cometproject.api.game.catalog.types.offers.ICatalogOffer;
+import com.cometproject.api.game.catalog.types.pages.ICatalogFrontPageEntry;
+import com.cometproject.api.game.catalog.types.pages.ICatalogPage;
 import com.cometproject.server.game.catalog.purchase.LegacyPurchaseHandler;
 import com.cometproject.server.storage.queries.catalog.CatalogDao;
 import com.google.common.collect.Lists;

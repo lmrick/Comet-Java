@@ -1,8 +1,8 @@
 package com.cometproject.api.game.furniture;
 
-import com.cometproject.api.game.furniture.types.CrackableReward;
+import com.cometproject.api.game.furniture.types.crackable.CrackableReward;
 import com.cometproject.api.game.furniture.types.IFurnitureDefinition;
-import com.cometproject.api.game.furniture.types.IMusicData;
+import com.cometproject.api.game.furniture.types.sounds.IMusicData;
 import com.cometproject.api.utilities.process.Initializable;
 import org.apache.logging.log4j.Logger;
 import java.util.Map;
