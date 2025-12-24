@@ -2,27 +2,21 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>Comet</groupId>
         <artifactId>Comet-Parent</artifactId>
         <version>2.12.1-TEST1</version>
     </parent>
 
-    <modelVersion>4.0.0</modelVersion>
     <artifactId>Comet-API</artifactId>
     <version>2.12.1-TEST1</version>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>maven_central</id>
-            <name>Maven Central</name>
-            <url>https://repo.maven.apache.org/maven2/</url>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>
@@ -33,7 +27,7 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.1.111.Final</version>
+            <version>4.2.5.Final</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
@@ -48,7 +42,7 @@
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
+            <version>20030203.000129</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -58,8 +52,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.15.0</version>
+            <version>3.18.0</version>
         </dependency>
     </dependencies>
-
 </project>
