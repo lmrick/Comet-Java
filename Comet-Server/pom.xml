@@ -108,7 +108,7 @@
         </repository>
         <repository>
             <id>sourceforge</id>
-            <url>http://oss.sonatype.org/content/groups/sourceforge/</url>
+            <url>https://oss.sonatype.org/content/groups/sourceforge/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -130,11 +130,11 @@
         <repository>
             <id>Codehaus Mojo</id>
             <name>Codehaus Mojo</name>
-            <url>http://repo1.maven.org/maven2</url>
+            <url>https://repo1.maven.org/maven2</url>
         </repository>
         <repository>
             <id>central</id>
-            <url>http://repo1.maven.org/maven2/</url>
+            <url>https://repo1.maven.org/maven2/</url>
         </repository>
         <repository>
             <id>maven_central</id>
