@@ -7,6 +7,7 @@ import com.cometproject.api.game.rooms.IRoomData;
 import com.cometproject.api.game.rooms.settings.RoomAccessType;
 import com.cometproject.server.game.navigator.NavigatorManager;
 import com.cometproject.server.game.navigator.types.categories.Category;
+import com.cometproject.server.game.navigator.types.categories.CategoryType;
 import com.cometproject.server.game.players.types.Player;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.objects.entities.types.PlayerEntity;
@@ -20,13 +21,15 @@ import java.util.concurrent.*;
 import java.util.function.BiConsumer;
 
 public class NavigatorSearchService implements ICometTask {
+
     private static NavigatorSearchService instance;
 
     // Executor para requests
     private final Executor searchExecutor = CometConstants.NAVIGATOR_SEARCH_EXECUTOR;
 
-    // Caches
+    // Caches separados
     private final LastReferenceCache<Integer, List<IRoomData>> friendsRoomsCache;
+    private final LastReferenceCache<Integer, List<IRoomData>> friendsOnlineRoomsCache;
     private final LastReferenceCache<Integer, List<IRoomData>> myGroupsCache;
     private final LastReferenceCache<String, List<Category>> categoryCache;
     private final LastReferenceCache<String, List<IRoomData>> generalRoomsCache;
@@ -34,11 +37,16 @@ public class NavigatorSearchService implements ICometTask {
     // Executor para limpar expirados
     private final ScheduledExecutorService cacheExecutor = Executors.newSingleThreadScheduledExecutor();
 
+    // Constantes de cache
+    private static final long CACHE_TTL = 30_000; // 30s
+    private static final long CACHE_CHECK_INTERVAL = 5_000; // 5s
+
     private NavigatorSearchService() {
-        friendsRoomsCache = new LastReferenceCache<>(30_000, 5_000, null, cacheExecutor);
-        myGroupsCache = new LastReferenceCache<>(30_000, 5_000, null, cacheExecutor);
-        categoryCache = new LastReferenceCache<>(30_000, 5_000, null, cacheExecutor);
-        generalRoomsCache = new LastReferenceCache<>(30_000, 5_000, null, cacheExecutor);
+        friendsRoomsCache = new LastReferenceCache<>(CACHE_TTL, CACHE_CHECK_INTERVAL, null, cacheExecutor);
+        friendsOnlineRoomsCache = new LastReferenceCache<>(CACHE_TTL, CACHE_CHECK_INTERVAL, null, cacheExecutor);
+        myGroupsCache = new LastReferenceCache<>(CACHE_TTL, CACHE_CHECK_INTERVAL, null, cacheExecutor);
+        categoryCache = new LastReferenceCache<>(CACHE_TTL, CACHE_CHECK_INTERVAL, null, cacheExecutor);
+        generalRoomsCache = new LastReferenceCache<>(CACHE_TTL, CACHE_CHECK_INTERVAL, null, cacheExecutor);
     }
 
     public static NavigatorSearchService getInstance() {
@@ -48,7 +56,7 @@ public class NavigatorSearchService implements ICometTask {
 
     @Override
     public void run() {
-        // Pode ser usado para atualização periódica de caches globais
+        // Atualização periódica de caches ou outras tarefas
     }
 
     // ===========================
@@ -66,36 +74,32 @@ public class NavigatorSearchService implements ICometTask {
         });
     }
 
+    // ===========================
+    // Computa categorias
+    // ===========================
     private List<Category> computeCategories(Player player, String category, String data) {
         List<Category> categoryList = new ArrayList<>();
 
-        if (!data.isEmpty()) {
-            categoryList.addAll(NavigatorManager.getInstance().getCategories().values());
-            return categoryList;
-        }
-
-        for (Category cat : NavigatorManager.getInstance().getCategories().values()) {
-            String type = cat.getCategoryType().toString().toLowerCase();
-            if ("myworld_view".equals(category)) {
-                switch (type) {
-                    case "my_friends_rooms" -> {
-                        if (!getFriendsRooms(player).isEmpty()) categoryList.add(cat);
+        if (data == null || data.isEmpty()) {
+            // Se data estiver vazio, retorna categorias visíveis filtradas por tipo
+            for (Category cat : NavigatorManager.getInstance().getCategories().values()) {
+                CategoryType type = cat.getCategoryType();
+                if (category.equalsIgnoreCase("myworld_view")) {
+                    switch (type) {
+                        case MY_FRIENDS_ROOMS -> { if (!getFriendsRooms(player).isEmpty()) categoryList.add(cat); }
+                        case WITH_FRIENDS -> { if (!getFriendsOnlineRooms(player).isEmpty()) categoryList.add(cat); }
+                        case MY_GROUPS -> { if (!getMyGroupsRooms(player).isEmpty()) categoryList.add(cat); }
+                        case WITH_RIGHTS -> { if (!player.getRoomsWithRights().isEmpty()) categoryList.add(cat); }
+                        default -> { if (cat.isVisible()) categoryList.add(cat); }
                     }
-                    case "with_friends" -> {
-                        if (!getFriendsOnlineRooms(player).isEmpty()) categoryList.add(cat);
-                    }
-                    case "my_groups" -> {
-                        if (!getMyGroupsRooms(player).isEmpty()) categoryList.add(cat);
-                    }
-                    case "with_rights" -> {
-                        if (!player.getRoomsWithRights().isEmpty()) categoryList.add(cat);
-                    }
-                    default -> {
-                        if (cat.isVisible()) categoryList.add(cat);
-                    }
+                } else if (cat.getCategory().equalsIgnoreCase(category) && cat.isVisible()) {
+                    categoryList.add(cat);
                 }
-            } else if (cat.getCategory().equals(category) && cat.isVisible()) {
-                categoryList.add(cat);
+            }
+        } else {
+            // Se houver filtro (data), retorna todas as categorias visíveis
+            for (Category cat : NavigatorManager.getInstance().getCategories().values()) {
+                if (cat.isVisible()) categoryList.add(cat);
             }
         }
 
@@ -123,7 +127,7 @@ public class NavigatorSearchService implements ICometTask {
     }
 
     private List<IRoomData> getFriendsOnlineRooms(Player player) {
-        List<IRoomData> cached = friendsRoomsCache.get(player.getId() + 1000000); // key offset
+        List<IRoomData> cached = friendsOnlineRoomsCache.get(player.getId());
         if (cached != null) return cached;
 
         List<IRoomData> rooms = new ArrayList<>();
@@ -136,7 +140,7 @@ public class NavigatorSearchService implements ICometTask {
             }
         }
 
-        friendsRoomsCache.add(player.getId() + 1000000, rooms);
+        friendsOnlineRoomsCache.add(player.getId(), rooms);
         return rooms;
     }
 
@@ -221,7 +225,13 @@ public class NavigatorSearchService implements ICometTask {
                 RoomManager.getInstance().isActive(r2.getId()) ? RoomManager.getInstance().get(r2.getId()).getEntities().playerCount() : 0,
                 RoomManager.getInstance().isActive(r1.getId()) ? RoomManager.getInstance().get(r1.getId()).getEntities().playerCount() : 0
         ));
-        if (rooms.size() > limit) return rooms.subList(0, limit);
-        return rooms;
+        return rooms.size() > limit ? new ArrayList<>(rooms.subList(0, limit)) : rooms;
+    }
+
+    // ===========================
+    // Shutdown do executor
+    // ===========================
+    public void shutdown() {
+        cacheExecutor.shutdownNow();
     }
 }
