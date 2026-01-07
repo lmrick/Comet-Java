@@ -190,9 +190,9 @@
             <version>33.2.1-jre</version>
         </dependency>
         <dependency>
-            <groupId>net.kencochrane.raven</groupId>
-            <artifactId>raven-log4j</artifactId>
-            <version>6.0.0</version>
+            <groupId>io.sentry</groupId>
+            <artifactId>sentry-log4j2</artifactId>
+            <version>7.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.mindrot</groupId>
