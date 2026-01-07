@@ -109,6 +109,21 @@
         </repository>
     </repositories>
 
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>9.4.51.v20230217</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+            <version>9.4.51.v20230217</version>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
