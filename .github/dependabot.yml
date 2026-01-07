@@ -3,17 +3,9 @@ updates:
   - package-ecosystem: "maven"       
     directory: "/"                   
     schedule:
-      interval: "daily"             
+      interval: "daily"    
     commit-message:
       prefix: "chore"                
-    open-pull-requests-limit: 100      
-    ignore:
-      - dependency-name: "*"
-        versions:
-          - ".*-SNAPSHOT"
-      - dependency-name: "org.apache.maven.plugins:maven-compiler-plugin"
-        versions:
-          - ".*-alpha.*"
-          - ".*-beta.*"
+    open-pull-requests-limit: 100  
     allow:
       - dependency-type: "direct"
