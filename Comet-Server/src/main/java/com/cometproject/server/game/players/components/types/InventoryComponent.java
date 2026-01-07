@@ -146,11 +146,12 @@ public class InventoryComponent extends PlayerComponent implements IPlayerInvent
 		}
 
 		List<Map.Entry<Long, IPlayerItem>> entries = List.copyOf(this.inventoryItems.entrySet());
-		int totalPages = (int) Math.ceil((double) entries.size() / InventoryMessageComposer.ITEMS_PER_PAGE);
+		int itemsPerPage = (int) InventoryMessageComposer.ITEMS_PER_PAGE;
+		int totalPages = (int) Math.ceil((double) entries.size() / itemsPerPage);
 		int currentPage = 0;
 
-		for (int i = 0; i < entries.size(); i += InventoryMessageComposer.ITEMS_PER_PAGE) {
-			Map<Long, IPlayerItem> inventoryPage = entries.subList(i, (int) Math.min(i + InventoryMessageComposer.ITEMS_PER_PAGE, entries.size()))
+		for (int i = 0; i < entries.size(); i += itemsPerPage) {
+			Map<Long, IPlayerItem> inventoryPage = entries.subList(i, Math.min(i + itemsPerPage, entries.size()))
 					.stream()
 					.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
