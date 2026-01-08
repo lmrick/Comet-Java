@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <maven.compiler.version>3.14.1</maven.compiler.version>
-        <maven.dependency.version>3.8.1</maven.dependency.version>
+        <maven.dependency.version>3.9.0</maven.dependency.version>
         <maven.jar.version>4.0.0-beta-1</maven.jar.version>
         <maven.resources.version>3.4.0</maven.resources.version>
         <openjdk.jmh.version>1.37</openjdk.jmh.version>
