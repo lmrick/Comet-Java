@@ -16,7 +16,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.14.1</maven.compiler.version>
-        <maven.dependency.version>3.8.1</maven.dependency.version>
+        <maven.dependency.version>3.9.0</maven.dependency.version>
         <maven.jar.version>3.5.0</maven.jar.version>
         <maven.resources.version>3.4.0</maven.resources.version>
         <hikaricp.version>7.0.2</hikaricp.version>
@@ -34,7 +34,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>${maven.dependency.version}3.8.1</version>
+                <version>${maven.dependency.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
