@@ -1,6 +1,8 @@
 package com.cometproject.server.network.messages.outgoing.navigator.updated;
 
+import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.rooms.IRoomData;
+import com.cometproject.api.game.rooms.IRoomWriter;
 import com.cometproject.api.game.rooms.settings.RoomAccessType;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.navigator.types.categories.Category;
@@ -10,7 +12,6 @@ import com.cometproject.server.game.navigator.types.search.NavigatorSearchServic
 import com.cometproject.server.game.players.types.Player;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.types.Room;
-import com.cometproject.server.game.rooms.types.RoomWriter;
 import com.cometproject.server.protocol.headers.Composers;
 import com.cometproject.server.protocol.messages.MessageComposer;
 import java.util.List;
@@ -79,7 +80,7 @@ public class NavigatorSearchResultSetMessageComposer extends MessageComposer {
 						}
 					}
 				}
-				RoomWriter.write(roomData, msg);
+				GameContext.getCurrent().getService(IRoomWriter.class).write(roomData, msg);
 			});
 			
 			rooms.clear();
@@ -94,7 +95,7 @@ public class NavigatorSearchResultSetMessageComposer extends MessageComposer {
 				msg.writeInt(this.player.getNavigator().getViewModes().containsKey(category.getCategoryId()) ? this.player.getNavigator().getViewModes().get(category.getCategoryId()) : category.getViewMode() == NavigatorViewMode.REGULAR ? 0 : category.getViewMode() == NavigatorViewMode.THUMBNAIL ? 1 : 0);
 				List<IRoomData> rooms = NavigatorSearchService.getInstance().search(category, this.player, this.categories.size() == 1);
 				msg.writeInt(rooms.size());// size of rooms found.
-				rooms.forEach(roomData -> RoomWriter.write(roomData, msg));
+				rooms.forEach(roomData -> GameContext.getCurrent().getService(IRoomWriter.class).write(roomData, msg));
 				rooms.clear();
 			});
 		}

@@ -6,6 +6,7 @@ import com.cometproject.api.game.groups.IGroupService;
 import com.cometproject.api.game.players.IPlayerService;
 import com.cometproject.api.game.rooms.IRoomService;
 import com.cometproject.api.game.rooms.models.IRoomModelService;
+import com.cometproject.api.game.rooms.writer.IRoomQueryService;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,6 +22,7 @@ public class GameContext {
 	private IPlayerService playerService;
 	private IRoomService roomService;
 	private IRoomModelService roomModelService;
+	private IRoomQueryService roomQueryService;
 
 	private final Map<Class<?>, Object> services = new ConcurrentHashMap<>();
 	private final Logger logger = Logger.getLogger(GameContext.class);
@@ -93,6 +95,14 @@ public class GameContext {
 	
 	public void setRoomModelService(IRoomModelService roomModelService) {
 		this.roomModelService = roomModelService;
+	}
+
+	public IRoomQueryService getRoomQueryService() {
+		return roomQueryService;
+	}
+
+	public void setRoomQueryService(IRoomQueryService roomQueryService) {
+		this.roomQueryService = roomQueryService;
 	}
 	
 }
