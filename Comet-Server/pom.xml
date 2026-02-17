@@ -244,7 +244,7 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>7.2.0</version>
+            <version>7.3.0</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
