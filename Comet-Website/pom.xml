@@ -20,7 +20,7 @@
         <maven.jar.version>3.5.0</maven.jar.version>
         <maven.resources.version>3.4.0</maven.resources.version>
         <hikaricp.version>7.0.2</hikaricp.version>
-        <mysql.connector.version>8.0.33</mysql.connector.version>
+        <mysql.connector.version>[8.2.0,)</mysql.connector.version>
     </properties>
 
     <build>
