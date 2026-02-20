@@ -2,9 +2,9 @@ package com.cometproject.server.game.navigator.types.featured;
 
 import com.cometproject.api.game.GameContext;
 import com.cometproject.api.game.rooms.IRoomData;
+import com.cometproject.api.game.rooms.IRoomWriter;
 import com.cometproject.api.networking.messages.wrappers.IComposerDataWrapper;
 import com.cometproject.server.game.rooms.RoomManager;
-import com.cometproject.server.game.rooms.types.RoomWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -72,7 +72,7 @@ public class FeaturedRoom {
 		if (isCategory) {
 			msg.writeBoolean(false);
 		} else {
-			RoomWriter.write(room, msg);
+			GameContext.getCurrent().getService(IRoomWriter.class).write(room, msg);
 		}
 	}
 	

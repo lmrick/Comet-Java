@@ -19,6 +19,7 @@ import com.cometproject.server.game.polls.PollManager;
 import com.cometproject.server.game.quests.QuestManager;
 import com.cometproject.server.game.rooms.RoomManager;
 import com.cometproject.server.game.rooms.bundles.RoomBundleManager;
+import com.cometproject.server.game.rooms.services.RoomQueryService;
 import com.cometproject.server.game.utilities.validator.PlayerFigureValidator;
 import com.cometproject.server.locale.Locale;
 import com.cometproject.server.logging.LogManager;
@@ -76,6 +77,7 @@ public class CometServer {
 		gameContext.setCatalogService(CatalogManager.getInstance());
 		gameContext.setFurnitureService(ItemManager.getInstance());
 		gameContext.setPlayerService(PlayerManager.getInstance());
+		gameContext.setRoomQueryService(new RoomQueryService());
 		
 		GameContext.setCurrent(gameContext);
 		
